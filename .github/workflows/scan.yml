@@ -60,3 +60,42 @@ jobs:
           BRANCH: ${{ matrix.branch }}
           CLI_DIR: ${{ runner.temp }}/ke-cli
         run: bash scripts/scan-one.sh
+
+      # 任务 2.3.1：L1 指标计算——scan-one 成功后执行（dedup skipped 同样出报告：
+      # 数值未变时产物逐字节一致，commit 步骤自动跳过）
+      - name: Compute metrics report (${{ matrix.owner }}/${{ matrix.repo }})
+        env:
+          KE_API_KEY: ${{ secrets.KE_API_KEY }}
+          KE_SERVER_URL: ${{ secrets.KE_SERVER_URL }}
+          OWNER: ${{ matrix.owner }}
+          REPO: ${{ matrix.repo }}
+          CLI_DIR: ${{ runner.temp }}/ke-cli
+        run: |
+          python3 scripts/compute-metrics.py \
+            --owner "$OWNER" --repo "$REPO" \
+            --ke-cli "node $CLI_DIR/bin/ke.cjs" \
+            --out "reports/$OWNER/$REPO.json"
+
+      # 产物入库（bot 身份；matrix 并发推送冲突 → fetch+rebase 重试）
+      - name: Commit report
+        env:
+          OWNER: ${{ matrix.owner }}
+          REPO: ${{ matrix.repo }}
+        run: |
+          git config user.name "ke-index-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add reports/
+          if git diff --cached --quiet; then
+            echo "report unchanged — no commit"
+            exit 0
+          fi
+          git commit -m "report: metrics for ${OWNER}/${REPO}"
+          for i in 1 2 3 4 5; do
+            if git push; then exit 0; fi
+            echo "push conflict (attempt $i) — fetch + rebase retry"
+            git fetch origin
+            git rebase "origin/${GITHUB_REF_NAME}" || { git rebase --abort; echo "FAIL: rebase conflict" >&2; exit 1; }
+            sleep $((i * 5))
+          done
+          echo "FAIL: push retries exhausted" >&2
+          exit 1

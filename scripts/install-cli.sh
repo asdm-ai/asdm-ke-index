@@ -12,7 +12,9 @@ set -euo pipefail
 
 : "${KE_API_KEY:?KE_API_KEY is required}"
 KE_SERVER_URL="${KE_SERVER_URL:-https://console.kengine.ai}"
-EXPECTED_VERSION="${EXPECTED_CLI_VERSION:-0.3.0}"
+# 版本锚点随生产发版联动升级（R6）：0.3.1 = 1.3.9-1019-002（tenant-slug console
+# ——import/query/count 命令契约与 0.3.0 相比零改动，仅版本 bump）
+EXPECTED_VERSION="${EXPECTED_CLI_VERSION:-0.3.1}"
 DEST="${1:-$PWD/ke-cli}"
 
 if command -v shasum >/dev/null 2>&1; then
