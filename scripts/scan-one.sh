@@ -40,14 +40,23 @@ RC=$?
 set -e
 tail -n 15 "$WORK/import.log"
 
-SUMMARY=$(tail -n 1 "$WORK/import.log")
-if ! printf '%s' "$SUMMARY" | jq -e '.ok == true and .status == "completed"' >/dev/null 2>&1; then
-  echo "FAIL: import summary 未通过（rc=${RC}）：$SUMMARY" >&2
+# summary 为美化多行 JSON（outputJSON——shared.ts 契约）：取最后一个行首 "{" 起的完整块
+SUMMARY_LINE=$(grep -n '^{$' "$WORK/import.log" | tail -n 1 | cut -d: -f1)
+if [ -z "$SUMMARY_LINE" ]; then
+  echo "FAIL: import 输出中未找到 summary JSON 块（rc=${RC}）" >&2
+  exit 1
+fi
+SUMMARY=$(tail -n +"$SUMMARY_LINE" "$WORK/import.log")
+# CLI 契约（import-cmd.ts）：ok = status ∈ {completed, skipped}——skipped 为同源
+# 同 HEAD 重扫的去重语义（月度重扫的正确行为，不视为失败）
+if ! printf '%s' "$SUMMARY" | jq -e '.ok == true and (.status == "completed" or .status == "skipped")' >/dev/null 2>&1; then
+  echo "FAIL: import summary 未通过（rc=${RC}）：$(printf '%s' "$SUMMARY" | jq -c . 2>/dev/null || echo "$SUMMARY")" >&2
   exit 1
 fi
 
 OBJECT_COUNT=$(printf '%s' "$SUMMARY" | jq -r '.objectCount')
 SNAPSHOT_ID=$(printf '%s' "$SUMMARY" | jq -r '.snapshotId')
-echo "scan-one: $OWNER/$REPO completed objectCount=$OBJECT_COUNT snapshotId=$SNAPSHOT_ID"
-# 末行回显原始 summary JSON（服务端对账锚——与 /api/snapshots objectCount 逐位对照）
-printf '%s\n' "$SUMMARY"
+STATUS=$(printf '%s' "$SUMMARY" | jq -r '.status')
+echo "scan-one: $OWNER/$REPO ${STATUS} objectCount=$OBJECT_COUNT snapshotId=$SNAPSHOT_ID"
+# 末行回显单行紧凑 summary JSON（服务端对账锚——与 /api/snapshots objectCount 逐位对照）
+printf '%s\n' "$SUMMARY" | jq -c .
