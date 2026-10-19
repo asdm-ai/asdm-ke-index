@@ -1,0 +1,62 @@
+# =============================================================================
+# KE Index 批量扫描 workflow
+# -----------------------------------------------------------------------------
+# 触发面（P2H-D3——公开仓库防注入红线：不使用 fork PR 触发类事件）：
+#   - push（paths 仅 repos.yaml——清单变更即重扫）
+#   - 手动触发面（单仓冒烟/全批首跑——Actions 页 dispatch）
+#   - schedule（月度重扫——聚合轮启用，启用前保持注释态）
+# 并发护栏：matrix 并发上限（单实例吞吐——Plan R4）
+# =============================================================================
+name: scan
+
+on:
+  push:
+    paths:
+      - "repos.yaml"
+  workflow_dispatch:
+  # schedule:
+  #   - cron: "0 2 1 * *"   # 每月 1 日 02:00 UTC（聚合轮启用）
+
+permissions:
+  contents: write
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.gen.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Generate scan matrix from repos.yaml
+        id: gen
+        run: |
+          # ruby stdlib YAML 解析（runner 预装）→ jq 过滤 skip 并整形 matrix.include
+          MATRIX=$(ruby -ryaml -rjson -e 'puts JSON.generate(YAML.load_file("repos.yaml"))' \
+            | jq -c '{include: [.repos[] | select((.skip // false) | not) | {owner: .owner, repo: .repo, branch: (.branch // "")}]}')
+          echo "matrix=$MATRIX" >> "$GITHUB_OUTPUT"
+          echo "$MATRIX"
+
+  scan:
+    needs: prepare
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 4
+      matrix: ${{ fromJson(needs.prepare.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install KE CLI
+        env:
+          KE_API_KEY: ${{ secrets.KE_API_KEY }}
+          KE_SERVER_URL: ${{ secrets.KE_SERVER_URL }}
+        run: bash scripts/install-cli.sh "$RUNNER_TEMP/ke-cli"
+
+      - name: Scan ${{ matrix.owner }}/${{ matrix.repo }}
+        env:
+          KE_API_KEY: ${{ secrets.KE_API_KEY }}
+          KE_SERVER_URL: ${{ secrets.KE_SERVER_URL }}
+          OWNER: ${{ matrix.owner }}
+          REPO: ${{ matrix.repo }}
+          BRANCH: ${{ matrix.branch }}
+          CLI_DIR: ${{ runner.temp }}/ke-cli
+        run: bash scripts/scan-one.sh

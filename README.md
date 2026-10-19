@@ -15,6 +15,24 @@ KE Index 开源基准库冷启动仓库——开源仓库扫描清单、扫描�
 | `reports/{owner}/{repo}.json` | 单仓 L1 指标报告（含分子分母与指令溯源，可复算） |
 | `census/summary.json` | 聚合分位（N<30 守门——accumulating 不出分位） |
 
+## 复现说明
+
+扫描由 GitHub Actions（`scan.yml`）自动执行；单仓扫描可本地复现：
+
+```bash
+# 1. 安装 KE CLI（manifest latest + sha256 对账 + 版本断言）
+KE_API_KEY=<member key> bash scripts/install-cli.sh /tmp/ke-cli
+
+# 2. 单仓扫描（clone --depth 1 → ke import start 三段上传直连）
+OWNER=macrozheng REPO=mall CLI_DIR=/tmp/ke-cli \
+KE_API_KEY=<member key> KE_SERVER_URL=https://console.kengine.ai \
+bash scripts/scan-one.sh
+# 步骤末行为导入 summary JSON（ok / status / objectCount）——失败 exit 1
+```
+
+- 触发：push 修改 `repos.yaml` / Actions 页手动触发；月度重扫随聚合轮启用
+- 并发护栏：`max-parallel: 4`；对账：Action 步骤末行 `objectCount` 与平台快照列表逐位对照
+
 ## 仓库索引（随扫描批次填充）
 
 | owner/repo | 快照 | Report | 状态 |
