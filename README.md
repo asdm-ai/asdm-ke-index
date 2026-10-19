@@ -14,3 +14,14 @@ KE Index 开源基准库冷启动仓库——开源仓库扫描清单、扫描�
 | `.github/workflows/scan.yml` | 批量扫描 workflow（matrix，max-parallel 4） |
 | `reports/{owner}/{repo}.json` | 单仓 L1 指标报告（含分子分母与指令溯源，可复算） |
 | `census/summary.json` | 聚合分位（N<30 守门——accumulating 不出分位） |
+
+## 仓库索引（随扫描批次填充）
+
+| owner/repo | 快照 | Report | 状态 |
+|---|---|---|---|
+| `macrozheng/mall` | 待首跑 | 待首跑 | queued |
+
+> 数据落点为 [kengine.ai](https://kengine.ai) 平台 `oss` 租户；report 产物可经 report 内
+> 指令溯源逐项复算。
+
+<!-- 徽章段占位：扫描批状态 / 已收录样本数 / census 守门状态（聚合轮填充） -->

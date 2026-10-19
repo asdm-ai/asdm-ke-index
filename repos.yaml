@@ -1,0 +1,23 @@
+# =============================================================================
+# KE Index 扫描清单（schema v1）
+# -----------------------------------------------------------------------------
+# 字段：
+#   owner          GitHub 组织/用户名（必填）
+#   repo           仓库名（必填；亦为导入 sourceId——clone 目录名）
+#   branch         分支（可选——缺省 clone 默认分支）
+#   skip           是否跳过本轮扫描（缺省 false）
+#   notes          入选理由/备注（可选）
+#   frontend-pair  前后端配对扩展位（多仓聚合轮启用——暂为注释占位，不参与解析）
+#
+# 约定：
+#   - owner 归属由本清单与 report 元数据承载（sourceId 仅取 repo 名，不含斜杠）
+#   - 修改本文件并 push 会触发批量扫描 workflow（paths 过滤仅限本文件）
+# =============================================================================
+
+repos:
+  - owner: macrozheng
+    repo: mall
+    branch: master
+    skip: false
+    notes: "Java admin/业务系统样板（SpringBoot + MyBatis）——单仓全管线冒烟目标"
+    # frontend-pair: <owner>/<repo>（前后端配对聚合用——扩展位占位）

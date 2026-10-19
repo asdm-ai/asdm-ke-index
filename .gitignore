@@ -3,4 +3,5 @@ ke-cli-*/
 *.zip
 *.sha256
 /tmp/
+node_modules/
 .DS_Store
