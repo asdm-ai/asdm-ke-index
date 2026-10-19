@@ -1,0 +1,6 @@
+# 本地工作产物（CLI 解包、clone 缓存等）
+ke-cli-*/
+*.zip
+*.sha256
+/tmp/
+.DS_Store
