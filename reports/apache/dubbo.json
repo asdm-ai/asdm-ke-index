@@ -1,0 +1,847 @@
+{
+  "schemaVersion": "draft-v1",
+  "implementation": "ke-index compute-metrics.py (transitional; to be superseded by ke checkup)",
+  "owner": "apache",
+  "repo": "dubbo",
+  "sourceId": "dubbo",
+  "snapshot": {
+    "snapshotId": "59c1b92a-9f6d-44f6-8160-5817d1148ab5",
+    "status": "complete",
+    "sourceVersion": "head",
+    "objectCount": 33898,
+    "linkCount": 107726,
+    "completedAt": "2026-10-20T00:36:41.004Z"
+  },
+  "cliVersion": "0.3.1",
+  "metrics": {
+    "B1.backend": {
+      "id": "B1.backend",
+      "name": "circular-dependency-density",
+      "label": "循环依赖密度（后端）",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": 0.500768,
+      "numerator": 326,
+      "denominator": 651,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Package --all --field id,dependsOnPackageIds --snapshot 59c1b92a-9f6d-44f6-8160-5817d1148ab5",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot 59c1b92a-9f6d-44f6-8160-5817d1148ab5"
+      ],
+      "sccCount": 17,
+      "sccs": [
+        {
+          "size": 277,
+          "members": [
+            "pkg:com.alibaba.dubbo.common",
+            "pkg:com.alibaba.dubbo.common.extension",
+            "pkg:com.alibaba.dubbo.config",
+            "pkg:com.alibaba.dubbo.remoting",
+            "pkg:com.alibaba.dubbo.remoting.exchange",
+            "pkg:com.alibaba.dubbo.rpc",
+            "pkg:com.alibaba.dubbo.rpc.cluster",
+            "pkg:com.alibaba.dubbo.rpc.protocol.dubbo",
+            "pkg:org.apache.dubbo.common",
+            "pkg:org.apache.dubbo.common.aot",
+            "pkg:org.apache.dubbo.common.beans",
+            "pkg:org.apache.dubbo.common.beans.factory",
+            "pkg:org.apache.dubbo.common.beans.model",
+            "pkg:org.apache.dubbo.common.beans.support",
+            "pkg:org.apache.dubbo.common.beanutil",
+            "pkg:org.apache.dubbo.common.bytecode",
+            "pkg:org.apache.dubbo.common.cache",
+            "pkg:org.apache.dubbo.common.compact",
+            "pkg:org.apache.dubbo.common.compiler",
+            "pkg:org.apache.dubbo.common.compiler.support",
+            "pkg:org.apache.dubbo.common.concurrent",
+            "pkg:org.apache.dubbo.common.config",
+            "pkg:org.apache.dubbo.common.config.configcenter",
+            "pkg:org.apache.dubbo.common.config.configcenter.nop",
+            "pkg:org.apache.dubbo.common.config.configcenter.wrapper",
+            "pkg:org.apache.dubbo.common.constants",
+            "pkg:org.apache.dubbo.common.context",
+            "pkg:org.apache.dubbo.common.convert",
+            "pkg:org.apache.dubbo.common.deploy",
+            "pkg:org.apache.dubbo.common.extension",
+            "pkg:org.apache.dubbo.common.extension.activate",
+            "pkg:org.apache.dubbo.common.extension.activate.impl",
+            "pkg:org.apache.dubbo.common.extension.adaptive",
+            "pkg:org.apache.dubbo.common.extension.adaptive.impl",
+            "pkg:org.apache.dubbo.common.extension.compatible",
+            "pkg:org.apache.dubbo.common.extension.compatible.impl",
+            "pkg:org.apache.dubbo.common.extension.convert",
+            "pkg:org.apache.dubbo.common.extension.director",
+            "pkg:org.apache.dubbo.common.extension.director.impl",
+            "pkg:org.apache.dubbo.common.extension.duplicated",
+            "pkg:org.apache.dubbo.common.extension.ext1",
+            "pkg:org.apache.dubbo.common.extension.ext1.impl",
+            "pkg:org.apache.dubbo.common.extension.ext10_multi_names",
+            "pkg:org.apache.dubbo.common.extension.ext11_no_adaptive",
+            "pkg:org.apache.dubbo.common.extension.ext2",
+            "pkg:org.apache.dubbo.common.extension.ext3",
+            "pkg:org.apache.dubbo.common.extension.ext4",
+            "pkg:org.apache.dubbo.common.extension.ext5",
+            "pkg:org.apache.dubbo.common.extension.ext6_inject",
+            "pkg:org.apache.dubbo.common.extension.ext6_inject.impl",
+            "pkg:org.apache.dubbo.common.extension.ext6_wrap",
+            "pkg:org.apache.dubbo.common.extension.ext6_wrap.impl",
+            "pkg:org.apache.dubbo.common.extension.ext7",
+            "pkg:org.apache.dubbo.common.extension.ext8_add",
+            "pkg:org.apache.dubbo.common.extension.ext8_add.impl",
+            "pkg:org.apache.dubbo.common.extension.ext9_empty",
+            "pkg:org.apache.dubbo.common.extension.ext9_empty.impl",
+            "pkg:org.apache.dubbo.common.extension.injection",
+            "pkg:org.apache.dubbo.common.extension.injection.impl",
+            "pkg:org.apache.dubbo.common.extension.support",
+            "pkg:org.apache.dubbo.common.extension.wrapper",
+            "pkg:org.apache.dubbo.common.extension.wrapper.impl",
+            "pkg:org.apache.dubbo.common.infra",
+            "pkg:org.apache.dubbo.common.io",
+            "pkg:org.apache.dubbo.common.json",
+            "pkg:org.apache.dubbo.common.json.impl",
+            "pkg:org.apache.dubbo.common.lang",
+            "pkg:org.apache.dubbo.common.logger",
+            "pkg:org.apache.dubbo.common.logger.jcl",
+            "pkg:org.apache.dubbo.common.logger.jdk",
+            "pkg:org.apache.dubbo.common.logger.log4j",
+            "pkg:org.apache.dubbo.common.logger.log4j2",
+            "pkg:org.apache.dubbo.common.logger.slf4j",
+            "pkg:org.apache.dubbo.common.logger.support",
+            "pkg:org.apache.dubbo.common.profiler",
+            "pkg:org.apache.dubbo.common.resource",
+            "pkg:org.apache.dubbo.common.serialization",
+            "pkg:org.apache.dubbo.common.serialize",
+            "pkg:org.apache.dubbo.common.serialize.support",
+            "pkg:org.apache.dubbo.common.ssl",
+            "pkg:org.apache.dubbo.common.ssl.impl",
+            "pkg:org.apache.dubbo.common.status",
+            "pkg:org.apache.dubbo.common.status.reporter",
+            "pkg:org.apache.dubbo.common.status.support",
+            "pkg:org.apache.dubbo.common.store",
+            "pkg:org.apache.dubbo.common.system",
+            "pkg:org.apache.dubbo.common.threadlocal",
+            "pkg:org.apache.dubbo.common.threadpool",
+            "pkg:org.apache.dubbo.common.threadpool.event",
+            "pkg:org.apache.dubbo.common.threadpool.manager",
+            "pkg:org.apache.dubbo.common.threadpool.serial",
+            "pkg:org.apache.dubbo.common.threadpool.support",
+            "pkg:org.apache.dubbo.common.timer",
+            "pkg:org.apache.dubbo.common.url.component",
+            "pkg:org.apache.dubbo.common.url.component.param",
+            "pkg:org.apache.dubbo.common.utils",
+            "pkg:org.apache.dubbo.config",
+            "pkg:org.apache.dubbo.config.annotation",
+            "pkg:org.apache.dubbo.config.api",
+            "pkg:org.apache.dubbo.config.bootstrap",
+            "pkg:org.apache.dubbo.config.bootstrap.builders",
+            "pkg:org.apache.dubbo.config.context",
+            "pkg:org.apache.dubbo.config.deploy",
+            "pkg:org.apache.dubbo.config.invoker",
+            "pkg:org.apache.dubbo.config.metadata",
+            "pkg:org.apache.dubbo.config.mock",
+            "pkg:org.apache.dubbo.config.provider.impl",
+            "pkg:org.apache.dubbo.config.utils",
+            "pkg:org.apache.dubbo.metadata",
+            "pkg:org.apache.dubbo.metadata.definition",
+            "pkg:org.apache.dubbo.metadata.definition.builder",
+            "pkg:org.apache.dubbo.metadata.definition.model",
+            "pkg:org.apache.dubbo.metadata.definition.util",
+            "pkg:org.apache.dubbo.metadata.report",
+            "pkg:org.apache.dubbo.metadata.report.identifier",
+            "pkg:org.apache.dubbo.metadata.report.support",
+            "pkg:org.apache.dubbo.metadata.util",
+            "pkg:org.apache.dubbo.metrics",
+            "pkg:org.apache.dubbo.metrics.aggregate",
+            "pkg:org.apache.dubbo.metrics.collector",
+            "pkg:org.apache.dubbo.metrics.collector.sample",
+            "pkg:org.apache.dubbo.metrics.config.collector",
+            "pkg:org.apache.dubbo.metrics.config.event",
+            "pkg:org.apache.dubbo.metrics.data",
+            "pkg:org.apache.dubbo.metrics.event",
+            "pkg:org.apache.dubbo.metrics.filter",
+            "pkg:org.apache.dubbo.metrics.listener",
+            "pkg:org.apache.dubbo.metrics.metadata",
+            "pkg:org.apache.dubbo.metrics.metadata.collector",
+            "pkg:org.apache.dubbo.metrics.metadata.event",
+            "pkg:org.apache.dubbo.metrics.model",
+            "pkg:org.apache.dubbo.metrics.model.container",
+            "pkg:org.apache.dubbo.metrics.model.key",
+            "pkg:org.apache.dubbo.metrics.model.sample",
+            "pkg:org.apache.dubbo.metrics.register",
+            "pkg:org.apache.dubbo.metrics.registry",
+            "pkg:org.apache.dubbo.metrics.registry.collector",
+            "pkg:org.apache.dubbo.metrics.registry.event",
+            "pkg:org.apache.dubbo.metrics.report",
+            "pkg:org.apache.dubbo.metrics.sample",
+            "pkg:org.apache.dubbo.metrics.service",
+            "pkg:org.apache.dubbo.metrics.utils",
+            "pkg:org.apache.dubbo.monitor",
+            "pkg:org.apache.dubbo.registry",
+            "pkg:org.apache.dubbo.registry.client",
+            "pkg:org.apache.dubbo.registry.client.event",
+            "pkg:org.apache.dubbo.registry.client.event.listener",
+            "pkg:org.apache.dubbo.registry.client.metadata",
+            "pkg:org.apache.dubbo.registry.client.metadata.store",
+            "pkg:org.apache.dubbo.registry.client.migration",
+            "pkg:org.apache.dubbo.registry.client.migration.model",
+            "pkg:org.apache.dubbo.registry.client.support",
+            "pkg:org.apache.dubbo.registry.integration",
+            "pkg:org.apache.dubbo.registry.retry",
+            "pkg:org.apache.dubbo.registry.support",
+            "pkg:org.apache.dubbo.remoting",
+            "pkg:org.apache.dubbo.remoting.api",
+            "pkg:org.apache.dubbo.remoting.api.connection",
+            "pkg:org.apache.dubbo.remoting.api.pu",
+            "pkg:org.apache.dubbo.remoting.event",
+            "pkg:org.apache.dubbo.remoting.exchange",
+            "pkg:org.apache.dubbo.remoting.exchange.codec",
+            "pkg:org.apache.dubbo.remoting.exchange.support",
+            "pkg:org.apache.dubbo.remoting.exchange.support.header",
+            "pkg:org.apache.dubbo.remoting.handler",
+            "pkg:org.apache.dubbo.remoting.http12",
+            "pkg:org.apache.dubbo.remoting.http12.command",
+            "pkg:org.apache.dubbo.remoting.http12.exception",
+            "pkg:org.apache.dubbo.remoting.http12.h1",
+            "pkg:org.apache.dubbo.remoting.http12.h2",
+            "pkg:org.apache.dubbo.remoting.http12.h2.command",
+            "pkg:org.apache.dubbo.remoting.http12.message",
+            "pkg:org.apache.dubbo.remoting.http12.message.codec",
+            "pkg:org.apache.dubbo.remoting.http12.netty4",
+            "pkg:org.apache.dubbo.remoting.http12.netty4.h1",
+            "pkg:org.apache.dubbo.remoting.http12.netty4.h2",
+            "pkg:org.apache.dubbo.remoting.http12.rest",
+            "pkg:org.apache.dubbo.remoting.http3",
+            "pkg:org.apache.dubbo.remoting.http3.netty4",
+            "pkg:org.apache.dubbo.remoting.telnet",
+            "pkg:org.apache.dubbo.remoting.telnet.codec",
+            "pkg:org.apache.dubbo.remoting.telnet.support",
+            "pkg:org.apache.dubbo.remoting.telnet.support.command",
+            "pkg:org.apache.dubbo.remoting.transport",
+            "pkg:org.apache.dubbo.remoting.transport.codec",
+            "pkg:org.apache.dubbo.remoting.transport.dispatcher",
+            "pkg:org.apache.dubbo.remoting.transport.dispatcher.all",
+            "pkg:org.apache.dubbo.remoting.transport.dispatcher.execution",
+            "pkg:org.apache.dubbo.remoting.transport.netty4",
+            "pkg:org.apache.dubbo.remoting.transport.netty4.http2",
+            "pkg:org.apache.dubbo.remoting.transport.netty4.ssl",
+            "pkg:org.apache.dubbo.remoting.utils",
+            "pkg:org.apache.dubbo.remoting.websocket",
+            "pkg:org.apache.dubbo.remoting.websocket.netty4",
+            "pkg:org.apache.dubbo.rpc",
+            "pkg:org.apache.dubbo.rpc.cluster",
+            "pkg:org.apache.dubbo.rpc.cluster.configurator",
+            "pkg:org.apache.dubbo.rpc.cluster.configurator.absent",
+            "pkg:org.apache.dubbo.rpc.cluster.configurator.override",
+            "pkg:org.apache.dubbo.rpc.cluster.configurator.parser",
+            "pkg:org.apache.dubbo.rpc.cluster.configurator.parser.model",
+            "pkg:org.apache.dubbo.rpc.cluster.directory",
+            "pkg:org.apache.dubbo.rpc.cluster.filter",
+            "pkg:org.apache.dubbo.rpc.cluster.filter.support",
+            "pkg:org.apache.dubbo.rpc.cluster.governance",
+            "pkg:org.apache.dubbo.rpc.cluster.interceptor",
+            "pkg:org.apache.dubbo.rpc.cluster.loadbalance",
+            "pkg:org.apache.dubbo.rpc.cluster.merger",
+            "pkg:org.apache.dubbo.rpc.cluster.router",
+            "pkg:org.apache.dubbo.rpc.cluster.router.condition",
+            "pkg:org.apache.dubbo.rpc.cluster.router.condition.config",
+            "pkg:org.apache.dubbo.rpc.cluster.router.condition.config.model",
+            "pkg:org.apache.dubbo.rpc.cluster.router.condition.matcher",
+            "pkg:org.apache.dubbo.rpc.cluster.router.condition.matcher.pattern",
+            "pkg:org.apache.dubbo.rpc.cluster.router.mesh.rule.virtualservice.match",
+            "pkg:org.apache.dubbo.rpc.cluster.router.mesh.util",
+            "pkg:org.apache.dubbo.rpc.cluster.router.state",
+            "pkg:org.apache.dubbo.rpc.cluster.router.tag",
+            "pkg:org.apache.dubbo.rpc.cluster.router.tag.model",
+            "pkg:org.apache.dubbo.rpc.cluster.support",
+            "pkg:org.apache.dubbo.rpc.cluster.support.registry",
+            "pkg:org.apache.dubbo.rpc.cluster.support.wrapper",
+            "pkg:org.apache.dubbo.rpc.executor",
+            "pkg:org.apache.dubbo.rpc.listener",
+            "pkg:org.apache.dubbo.rpc.model",
+            "pkg:org.apache.dubbo.rpc.protocol",
+            "pkg:org.apache.dubbo.rpc.protocol.dubbo",
+            "pkg:org.apache.dubbo.rpc.protocol.dubbo.decode",
+            "pkg:org.apache.dubbo.rpc.protocol.dubbo.filter",
+            "pkg:org.apache.dubbo.rpc.protocol.dubbo.support",
+            "pkg:org.apache.dubbo.rpc.protocol.injvm",
+            "pkg:org.apache.dubbo.rpc.protocol.tri",
+            "pkg:org.apache.dubbo.rpc.protocol.tri.call",
+            "pkg:org.apache.dubbo.rpc.protocol.tri.command",
+            "pkg:org.apache.dubbo.rpc.protocol.tri.compressor",
+            "pkg:org.apache.dubbo.rpc.protocol.tri.h12",
+            "pkg:org.apache.dubbo.rpc.protocol.tri.h12.grpc",
+            "pkg:org.apache.dubbo.rpc.protocol.tri.h12.http1",
+            "pkg:org.apache.dubbo.rpc.protocol.tri.h12.http2",
+            "pkg:org.apache.dubbo.rpc.protocol.tri.h3",
+            "pkg:org.apache.dubbo.rpc.protocol.tri.h3.negotiation",
+            "pkg:org.apache.dubbo.rpc.protocol.tri.observer",
+            "pkg:org.apache.dubbo.rpc.protocol.tri.rest",
+            "pkg:org.apache.dubbo.rpc.protocol.tri.rest.argument",
+            "pkg:org.apache.dubbo.rpc.protocol.tri.rest.cors",
+            "pkg:org.apache.dubbo.rpc.protocol.tri.rest.filter",
+            "pkg:org.apache.dubbo.rpc.protocol.tri.rest.mapping",
+            "pkg:org.apache.dubbo.rpc.protocol.tri.rest.mapping.condition",
+            "pkg:org.apache.dubbo.rpc.protocol.tri.rest.mapping.meta",
+            "pkg:org.apache.dubbo.rpc.protocol.tri.rest.util",
+            "pkg:org.apache.dubbo.rpc.protocol.tri.route",
+            "pkg:org.apache.dubbo.rpc.protocol.tri.service",
+            "pkg:org.apache.dubbo.rpc.protocol.tri.stream",
+            "pkg:org.apache.dubbo.rpc.protocol.tri.transport",
+            "pkg:org.apache.dubbo.rpc.protocol.tri.websocket",
+            "pkg:org.apache.dubbo.rpc.proxy",
+            "pkg:org.apache.dubbo.rpc.proxy.jdk",
+            "pkg:org.apache.dubbo.rpc.service",
+            "pkg:org.apache.dubbo.rpc.stub",
+            "pkg:org.apache.dubbo.rpc.support",
+            "pkg:org.apache.dubbo.service",
+            "pkg:org.apache.dubbo.test.check",
+            "pkg:org.apache.dubbo.test.check.registrycenter",
+            "pkg:org.apache.dubbo.test.check.registrycenter.config",
+            "pkg:org.apache.dubbo.test.check.registrycenter.context",
+            "pkg:org.apache.dubbo.test.check.registrycenter.initializer",
+            "pkg:org.apache.dubbo.test.check.registrycenter.processor",
+            "pkg:org.apache.dubbo.tracing",
+            "pkg:org.apache.dubbo.tracing.context",
+            "pkg:org.apache.dubbo.tracing.exporter.otlp",
+            "pkg:org.apache.dubbo.tracing.exporter.zipkin",
+            "pkg:org.apache.dubbo.tracing.handler",
+            "pkg:org.apache.dubbo.tracing.metrics",
+            "pkg:org.apache.dubbo.tracing.tracer",
+            "pkg:org.apache.dubbo.tracing.tracer.brave",
+            "pkg:org.apache.dubbo.tracing.tracer.otel",
+            "pkg:org.apache.dubbo.tracing.utils"
+          ]
+        },
+        {
+          "size": 15,
+          "members": [
+            "pkg:org.apache.dubbo.config.spring",
+            "pkg:org.apache.dubbo.config.spring.beans.factory.annotation",
+            "pkg:org.apache.dubbo.config.spring.beans.factory.config",
+            "pkg:org.apache.dubbo.config.spring.context",
+            "pkg:org.apache.dubbo.config.spring.context.annotation",
+            "pkg:org.apache.dubbo.config.spring.context.annotation.consumer",
+            "pkg:org.apache.dubbo.config.spring.context.annotation.consumer.test",
+            "pkg:org.apache.dubbo.config.spring.context.annotation.provider",
+            "pkg:org.apache.dubbo.config.spring.context.config",
+            "pkg:org.apache.dubbo.config.spring.context.event",
+            "pkg:org.apache.dubbo.config.spring.context.properties",
+            "pkg:org.apache.dubbo.config.spring.extension",
+            "pkg:org.apache.dubbo.config.spring.reference",
+            "pkg:org.apache.dubbo.config.spring.schema",
+            "pkg:org.apache.dubbo.config.spring.util"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:org.apache.dubbo.qos",
+            "pkg:org.apache.dubbo.qos.command.impl",
+            "pkg:org.apache.dubbo.qos.command.util"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:org.apache.dubbo.reactive",
+            "pkg:org.apache.dubbo.reactive.calls",
+            "pkg:org.apache.dubbo.reactive.handler"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:org.apache.dubbo.rpc.cluster.router.mesh.rule",
+            "pkg:org.apache.dubbo.rpc.cluster.router.mesh.rule.destination",
+            "pkg:org.apache.dubbo.rpc.cluster.router.mesh.rule.virtualservice"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:org.apache.dubbo.rpc.protocol.tri.rest.openapi",
+            "pkg:org.apache.dubbo.rpc.protocol.tri.rest.openapi.model",
+            "pkg:org.apache.dubbo.rpc.protocol.tri.rest.support.basic"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.dubbo.config.spring6.beans.factory.annotation",
+            "pkg:org.apache.dubbo.config.spring6.beans.factory.aot"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.dubbo.maven.plugin.protoc",
+            "pkg:org.apache.dubbo.maven.plugin.protoc.command"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.dubbo.mcp.core",
+            "pkg:org.apache.dubbo.mcp.tool"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.dubbo.metadata.annotation.processing",
+            "pkg:org.apache.dubbo.metadata.annotation.processing.util"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.dubbo.metadata.annotation.processing.model",
+            "pkg:org.apache.dubbo.metadata.tools"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.dubbo.mutiny",
+            "pkg:org.apache.dubbo.mutiny.calls"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.dubbo.registry.nacos",
+            "pkg:org.apache.dubbo.registry.nacos.util"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.dubbo.rpc.cluster.router.affinity",
+            "pkg:org.apache.dubbo.rpc.cluster.router.affinity.config"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.dubbo.rpc.filter",
+            "pkg:org.apache.dubbo.rpc.filter.tps"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.dubbo.rpc.protocol.tri.rest.support.jaxrs.compatible",
+            "pkg:org.apache.dubbo.rpc.protocol.tri.rest.support.jaxrs.compatible.rest"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.dubbo.spring.boot.autoconfigure.observability",
+            "pkg:org.apache.dubbo.spring.boot.autoconfigure.observability.annotation"
+          ]
+        }
+      ]
+    },
+    "B2": {
+      "id": "B2",
+      "name": "package-dependency-density",
+      "label": "包依赖密度",
+      "domain": "B",
+      "direction": "interval",
+      "value": 6.1398,
+      "numerator": 3997,
+      "denominator": 651,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Package --all --field id,dependsOnPackageIds --snapshot 59c1b92a-9f6d-44f6-8160-5817d1148ab5",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot 59c1b92a-9f6d-44f6-8160-5817d1148ab5"
+      ]
+    },
+    "B3": {
+      "id": "B3",
+      "name": "giant-class-ratio",
+      "label": "巨型类占比",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": 0.025197,
+      "numerator": 99,
+      "denominator": 3929,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Class --all --field id,lineCount --snapshot 59c1b92a-9f6d-44f6-8160-5817d1148ab5",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --where 'lineCount>500' --snapshot 59c1b92a-9f6d-44f6-8160-5817d1148ab5",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --snapshot 59c1b92a-9f6d-44f6-8160-5817d1148ab5"
+      ],
+      "threshold": "lineCount > 500",
+      "top": [
+        {
+          "lineCount": 3867,
+          "id": "cls:org.apache.dubbo.metadata.definition.protobuf.model.GooglePB"
+        },
+        {
+          "lineCount": 2015,
+          "id": "cls:org.apache.dubbo.metadata.definition.protobuf.model.GooglePB$PBRequestType"
+        },
+        {
+          "lineCount": 1764,
+          "id": "cls:org.apache.dubbo.common.URL"
+        },
+        {
+          "lineCount": 1721,
+          "id": "cls:org.apache.dubbo.metadata.OpenAPIRequest"
+        },
+        {
+          "lineCount": 1640,
+          "id": "cls:org.apache.dubbo.metadata.ServiceInfoV2"
+        }
+      ],
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --where 'lineCount>500' --snapshot 59c1b92a-9f6d-44f6-8160-5817d1148ab5",
+        "serverCount": 99,
+        "match": true
+      }
+    },
+    "C2": {
+      "id": "C2",
+      "name": "cyclomatic-complexity-p90",
+      "label": "圈复杂度 P90",
+      "domain": "C",
+      "direction": "lower-better",
+      "value": 3,
+      "denominator": 25419,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot 59c1b92a-9f6d-44f6-8160-5817d1148ab5",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,lineCount,complexity --snapshot 59c1b92a-9f6d-44f6-8160-5817d1148ab5"
+      ],
+      "percentiles": {
+        "p25": 1,
+        "p50": 1,
+        "p75": 2,
+        "p90": 3
+      },
+      "mean": 1.7948,
+      "max": 191,
+      "top": [
+        {
+          "cyclomaticComplexity": 191,
+          "id": "mtd:org.apache.dubbo.rpc.protocol.tri.rest.argument.GeneralTypeConverter.doConvert(:Object:Class<T>)"
+        },
+        {
+          "cyclomaticComplexity": 97,
+          "id": "mtd:org.apache.dubbo.rpc.protocol.tri.rest.mapping.condition.PathParser.parseSegments(:String)"
+        },
+        {
+          "cyclomaticComplexity": 73,
+          "id": "mtd:org.apache.dubbo.common.utils.CompatibleTypeUtils.compatibleTypeConvert(:Object:Class<?>)"
+        },
+        {
+          "cyclomaticComplexity": 62,
+          "id": "mtd:org.apache.dubbo.rpc.protocol.tri.rest.mapping.condition.PathParser.transformSegments(:List<PathSegment>:String)"
+        },
+        {
+          "cyclomaticComplexity": 57,
+          "id": "mtd:org.apache.dubbo.common.utils.PojoUtils.realize1(:Object:Class<?>:Type:Map<String, Type>:Map<Object, Object>)"
+        }
+      ],
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot 59c1b92a-9f6d-44f6-8160-5817d1148ab5",
+        "serverCount": 25419,
+        "match": true
+      }
+    },
+    "C3": {
+      "id": "C3",
+      "name": "test-method-ratio",
+      "label": "测试方法占比",
+      "domain": "C",
+      "direction": "higher-better",
+      "value": 0.136507,
+      "numerator": 3857,
+      "denominator": 28255,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'isTest=true' --snapshot 59c1b92a-9f6d-44f6-8160-5817d1148ab5",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot 59c1b92a-9f6d-44f6-8160-5817d1148ab5",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,isTest,testType --snapshot 59c1b92a-9f6d-44f6-8160-5817d1148ab5"
+      ],
+      "testTypes": {
+        "UnitTest": 3840,
+        "IntegrationTest": 17
+      },
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'isTest=true' --snapshot 59c1b92a-9f6d-44f6-8160-5817d1148ab5",
+        "serverCount": 3857,
+        "match": true
+      }
+    },
+    "C4": {
+      "id": "C4",
+      "name": "giant-method-ratio",
+      "label": "巨型方法占比",
+      "domain": "C",
+      "direction": "lower-better",
+      "value": 0.005041,
+      "numerator": 129,
+      "denominator": 25588,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount>80' --snapshot 59c1b92a-9f6d-44f6-8160-5817d1148ab5",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount=0' --snapshot 59c1b92a-9f6d-44f6-8160-5817d1148ab5",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot 59c1b92a-9f6d-44f6-8160-5817d1148ab5",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,lineCount --snapshot 59c1b92a-9f6d-44f6-8160-5817d1148ab5"
+      ],
+      "threshold": "lineCount > 80",
+      "excludedFromDenominator": {
+        "lineCountIsZero": 2667,
+        "lineCountIsNull": 0
+      },
+      "top": [
+        {
+          "lineCount": 500,
+          "id": "mtd:org.apache.dubbo.rpc.protocol.tri.rest.argument.GeneralTypeConverter.doConvert(:Object:Class<T>)"
+        },
+        {
+          "lineCount": 306,
+          "id": "mtd:org.apache.dubbo.config.ReferenceConfigTest.testAppendConfig"
+        },
+        {
+          "lineCount": 280,
+          "id": "mtd:org.apache.dubbo.common.utils.PojoUtils.realize1(:Object:Class<?>:Type:Map<String, Type>:Map<Object, Object>)"
+        },
+        {
+          "lineCount": 240,
+          "id": "mtd:org.apache.dubbo.common.bytecode.Wrapper.makeWrapper(:Class<?>)"
+        },
+        {
+          "lineCount": 191,
+          "id": "mtd:org.apache.dubbo.common.utils.CompatibleTypeUtils.compatibleTypeConvert(:Object:Class<?>)"
+        }
+      ],
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount>80' --snapshot 59c1b92a-9f6d-44f6-8160-5817d1148ab5",
+        "serverCount": 129,
+        "match": true
+      }
+    },
+    "D3": {
+      "id": "D3",
+      "name": "scale-profile",
+      "label": "规模画像",
+      "domain": "D",
+      "direction": "none",
+      "value": 33898,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" snapshot list --repo dubbo",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Repository --snapshot 59c1b92a-9f6d-44f6-8160-5817d1148ab5",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot 59c1b92a-9f6d-44f6-8160-5817d1148ab5",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --snapshot 59c1b92a-9f6d-44f6-8160-5817d1148ab5",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Interface --snapshot 59c1b92a-9f6d-44f6-8160-5817d1148ab5",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot 59c1b92a-9f6d-44f6-8160-5817d1148ab5",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Dependency --snapshot 59c1b92a-9f6d-44f6-8160-5817d1148ab5",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot 59c1b92a-9f6d-44f6-8160-5817d1148ab5",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Mapper --snapshot 59c1b92a-9f6d-44f6-8160-5817d1148ab5",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Module --snapshot 59c1b92a-9f6d-44f6-8160-5817d1148ab5",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Component --snapshot 59c1b92a-9f6d-44f6-8160-5817d1148ab5",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Function --snapshot 59c1b92a-9f6d-44f6-8160-5817d1148ab5",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Store --snapshot 59c1b92a-9f6d-44f6-8160-5817d1148ab5",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Route --snapshot 59c1b92a-9f6d-44f6-8160-5817d1148ab5",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot 59c1b92a-9f6d-44f6-8160-5817d1148ab5"
+      ],
+      "typeCounts": {
+        "Repository": 1,
+        "Package": 651,
+        "Class": 3929,
+        "Interface": 731,
+        "Method": 28255,
+        "Dependency": 331,
+        "Table": 0,
+        "Mapper": 0,
+        "Module": 0,
+        "Component": 0,
+        "Function": 0,
+        "Store": 0,
+        "Route": 0,
+        "ApiEndpoint": 0
+      },
+      "linkCount": 107726
+    }
+  },
+  "nullMetrics": {
+    "A1": {
+      "id": "A1",
+      "name": "full-chain-coverage",
+      "label": "全链路贯通率",
+      "domain": "A",
+      "direction": "higher-better",
+      "value": null,
+      "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot 59c1b92a-9f6d-44f6-8160-5817d1148ab5"
+      ],
+      "evidence": {
+        "apiEndpointCount": 0
+      }
+    },
+    "A2": {
+      "id": "A2",
+      "name": "api-backend-breakrate",
+      "label": "前后端断链率",
+      "domain": "A",
+      "direction": "lower-better",
+      "value": null,
+      "reason": "无 ApiEndpoint 对象（纯后端仓库——按口径置空）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot 59c1b92a-9f6d-44f6-8160-5817d1148ab5"
+      ],
+      "evidence": {
+        "apiEndpointCount": 0
+      }
+    },
+    "A3": {
+      "id": "A3",
+      "name": "orphan-table-rate",
+      "label": "孤儿表率",
+      "domain": "A",
+      "direction": "lower-better",
+      "value": null,
+      "reason": "无 Table 对象（分母为 0）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot 59c1b92a-9f6d-44f6-8160-5817d1148ab5"
+      ]
+    },
+    "A4": {
+      "id": "A4",
+      "name": "table-entity-mapping-rate",
+      "label": "表↔实体映射率",
+      "domain": "A",
+      "direction": "higher-better",
+      "value": null,
+      "reason": "无 Table 对象（分母为 0）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot 59c1b92a-9f6d-44f6-8160-5817d1148ab5"
+      ]
+    },
+    "B1.frontend": {
+      "id": "B1.frontend",
+      "name": "circular-dependency-density",
+      "label": "循环依赖密度（前端）",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": null,
+      "reason": "无 Module 对象（纯后端仓库——按口径置空）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Module --snapshot 59c1b92a-9f6d-44f6-8160-5817d1148ab5"
+      ],
+      "evidence": {
+        "moduleCount": 0
+      }
+    },
+    "B4": {
+      "id": "B4",
+      "name": "component-coupling-degree",
+      "label": "组件耦合度",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": null,
+      "reason": "无 Component 对象（纯后端仓库——按口径置空）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Component --snapshot 59c1b92a-9f6d-44f6-8160-5817d1148ab5"
+      ],
+      "evidence": {
+        "componentCount": 0
+      }
+    },
+    "C1": {
+      "id": "C1",
+      "name": "endpoint-table-hops",
+      "label": "端到端跳数",
+      "domain": "C",
+      "direction": "interval",
+      "value": null,
+      "reason": "无 ApiEndpoint 对象（贯通链分母为 0）",
+      "evidence": {
+        "apiEndpointCount": 0
+      }
+    },
+    "D1": {
+      "id": "D1",
+      "name": "framework-version-coverage",
+      "label": "技术栈版本覆盖率",
+      "domain": "D",
+      "direction": "higher-better",
+      "value": null,
+      "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Dependency --all --field id,name,version,scope --snapshot 59c1b92a-9f6d-44f6-8160-5817d1148ab5"
+      ],
+      "evidence": {
+        "total": 331,
+        "emptyVersion": 27,
+        "placeholder": 294,
+        "determinable": 10
+      }
+    },
+    "D2": {
+      "id": "D2",
+      "name": "dependency-homogeneity",
+      "label": "依赖同质度",
+      "domain": "D",
+      "direction": "none",
+      "value": null,
+      "reason": "cohort 级指标（依赖 cohort 众数集合——单体层不产出）",
+      "evidence": {
+        "dependencyCount": 331
+      }
+    },
+    "D4": {
+      "id": "D4",
+      "name": "evolution-trend",
+      "label": "年度演进趋势",
+      "domain": "D",
+      "direction": "none",
+      "value": null,
+      "reason": "单快照（首次导入——无时序）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" snapshot list --repo dubbo"
+      ],
+      "evidence": {
+        "completeSnapshotCount": 1
+      }
+    }
+  },
+  "dataQuality": {
+    "dq.null-complexity-ratio": {
+      "id": "dq.null-complexity-ratio",
+      "name": "null-complexity-ratio",
+      "label": "complexity 为 null 的方法占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": 0.100372,
+      "numerator": 2836,
+      "denominator": 28255,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot 59c1b92a-9f6d-44f6-8160-5817d1148ab5",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot 59c1b92a-9f6d-44f6-8160-5817d1148ab5"
+      ]
+    },
+    "dq.missing-version-ratio": {
+      "id": "dq.missing-version-ratio",
+      "name": "missing-version-ratio",
+      "label": "version 为空串的依赖占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": 0.081571,
+      "numerator": 27,
+      "denominator": 331,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Dependency --all --field id,name,version,scope --snapshot 59c1b92a-9f6d-44f6-8160-5817d1148ab5"
+      ],
+      "placeholderVersionCount": 294
+    },
+    "dq.ext-call-ratio": {
+      "id": "dq.ext-call-ratio",
+      "name": "ext-call-ratio",
+      "label": "ext: 虚拟调用过滤占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": null,
+      "reason": "不可观测（ext: 虚拟边在导入物化时已过滤——查询面天然免疫）"
+    }
+  }
+}
