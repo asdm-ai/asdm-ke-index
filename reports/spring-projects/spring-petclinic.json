@@ -1,0 +1,445 @@
+{
+  "schemaVersion": "draft-v1",
+  "implementation": "ke-index compute-metrics.py (transitional; to be superseded by ke checkup)",
+  "owner": "spring-projects",
+  "repo": "spring-petclinic",
+  "sourceId": "spring-petclinic",
+  "snapshot": {
+    "snapshotId": "38cf5bad-562e-4d0c-9d33-3fb329541faf",
+    "status": "complete",
+    "sourceVersion": "head",
+    "objectCount": 283,
+    "linkCount": 626,
+    "completedAt": "2026-10-20T00:55:14.754Z"
+  },
+  "cliVersion": "0.3.1",
+  "metrics": {
+    "A3": {
+      "id": "A3",
+      "name": "orphan-table-rate",
+      "label": "孤儿表率",
+      "domain": "A",
+      "direction": "lower-better",
+      "value": 0.142857,
+      "numerator": 1,
+      "denominator": 7,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Table --all --field id,name,matchedEntityClass --snapshot 38cf5bad-562e-4d0c-9d33-3fb329541faf",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Mapper --all --field id,namespace,mappedTableIds --snapshot 38cf5bad-562e-4d0c-9d33-3fb329541faf",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot 38cf5bad-562e-4d0c-9d33-3fb329541faf"
+      ]
+    },
+    "A4": {
+      "id": "A4",
+      "name": "table-entity-mapping-rate",
+      "label": "表↔实体映射率",
+      "domain": "A",
+      "direction": "higher-better",
+      "value": 0.857143,
+      "numerator": 6,
+      "denominator": 7,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Table --all --field id,name,matchedEntityClass --snapshot 38cf5bad-562e-4d0c-9d33-3fb329541faf",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Mapper --all --field id,namespace,mappedTableIds --snapshot 38cf5bad-562e-4d0c-9d33-3fb329541faf",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot 38cf5bad-562e-4d0c-9d33-3fb329541faf"
+      ],
+      "evidence": {
+        "mapperEdgeOnly": 0,
+        "entityClassOnly": 6,
+        "both": 0
+      }
+    },
+    "B1.backend": {
+      "id": "B1.backend",
+      "name": "circular-dependency-density",
+      "label": "循环依赖密度（后端）",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": 0.0,
+      "numerator": 0,
+      "denominator": 6,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Package --all --field id,dependsOnPackageIds --snapshot 38cf5bad-562e-4d0c-9d33-3fb329541faf",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot 38cf5bad-562e-4d0c-9d33-3fb329541faf"
+      ],
+      "sccCount": 0,
+      "sccs": []
+    },
+    "B2": {
+      "id": "B2",
+      "name": "package-dependency-density",
+      "label": "包依赖密度",
+      "domain": "B",
+      "direction": "interval",
+      "value": 1.3333,
+      "numerator": 8,
+      "denominator": 6,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Package --all --field id,dependsOnPackageIds --snapshot 38cf5bad-562e-4d0c-9d33-3fb329541faf",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot 38cf5bad-562e-4d0c-9d33-3fb329541faf"
+      ]
+    },
+    "B3": {
+      "id": "B3",
+      "name": "giant-class-ratio",
+      "label": "巨型类占比",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": 0.0,
+      "numerator": 0,
+      "denominator": 47,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Class --all --field id,lineCount --snapshot 38cf5bad-562e-4d0c-9d33-3fb329541faf",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --where 'lineCount>500' --snapshot 38cf5bad-562e-4d0c-9d33-3fb329541faf",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --snapshot 38cf5bad-562e-4d0c-9d33-3fb329541faf"
+      ],
+      "threshold": "lineCount > 500",
+      "top": [
+        {
+          "lineCount": 259,
+          "id": "cls:org.springframework.samples.petclinic.owner.OwnerControllerTests"
+        },
+        {
+          "lineCount": 244,
+          "id": "cls:org.springframework.samples.petclinic.service.ClinicServiceTests"
+        },
+        {
+          "lineCount": 224,
+          "id": "cls:org.springframework.samples.petclinic.owner.PetControllerTests"
+        },
+        {
+          "lineCount": 161,
+          "id": "cls:org.springframework.samples.petclinic.owner.PetController"
+        },
+        {
+          "lineCount": 141,
+          "id": "cls:org.springframework.samples.petclinic.owner.OwnerController"
+        }
+      ],
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --where 'lineCount>500' --snapshot 38cf5bad-562e-4d0c-9d33-3fb329541faf",
+        "serverCount": 0,
+        "match": true
+      }
+    },
+    "C2": {
+      "id": "C2",
+      "name": "cyclomatic-complexity-p90",
+      "label": "圈复杂度 P90",
+      "domain": "C",
+      "direction": "lower-better",
+      "value": 2,
+      "denominator": 184,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot 38cf5bad-562e-4d0c-9d33-3fb329541faf",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,lineCount,complexity --snapshot 38cf5bad-562e-4d0c-9d33-3fb329541faf"
+      ],
+      "percentiles": {
+        "p25": 1,
+        "p50": 1,
+        "p75": 1,
+        "p90": 2
+      },
+      "mean": 1.4402,
+      "max": 13,
+      "top": [
+        {
+          "cyclomaticComplexity": 13,
+          "id": "mtd:org.springframework.samples.petclinic.system.I18nPropertiesSyncTest.checkNonInternationalizedStrings"
+        },
+        {
+          "cyclomaticComplexity": 9,
+          "id": "mtd:org.springframework.samples.petclinic.owner.PetController.processUpdateForm(:Owner:Pet:BindingResult:RedirectAttributes)"
+        },
+        {
+          "cyclomaticComplexity": 9,
+          "id": "mtd:org.springframework.samples.petclinic.owner.PetController.processCreationForm(:Owner:Pet:BindingResult:RedirectAttributes)"
+        },
+        {
+          "cyclomaticComplexity": 7,
+          "id": "mtd:org.springframework.samples.petclinic.owner.OwnerController.processFindForm(:int:Owner:BindingResult:Model:RedirectAttributes)"
+        },
+        {
+          "cyclomaticComplexity": 6,
+          "id": "mtd:org.springframework.samples.petclinic.owner.Owner.addPet(:Pet)"
+        }
+      ],
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot 38cf5bad-562e-4d0c-9d33-3fb329541faf",
+        "serverCount": 184,
+        "match": true
+      }
+    },
+    "C3": {
+      "id": "C3",
+      "name": "test-method-ratio",
+      "label": "测试方法占比",
+      "domain": "C",
+      "direction": "higher-better",
+      "value": 0.428571,
+      "numerator": 81,
+      "denominator": 189,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'isTest=true' --snapshot 38cf5bad-562e-4d0c-9d33-3fb329541faf",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot 38cf5bad-562e-4d0c-9d33-3fb329541faf",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,isTest,testType --snapshot 38cf5bad-562e-4d0c-9d33-3fb329541faf"
+      ],
+      "testTypes": {
+        "UnitTest": 81
+      },
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'isTest=true' --snapshot 38cf5bad-562e-4d0c-9d33-3fb329541faf",
+        "serverCount": 81,
+        "match": true
+      }
+    },
+    "C4": {
+      "id": "C4",
+      "name": "giant-method-ratio",
+      "label": "巨型方法占比",
+      "domain": "C",
+      "direction": "lower-better",
+      "value": 0.005435,
+      "numerator": 1,
+      "denominator": 184,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount>80' --snapshot 38cf5bad-562e-4d0c-9d33-3fb329541faf",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount=0' --snapshot 38cf5bad-562e-4d0c-9d33-3fb329541faf",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot 38cf5bad-562e-4d0c-9d33-3fb329541faf",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,lineCount --snapshot 38cf5bad-562e-4d0c-9d33-3fb329541faf"
+      ],
+      "threshold": "lineCount > 80",
+      "excludedFromDenominator": {
+        "lineCountIsZero": 5,
+        "lineCountIsNull": 0
+      },
+      "top": [
+        {
+          "lineCount": 93,
+          "id": "mtd:org.springframework.samples.petclinic.PetClinicConcurrencyTests.testDuplicatePetNameRaceConditionIsBlocked"
+        },
+        {
+          "lineCount": 51,
+          "id": "mtd:org.springframework.samples.petclinic.system.I18nPropertiesSyncTest.checkI18nPropertyFilesAreInSync"
+        },
+        {
+          "lineCount": 46,
+          "id": "mtd:org.springframework.samples.petclinic.system.I18nPropertiesSyncTest.checkNonInternationalizedStrings"
+        },
+        {
+          "lineCount": 37,
+          "id": "mtd:org.springframework.samples.petclinic.owner.OwnerController.processFindForm(:int:Owner:BindingResult:Model:RedirectAttributes)"
+        },
+        {
+          "lineCount": 36,
+          "id": "mtd:org.springframework.samples.petclinic.owner.PetController.processUpdateForm(:Owner:Pet:BindingResult:RedirectAttributes)"
+        }
+      ],
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount>80' --snapshot 38cf5bad-562e-4d0c-9d33-3fb329541faf",
+        "serverCount": 1,
+        "match": true
+      }
+    },
+    "D3": {
+      "id": "D3",
+      "name": "scale-profile",
+      "label": "规模画像",
+      "domain": "D",
+      "direction": "none",
+      "value": 283,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" snapshot list --repo spring-petclinic",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Repository --snapshot 38cf5bad-562e-4d0c-9d33-3fb329541faf",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot 38cf5bad-562e-4d0c-9d33-3fb329541faf",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --snapshot 38cf5bad-562e-4d0c-9d33-3fb329541faf",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Interface --snapshot 38cf5bad-562e-4d0c-9d33-3fb329541faf",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot 38cf5bad-562e-4d0c-9d33-3fb329541faf",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Dependency --snapshot 38cf5bad-562e-4d0c-9d33-3fb329541faf",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot 38cf5bad-562e-4d0c-9d33-3fb329541faf",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Mapper --snapshot 38cf5bad-562e-4d0c-9d33-3fb329541faf",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Module --snapshot 38cf5bad-562e-4d0c-9d33-3fb329541faf",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Component --snapshot 38cf5bad-562e-4d0c-9d33-3fb329541faf",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Function --snapshot 38cf5bad-562e-4d0c-9d33-3fb329541faf",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Store --snapshot 38cf5bad-562e-4d0c-9d33-3fb329541faf",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Route --snapshot 38cf5bad-562e-4d0c-9d33-3fb329541faf",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot 38cf5bad-562e-4d0c-9d33-3fb329541faf"
+      ],
+      "typeCounts": {
+        "Repository": 1,
+        "Package": 6,
+        "Class": 47,
+        "Interface": 3,
+        "Method": 189,
+        "Dependency": 30,
+        "Table": 7,
+        "Mapper": 0,
+        "Module": 0,
+        "Component": 0,
+        "Function": 0,
+        "Store": 0,
+        "Route": 0,
+        "ApiEndpoint": 0
+      },
+      "linkCount": 626
+    }
+  },
+  "nullMetrics": {
+    "A1": {
+      "id": "A1",
+      "name": "full-chain-coverage",
+      "label": "全链路贯通率",
+      "domain": "A",
+      "direction": "higher-better",
+      "value": null,
+      "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot 38cf5bad-562e-4d0c-9d33-3fb329541faf"
+      ],
+      "evidence": {
+        "apiEndpointCount": 0
+      }
+    },
+    "A2": {
+      "id": "A2",
+      "name": "api-backend-breakrate",
+      "label": "前后端断链率",
+      "domain": "A",
+      "direction": "lower-better",
+      "value": null,
+      "reason": "无 ApiEndpoint 对象（纯后端仓库——按口径置空）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot 38cf5bad-562e-4d0c-9d33-3fb329541faf"
+      ],
+      "evidence": {
+        "apiEndpointCount": 0
+      }
+    },
+    "B1.frontend": {
+      "id": "B1.frontend",
+      "name": "circular-dependency-density",
+      "label": "循环依赖密度（前端）",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": null,
+      "reason": "无 Module 对象（纯后端仓库——按口径置空）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Module --snapshot 38cf5bad-562e-4d0c-9d33-3fb329541faf"
+      ],
+      "evidence": {
+        "moduleCount": 0
+      }
+    },
+    "B4": {
+      "id": "B4",
+      "name": "component-coupling-degree",
+      "label": "组件耦合度",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": null,
+      "reason": "无 Component 对象（纯后端仓库——按口径置空）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Component --snapshot 38cf5bad-562e-4d0c-9d33-3fb329541faf"
+      ],
+      "evidence": {
+        "componentCount": 0
+      }
+    },
+    "C1": {
+      "id": "C1",
+      "name": "endpoint-table-hops",
+      "label": "端到端跳数",
+      "domain": "C",
+      "direction": "interval",
+      "value": null,
+      "reason": "无 ApiEndpoint 对象（贯通链分母为 0）",
+      "evidence": {
+        "apiEndpointCount": 0
+      }
+    },
+    "D1": {
+      "id": "D1",
+      "name": "framework-version-coverage",
+      "label": "技术栈版本覆盖率",
+      "domain": "D",
+      "direction": "higher-better",
+      "value": null,
+      "reason": "无可判定版本（空串 25 / 属性占位 5 / 合计 30——分母为 0，按口径置空）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Dependency --all --field id,name,version,scope --snapshot 38cf5bad-562e-4d0c-9d33-3fb329541faf"
+      ],
+      "evidence": {
+        "total": 30,
+        "emptyVersion": 25,
+        "placeholder": 5,
+        "determinable": 0
+      }
+    },
+    "D2": {
+      "id": "D2",
+      "name": "dependency-homogeneity",
+      "label": "依赖同质度",
+      "domain": "D",
+      "direction": "none",
+      "value": null,
+      "reason": "cohort 级指标（依赖 cohort 众数集合——单体层不产出）",
+      "evidence": {
+        "dependencyCount": 30
+      }
+    },
+    "D4": {
+      "id": "D4",
+      "name": "evolution-trend",
+      "label": "年度演进趋势",
+      "domain": "D",
+      "direction": "none",
+      "value": null,
+      "reason": "单快照（首次导入——无时序）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" snapshot list --repo spring-petclinic"
+      ],
+      "evidence": {
+        "completeSnapshotCount": 1
+      }
+    }
+  },
+  "dataQuality": {
+    "dq.null-complexity-ratio": {
+      "id": "dq.null-complexity-ratio",
+      "name": "null-complexity-ratio",
+      "label": "complexity 为 null 的方法占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": 0.026455,
+      "numerator": 5,
+      "denominator": 189,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot 38cf5bad-562e-4d0c-9d33-3fb329541faf",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot 38cf5bad-562e-4d0c-9d33-3fb329541faf"
+      ]
+    },
+    "dq.missing-version-ratio": {
+      "id": "dq.missing-version-ratio",
+      "name": "missing-version-ratio",
+      "label": "version 为空串的依赖占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": 0.833333,
+      "numerator": 25,
+      "denominator": 30,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Dependency --all --field id,name,version,scope --snapshot 38cf5bad-562e-4d0c-9d33-3fb329541faf"
+      ],
+      "placeholderVersionCount": 5
+    },
+    "dq.ext-call-ratio": {
+      "id": "dq.ext-call-ratio",
+      "name": "ext-call-ratio",
+      "label": "ext: 虚拟调用过滤占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": null,
+      "reason": "不可观测（ext: 虚拟边在导入物化时已过滤——查询面天然免疫）"
+    }
+  }
+}
