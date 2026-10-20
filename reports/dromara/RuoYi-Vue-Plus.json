@@ -1,0 +1,524 @@
+{
+  "schemaVersion": "draft-v1",
+  "implementation": "ke-index compute-metrics.py (transitional; to be superseded by ke checkup)",
+  "owner": "dromara",
+  "repo": "RuoYi-Vue-Plus",
+  "sourceId": "RuoYi-Vue-Plus",
+  "snapshot": {
+    "snapshotId": "e21931f9-f790-4dda-a6c9-4e9799fda2f4",
+    "status": "complete",
+    "sourceVersion": "head",
+    "objectCount": 4632,
+    "linkCount": 21671,
+    "completedAt": "2026-10-20T00:53:43.586Z"
+  },
+  "cliVersion": "0.3.1",
+  "metrics": {
+    "A3": {
+      "id": "A3",
+      "name": "orphan-table-rate",
+      "label": "孤儿表率",
+      "domain": "A",
+      "direction": "lower-better",
+      "value": 0.882353,
+      "numerator": 60,
+      "denominator": 68,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Table --all --field id,name,matchedEntityClass --snapshot e21931f9-f790-4dda-a6c9-4e9799fda2f4",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Mapper --all --field id,namespace,mappedTableIds --snapshot e21931f9-f790-4dda-a6c9-4e9799fda2f4",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot e21931f9-f790-4dda-a6c9-4e9799fda2f4"
+      ]
+    },
+    "A4": {
+      "id": "A4",
+      "name": "table-entity-mapping-rate",
+      "label": "表↔实体映射率",
+      "domain": "A",
+      "direction": "higher-better",
+      "value": 0.117647,
+      "numerator": 8,
+      "denominator": 68,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Table --all --field id,name,matchedEntityClass --snapshot e21931f9-f790-4dda-a6c9-4e9799fda2f4",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Mapper --all --field id,namespace,mappedTableIds --snapshot e21931f9-f790-4dda-a6c9-4e9799fda2f4",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot e21931f9-f790-4dda-a6c9-4e9799fda2f4"
+      ],
+      "evidence": {
+        "mapperEdgeOnly": 0,
+        "entityClassOnly": 7,
+        "both": 1
+      }
+    },
+    "B1.backend": {
+      "id": "B1.backend",
+      "name": "circular-dependency-density",
+      "label": "循环依赖密度（后端）",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": 0.101695,
+      "numerator": 24,
+      "denominator": 236,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Package --all --field id,dependsOnPackageIds --snapshot e21931f9-f790-4dda-a6c9-4e9799fda2f4",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot e21931f9-f790-4dda-a6c9-4e9799fda2f4"
+      ],
+      "sccCount": 8,
+      "sccs": [
+        {
+          "size": 7,
+          "members": [
+            "pkg:org.dromara.common.core.factory",
+            "pkg:org.dromara.common.core.utils",
+            "pkg:org.dromara.common.core.utils.reflect",
+            "pkg:org.dromara.common.core.utils.regex",
+            "pkg:org.dromara.common.core.utils.sql",
+            "pkg:org.dromara.common.core.validate.dicts",
+            "pkg:org.dromara.common.core.xss"
+          ]
+        },
+        {
+          "size": 4,
+          "members": [
+            "pkg:org.dromara.common.encrypt.annotation",
+            "pkg:org.dromara.common.encrypt.core",
+            "pkg:org.dromara.common.encrypt.enums",
+            "pkg:org.dromara.common.encrypt.properties"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:org.dromara.system.domain.vo",
+            "pkg:org.dromara.system.listener",
+            "pkg:org.dromara.system.service"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.dromara.common.excel",
+            "pkg:org.dromara.common.excel.utils"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.dromara.common.excel.annotation",
+            "pkg:org.dromara.common.excel.core"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.dromara.common.mybatis.enums",
+            "pkg:org.dromara.common.mybatis.helper"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.dromara.common.push.annotation",
+            "pkg:org.dromara.common.push.condition"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.dromara.common.translation.annotation",
+            "pkg:org.dromara.common.translation.core"
+          ]
+        }
+      ]
+    },
+    "B2": {
+      "id": "B2",
+      "name": "package-dependency-density",
+      "label": "包依赖密度",
+      "domain": "B",
+      "direction": "interval",
+      "value": 3.572,
+      "numerator": 843,
+      "denominator": 236,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Package --all --field id,dependsOnPackageIds --snapshot e21931f9-f790-4dda-a6c9-4e9799fda2f4",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot e21931f9-f790-4dda-a6c9-4e9799fda2f4"
+      ]
+    },
+    "B3": {
+      "id": "B3",
+      "name": "giant-class-ratio",
+      "label": "巨型类占比",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": 0.019757,
+      "numerator": 13,
+      "denominator": 658,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Class --all --field id,lineCount --snapshot e21931f9-f790-4dda-a6c9-4e9799fda2f4",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --where 'lineCount>500' --snapshot e21931f9-f790-4dda-a6c9-4e9799fda2f4",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --snapshot e21931f9-f790-4dda-a6c9-4e9799fda2f4"
+      ],
+      "threshold": "lineCount > 500",
+      "top": [
+        {
+          "lineCount": 1375,
+          "id": "cls:org.dromara.common.mybatis.core.query.LambdaQueryBuilder"
+        },
+        {
+          "lineCount": 1189,
+          "id": "cls:org.dromara.common.oss.client.AbstractOssClientImpl"
+        },
+        {
+          "lineCount": 1064,
+          "id": "cls:org.dromara.common.excel.utils.ExcelBuilder"
+        },
+        {
+          "lineCount": 963,
+          "id": "cls:org.dromara.common.mybatis.core.query.LambdaJoinQueryBuilder"
+        },
+        {
+          "lineCount": 872,
+          "id": "cls:org.dromara.common.mybatis.core.mapper.LambdaCrudChainWrapper"
+        }
+      ],
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --where 'lineCount>500' --snapshot e21931f9-f790-4dda-a6c9-4e9799fda2f4",
+        "serverCount": 13,
+        "match": true
+      }
+    },
+    "C2": {
+      "id": "C2",
+      "name": "cyclomatic-complexity-p90",
+      "label": "圈复杂度 P90",
+      "domain": "C",
+      "direction": "lower-better",
+      "value": 3,
+      "denominator": 2834,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot e21931f9-f790-4dda-a6c9-4e9799fda2f4",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,lineCount,complexity --snapshot e21931f9-f790-4dda-a6c9-4e9799fda2f4"
+      ],
+      "percentiles": {
+        "p25": 1,
+        "p50": 1,
+        "p75": 2,
+        "p90": 3
+      },
+      "mean": 1.7378,
+      "max": 30,
+      "top": [
+        {
+          "cyclomaticComplexity": 30,
+          "id": "mtd:org.dromara.gen.util.TemplateEngineUtils.setColumnFeatureContext(:Dict:GenTable:String)"
+        },
+        {
+          "cyclomaticComplexity": 26,
+          "id": "mtd:org.dromara.gen.util.GenUtils.initColumnField(:GenTableColumn:GenTable)"
+        },
+        {
+          "cyclomaticComplexity": 22,
+          "id": "mtd:org.dromara.workflow.service.impl.FlwNodeExtServiceImpl.spelSmartSplit(:String)"
+        },
+        {
+          "cyclomaticComplexity": 17,
+          "id": "mtd:org.dromara.workflow.listener.WorkflowGlobalListener.finish(:ListenerVariable)"
+        },
+        {
+          "cyclomaticComplexity": 15,
+          "id": "mtd:org.dromara.common.redis.aspectj.RepeatSubmitAspect.isFilterObject(:Object)"
+        }
+      ],
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot e21931f9-f790-4dda-a6c9-4e9799fda2f4",
+        "serverCount": 2834,
+        "match": true
+      }
+    },
+    "C3": {
+      "id": "C3",
+      "name": "test-method-ratio",
+      "label": "测试方法占比",
+      "domain": "C",
+      "direction": "higher-better",
+      "value": 0.068015,
+      "numerator": 232,
+      "denominator": 3411,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'isTest=true' --snapshot e21931f9-f790-4dda-a6c9-4e9799fda2f4",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot e21931f9-f790-4dda-a6c9-4e9799fda2f4",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,isTest,testType --snapshot e21931f9-f790-4dda-a6c9-4e9799fda2f4"
+      ],
+      "testTypes": {
+        "UnitTest": 232
+      },
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'isTest=true' --snapshot e21931f9-f790-4dda-a6c9-4e9799fda2f4",
+        "serverCount": 232,
+        "match": true
+      }
+    },
+    "C4": {
+      "id": "C4",
+      "name": "giant-method-ratio",
+      "label": "巨型方法占比",
+      "domain": "C",
+      "direction": "lower-better",
+      "value": 0.001058,
+      "numerator": 3,
+      "denominator": 2836,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount>80' --snapshot e21931f9-f790-4dda-a6c9-4e9799fda2f4",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount=0' --snapshot e21931f9-f790-4dda-a6c9-4e9799fda2f4",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot e21931f9-f790-4dda-a6c9-4e9799fda2f4",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,lineCount --snapshot e21931f9-f790-4dda-a6c9-4e9799fda2f4"
+      ],
+      "threshold": "lineCount > 80",
+      "excludedFromDenominator": {
+        "lineCountIsZero": 575,
+        "lineCountIsNull": 0
+      },
+      "top": [
+        {
+          "lineCount": 122,
+          "id": "mtd:org.dromara.common.excel.core.ExcelDownHandler.dropDownLinkedOptions(:DataValidationHelper:Workbook:Sheet:DropDownOptions)"
+        },
+        {
+          "lineCount": 91,
+          "id": "mtd:org.dromara.gen.util.GenUtils.initColumnField(:GenTableColumn:GenTable)"
+        },
+        {
+          "lineCount": 81,
+          "id": "mtd:org.dromara.workflow.listener.WorkflowGlobalListener.finish(:ListenerVariable)"
+        },
+        {
+          "lineCount": 80,
+          "id": "mtd:org.dromara.common.excel.core.ExcelDownHandler.afterSheetCreate(:WriteWorkbookHolder:WriteSheetHolder)"
+        },
+        {
+          "lineCount": 77,
+          "id": "mtd:org.dromara.demo.service.impl.ExportExcelServiceImpl.exportWithOptions(:HttpServletResponse)"
+        }
+      ],
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount>80' --snapshot e21931f9-f790-4dda-a6c9-4e9799fda2f4",
+        "serverCount": 3,
+        "match": true
+      }
+    },
+    "D3": {
+      "id": "D3",
+      "name": "scale-profile",
+      "label": "规模画像",
+      "domain": "D",
+      "direction": "none",
+      "value": 4632,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" snapshot list --repo RuoYi-Vue-Plus",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Repository --snapshot e21931f9-f790-4dda-a6c9-4e9799fda2f4",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot e21931f9-f790-4dda-a6c9-4e9799fda2f4",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --snapshot e21931f9-f790-4dda-a6c9-4e9799fda2f4",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Interface --snapshot e21931f9-f790-4dda-a6c9-4e9799fda2f4",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot e21931f9-f790-4dda-a6c9-4e9799fda2f4",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Dependency --snapshot e21931f9-f790-4dda-a6c9-4e9799fda2f4",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot e21931f9-f790-4dda-a6c9-4e9799fda2f4",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Mapper --snapshot e21931f9-f790-4dda-a6c9-4e9799fda2f4",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Module --snapshot e21931f9-f790-4dda-a6c9-4e9799fda2f4",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Component --snapshot e21931f9-f790-4dda-a6c9-4e9799fda2f4",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Function --snapshot e21931f9-f790-4dda-a6c9-4e9799fda2f4",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Store --snapshot e21931f9-f790-4dda-a6c9-4e9799fda2f4",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Route --snapshot e21931f9-f790-4dda-a6c9-4e9799fda2f4",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot e21931f9-f790-4dda-a6c9-4e9799fda2f4"
+      ],
+      "typeCounts": {
+        "Repository": 1,
+        "Package": 236,
+        "Class": 658,
+        "Interface": 134,
+        "Method": 3411,
+        "Dependency": 123,
+        "Table": 68,
+        "Mapper": 1,
+        "Module": 0,
+        "Component": 0,
+        "Function": 0,
+        "Store": 0,
+        "Route": 0,
+        "ApiEndpoint": 0
+      },
+      "linkCount": 21671
+    }
+  },
+  "nullMetrics": {
+    "A1": {
+      "id": "A1",
+      "name": "full-chain-coverage",
+      "label": "全链路贯通率",
+      "domain": "A",
+      "direction": "higher-better",
+      "value": null,
+      "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot e21931f9-f790-4dda-a6c9-4e9799fda2f4"
+      ],
+      "evidence": {
+        "apiEndpointCount": 0
+      }
+    },
+    "A2": {
+      "id": "A2",
+      "name": "api-backend-breakrate",
+      "label": "前后端断链率",
+      "domain": "A",
+      "direction": "lower-better",
+      "value": null,
+      "reason": "无 ApiEndpoint 对象（纯后端仓库——按口径置空）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot e21931f9-f790-4dda-a6c9-4e9799fda2f4"
+      ],
+      "evidence": {
+        "apiEndpointCount": 0
+      }
+    },
+    "B1.frontend": {
+      "id": "B1.frontend",
+      "name": "circular-dependency-density",
+      "label": "循环依赖密度（前端）",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": null,
+      "reason": "无 Module 对象（纯后端仓库——按口径置空）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Module --snapshot e21931f9-f790-4dda-a6c9-4e9799fda2f4"
+      ],
+      "evidence": {
+        "moduleCount": 0
+      }
+    },
+    "B4": {
+      "id": "B4",
+      "name": "component-coupling-degree",
+      "label": "组件耦合度",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": null,
+      "reason": "无 Component 对象（纯后端仓库——按口径置空）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Component --snapshot e21931f9-f790-4dda-a6c9-4e9799fda2f4"
+      ],
+      "evidence": {
+        "componentCount": 0
+      }
+    },
+    "C1": {
+      "id": "C1",
+      "name": "endpoint-table-hops",
+      "label": "端到端跳数",
+      "domain": "C",
+      "direction": "interval",
+      "value": null,
+      "reason": "无 ApiEndpoint 对象（贯通链分母为 0）",
+      "evidence": {
+        "apiEndpointCount": 0
+      }
+    },
+    "D1": {
+      "id": "D1",
+      "name": "framework-version-coverage",
+      "label": "技术栈版本覆盖率",
+      "domain": "D",
+      "direction": "higher-better",
+      "value": null,
+      "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Dependency --all --field id,name,version,scope --snapshot e21931f9-f790-4dda-a6c9-4e9799fda2f4"
+      ],
+      "evidence": {
+        "total": 123,
+        "emptyVersion": 39,
+        "placeholder": 82,
+        "determinable": 2
+      }
+    },
+    "D2": {
+      "id": "D2",
+      "name": "dependency-homogeneity",
+      "label": "依赖同质度",
+      "domain": "D",
+      "direction": "none",
+      "value": null,
+      "reason": "cohort 级指标（依赖 cohort 众数集合——单体层不产出）",
+      "evidence": {
+        "dependencyCount": 123
+      }
+    },
+    "D4": {
+      "id": "D4",
+      "name": "evolution-trend",
+      "label": "年度演进趋势",
+      "domain": "D",
+      "direction": "none",
+      "value": null,
+      "reason": "单快照（首次导入——无时序）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" snapshot list --repo RuoYi-Vue-Plus"
+      ],
+      "evidence": {
+        "completeSnapshotCount": 1
+      }
+    }
+  },
+  "dataQuality": {
+    "dq.null-complexity-ratio": {
+      "id": "dq.null-complexity-ratio",
+      "name": "null-complexity-ratio",
+      "label": "complexity 为 null 的方法占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": 0.169159,
+      "numerator": 577,
+      "denominator": 3411,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot e21931f9-f790-4dda-a6c9-4e9799fda2f4",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot e21931f9-f790-4dda-a6c9-4e9799fda2f4"
+      ]
+    },
+    "dq.missing-version-ratio": {
+      "id": "dq.missing-version-ratio",
+      "name": "missing-version-ratio",
+      "label": "version 为空串的依赖占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": 0.317073,
+      "numerator": 39,
+      "denominator": 123,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Dependency --all --field id,name,version,scope --snapshot e21931f9-f790-4dda-a6c9-4e9799fda2f4"
+      ],
+      "placeholderVersionCount": 82
+    },
+    "dq.mapper-join-miss-ratio": {
+      "id": "dq.mapper-join-miss-ratio",
+      "name": "mapper-join-miss-ratio",
+      "label": "Mapper namespace 与接口 FQN join 未命中占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": 0.0,
+      "numerator": 0,
+      "denominator": 1,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Mapper --all --field id,namespace --snapshot e21931f9-f790-4dda-a6c9-4e9799fda2f4",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Interface --all --field id --snapshot e21931f9-f790-4dda-a6c9-4e9799fda2f4"
+      ]
+    },
+    "dq.ext-call-ratio": {
+      "id": "dq.ext-call-ratio",
+      "name": "ext-call-ratio",
+      "label": "ext: 虚拟调用过滤占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": null,
+      "reason": "不可观测（ext: 虚拟边在导入物化时已过滤——查询面天然免疫）"
+    }
+  }
+}
