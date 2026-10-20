@@ -1,0 +1,455 @@
+{
+  "schemaVersion": "draft-v1",
+  "implementation": "ke-index compute-metrics.py (transitional; to be superseded by ke checkup)",
+  "owner": "lenve",
+  "repo": "vhr",
+  "sourceId": "vhr",
+  "snapshot": {
+    "snapshotId": "e290ac2b-b118-4e7d-88ca-01dcba0087c8",
+    "status": "complete",
+    "sourceVersion": "head",
+    "objectCount": 966,
+    "linkCount": 1391,
+    "completedAt": "2026-10-20T00:29:09.829Z"
+  },
+  "cliVersion": "0.3.1",
+  "metrics": {
+    "A2": {
+      "id": "A2",
+      "name": "api-backend-breakrate",
+      "label": "前后端断链率",
+      "domain": "A",
+      "direction": "lower-better",
+      "value": 0.0,
+      "numerator": 0,
+      "denominator": 1,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query ApiEndpoint --all --field id,backendMethodId,matchedVia --snapshot e290ac2b-b118-4e7d-88ca-01dcba0087c8",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot e290ac2b-b118-4e7d-88ca-01dcba0087c8"
+      ]
+    },
+    "A3": {
+      "id": "A3",
+      "name": "orphan-table-rate",
+      "label": "孤儿表率",
+      "domain": "A",
+      "direction": "lower-better",
+      "value": 0.045455,
+      "numerator": 1,
+      "denominator": 22,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Table --all --field id,name,matchedEntityClass --snapshot e290ac2b-b118-4e7d-88ca-01dcba0087c8",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Mapper --all --field id,namespace,mappedTableIds --snapshot e290ac2b-b118-4e7d-88ca-01dcba0087c8",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot e290ac2b-b118-4e7d-88ca-01dcba0087c8"
+      ]
+    },
+    "A4": {
+      "id": "A4",
+      "name": "table-entity-mapping-rate",
+      "label": "表↔实体映射率",
+      "domain": "A",
+      "direction": "higher-better",
+      "value": 0.954545,
+      "numerator": 21,
+      "denominator": 22,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Table --all --field id,name,matchedEntityClass --snapshot e290ac2b-b118-4e7d-88ca-01dcba0087c8",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Mapper --all --field id,namespace,mappedTableIds --snapshot e290ac2b-b118-4e7d-88ca-01dcba0087c8",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot e290ac2b-b118-4e7d-88ca-01dcba0087c8"
+      ],
+      "evidence": {
+        "mapperEdgeOnly": 0,
+        "entityClassOnly": 6,
+        "both": 15
+      }
+    },
+    "B1.backend": {
+      "id": "B1.backend",
+      "name": "circular-dependency-density",
+      "label": "循环依赖密度（后端）",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": 0.0,
+      "numerator": 0,
+      "denominator": 17,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Package --all --field id,dependsOnPackageIds --snapshot e290ac2b-b118-4e7d-88ca-01dcba0087c8",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot e290ac2b-b118-4e7d-88ca-01dcba0087c8"
+      ],
+      "sccCount": 0,
+      "sccs": []
+    },
+    "B2": {
+      "id": "B2",
+      "name": "package-dependency-density",
+      "label": "包依赖密度",
+      "domain": "B",
+      "direction": "interval",
+      "value": 1.5294,
+      "numerator": 26,
+      "denominator": 17,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Package --all --field id,dependsOnPackageIds --snapshot e290ac2b-b118-4e7d-88ca-01dcba0087c8",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot e290ac2b-b118-4e7d-88ca-01dcba0087c8"
+      ]
+    },
+    "B1.frontend": {
+      "id": "B1.frontend",
+      "name": "circular-dependency-density",
+      "label": "循环依赖密度（前端）",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": 0.0,
+      "numerator": 0,
+      "denominator": 56,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Module --all --field id,importedModuleIds --snapshot e290ac2b-b118-4e7d-88ca-01dcba0087c8",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Module --snapshot e290ac2b-b118-4e7d-88ca-01dcba0087c8"
+      ],
+      "sccCount": 0
+    },
+    "B3": {
+      "id": "B3",
+      "name": "giant-class-ratio",
+      "label": "巨型类占比",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": 0.0,
+      "numerator": 0,
+      "denominator": 69,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Class --all --field id,lineCount --snapshot e290ac2b-b118-4e7d-88ca-01dcba0087c8",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --where 'lineCount>500' --snapshot e290ac2b-b118-4e7d-88ca-01dcba0087c8",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --snapshot e290ac2b-b118-4e7d-88ca-01dcba0087c8"
+      ],
+      "threshold": "lineCount > 500",
+      "top": [
+        {
+          "lineCount": 379,
+          "id": "cls:org.javaboy.vhr.model.Employee"
+        },
+        {
+          "lineCount": 329,
+          "id": "cls:org.javaboy.vhr.utils.POIUtils"
+        },
+        {
+          "lineCount": 149,
+          "id": "cls:org.javaboy.vhr.model.Hr"
+        },
+        {
+          "lineCount": 142,
+          "id": "cls:org.javaboy.vhr.model.Salary"
+        },
+        {
+          "lineCount": 122,
+          "id": "cls:org.javaboy.vhr.config.SecurityConfig"
+        }
+      ],
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --where 'lineCount>500' --snapshot e290ac2b-b118-4e7d-88ca-01dcba0087c8",
+        "serverCount": 0,
+        "match": true
+      }
+    },
+    "B4": {
+      "id": "B4",
+      "name": "component-coupling-degree",
+      "label": "组件耦合度",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": 0.1429,
+      "numerator": 5,
+      "denominator": 35,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Component --all --field id,referencedComponentIds,isGlobal --snapshot e290ac2b-b118-4e7d-88ca-01dcba0087c8",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Component --snapshot e290ac2b-b118-4e7d-88ca-01dcba0087c8"
+      ],
+      "globalRegistrationRatio": 0.0
+    },
+    "C2": {
+      "id": "C2",
+      "name": "cyclomatic-complexity-p90",
+      "label": "圈复杂度 P90",
+      "domain": "C",
+      "direction": "lower-better",
+      "value": 2,
+      "denominator": 504,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot e290ac2b-b118-4e7d-88ca-01dcba0087c8",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,lineCount,complexity --snapshot e290ac2b-b118-4e7d-88ca-01dcba0087c8"
+      ],
+      "percentiles": {
+        "p25": 1,
+        "p50": 1,
+        "p75": 1,
+        "p90": 2
+      },
+      "mean": 1.3016,
+      "max": 59,
+      "top": [
+        {
+          "cyclomaticComplexity": 59,
+          "id": "mtd:org.javaboy.vhr.utils.POIUtils.excel2Employee(:MultipartFile:List<Nation>:List<Politicsstatus>:List<Department>:List<Position>:List<JobLevel>)"
+        },
+        {
+          "cyclomaticComplexity": 7,
+          "id": "mtd:org.javaboy.vhr.config.LoginFilter.attemptAuthentication(:HttpServletRequest:HttpServletResponse)"
+        },
+        {
+          "cyclomaticComplexity": 6,
+          "id": "mtd:org.javaboy.vhr.config.SecurityConfig.loginFilter"
+        },
+        {
+          "cyclomaticComplexity": 5,
+          "id": "mtd:org.javaboy.vhr.config.LoginFilter.checkCode(:HttpServletResponse:String:String)"
+        },
+        {
+          "cyclomaticComplexity": 4,
+          "id": "mtd:org.javaboy.vhr.model.JobLevel.equals(:Object)"
+        }
+      ],
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot e290ac2b-b118-4e7d-88ca-01dcba0087c8",
+        "serverCount": 504,
+        "match": true
+      }
+    },
+    "C3": {
+      "id": "C3",
+      "name": "test-method-ratio",
+      "label": "测试方法占比",
+      "domain": "C",
+      "direction": "higher-better",
+      "value": 0.002999,
+      "numerator": 2,
+      "denominator": 667,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'isTest=true' --snapshot e290ac2b-b118-4e7d-88ca-01dcba0087c8",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot e290ac2b-b118-4e7d-88ca-01dcba0087c8",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,isTest,testType --snapshot e290ac2b-b118-4e7d-88ca-01dcba0087c8"
+      ],
+      "testTypes": {
+        "UnitTest": 2
+      },
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'isTest=true' --snapshot e290ac2b-b118-4e7d-88ca-01dcba0087c8",
+        "serverCount": 2,
+        "match": true
+      }
+    },
+    "C4": {
+      "id": "C4",
+      "name": "giant-method-ratio",
+      "label": "巨型方法占比",
+      "domain": "C",
+      "direction": "lower-better",
+      "value": 0.003968,
+      "numerator": 2,
+      "denominator": 504,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount>80' --snapshot e290ac2b-b118-4e7d-88ca-01dcba0087c8",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount=0' --snapshot e290ac2b-b118-4e7d-88ca-01dcba0087c8",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot e290ac2b-b118-4e7d-88ca-01dcba0087c8",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,lineCount --snapshot e290ac2b-b118-4e7d-88ca-01dcba0087c8"
+      ],
+      "threshold": "lineCount > 80",
+      "excludedFromDenominator": {
+        "lineCountIsZero": 163,
+        "lineCountIsNull": 0
+      },
+      "top": [
+        {
+          "lineCount": 184,
+          "id": "mtd:org.javaboy.vhr.utils.POIUtils.employee2Excel(:List<Employee>)"
+        },
+        {
+          "lineCount": 130,
+          "id": "mtd:org.javaboy.vhr.utils.POIUtils.excel2Employee(:MultipartFile:List<Nation>:List<Politicsstatus>:List<Department>:List<Position>:List<JobLevel>)"
+        },
+        {
+          "lineCount": 49,
+          "id": "mtd:org.javaboy.vhr.config.SecurityConfig.configure(:HttpSecurity)"
+        },
+        {
+          "lineCount": 42,
+          "id": "mtd:org.javaboy.vhr.config.SecurityConfig.loginFilter"
+        },
+        {
+          "lineCount": 38,
+          "id": "mtd:org.javaboy.vhr.model.Employee.toString"
+        }
+      ],
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount>80' --snapshot e290ac2b-b118-4e7d-88ca-01dcba0087c8",
+        "serverCount": 2,
+        "match": true
+      }
+    },
+    "D3": {
+      "id": "D3",
+      "name": "scale-profile",
+      "label": "规模画像",
+      "domain": "D",
+      "direction": "none",
+      "value": 966,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" snapshot list --repo vhr",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Repository --snapshot e290ac2b-b118-4e7d-88ca-01dcba0087c8",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot e290ac2b-b118-4e7d-88ca-01dcba0087c8",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --snapshot e290ac2b-b118-4e7d-88ca-01dcba0087c8",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Interface --snapshot e290ac2b-b118-4e7d-88ca-01dcba0087c8",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot e290ac2b-b118-4e7d-88ca-01dcba0087c8",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Dependency --snapshot e290ac2b-b118-4e7d-88ca-01dcba0087c8",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot e290ac2b-b118-4e7d-88ca-01dcba0087c8",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Mapper --snapshot e290ac2b-b118-4e7d-88ca-01dcba0087c8",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Module --snapshot e290ac2b-b118-4e7d-88ca-01dcba0087c8",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Component --snapshot e290ac2b-b118-4e7d-88ca-01dcba0087c8",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Function --snapshot e290ac2b-b118-4e7d-88ca-01dcba0087c8",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Store --snapshot e290ac2b-b118-4e7d-88ca-01dcba0087c8",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Route --snapshot e290ac2b-b118-4e7d-88ca-01dcba0087c8",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot e290ac2b-b118-4e7d-88ca-01dcba0087c8"
+      ],
+      "typeCounts": {
+        "Repository": 1,
+        "Package": 17,
+        "Class": 69,
+        "Interface": 22,
+        "Method": 667,
+        "Dependency": 20,
+        "Table": 22,
+        "Mapper": 21,
+        "Module": 56,
+        "Component": 35,
+        "Function": 34,
+        "Store": 1,
+        "Route": 0,
+        "ApiEndpoint": 1
+      },
+      "linkCount": 1391
+    }
+  },
+  "nullMetrics": {
+    "A1": {
+      "id": "A1",
+      "name": "full-chain-coverage",
+      "label": "全链路贯通率",
+      "domain": "A",
+      "direction": "higher-better",
+      "value": null,
+      "reason": "calls 传递闭包与 Method→Mapper 名字 join 未实现（过渡实现——待 ke checkup）",
+      "evidence": {
+        "apiEndpointCount": 1
+      }
+    },
+    "C1": {
+      "id": "C1",
+      "name": "endpoint-table-hops",
+      "label": "端到端跳数",
+      "domain": "C",
+      "direction": "interval",
+      "value": null,
+      "reason": "依赖 A1 贯通链算法（过渡实现未含——待 ke checkup）",
+      "evidence": {
+        "apiEndpointCount": 1
+      }
+    },
+    "D1": {
+      "id": "D1",
+      "name": "framework-version-coverage",
+      "label": "技术栈版本覆盖率",
+      "domain": "D",
+      "direction": "higher-better",
+      "value": null,
+      "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Dependency --all --field id,name,version,scope --snapshot e290ac2b-b118-4e7d-88ca-01dcba0087c8"
+      ],
+      "evidence": {
+        "total": 20,
+        "emptyVersion": 13,
+        "placeholder": 0,
+        "determinable": 7
+      }
+    },
+    "D2": {
+      "id": "D2",
+      "name": "dependency-homogeneity",
+      "label": "依赖同质度",
+      "domain": "D",
+      "direction": "none",
+      "value": null,
+      "reason": "cohort 级指标（依赖 cohort 众数集合——单体层不产出）",
+      "evidence": {
+        "dependencyCount": 20
+      }
+    },
+    "D4": {
+      "id": "D4",
+      "name": "evolution-trend",
+      "label": "年度演进趋势",
+      "domain": "D",
+      "direction": "none",
+      "value": null,
+      "reason": "单快照（首次导入——无时序）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" snapshot list --repo vhr"
+      ],
+      "evidence": {
+        "completeSnapshotCount": 1
+      }
+    }
+  },
+  "dataQuality": {
+    "dq.null-complexity-ratio": {
+      "id": "dq.null-complexity-ratio",
+      "name": "null-complexity-ratio",
+      "label": "complexity 为 null 的方法占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": 0.244378,
+      "numerator": 163,
+      "denominator": 667,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot e290ac2b-b118-4e7d-88ca-01dcba0087c8",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot e290ac2b-b118-4e7d-88ca-01dcba0087c8"
+      ]
+    },
+    "dq.missing-version-ratio": {
+      "id": "dq.missing-version-ratio",
+      "name": "missing-version-ratio",
+      "label": "version 为空串的依赖占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": 0.65,
+      "numerator": 13,
+      "denominator": 20,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Dependency --all --field id,name,version,scope --snapshot e290ac2b-b118-4e7d-88ca-01dcba0087c8"
+      ],
+      "placeholderVersionCount": 0
+    },
+    "dq.mapper-join-miss-ratio": {
+      "id": "dq.mapper-join-miss-ratio",
+      "name": "mapper-join-miss-ratio",
+      "label": "Mapper namespace 与接口 FQN join 未命中占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": 0.0,
+      "numerator": 0,
+      "denominator": 21,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Mapper --all --field id,namespace --snapshot e290ac2b-b118-4e7d-88ca-01dcba0087c8",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Interface --all --field id --snapshot e290ac2b-b118-4e7d-88ca-01dcba0087c8"
+      ]
+    },
+    "dq.ext-call-ratio": {
+      "id": "dq.ext-call-ratio",
+      "name": "ext-call-ratio",
+      "label": "ext: 虚拟调用过滤占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": null,
+      "reason": "不可观测（ext: 虚拟边在导入物化时已过滤——查询面天然免疫）"
+    }
+  }
+}
