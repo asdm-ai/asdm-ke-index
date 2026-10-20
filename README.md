@@ -37,18 +37,28 @@ bash scripts/scan-one.sh
 
 | owner/repo | 分层 | Report | 快照 | 状态 |
 |---|---|---|---|---|
-| [macrozheng/mall](https://github.com/macrozheng/mall) | A·业务系统 | [report](reports/macrozheng/mall.json) | 待首跑回填 | queued |
-| [macrozheng/mall-swarm](https://github.com/macrozheng/mall-swarm) | A·业务系统 | [report](reports/macrozheng/mall-swarm.json) | 待首跑回填 | queued |
-| [yangzongzhuan/RuoYi-Vue](https://github.com/yangzongzhuan/RuoYi-Vue) | A·admin 脚手架 | [report](reports/yangzongzhuan/RuoYi-Vue.json) | 待首跑回填 | queued |
-| [dromara/RuoYi-Vue-Plus](https://github.com/dromara/RuoYi-Vue-Plus) | A·admin 脚手架 | [report](reports/dromara/RuoYi-Vue-Plus.json) | 待首跑回填 | queued |
-| [jeecgboot/JeecgBoot](https://github.com/jeecgboot/JeecgBoot) | A·低代码平台 | [report](reports/jeecgboot/JeecgBoot.json) | 待首跑回填 | queued |
-| [lenve/vhr](https://github.com/lenve/vhr) | A·业务系统 | [report](reports/lenve/vhr.json) | 待首跑回填 | queued |
-| [apache/dubbo](https://github.com/apache/dubbo) | B·大型 | [report](reports/apache/dubbo.json) | 待首跑回填 | queued |
-| [apache/fineract](https://github.com/apache/fineract) | B·大型 | [report](reports/apache/fineract.json) | 待首跑回填 | queued |
-| [spring-projects/spring-petclinic](https://github.com/spring-projects/spring-petclinic) | C·JPA | [report](reports/spring-projects/spring-petclinic.json) | 待首跑回填 | queued |
-| [elunez/eladmin](https://github.com/elunez/eladmin) | C·JPA | [report](reports/elunez/eladmin.json) | 待首跑回填 | queued |
+| [macrozheng/mall](https://github.com/macrozheng/mall) | A·业务系统 | [report](reports/macrozheng/mall.json) | `756e24db` | ✅ 14527 对象 |
+| [macrozheng/mall-swarm](https://github.com/macrozheng/mall-swarm) | A·业务系统 | [report](reports/macrozheng/mall-swarm.json) | `65cedc29` | ✅ 14878 对象 |
+| [yangzongzhuan/RuoYi-Vue](https://github.com/yangzongzhuan/RuoYi-Vue) | A·admin 脚手架 | [report](reports/yangzongzhuan/RuoYi-Vue.json) | `94a6a5de` | ✅ 2557 对象 |
+| [dromara/RuoYi-Vue-Plus](https://github.com/dromara/RuoYi-Vue-Plus) | A·admin 脚手架 | [report](reports/dromara/RuoYi-Vue-Plus.json) | `e21931f9` | ✅ 4632 对象 |
+| [jeecgboot/JeecgBoot](https://github.com/jeecgboot/JeecgBoot) | A·低代码平台 | [report](reports/jeecgboot/JeecgBoot.json) | `e3b166ff` | ✅ 15478 对象 |
+| [lenve/vhr](https://github.com/lenve/vhr) | A·业务系统 | [report](reports/lenve/vhr.json) | `e290ac2b` | ✅ 966 对象 |
+| [apache/dubbo](https://github.com/apache/dubbo) | B·大型 | [report](reports/apache/dubbo.json) | `59c1b92a` | ✅ 33898 对象 |
+| [apache/fineract](https://github.com/apache/fineract) | B·大型 | [report](reports/apache/fineract.json) | `c7e0ff54` | ✅ 48905 对象 |
+| [spring-projects/spring-petclinic](https://github.com/spring-projects/spring-petclinic) | C·JPA | [report](reports/spring-projects/spring-petclinic.json) | `38cf5bad` | ✅ 283 对象 |
+| [elunez/eladmin](https://github.com/elunez/eladmin) | C·JPA | [report](reports/elunez/eladmin.json) | `cfdec4bb` | ✅ 1356 对象 |
 
 > 数据落点为 [kengine.ai](https://kengine.ai) 平台 `oss` 租户；report 产物可经 report 内
-> 指令溯源逐项复算；快照列随种子批首跑回填（census/summary.json 的 repos 区为机器可读源）。
+> 指令溯源逐项复算；快照 ID 列截取前 8 位（完整值见 `census/summary.json` 的 repos 区——机器可读源）。
 
-<!-- 徽章段占位：扫描批状态 / 已收录样本数 / census 守门状态（聚合轮填充） -->
+## census 守门状态
+
+| 项 | 值 |
+|---|---|
+| 已收录样本 | **10** |
+| 发布门槛（统计充分性） | N ≥ 30 出 mean / P25-P90（nearest-rank） |
+| 隐私护栏（k-匿名单指标级） | 切片 N < 5 整组不出分位 |
+| 当前状态 | `accumulating`（N=10 < 30——不出分位，仅样本计数与缺失标注） |
+
+> 聚合产物：[census/summary.json](census/summary.json)（每指标样本计数 + 缺失标注；开源样本
+> 自选择偏差披露：本清单为分层选样的知名 Java 仓库，非随机抽样——分位参考线解释时须注意）。
