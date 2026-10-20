@@ -1,0 +1,516 @@
+{
+  "schemaVersion": "draft-v1",
+  "implementation": "ke-index census.py (transitional; L2 aggregation over compute-metrics reports)",
+  "status": "accumulating",
+  "samples": 10,
+  "gate": {
+    "publishThreshold": 30,
+    "privacyFloor": 5,
+    "statusReason": "N=10 < 30（accumulating——不出分位，仅样本计数与缺失标注）",
+    "note": "publishThreshold 为统计充分性门槛（P2-D10）；privacyFloor 为 k-匿名隐私护栏（Schema §4.2）——两者显式区分，不混用"
+  },
+  "repos": [
+    {
+      "owner": "apache",
+      "repo": "dubbo",
+      "sourceId": "dubbo",
+      "snapshotId": "59c1b92a-9f6d-44f6-8160-5817d1148ab5",
+      "objectCount": 33898,
+      "linkCount": 107726,
+      "schemaVersion": "draft-v1"
+    },
+    {
+      "owner": "apache",
+      "repo": "fineract",
+      "sourceId": "fineract",
+      "snapshotId": "c7e0ff54-d246-4ca0-9cdb-b311d9a07b8d",
+      "objectCount": 48905,
+      "linkCount": 192668,
+      "schemaVersion": "draft-v1"
+    },
+    {
+      "owner": "dromara",
+      "repo": "RuoYi-Vue-Plus",
+      "sourceId": "RuoYi-Vue-Plus",
+      "snapshotId": "e21931f9-f790-4dda-a6c9-4e9799fda2f4",
+      "objectCount": 4632,
+      "linkCount": 21671,
+      "schemaVersion": "draft-v1"
+    },
+    {
+      "owner": "elunez",
+      "repo": "eladmin",
+      "sourceId": "eladmin",
+      "snapshotId": "cfdec4bb-8666-457b-bbd7-970338c89f6c",
+      "objectCount": 1356,
+      "linkCount": 4597,
+      "schemaVersion": "draft-v1"
+    },
+    {
+      "owner": "jeecgboot",
+      "repo": "JeecgBoot",
+      "sourceId": "JeecgBoot",
+      "snapshotId": "e3b166ff-6881-4441-bf47-d98ef162a97d",
+      "objectCount": 15478,
+      "linkCount": 112659,
+      "schemaVersion": "draft-v1"
+    },
+    {
+      "owner": "lenve",
+      "repo": "vhr",
+      "sourceId": "vhr",
+      "snapshotId": "e290ac2b-b118-4e7d-88ca-01dcba0087c8",
+      "objectCount": 966,
+      "linkCount": 1391,
+      "schemaVersion": "draft-v1"
+    },
+    {
+      "owner": "macrozheng",
+      "repo": "mall-swarm",
+      "sourceId": "mall-swarm",
+      "snapshotId": "65cedc29-e41d-4ec9-b9b4-3ee15b876a2b",
+      "objectCount": 14878,
+      "linkCount": 35427,
+      "schemaVersion": "draft-v1"
+    },
+    {
+      "owner": "macrozheng",
+      "repo": "mall",
+      "sourceId": "mall",
+      "snapshotId": "756e24db-8e74-4205-92cf-757e517a491b",
+      "objectCount": 14527,
+      "linkCount": 34538,
+      "schemaVersion": "draft-v1"
+    },
+    {
+      "owner": "spring-projects",
+      "repo": "spring-petclinic",
+      "sourceId": "spring-petclinic",
+      "snapshotId": "38cf5bad-562e-4d0c-9d33-3fb329541faf",
+      "objectCount": 283,
+      "linkCount": 626,
+      "schemaVersion": "draft-v1"
+    },
+    {
+      "owner": "yangzongzhuan",
+      "repo": "RuoYi-Vue",
+      "sourceId": "RuoYi-Vue",
+      "snapshotId": "94a6a5de-32b9-427e-b574-3485662ccc79",
+      "objectCount": 2557,
+      "linkCount": 7200,
+      "schemaVersion": "draft-v1"
+    }
+  ],
+  "metrics": {
+    "A1": {
+      "id": "A1",
+      "name": "full-chain-coverage",
+      "label": "全链路贯通率",
+      "domain": "A",
+      "direction": "higher-better",
+      "N": 0,
+      "missing": 10,
+      "missingRepos": [
+        {
+          "repo": "apache/dubbo",
+          "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）"
+        },
+        {
+          "repo": "apache/fineract",
+          "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）"
+        },
+        {
+          "repo": "dromara/RuoYi-Vue-Plus",
+          "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）"
+        },
+        {
+          "repo": "elunez/eladmin",
+          "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）"
+        },
+        {
+          "repo": "jeecgboot/JeecgBoot",
+          "reason": "calls 传递闭包与 Method→Mapper 名字 join 未实现（过渡实现——待 ke checkup）"
+        },
+        {
+          "repo": "lenve/vhr",
+          "reason": "calls 传递闭包与 Method→Mapper 名字 join 未实现（过渡实现——待 ke checkup）"
+        },
+        {
+          "repo": "macrozheng/mall",
+          "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）"
+        },
+        {
+          "repo": "macrozheng/mall-swarm",
+          "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）"
+        },
+        {
+          "repo": "spring-projects/spring-petclinic",
+          "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）"
+        },
+        {
+          "repo": "yangzongzhuan/RuoYi-Vue",
+          "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）"
+        }
+      ],
+      "mean": null,
+      "percentiles": null,
+      "percentileMethod": "nearest-rank (Schema §4.2)"
+    },
+    "A2": {
+      "id": "A2",
+      "name": "api-backend-breakrate",
+      "label": "前后端断链率",
+      "domain": "A",
+      "direction": "lower-better",
+      "N": 2,
+      "missing": 8,
+      "missingRepos": [
+        {
+          "repo": "apache/dubbo",
+          "reason": "无 ApiEndpoint 对象（纯后端仓库——按口径置空）"
+        },
+        {
+          "repo": "apache/fineract",
+          "reason": "无 ApiEndpoint 对象（纯后端仓库——按口径置空）"
+        },
+        {
+          "repo": "dromara/RuoYi-Vue-Plus",
+          "reason": "无 ApiEndpoint 对象（纯后端仓库——按口径置空）"
+        },
+        {
+          "repo": "elunez/eladmin",
+          "reason": "无 ApiEndpoint 对象（纯后端仓库——按口径置空）"
+        },
+        {
+          "repo": "macrozheng/mall",
+          "reason": "无 ApiEndpoint 对象（纯后端仓库——按口径置空）"
+        },
+        {
+          "repo": "macrozheng/mall-swarm",
+          "reason": "无 ApiEndpoint 对象（纯后端仓库——按口径置空）"
+        },
+        {
+          "repo": "spring-projects/spring-petclinic",
+          "reason": "无 ApiEndpoint 对象（纯后端仓库——按口径置空）"
+        },
+        {
+          "repo": "yangzongzhuan/RuoYi-Vue",
+          "reason": "无 ApiEndpoint 对象（纯后端仓库——按口径置空）"
+        }
+      ],
+      "mean": null,
+      "percentiles": null,
+      "percentileMethod": "nearest-rank (Schema §4.2)"
+    },
+    "A3": {
+      "id": "A3",
+      "name": "orphan-table-rate",
+      "label": "孤儿表率",
+      "domain": "A",
+      "direction": "lower-better",
+      "N": 9,
+      "missing": 1,
+      "missingRepos": [
+        {
+          "repo": "apache/dubbo",
+          "reason": "无 Table 对象（分母为 0）"
+        }
+      ],
+      "mean": null,
+      "percentiles": null,
+      "percentileMethod": "nearest-rank (Schema §4.2)"
+    },
+    "A4": {
+      "id": "A4",
+      "name": "table-entity-mapping-rate",
+      "label": "表↔实体映射率",
+      "domain": "A",
+      "direction": "higher-better",
+      "N": 9,
+      "missing": 1,
+      "missingRepos": [
+        {
+          "repo": "apache/dubbo",
+          "reason": "无 Table 对象（分母为 0）"
+        }
+      ],
+      "mean": null,
+      "percentiles": null,
+      "percentileMethod": "nearest-rank (Schema §4.2)"
+    },
+    "B1.backend": {
+      "id": "B1.backend",
+      "name": "circular-dependency-density",
+      "label": "循环依赖密度（后端）",
+      "domain": "B",
+      "direction": "lower-better",
+      "N": 10,
+      "missing": 0,
+      "missingRepos": [],
+      "mean": null,
+      "percentiles": null,
+      "percentileMethod": "nearest-rank (Schema §4.2)"
+    },
+    "B1.frontend": {
+      "id": "B1.frontend",
+      "name": "circular-dependency-density",
+      "label": "循环依赖密度（前端）",
+      "domain": "B",
+      "direction": "lower-better",
+      "N": 3,
+      "missing": 7,
+      "missingRepos": [
+        {
+          "repo": "apache/dubbo",
+          "reason": "无 Module 对象（纯后端仓库——按口径置空）"
+        },
+        {
+          "repo": "dromara/RuoYi-Vue-Plus",
+          "reason": "无 Module 对象（纯后端仓库——按口径置空）"
+        },
+        {
+          "repo": "elunez/eladmin",
+          "reason": "无 Module 对象（纯后端仓库——按口径置空）"
+        },
+        {
+          "repo": "macrozheng/mall",
+          "reason": "无 Module 对象（纯后端仓库——按口径置空）"
+        },
+        {
+          "repo": "macrozheng/mall-swarm",
+          "reason": "无 Module 对象（纯后端仓库——按口径置空）"
+        },
+        {
+          "repo": "spring-projects/spring-petclinic",
+          "reason": "无 Module 对象（纯后端仓库——按口径置空）"
+        },
+        {
+          "repo": "yangzongzhuan/RuoYi-Vue",
+          "reason": "无 Module 对象（纯后端仓库——按口径置空）"
+        }
+      ],
+      "mean": null,
+      "percentiles": null,
+      "percentileMethod": "nearest-rank (Schema §4.2)"
+    },
+    "B2": {
+      "id": "B2",
+      "name": "package-dependency-density",
+      "label": "包依赖密度",
+      "domain": "B",
+      "direction": "interval",
+      "N": 10,
+      "missing": 0,
+      "missingRepos": [],
+      "mean": null,
+      "percentiles": null,
+      "percentileMethod": "nearest-rank (Schema §4.2)"
+    },
+    "B3": {
+      "id": "B3",
+      "name": "giant-class-ratio",
+      "label": "巨型类占比",
+      "domain": "B",
+      "direction": "lower-better",
+      "N": 10,
+      "missing": 0,
+      "missingRepos": [],
+      "mean": null,
+      "percentiles": null,
+      "percentileMethod": "nearest-rank (Schema §4.2)"
+    },
+    "B4": {
+      "id": "B4",
+      "name": "component-coupling-degree",
+      "label": "组件耦合度",
+      "domain": "B",
+      "direction": "lower-better",
+      "N": 2,
+      "missing": 8,
+      "missingRepos": [
+        {
+          "repo": "apache/dubbo",
+          "reason": "无 Component 对象（纯后端仓库——按口径置空）"
+        },
+        {
+          "repo": "apache/fineract",
+          "reason": "无 Component 对象（纯后端仓库——按口径置空）"
+        },
+        {
+          "repo": "dromara/RuoYi-Vue-Plus",
+          "reason": "无 Component 对象（纯后端仓库——按口径置空）"
+        },
+        {
+          "repo": "elunez/eladmin",
+          "reason": "无 Component 对象（纯后端仓库——按口径置空）"
+        },
+        {
+          "repo": "macrozheng/mall",
+          "reason": "无 Component 对象（纯后端仓库——按口径置空）"
+        },
+        {
+          "repo": "macrozheng/mall-swarm",
+          "reason": "无 Component 对象（纯后端仓库——按口径置空）"
+        },
+        {
+          "repo": "spring-projects/spring-petclinic",
+          "reason": "无 Component 对象（纯后端仓库——按口径置空）"
+        },
+        {
+          "repo": "yangzongzhuan/RuoYi-Vue",
+          "reason": "无 Component 对象（纯后端仓库——按口径置空）"
+        }
+      ],
+      "mean": null,
+      "percentiles": null,
+      "percentileMethod": "nearest-rank (Schema §4.2)"
+    },
+    "C1": {
+      "id": "C1",
+      "name": "endpoint-table-hops",
+      "label": "端到端跳数",
+      "domain": "C",
+      "direction": "interval",
+      "N": 0,
+      "missing": 10,
+      "missingRepos": [
+        {
+          "repo": "apache/dubbo",
+          "reason": "无 ApiEndpoint 对象（贯通链分母为 0）"
+        },
+        {
+          "repo": "apache/fineract",
+          "reason": "无 ApiEndpoint 对象（贯通链分母为 0）"
+        },
+        {
+          "repo": "dromara/RuoYi-Vue-Plus",
+          "reason": "无 ApiEndpoint 对象（贯通链分母为 0）"
+        },
+        {
+          "repo": "elunez/eladmin",
+          "reason": "无 ApiEndpoint 对象（贯通链分母为 0）"
+        },
+        {
+          "repo": "jeecgboot/JeecgBoot",
+          "reason": "依赖 A1 贯通链算法（过渡实现未含——待 ke checkup）"
+        },
+        {
+          "repo": "lenve/vhr",
+          "reason": "依赖 A1 贯通链算法（过渡实现未含——待 ke checkup）"
+        },
+        {
+          "repo": "macrozheng/mall",
+          "reason": "无 ApiEndpoint 对象（贯通链分母为 0）"
+        },
+        {
+          "repo": "macrozheng/mall-swarm",
+          "reason": "无 ApiEndpoint 对象（贯通链分母为 0）"
+        },
+        {
+          "repo": "spring-projects/spring-petclinic",
+          "reason": "无 ApiEndpoint 对象（贯通链分母为 0）"
+        },
+        {
+          "repo": "yangzongzhuan/RuoYi-Vue",
+          "reason": "无 ApiEndpoint 对象（贯通链分母为 0）"
+        }
+      ],
+      "mean": null,
+      "percentiles": null,
+      "percentileMethod": "nearest-rank (Schema §4.2)"
+    },
+    "C2": {
+      "id": "C2",
+      "name": "cyclomatic-complexity-p90",
+      "label": "圈复杂度 P90",
+      "domain": "C",
+      "direction": "lower-better",
+      "N": 10,
+      "missing": 0,
+      "missingRepos": [],
+      "mean": null,
+      "percentiles": null,
+      "percentileMethod": "nearest-rank (Schema §4.2)"
+    },
+    "C3": {
+      "id": "C3",
+      "name": "test-method-ratio",
+      "label": "测试方法占比",
+      "domain": "C",
+      "direction": "higher-better",
+      "N": 10,
+      "missing": 0,
+      "missingRepos": [],
+      "mean": null,
+      "percentiles": null,
+      "percentileMethod": "nearest-rank (Schema §4.2)"
+    },
+    "C4": {
+      "id": "C4",
+      "name": "giant-method-ratio",
+      "label": "巨型方法占比",
+      "domain": "C",
+      "direction": "lower-better",
+      "N": 10,
+      "missing": 0,
+      "missingRepos": [],
+      "mean": null,
+      "percentiles": null,
+      "percentileMethod": "nearest-rank (Schema §4.2)"
+    },
+    "D1": {
+      "id": "D1",
+      "name": "framework-version-coverage",
+      "label": "技术栈版本覆盖率",
+      "domain": "D",
+      "direction": "higher-better",
+      "N": 0,
+      "missing": 10,
+      "missingRepos": [
+        {
+          "repo": "apache/dubbo",
+          "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）"
+        },
+        {
+          "repo": "apache/fineract",
+          "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）"
+        },
+        {
+          "repo": "dromara/RuoYi-Vue-Plus",
+          "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）"
+        },
+        {
+          "repo": "elunez/eladmin",
+          "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）"
+        },
+        {
+          "repo": "jeecgboot/JeecgBoot",
+          "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）"
+        },
+        {
+          "repo": "lenve/vhr",
+          "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）"
+        },
+        {
+          "repo": "macrozheng/mall",
+          "reason": "无可判定版本（空串 14 / 属性占位 20 / 合计 34——分母为 0，按口径置空）"
+        },
+        {
+          "repo": "macrozheng/mall-swarm",
+          "reason": "无可判定版本（空串 19 / 属性占位 27 / 合计 46——分母为 0，按口径置空）"
+        },
+        {
+          "repo": "spring-projects/spring-petclinic",
+          "reason": "无可判定版本（空串 25 / 属性占位 5 / 合计 30——分母为 0，按口径置空）"
+        },
+        {
+          "repo": "yangzongzhuan/RuoYi-Vue",
+          "reason": "无可判定版本（空串 15 / 属性占位 19 / 合计 34——分母为 0，按口径置空）"
+        }
+      ],
+      "mean": null,
+      "percentiles": null,
+      "percentileMethod": "nearest-rank (Schema §4.2)"
+    }
+  }
+}
