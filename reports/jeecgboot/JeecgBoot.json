@@ -1,0 +1,548 @@
+{
+  "schemaVersion": "draft-v1",
+  "implementation": "ke-index compute-metrics.py (transitional; to be superseded by ke checkup)",
+  "owner": "jeecgboot",
+  "repo": "JeecgBoot",
+  "sourceId": "JeecgBoot",
+  "snapshot": {
+    "snapshotId": "e3b166ff-6881-4441-bf47-d98ef162a97d",
+    "status": "complete",
+    "sourceVersion": "head",
+    "objectCount": 15478,
+    "linkCount": 112659,
+    "completedAt": "2026-10-20T00:31:58.540Z"
+  },
+  "cliVersion": "0.3.1",
+  "metrics": {
+    "A2": {
+      "id": "A2",
+      "name": "api-backend-breakrate",
+      "label": "前后端断链率",
+      "domain": "A",
+      "direction": "lower-better",
+      "value": 1.0,
+      "numerator": 11,
+      "denominator": 11,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query ApiEndpoint --all --field id,backendMethodId,matchedVia --snapshot e3b166ff-6881-4441-bf47-d98ef162a97d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot e3b166ff-6881-4441-bf47-d98ef162a97d"
+      ]
+    },
+    "A3": {
+      "id": "A3",
+      "name": "orphan-table-rate",
+      "label": "孤儿表率",
+      "domain": "A",
+      "direction": "lower-better",
+      "value": 0.752874,
+      "numerator": 131,
+      "denominator": 174,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Table --all --field id,name,matchedEntityClass --snapshot e3b166ff-6881-4441-bf47-d98ef162a97d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Mapper --all --field id,namespace,mappedTableIds --snapshot e3b166ff-6881-4441-bf47-d98ef162a97d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot e3b166ff-6881-4441-bf47-d98ef162a97d"
+      ]
+    },
+    "A4": {
+      "id": "A4",
+      "name": "table-entity-mapping-rate",
+      "label": "表↔实体映射率",
+      "domain": "A",
+      "direction": "higher-better",
+      "value": 0.247126,
+      "numerator": 43,
+      "denominator": 174,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Table --all --field id,name,matchedEntityClass --snapshot e3b166ff-6881-4441-bf47-d98ef162a97d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Mapper --all --field id,namespace,mappedTableIds --snapshot e3b166ff-6881-4441-bf47-d98ef162a97d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot e3b166ff-6881-4441-bf47-d98ef162a97d"
+      ],
+      "evidence": {
+        "mapperEdgeOnly": 0,
+        "entityClassOnly": 36,
+        "both": 7
+      }
+    },
+    "B1.backend": {
+      "id": "B1.backend",
+      "name": "circular-dependency-density",
+      "label": "循环依赖密度（后端）",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": 0.157718,
+      "numerator": 47,
+      "denominator": 298,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Package --all --field id,dependsOnPackageIds --snapshot e3b166ff-6881-4441-bf47-d98ef162a97d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot e3b166ff-6881-4441-bf47-d98ef162a97d"
+      ],
+      "sccCount": 9,
+      "sccs": [
+        {
+          "size": 22,
+          "members": [
+            "pkg:org.jeecg.common.api",
+            "pkg:org.jeecg.common.api.dto",
+            "pkg:org.jeecg.common.api.vo",
+            "pkg:org.jeecg.common.aspect.annotation",
+            "pkg:org.jeecg.common.constant",
+            "pkg:org.jeecg.common.constant.enums",
+            "pkg:org.jeecg.common.desensitization",
+            "pkg:org.jeecg.common.desensitization.annotation",
+            "pkg:org.jeecg.common.desensitization.util",
+            "pkg:org.jeecg.common.exception",
+            "pkg:org.jeecg.common.system.query",
+            "pkg:org.jeecg.common.system.util",
+            "pkg:org.jeecg.common.system.vo",
+            "pkg:org.jeecg.common.util",
+            "pkg:org.jeecg.common.util.encryption",
+            "pkg:org.jeecg.common.util.filter",
+            "pkg:org.jeecg.common.util.oss",
+            "pkg:org.jeecg.config",
+            "pkg:org.jeecg.config.filter",
+            "pkg:org.jeecg.config.mybatis",
+            "pkg:org.jeecg.config.sign.util",
+            "pkg:org.jeecg.modules.base.service"
+          ]
+        },
+        {
+          "size": 6,
+          "members": [
+            "pkg:com.xxl.job.admin.business.mapper",
+            "pkg:com.xxl.job.admin.business.scheduler.complete",
+            "pkg:com.xxl.job.admin.business.scheduler.config",
+            "pkg:com.xxl.job.admin.business.scheduler.misfire",
+            "pkg:com.xxl.job.admin.business.scheduler.misfire.strategy",
+            "pkg:com.xxl.job.admin.business.scheduler.trigger"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:org.jeecg.common.online.api",
+            "pkg:org.jeecg.common.online.api.factory",
+            "pkg:org.jeecg.common.online.api.fallback"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:org.jeecg.common.system.api",
+            "pkg:org.jeecg.common.system.api.factory",
+            "pkg:org.jeecg.common.system.api.fallback"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:org.jeecg.config.shiro",
+            "pkg:org.jeecg.config.shiro.filters",
+            "pkg:org.jeecg.config.shiro.ignore"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:org.jeecg.modules.message.handle.impl",
+            "pkg:org.jeecg.modules.system.service.impl",
+            "pkg:org.jeecg.modules.system.util"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:org.jeecg.modules.test.feign.client",
+            "pkg:org.jeecg.modules.test.feign.factory",
+            "pkg:org.jeecg.modules.test.feign.fallback"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:com.xxl.job.admin.business.scheduler.type",
+            "pkg:com.xxl.job.admin.business.scheduler.type.strategy"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.jeecg.common.airag.api",
+            "pkg:org.jeecg.common.airag.api.fallback"
+          ]
+        }
+      ]
+    },
+    "B2": {
+      "id": "B2",
+      "name": "package-dependency-density",
+      "label": "包依赖密度",
+      "domain": "B",
+      "direction": "interval",
+      "value": 3.0705,
+      "numerator": 915,
+      "denominator": 298,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Package --all --field id,dependsOnPackageIds --snapshot e3b166ff-6881-4441-bf47-d98ef162a97d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot e3b166ff-6881-4441-bf47-d98ef162a97d"
+      ]
+    },
+    "B1.frontend": {
+      "id": "B1.frontend",
+      "name": "circular-dependency-density",
+      "label": "循环依赖密度（前端）",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": 0.005754,
+      "numerator": 10,
+      "denominator": 1738,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Module --all --field id,importedModuleIds --snapshot e3b166ff-6881-4441-bf47-d98ef162a97d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Module --snapshot e3b166ff-6881-4441-bf47-d98ef162a97d"
+      ],
+      "sccCount": 2
+    },
+    "B3": {
+      "id": "B3",
+      "name": "giant-class-ratio",
+      "label": "巨型类占比",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": 0.04534,
+      "numerator": 36,
+      "denominator": 794,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Class --all --field id,lineCount --snapshot e3b166ff-6881-4441-bf47-d98ef162a97d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --where 'lineCount>500' --snapshot e3b166ff-6881-4441-bf47-d98ef162a97d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --snapshot e3b166ff-6881-4441-bf47-d98ef162a97d"
+      ],
+      "threshold": "lineCount > 500",
+      "top": [
+        {
+          "lineCount": 3207,
+          "id": "cls:org.jeecg.modules.system.service.impl.SysUserServiceImpl"
+        },
+        {
+          "lineCount": 2496,
+          "id": "cls:org.jeecg.modules.airag.app.service.impl.AiragChatServiceImpl"
+        },
+        {
+          "lineCount": 2304,
+          "id": "cls:org.jeecg.modules.system.service.impl.SysDepartServiceImpl"
+        },
+        {
+          "lineCount": 2242,
+          "id": "cls:org.jeecg.modules.system.service.impl.SysBaseApiImpl"
+        },
+        {
+          "lineCount": 2192,
+          "id": "cls:org.jeecg.modules.system.controller.SysUserController"
+        }
+      ],
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --where 'lineCount>500' --snapshot e3b166ff-6881-4441-bf47-d98ef162a97d",
+        "serverCount": 36,
+        "match": true
+      }
+    },
+    "B4": {
+      "id": "B4",
+      "name": "component-coupling-degree",
+      "label": "组件耦合度",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": 0.2732,
+      "numerator": 109,
+      "denominator": 399,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Component --all --field id,referencedComponentIds,isGlobal --snapshot e3b166ff-6881-4441-bf47-d98ef162a97d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Component --snapshot e3b166ff-6881-4441-bf47-d98ef162a97d"
+      ],
+      "globalRegistrationRatio": 0.0
+    },
+    "C2": {
+      "id": "C2",
+      "name": "cyclomatic-complexity-p90",
+      "label": "圈复杂度 P90",
+      "domain": "C",
+      "direction": "lower-better",
+      "value": 6,
+      "denominator": 4423,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot e3b166ff-6881-4441-bf47-d98ef162a97d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,lineCount,complexity --snapshot e3b166ff-6881-4441-bf47-d98ef162a97d"
+      ],
+      "percentiles": {
+        "p25": 1,
+        "p50": 1,
+        "p75": 3,
+        "p90": 6
+      },
+      "mean": 2.8094,
+      "max": 75,
+      "top": [
+        {
+          "cyclomaticComplexity": 75,
+          "id": "mtd:com.xxl.job.admin.business.scheduler.cron.CronExpression.addToSet(:int:int:int:int)"
+        },
+        {
+          "cyclomaticComplexity": 59,
+          "id": "mtd:com.xxl.job.admin.business.scheduler.cron.CronExpression.storeExpressionVals(:int:String:int)"
+        },
+        {
+          "cyclomaticComplexity": 57,
+          "id": "mtd:com.xxl.job.admin.business.scheduler.cron.CronExpression.getTimeAfter(:Date)"
+        },
+        {
+          "cyclomaticComplexity": 45,
+          "id": "mtd:org.jeecg.modules.airag.wordtpl.utils.WordTplUtils.parseTextParagraph(:XWPFParagraph:List<Object>:boolean)"
+        },
+        {
+          "cyclomaticComplexity": 43,
+          "id": "mtd:org.jeecg.modules.airag.wordtpl.utils.WordUtil.addTable(:XWPFDocument:JSONObject:int)"
+        }
+      ],
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot e3b166ff-6881-4441-bf47-d98ef162a97d",
+        "serverCount": 4423,
+        "match": true
+      }
+    },
+    "C3": {
+      "id": "C3",
+      "name": "test-method-ratio",
+      "label": "测试方法占比",
+      "domain": "C",
+      "direction": "higher-better",
+      "value": 0.022904,
+      "numerator": 124,
+      "denominator": 5414,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'isTest=true' --snapshot e3b166ff-6881-4441-bf47-d98ef162a97d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot e3b166ff-6881-4441-bf47-d98ef162a97d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,isTest,testType --snapshot e3b166ff-6881-4441-bf47-d98ef162a97d"
+      ],
+      "testTypes": {
+        "UnitTest": 124
+      },
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'isTest=true' --snapshot e3b166ff-6881-4441-bf47-d98ef162a97d",
+        "serverCount": 124,
+        "match": true
+      }
+    },
+    "C4": {
+      "id": "C4",
+      "name": "giant-method-ratio",
+      "label": "巨型方法占比",
+      "domain": "C",
+      "direction": "lower-better",
+      "value": 0.016941,
+      "numerator": 75,
+      "denominator": 4427,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount>80' --snapshot e3b166ff-6881-4441-bf47-d98ef162a97d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount=0' --snapshot e3b166ff-6881-4441-bf47-d98ef162a97d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot e3b166ff-6881-4441-bf47-d98ef162a97d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,lineCount --snapshot e3b166ff-6881-4441-bf47-d98ef162a97d"
+      ],
+      "threshold": "lineCount > 80",
+      "excludedFromDenominator": {
+        "lineCountIsZero": 987,
+        "lineCountIsNull": 0
+      },
+      "top": [
+        {
+          "lineCount": 351,
+          "id": "mtd:com.xxl.job.admin.business.scheduler.cron.CronExpression.getTimeAfter(:Date)"
+        },
+        {
+          "lineCount": 286,
+          "id": "mtd:org.jeecg.modules.airag.app.service.impl.AiragChatServiceImpl.sendWithDefault(:String:ChatConversation:String:String:List<ChatMessage>:AIChatParams:String:Function<String, List<String>>)"
+        },
+        {
+          "lineCount": 213,
+          "id": "mtd:com.xxl.job.admin.business.scheduler.thread.JobScheduleHelper.start"
+        },
+        {
+          "lineCount": 189,
+          "id": "mtd:com.xxl.job.admin.business.scheduler.cron.CronExpression.storeExpressionVals(:int:String:int)"
+        },
+        {
+          "lineCount": 178,
+          "id": "mtd:org.jeecg.modules.airag.wordtpl.utils.WordTplUtils.parseTextParagraph(:XWPFParagraph:List<Object>:boolean)"
+        }
+      ],
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount>80' --snapshot e3b166ff-6881-4441-bf47-d98ef162a97d",
+        "serverCount": 75,
+        "match": true
+      }
+    },
+    "D3": {
+      "id": "D3",
+      "name": "scale-profile",
+      "label": "规模画像",
+      "domain": "D",
+      "direction": "none",
+      "value": 15478,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" snapshot list --repo JeecgBoot",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Repository --snapshot e3b166ff-6881-4441-bf47-d98ef162a97d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot e3b166ff-6881-4441-bf47-d98ef162a97d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --snapshot e3b166ff-6881-4441-bf47-d98ef162a97d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Interface --snapshot e3b166ff-6881-4441-bf47-d98ef162a97d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot e3b166ff-6881-4441-bf47-d98ef162a97d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Dependency --snapshot e3b166ff-6881-4441-bf47-d98ef162a97d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot e3b166ff-6881-4441-bf47-d98ef162a97d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Mapper --snapshot e3b166ff-6881-4441-bf47-d98ef162a97d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Module --snapshot e3b166ff-6881-4441-bf47-d98ef162a97d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Component --snapshot e3b166ff-6881-4441-bf47-d98ef162a97d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Function --snapshot e3b166ff-6881-4441-bf47-d98ef162a97d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Store --snapshot e3b166ff-6881-4441-bf47-d98ef162a97d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Route --snapshot e3b166ff-6881-4441-bf47-d98ef162a97d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot e3b166ff-6881-4441-bf47-d98ef162a97d"
+      ],
+      "typeCounts": {
+        "Repository": 1,
+        "Package": 298,
+        "Class": 794,
+        "Interface": 187,
+        "Method": 5414,
+        "Dependency": 143,
+        "Table": 174,
+        "Mapper": 11,
+        "Module": 1738,
+        "Component": 399,
+        "Function": 6307,
+        "Store": 0,
+        "Route": 1,
+        "ApiEndpoint": 11
+      },
+      "linkCount": 112659
+    }
+  },
+  "nullMetrics": {
+    "A1": {
+      "id": "A1",
+      "name": "full-chain-coverage",
+      "label": "全链路贯通率",
+      "domain": "A",
+      "direction": "higher-better",
+      "value": null,
+      "reason": "calls 传递闭包与 Method→Mapper 名字 join 未实现（过渡实现——待 ke checkup）",
+      "evidence": {
+        "apiEndpointCount": 11
+      }
+    },
+    "C1": {
+      "id": "C1",
+      "name": "endpoint-table-hops",
+      "label": "端到端跳数",
+      "domain": "C",
+      "direction": "interval",
+      "value": null,
+      "reason": "依赖 A1 贯通链算法（过渡实现未含——待 ke checkup）",
+      "evidence": {
+        "apiEndpointCount": 11
+      }
+    },
+    "D1": {
+      "id": "D1",
+      "name": "framework-version-coverage",
+      "label": "技术栈版本覆盖率",
+      "domain": "D",
+      "direction": "higher-better",
+      "value": null,
+      "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Dependency --all --field id,name,version,scope --snapshot e3b166ff-6881-4441-bf47-d98ef162a97d"
+      ],
+      "evidence": {
+        "total": 143,
+        "emptyVersion": 38,
+        "placeholder": 75,
+        "determinable": 30
+      }
+    },
+    "D2": {
+      "id": "D2",
+      "name": "dependency-homogeneity",
+      "label": "依赖同质度",
+      "domain": "D",
+      "direction": "none",
+      "value": null,
+      "reason": "cohort 级指标（依赖 cohort 众数集合——单体层不产出）",
+      "evidence": {
+        "dependencyCount": 143
+      }
+    },
+    "D4": {
+      "id": "D4",
+      "name": "evolution-trend",
+      "label": "年度演进趋势",
+      "domain": "D",
+      "direction": "none",
+      "value": null,
+      "reason": "单快照（首次导入——无时序）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" snapshot list --repo JeecgBoot"
+      ],
+      "evidence": {
+        "completeSnapshotCount": 1
+      }
+    }
+  },
+  "dataQuality": {
+    "dq.null-complexity-ratio": {
+      "id": "dq.null-complexity-ratio",
+      "name": "null-complexity-ratio",
+      "label": "complexity 为 null 的方法占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": 0.183044,
+      "numerator": 991,
+      "denominator": 5414,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot e3b166ff-6881-4441-bf47-d98ef162a97d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot e3b166ff-6881-4441-bf47-d98ef162a97d"
+      ]
+    },
+    "dq.missing-version-ratio": {
+      "id": "dq.missing-version-ratio",
+      "name": "missing-version-ratio",
+      "label": "version 为空串的依赖占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": 0.265734,
+      "numerator": 38,
+      "denominator": 143,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Dependency --all --field id,name,version,scope --snapshot e3b166ff-6881-4441-bf47-d98ef162a97d"
+      ],
+      "placeholderVersionCount": 75
+    },
+    "dq.mapper-join-miss-ratio": {
+      "id": "dq.mapper-join-miss-ratio",
+      "name": "mapper-join-miss-ratio",
+      "label": "Mapper namespace 与接口 FQN join 未命中占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": 0.0,
+      "numerator": 0,
+      "denominator": 11,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Mapper --all --field id,namespace --snapshot e3b166ff-6881-4441-bf47-d98ef162a97d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Interface --all --field id --snapshot e3b166ff-6881-4441-bf47-d98ef162a97d"
+      ]
+    },
+    "dq.ext-call-ratio": {
+      "id": "dq.ext-call-ratio",
+      "name": "ext-call-ratio",
+      "label": "ext: 虚拟调用过滤占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": null,
+      "reason": "不可观测（ext: 虚拟边在导入物化时已过滤——查询面天然免疫）"
+    }
+  }
+}
