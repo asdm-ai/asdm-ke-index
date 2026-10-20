@@ -33,13 +33,22 @@ bash scripts/scan-one.sh
 - 触发：push 修改 `repos.yaml` / Actions 页手动触发；月度重扫随聚合轮启用
 - 并发护栏：`max-parallel: 4`；对账：Action 步骤末行 `objectCount` 与平台快照列表逐位对照
 
-## 仓库索引（随扫描批次填充）
+## 仓库索引（种子批 10 仓——分层选样：admin/业务系统 6 + 大型 2 + JPA 2）
 
-| owner/repo | 快照 | Report | 状态 |
-|---|---|---|---|
-| `macrozheng/mall` | 待首跑 | 待首跑 | queued |
+| owner/repo | 分层 | Report | 快照 | 状态 |
+|---|---|---|---|---|
+| [macrozheng/mall](https://github.com/macrozheng/mall) | A·业务系统 | [report](reports/macrozheng/mall.json) | 待首跑回填 | queued |
+| [macrozheng/mall-swarm](https://github.com/macrozheng/mall-swarm) | A·业务系统 | [report](reports/macrozheng/mall-swarm.json) | 待首跑回填 | queued |
+| [yangzongzhuan/RuoYi-Vue](https://github.com/yangzongzhuan/RuoYi-Vue) | A·admin 脚手架 | [report](reports/yangzongzhuan/RuoYi-Vue.json) | 待首跑回填 | queued |
+| [dromara/RuoYi-Vue-Plus](https://github.com/dromara/RuoYi-Vue-Plus) | A·admin 脚手架 | [report](reports/dromara/RuoYi-Vue-Plus.json) | 待首跑回填 | queued |
+| [jeecgboot/JeecgBoot](https://github.com/jeecgboot/JeecgBoot) | A·低代码平台 | [report](reports/jeecgboot/JeecgBoot.json) | 待首跑回填 | queued |
+| [lenve/vhr](https://github.com/lenve/vhr) | A·业务系统 | [report](reports/lenve/vhr.json) | 待首跑回填 | queued |
+| [apache/dubbo](https://github.com/apache/dubbo) | B·大型 | [report](reports/apache/dubbo.json) | 待首跑回填 | queued |
+| [apache/fineract](https://github.com/apache/fineract) | B·大型 | [report](reports/apache/fineract.json) | 待首跑回填 | queued |
+| [spring-projects/spring-petclinic](https://github.com/spring-projects/spring-petclinic) | C·JPA | [report](reports/spring-projects/spring-petclinic.json) | 待首跑回填 | queued |
+| [elunez/eladmin](https://github.com/elunez/eladmin) | C·JPA | [report](reports/elunez/eladmin.json) | 待首跑回填 | queued |
 
 > 数据落点为 [kengine.ai](https://kengine.ai) 平台 `oss` 租户；report 产物可经 report 内
-> 指令溯源逐项复算。
+> 指令溯源逐项复算；快照列随种子批首跑回填（census/summary.json 的 repos 区为机器可读源）。
 
 <!-- 徽章段占位：扫描批状态 / 已收录样本数 / census 守门状态（聚合轮填充） -->
