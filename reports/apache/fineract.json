@@ -1,0 +1,1117 @@
+{
+  "schemaVersion": "draft-v1",
+  "implementation": "ke-index compute-metrics.py (transitional; to be superseded by ke checkup)",
+  "owner": "apache",
+  "repo": "fineract",
+  "sourceId": "fineract",
+  "snapshot": {
+    "snapshotId": "c7e0ff54-d246-4ca0-9cdb-b311d9a07b8d",
+    "status": "complete",
+    "sourceVersion": "head",
+    "objectCount": 48905,
+    "linkCount": 192668,
+    "completedAt": "2026-10-20T00:48:54.850Z"
+  },
+  "cliVersion": "0.3.1",
+  "metrics": {
+    "A3": {
+      "id": "A3",
+      "name": "orphan-table-rate",
+      "label": "孤儿表率",
+      "domain": "A",
+      "direction": "lower-better",
+      "value": 0.215,
+      "numerator": 43,
+      "denominator": 200,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Table --all --field id,name,matchedEntityClass --snapshot c7e0ff54-d246-4ca0-9cdb-b311d9a07b8d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Mapper --all --field id,namespace,mappedTableIds --snapshot c7e0ff54-d246-4ca0-9cdb-b311d9a07b8d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot c7e0ff54-d246-4ca0-9cdb-b311d9a07b8d"
+      ]
+    },
+    "A4": {
+      "id": "A4",
+      "name": "table-entity-mapping-rate",
+      "label": "表↔实体映射率",
+      "domain": "A",
+      "direction": "higher-better",
+      "value": 0.785,
+      "numerator": 157,
+      "denominator": 200,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Table --all --field id,name,matchedEntityClass --snapshot c7e0ff54-d246-4ca0-9cdb-b311d9a07b8d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Mapper --all --field id,namespace,mappedTableIds --snapshot c7e0ff54-d246-4ca0-9cdb-b311d9a07b8d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot c7e0ff54-d246-4ca0-9cdb-b311d9a07b8d"
+      ],
+      "evidence": {
+        "mapperEdgeOnly": 0,
+        "entityClassOnly": 157,
+        "both": 0
+      }
+    },
+    "B1.backend": {
+      "id": "B1.backend",
+      "name": "circular-dependency-density",
+      "label": "循环依赖密度（后端）",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": 0.504787,
+      "numerator": 580,
+      "denominator": 1149,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Package --all --field id,dependsOnPackageIds --snapshot c7e0ff54-d246-4ca0-9cdb-b311d9a07b8d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot c7e0ff54-d246-4ca0-9cdb-b311d9a07b8d"
+      ],
+      "sccCount": 18,
+      "sccs": [
+        {
+          "size": 504,
+          "members": [
+            "pkg:org.apache.fineract",
+            "pkg:org.apache.fineract.accounting.closure.api",
+            "pkg:org.apache.fineract.accounting.closure.command",
+            "pkg:org.apache.fineract.accounting.closure.data",
+            "pkg:org.apache.fineract.accounting.closure.domain",
+            "pkg:org.apache.fineract.accounting.closure.exception",
+            "pkg:org.apache.fineract.accounting.closure.serialization",
+            "pkg:org.apache.fineract.accounting.closure.service",
+            "pkg:org.apache.fineract.accounting.common",
+            "pkg:org.apache.fineract.accounting.financialactivityaccount.data",
+            "pkg:org.apache.fineract.accounting.financialactivityaccount.domain",
+            "pkg:org.apache.fineract.accounting.financialactivityaccount.exception",
+            "pkg:org.apache.fineract.accounting.glaccount.api",
+            "pkg:org.apache.fineract.accounting.glaccount.command",
+            "pkg:org.apache.fineract.accounting.glaccount.data",
+            "pkg:org.apache.fineract.accounting.glaccount.domain",
+            "pkg:org.apache.fineract.accounting.glaccount.exception",
+            "pkg:org.apache.fineract.accounting.glaccount.mapper",
+            "pkg:org.apache.fineract.accounting.glaccount.serialization",
+            "pkg:org.apache.fineract.accounting.glaccount.service",
+            "pkg:org.apache.fineract.accounting.journalentry",
+            "pkg:org.apache.fineract.accounting.journalentry.api",
+            "pkg:org.apache.fineract.accounting.journalentry.command",
+            "pkg:org.apache.fineract.accounting.journalentry.data",
+            "pkg:org.apache.fineract.accounting.journalentry.domain",
+            "pkg:org.apache.fineract.accounting.journalentry.exception",
+            "pkg:org.apache.fineract.accounting.journalentry.serialization",
+            "pkg:org.apache.fineract.accounting.journalentry.service",
+            "pkg:org.apache.fineract.accounting.producttoaccountmapping.data",
+            "pkg:org.apache.fineract.accounting.producttoaccountmapping.domain",
+            "pkg:org.apache.fineract.accounting.producttoaccountmapping.exception",
+            "pkg:org.apache.fineract.accounting.producttoaccountmapping.service",
+            "pkg:org.apache.fineract.accounting.provisioning.domain",
+            "pkg:org.apache.fineract.accounting.rule.api",
+            "pkg:org.apache.fineract.accounting.rule.data",
+            "pkg:org.apache.fineract.accounting.rule.data.request",
+            "pkg:org.apache.fineract.accounting.rule.domain",
+            "pkg:org.apache.fineract.accounting.rule.exception",
+            "pkg:org.apache.fineract.accounting.rule.serialization",
+            "pkg:org.apache.fineract.accounting.rule.service",
+            "pkg:org.apache.fineract.accounting.trialbalance.exception",
+            "pkg:org.apache.fineract.batch.command",
+            "pkg:org.apache.fineract.batch.command.internal",
+            "pkg:org.apache.fineract.batch.exception",
+            "pkg:org.apache.fineract.batch.service",
+            "pkg:org.apache.fineract.cob",
+            "pkg:org.apache.fineract.cob.api",
+            "pkg:org.apache.fineract.cob.common",
+            "pkg:org.apache.fineract.cob.conditions",
+            "pkg:org.apache.fineract.cob.converter",
+            "pkg:org.apache.fineract.cob.data",
+            "pkg:org.apache.fineract.cob.data.request",
+            "pkg:org.apache.fineract.cob.domain",
+            "pkg:org.apache.fineract.cob.exceptions",
+            "pkg:org.apache.fineract.cob.internal",
+            "pkg:org.apache.fineract.cob.listener",
+            "pkg:org.apache.fineract.cob.loan",
+            "pkg:org.apache.fineract.cob.processor",
+            "pkg:org.apache.fineract.cob.resolver",
+            "pkg:org.apache.fineract.cob.service",
+            "pkg:org.apache.fineract.cob.tasklet",
+            "pkg:org.apache.fineract.cob.workingcapitalloan",
+            "pkg:org.apache.fineract.cob.workingcapitalloan.businessstep",
+            "pkg:org.apache.fineract.commands.configuration",
+            "pkg:org.apache.fineract.commands.data",
+            "pkg:org.apache.fineract.commands.data.request",
+            "pkg:org.apache.fineract.commands.domain",
+            "pkg:org.apache.fineract.commands.exception",
+            "pkg:org.apache.fineract.commands.handler",
+            "pkg:org.apache.fineract.commands.provider",
+            "pkg:org.apache.fineract.commands.service",
+            "pkg:org.apache.fineract.infrastructure",
+            "pkg:org.apache.fineract.infrastructure.accountnumberformat.data",
+            "pkg:org.apache.fineract.infrastructure.accountnumberformat.domain",
+            "pkg:org.apache.fineract.infrastructure.accountnumberformat.exception",
+            "pkg:org.apache.fineract.infrastructure.accountnumberformat.service",
+            "pkg:org.apache.fineract.infrastructure.bulkimport.data",
+            "pkg:org.apache.fineract.infrastructure.bulkimport.domain",
+            "pkg:org.apache.fineract.infrastructure.bulkimport.importhandler",
+            "pkg:org.apache.fineract.infrastructure.bulkimport.mapping",
+            "pkg:org.apache.fineract.infrastructure.bulkimport.populator",
+            "pkg:org.apache.fineract.infrastructure.bulkimport.populator.centers",
+            "pkg:org.apache.fineract.infrastructure.bulkimport.populator.chartofaccounts",
+            "pkg:org.apache.fineract.infrastructure.bulkimport.populator.client",
+            "pkg:org.apache.fineract.infrastructure.bulkimport.populator.comparator",
+            "pkg:org.apache.fineract.infrastructure.bulkimport.populator.fixeddeposits",
+            "pkg:org.apache.fineract.infrastructure.bulkimport.populator.group",
+            "pkg:org.apache.fineract.infrastructure.bulkimport.populator.guarantor",
+            "pkg:org.apache.fineract.infrastructure.bulkimport.populator.journalentry",
+            "pkg:org.apache.fineract.infrastructure.bulkimport.populator.loan",
+            "pkg:org.apache.fineract.infrastructure.bulkimport.populator.loanrepayment",
+            "pkg:org.apache.fineract.infrastructure.bulkimport.populator.office",
+            "pkg:org.apache.fineract.infrastructure.bulkimport.populator.recurringdeposit",
+            "pkg:org.apache.fineract.infrastructure.bulkimport.populator.savings",
+            "pkg:org.apache.fineract.infrastructure.bulkimport.populator.shareaccount",
+            "pkg:org.apache.fineract.infrastructure.bulkimport.populator.staff",
+            "pkg:org.apache.fineract.infrastructure.bulkimport.populator.users",
+            "pkg:org.apache.fineract.infrastructure.bulkimport.service",
+            "pkg:org.apache.fineract.infrastructure.businessdate.data.api",
+            "pkg:org.apache.fineract.infrastructure.businessdate.data.service",
+            "pkg:org.apache.fineract.infrastructure.businessdate.domain",
+            "pkg:org.apache.fineract.infrastructure.businessdate.exception",
+            "pkg:org.apache.fineract.infrastructure.businessdate.mapper",
+            "pkg:org.apache.fineract.infrastructure.businessdate.service",
+            "pkg:org.apache.fineract.infrastructure.cache",
+            "pkg:org.apache.fineract.infrastructure.cache.data",
+            "pkg:org.apache.fineract.infrastructure.cache.domain",
+            "pkg:org.apache.fineract.infrastructure.cache.service",
+            "pkg:org.apache.fineract.infrastructure.campaigns.constants",
+            "pkg:org.apache.fineract.infrastructure.campaigns.helper",
+            "pkg:org.apache.fineract.infrastructure.campaigns.sms.constants",
+            "pkg:org.apache.fineract.infrastructure.campaigns.sms.data",
+            "pkg:org.apache.fineract.infrastructure.campaigns.sms.domain",
+            "pkg:org.apache.fineract.infrastructure.campaigns.sms.exception",
+            "pkg:org.apache.fineract.infrastructure.campaigns.sms.serialization",
+            "pkg:org.apache.fineract.infrastructure.codes.domain",
+            "pkg:org.apache.fineract.infrastructure.codes.exception",
+            "pkg:org.apache.fineract.infrastructure.codes.mapper",
+            "pkg:org.apache.fineract.infrastructure.codes.serialization",
+            "pkg:org.apache.fineract.infrastructure.codes.service",
+            "pkg:org.apache.fineract.infrastructure.configuration.api",
+            "pkg:org.apache.fineract.infrastructure.configuration.data",
+            "pkg:org.apache.fineract.infrastructure.configuration.domain",
+            "pkg:org.apache.fineract.infrastructure.configuration.exception",
+            "pkg:org.apache.fineract.infrastructure.configuration.serialization",
+            "pkg:org.apache.fineract.infrastructure.configuration.service",
+            "pkg:org.apache.fineract.infrastructure.contentstore.detector",
+            "pkg:org.apache.fineract.infrastructure.contentstore.exception",
+            "pkg:org.apache.fineract.infrastructure.contentstore.policy",
+            "pkg:org.apache.fineract.infrastructure.contentstore.processor",
+            "pkg:org.apache.fineract.infrastructure.contentstore.service",
+            "pkg:org.apache.fineract.infrastructure.contentstore.util",
+            "pkg:org.apache.fineract.infrastructure.core.api",
+            "pkg:org.apache.fineract.infrastructure.core.auditing",
+            "pkg:org.apache.fineract.infrastructure.core.boot",
+            "pkg:org.apache.fineract.infrastructure.core.condition",
+            "pkg:org.apache.fineract.infrastructure.core.config",
+            "pkg:org.apache.fineract.infrastructure.core.config.cache",
+            "pkg:org.apache.fineract.infrastructure.core.config.jpa",
+            "pkg:org.apache.fineract.infrastructure.core.data",
+            "pkg:org.apache.fineract.infrastructure.core.domain",
+            "pkg:org.apache.fineract.infrastructure.core.exception",
+            "pkg:org.apache.fineract.infrastructure.core.exceptionmapper",
+            "pkg:org.apache.fineract.infrastructure.core.filters",
+            "pkg:org.apache.fineract.infrastructure.core.jersey",
+            "pkg:org.apache.fineract.infrastructure.core.jersey.converter",
+            "pkg:org.apache.fineract.infrastructure.core.jersey.serializer",
+            "pkg:org.apache.fineract.infrastructure.core.jersey.serializer.legacy",
+            "pkg:org.apache.fineract.infrastructure.core.persistence",
+            "pkg:org.apache.fineract.infrastructure.core.persistence.visibility",
+            "pkg:org.apache.fineract.infrastructure.core.serialization",
+            "pkg:org.apache.fineract.infrastructure.core.service",
+            "pkg:org.apache.fineract.infrastructure.core.service.database",
+            "pkg:org.apache.fineract.infrastructure.core.service.migration",
+            "pkg:org.apache.fineract.infrastructure.core.service.tenant",
+            "pkg:org.apache.fineract.infrastructure.core.validator",
+            "pkg:org.apache.fineract.infrastructure.dataqueries.api",
+            "pkg:org.apache.fineract.infrastructure.dataqueries.data",
+            "pkg:org.apache.fineract.infrastructure.dataqueries.domain",
+            "pkg:org.apache.fineract.infrastructure.dataqueries.exception",
+            "pkg:org.apache.fineract.infrastructure.dataqueries.serialization",
+            "pkg:org.apache.fineract.infrastructure.dataqueries.service",
+            "pkg:org.apache.fineract.infrastructure.dataqueries.service.export",
+            "pkg:org.apache.fineract.infrastructure.documentmanagement.exception",
+            "pkg:org.apache.fineract.infrastructure.documentmanagement.service",
+            "pkg:org.apache.fineract.infrastructure.entityaccess.api",
+            "pkg:org.apache.fineract.infrastructure.entityaccess.data",
+            "pkg:org.apache.fineract.infrastructure.entityaccess.domain",
+            "pkg:org.apache.fineract.infrastructure.entityaccess.exception",
+            "pkg:org.apache.fineract.infrastructure.entityaccess.service",
+            "pkg:org.apache.fineract.infrastructure.event.business",
+            "pkg:org.apache.fineract.infrastructure.event.business.domain",
+            "pkg:org.apache.fineract.infrastructure.event.business.domain.client",
+            "pkg:org.apache.fineract.infrastructure.event.business.domain.datatable",
+            "pkg:org.apache.fineract.infrastructure.event.business.domain.deposit",
+            "pkg:org.apache.fineract.infrastructure.event.business.domain.document",
+            "pkg:org.apache.fineract.infrastructure.event.business.domain.group",
+            "pkg:org.apache.fineract.infrastructure.event.business.domain.journalentry",
+            "pkg:org.apache.fineract.infrastructure.event.business.domain.loan",
+            "pkg:org.apache.fineract.infrastructure.event.business.domain.loan.charge",
+            "pkg:org.apache.fineract.infrastructure.event.business.domain.loan.product",
+            "pkg:org.apache.fineract.infrastructure.event.business.domain.loan.reaging",
+            "pkg:org.apache.fineract.infrastructure.event.business.domain.loan.reamortization",
+            "pkg:org.apache.fineract.infrastructure.event.business.domain.loan.repayment",
+            "pkg:org.apache.fineract.infrastructure.event.business.domain.loan.transaction",
+            "pkg:org.apache.fineract.infrastructure.event.business.domain.loan.transaction.reaging",
+            "pkg:org.apache.fineract.infrastructure.event.business.domain.loan.transaction.reamortization",
+            "pkg:org.apache.fineract.infrastructure.event.business.domain.savings",
+            "pkg:org.apache.fineract.infrastructure.event.business.domain.savings.transaction",
+            "pkg:org.apache.fineract.infrastructure.event.business.domain.share",
+            "pkg:org.apache.fineract.infrastructure.event.business.domain.workingcapitalloan.charge",
+            "pkg:org.apache.fineract.infrastructure.event.business.domain.workingcapitalloan.journalentry",
+            "pkg:org.apache.fineract.infrastructure.event.business.domain.workingcapitalloan.loan",
+            "pkg:org.apache.fineract.infrastructure.event.business.domain.workingcapitalloan.transaction",
+            "pkg:org.apache.fineract.infrastructure.event.business.service",
+            "pkg:org.apache.fineract.infrastructure.event.external.repository",
+            "pkg:org.apache.fineract.infrastructure.event.external.repository.domain",
+            "pkg:org.apache.fineract.infrastructure.event.external.service",
+            "pkg:org.apache.fineract.infrastructure.event.external.service.idempotency",
+            "pkg:org.apache.fineract.infrastructure.event.external.service.message",
+            "pkg:org.apache.fineract.infrastructure.event.external.service.serialization.mapper.support",
+            "pkg:org.apache.fineract.infrastructure.event.external.service.serialization.serializer",
+            "pkg:org.apache.fineract.infrastructure.gcm.service",
+            "pkg:org.apache.fineract.infrastructure.hooks.event",
+            "pkg:org.apache.fineract.infrastructure.instancemode",
+            "pkg:org.apache.fineract.infrastructure.instancemode.api",
+            "pkg:org.apache.fineract.infrastructure.instancemode.filter",
+            "pkg:org.apache.fineract.infrastructure.jobs",
+            "pkg:org.apache.fineract.infrastructure.jobs.api",
+            "pkg:org.apache.fineract.infrastructure.jobs.config",
+            "pkg:org.apache.fineract.infrastructure.jobs.data",
+            "pkg:org.apache.fineract.infrastructure.jobs.data.partitionedjobs",
+            "pkg:org.apache.fineract.infrastructure.jobs.domain",
+            "pkg:org.apache.fineract.infrastructure.jobs.exception",
+            "pkg:org.apache.fineract.infrastructure.jobs.filter",
+            "pkg:org.apache.fineract.infrastructure.jobs.service",
+            "pkg:org.apache.fineract.infrastructure.jobs.service.jobparameterprovider",
+            "pkg:org.apache.fineract.infrastructure.report.provider",
+            "pkg:org.apache.fineract.infrastructure.report.service",
+            "pkg:org.apache.fineract.infrastructure.security.data",
+            "pkg:org.apache.fineract.infrastructure.security.domain",
+            "pkg:org.apache.fineract.infrastructure.security.exception",
+            "pkg:org.apache.fineract.infrastructure.security.filter",
+            "pkg:org.apache.fineract.infrastructure.security.service",
+            "pkg:org.apache.fineract.infrastructure.security.utils",
+            "pkg:org.apache.fineract.infrastructure.sms.data",
+            "pkg:org.apache.fineract.infrastructure.sms.domain",
+            "pkg:org.apache.fineract.infrastructure.sms.exception",
+            "pkg:org.apache.fineract.infrastructure.sms.scheduler",
+            "pkg:org.apache.fineract.infrastructure.springbatch",
+            "pkg:org.apache.fineract.interoperation.domain",
+            "pkg:org.apache.fineract.investor.accounting.journalentry.service",
+            "pkg:org.apache.fineract.investor.config",
+            "pkg:org.apache.fineract.investor.data",
+            "pkg:org.apache.fineract.investor.data.attribute",
+            "pkg:org.apache.fineract.investor.domain",
+            "pkg:org.apache.fineract.investor.enricher",
+            "pkg:org.apache.fineract.investor.exception",
+            "pkg:org.apache.fineract.investor.serialization",
+            "pkg:org.apache.fineract.investor.service",
+            "pkg:org.apache.fineract.junit.context",
+            "pkg:org.apache.fineract.notification.domain",
+            "pkg:org.apache.fineract.notification.eventandlistener",
+            "pkg:org.apache.fineract.notification.service",
+            "pkg:org.apache.fineract.organisation.holiday.api",
+            "pkg:org.apache.fineract.organisation.holiday.data",
+            "pkg:org.apache.fineract.organisation.holiday.domain",
+            "pkg:org.apache.fineract.organisation.holiday.exception",
+            "pkg:org.apache.fineract.organisation.holiday.service",
+            "pkg:org.apache.fineract.organisation.monetary.domain",
+            "pkg:org.apache.fineract.organisation.monetary.exception",
+            "pkg:org.apache.fineract.organisation.monetary.mapper",
+            "pkg:org.apache.fineract.organisation.monetary.service",
+            "pkg:org.apache.fineract.organisation.office.data",
+            "pkg:org.apache.fineract.organisation.office.domain",
+            "pkg:org.apache.fineract.organisation.office.exception",
+            "pkg:org.apache.fineract.organisation.office.mapper",
+            "pkg:org.apache.fineract.organisation.office.serialization",
+            "pkg:org.apache.fineract.organisation.office.service",
+            "pkg:org.apache.fineract.organisation.provisioning.domain",
+            "pkg:org.apache.fineract.organisation.staff.data",
+            "pkg:org.apache.fineract.organisation.staff.domain",
+            "pkg:org.apache.fineract.organisation.staff.exception",
+            "pkg:org.apache.fineract.organisation.staff.mapper",
+            "pkg:org.apache.fineract.organisation.staff.service",
+            "pkg:org.apache.fineract.organisation.staff.validation",
+            "pkg:org.apache.fineract.organisation.teller.data",
+            "pkg:org.apache.fineract.organisation.teller.domain",
+            "pkg:org.apache.fineract.organisation.teller.exception",
+            "pkg:org.apache.fineract.organisation.teller.serialization",
+            "pkg:org.apache.fineract.organisation.teller.service",
+            "pkg:org.apache.fineract.organisation.workingdays.api",
+            "pkg:org.apache.fineract.organisation.workingdays.command",
+            "pkg:org.apache.fineract.organisation.workingdays.data",
+            "pkg:org.apache.fineract.organisation.workingdays.domain",
+            "pkg:org.apache.fineract.organisation.workingdays.exception",
+            "pkg:org.apache.fineract.organisation.workingdays.service",
+            "pkg:org.apache.fineract.portfolio",
+            "pkg:org.apache.fineract.portfolio.account.api",
+            "pkg:org.apache.fineract.portfolio.account.data",
+            "pkg:org.apache.fineract.portfolio.account.domain",
+            "pkg:org.apache.fineract.portfolio.account.exception",
+            "pkg:org.apache.fineract.portfolio.account.mapper",
+            "pkg:org.apache.fineract.portfolio.account.service",
+            "pkg:org.apache.fineract.portfolio.accountdetails.data",
+            "pkg:org.apache.fineract.portfolio.accountdetails.domain",
+            "pkg:org.apache.fineract.portfolio.accountdetails.service",
+            "pkg:org.apache.fineract.portfolio.accounts.exceptions",
+            "pkg:org.apache.fineract.portfolio.accounts.service",
+            "pkg:org.apache.fineract.portfolio.address.domain",
+            "pkg:org.apache.fineract.portfolio.address.exception",
+            "pkg:org.apache.fineract.portfolio.address.serialization",
+            "pkg:org.apache.fineract.portfolio.address.service",
+            "pkg:org.apache.fineract.portfolio.calendar.data",
+            "pkg:org.apache.fineract.portfolio.calendar.domain",
+            "pkg:org.apache.fineract.portfolio.calendar.exception",
+            "pkg:org.apache.fineract.portfolio.calendar.serialization",
+            "pkg:org.apache.fineract.portfolio.calendar.service",
+            "pkg:org.apache.fineract.portfolio.charge.api",
+            "pkg:org.apache.fineract.portfolio.charge.data",
+            "pkg:org.apache.fineract.portfolio.charge.domain",
+            "pkg:org.apache.fineract.portfolio.charge.exception",
+            "pkg:org.apache.fineract.portfolio.charge.serialization",
+            "pkg:org.apache.fineract.portfolio.charge.service",
+            "pkg:org.apache.fineract.portfolio.charge.util",
+            "pkg:org.apache.fineract.portfolio.client.api",
+            "pkg:org.apache.fineract.portfolio.client.command",
+            "pkg:org.apache.fineract.portfolio.client.data",
+            "pkg:org.apache.fineract.portfolio.client.domain",
+            "pkg:org.apache.fineract.portfolio.client.domain.search",
+            "pkg:org.apache.fineract.portfolio.client.exception",
+            "pkg:org.apache.fineract.portfolio.client.mapper",
+            "pkg:org.apache.fineract.portfolio.client.serialization",
+            "pkg:org.apache.fineract.portfolio.client.service",
+            "pkg:org.apache.fineract.portfolio.collateral.domain",
+            "pkg:org.apache.fineract.portfolio.collateral.exception",
+            "pkg:org.apache.fineract.portfolio.collateralmanagement.api",
+            "pkg:org.apache.fineract.portfolio.collateralmanagement.command",
+            "pkg:org.apache.fineract.portfolio.collateralmanagement.data",
+            "pkg:org.apache.fineract.portfolio.collateralmanagement.domain",
+            "pkg:org.apache.fineract.portfolio.collateralmanagement.exception",
+            "pkg:org.apache.fineract.portfolio.collateralmanagement.service",
+            "pkg:org.apache.fineract.portfolio.collectionsheet.command",
+            "pkg:org.apache.fineract.portfolio.collectionsheet.data",
+            "pkg:org.apache.fineract.portfolio.collectionsheet.serialization",
+            "pkg:org.apache.fineract.portfolio.collectionsheet.service",
+            "pkg:org.apache.fineract.portfolio.common.domain",
+            "pkg:org.apache.fineract.portfolio.common.service",
+            "pkg:org.apache.fineract.portfolio.delinquency.api",
+            "pkg:org.apache.fineract.portfolio.delinquency.api.data",
+            "pkg:org.apache.fineract.portfolio.delinquency.data",
+            "pkg:org.apache.fineract.portfolio.delinquency.domain",
+            "pkg:org.apache.fineract.portfolio.delinquency.exception",
+            "pkg:org.apache.fineract.portfolio.delinquency.helper",
+            "pkg:org.apache.fineract.portfolio.delinquency.mapper",
+            "pkg:org.apache.fineract.portfolio.delinquency.service",
+            "pkg:org.apache.fineract.portfolio.delinquency.spi",
+            "pkg:org.apache.fineract.portfolio.delinquency.validator",
+            "pkg:org.apache.fineract.portfolio.floatingrates.data",
+            "pkg:org.apache.fineract.portfolio.floatingrates.domain",
+            "pkg:org.apache.fineract.portfolio.floatingrates.exception",
+            "pkg:org.apache.fineract.portfolio.floatingrates.service",
+            "pkg:org.apache.fineract.portfolio.floatingrates.validation",
+            "pkg:org.apache.fineract.portfolio.fund.domain",
+            "pkg:org.apache.fineract.portfolio.fund.exception",
+            "pkg:org.apache.fineract.portfolio.fund.serialization",
+            "pkg:org.apache.fineract.portfolio.fund.service",
+            "pkg:org.apache.fineract.portfolio.group.api",
+            "pkg:org.apache.fineract.portfolio.group.data",
+            "pkg:org.apache.fineract.portfolio.group.domain",
+            "pkg:org.apache.fineract.portfolio.group.exception",
+            "pkg:org.apache.fineract.portfolio.group.serialization",
+            "pkg:org.apache.fineract.portfolio.group.service",
+            "pkg:org.apache.fineract.portfolio.interestpauses.api",
+            "pkg:org.apache.fineract.portfolio.interestpauses.service",
+            "pkg:org.apache.fineract.portfolio.interestratechart.data",
+            "pkg:org.apache.fineract.portfolio.interestratechart.domain",
+            "pkg:org.apache.fineract.portfolio.interestratechart.exception",
+            "pkg:org.apache.fineract.portfolio.interestratechart.incentive",
+            "pkg:org.apache.fineract.portfolio.interestratechart.service",
+            "pkg:org.apache.fineract.portfolio.loanaccount.api",
+            "pkg:org.apache.fineract.portfolio.loanaccount.api.request",
+            "pkg:org.apache.fineract.portfolio.loanaccount.command",
+            "pkg:org.apache.fineract.portfolio.loanaccount.data",
+            "pkg:org.apache.fineract.portfolio.loanaccount.domain",
+            "pkg:org.apache.fineract.portfolio.loanaccount.domain.reaging",
+            "pkg:org.apache.fineract.portfolio.loanaccount.domain.reamortization",
+            "pkg:org.apache.fineract.portfolio.loanaccount.domain.transactionprocessor",
+            "pkg:org.apache.fineract.portfolio.loanaccount.domain.transactionprocessor.impl",
+            "pkg:org.apache.fineract.portfolio.loanaccount.exception",
+            "pkg:org.apache.fineract.portfolio.loanaccount.guarantor.command",
+            "pkg:org.apache.fineract.portfolio.loanaccount.guarantor.data",
+            "pkg:org.apache.fineract.portfolio.loanaccount.guarantor.domain",
+            "pkg:org.apache.fineract.portfolio.loanaccount.guarantor.exception",
+            "pkg:org.apache.fineract.portfolio.loanaccount.guarantor.serialization",
+            "pkg:org.apache.fineract.portfolio.loanaccount.guarantor.service",
+            "pkg:org.apache.fineract.portfolio.loanaccount.jobs.updateloanarrearsageing",
+            "pkg:org.apache.fineract.portfolio.loanaccount.loanschedule.data",
+            "pkg:org.apache.fineract.portfolio.loanaccount.loanschedule.domain",
+            "pkg:org.apache.fineract.portfolio.loanaccount.loanschedule.exception",
+            "pkg:org.apache.fineract.portfolio.loanaccount.loanschedule.service",
+            "pkg:org.apache.fineract.portfolio.loanaccount.mapper",
+            "pkg:org.apache.fineract.portfolio.loanaccount.repository",
+            "pkg:org.apache.fineract.portfolio.loanaccount.rescheduleloan.api",
+            "pkg:org.apache.fineract.portfolio.loanaccount.rescheduleloan.data",
+            "pkg:org.apache.fineract.portfolio.loanaccount.rescheduleloan.domain",
+            "pkg:org.apache.fineract.portfolio.loanaccount.rescheduleloan.exception",
+            "pkg:org.apache.fineract.portfolio.loanaccount.rescheduleloan.service",
+            "pkg:org.apache.fineract.portfolio.loanaccount.serialization",
+            "pkg:org.apache.fineract.portfolio.loanaccount.service",
+            "pkg:org.apache.fineract.portfolio.loanaccount.service.adjustment",
+            "pkg:org.apache.fineract.portfolio.loanaccount.service.reaging",
+            "pkg:org.apache.fineract.portfolio.loanaccount.service.reamortization",
+            "pkg:org.apache.fineract.portfolio.loanaccount.service.schedule",
+            "pkg:org.apache.fineract.portfolio.loanaccount.starter",
+            "pkg:org.apache.fineract.portfolio.loanaccount.util",
+            "pkg:org.apache.fineract.portfolio.loanorigination.api",
+            "pkg:org.apache.fineract.portfolio.loanorigination.domain",
+            "pkg:org.apache.fineract.portfolio.loanorigination.exception",
+            "pkg:org.apache.fineract.portfolio.loanorigination.mapper",
+            "pkg:org.apache.fineract.portfolio.loanorigination.serialization",
+            "pkg:org.apache.fineract.portfolio.loanorigination.service",
+            "pkg:org.apache.fineract.portfolio.loanproduct",
+            "pkg:org.apache.fineract.portfolio.loanproduct.calc",
+            "pkg:org.apache.fineract.portfolio.loanproduct.calc.converter",
+            "pkg:org.apache.fineract.portfolio.loanproduct.calc.data",
+            "pkg:org.apache.fineract.portfolio.loanproduct.data",
+            "pkg:org.apache.fineract.portfolio.loanproduct.domain",
+            "pkg:org.apache.fineract.portfolio.loanproduct.exception",
+            "pkg:org.apache.fineract.portfolio.loanproduct.mapper",
+            "pkg:org.apache.fineract.portfolio.loanproduct.serialization",
+            "pkg:org.apache.fineract.portfolio.loanproduct.service",
+            "pkg:org.apache.fineract.portfolio.meeting.data",
+            "pkg:org.apache.fineract.portfolio.meeting.domain",
+            "pkg:org.apache.fineract.portfolio.meeting.exception",
+            "pkg:org.apache.fineract.portfolio.meeting.service",
+            "pkg:org.apache.fineract.portfolio.note.data",
+            "pkg:org.apache.fineract.portfolio.note.domain",
+            "pkg:org.apache.fineract.portfolio.note.exception",
+            "pkg:org.apache.fineract.portfolio.note.service",
+            "pkg:org.apache.fineract.portfolio.paymentdetail.domain",
+            "pkg:org.apache.fineract.portfolio.paymentdetail.service",
+            "pkg:org.apache.fineract.portfolio.paymenttype.domain",
+            "pkg:org.apache.fineract.portfolio.paymenttype.exception",
+            "pkg:org.apache.fineract.portfolio.paymenttype.mapper",
+            "pkg:org.apache.fineract.portfolio.paymenttype.service",
+            "pkg:org.apache.fineract.portfolio.products.exception",
+            "pkg:org.apache.fineract.portfolio.products.service",
+            "pkg:org.apache.fineract.portfolio.rate.api",
+            "pkg:org.apache.fineract.portfolio.rate.data",
+            "pkg:org.apache.fineract.portfolio.rate.domain",
+            "pkg:org.apache.fineract.portfolio.rate.exception",
+            "pkg:org.apache.fineract.portfolio.rate.serialization",
+            "pkg:org.apache.fineract.portfolio.rate.service",
+            "pkg:org.apache.fineract.portfolio.repaymentwithpostdatedchecks.domain",
+            "pkg:org.apache.fineract.portfolio.repaymentwithpostdatedchecks.exception",
+            "pkg:org.apache.fineract.portfolio.repaymentwithpostdatedchecks.service",
+            "pkg:org.apache.fineract.portfolio.savings",
+            "pkg:org.apache.fineract.portfolio.savings.api",
+            "pkg:org.apache.fineract.portfolio.savings.data",
+            "pkg:org.apache.fineract.portfolio.savings.domain",
+            "pkg:org.apache.fineract.portfolio.savings.domain.interest",
+            "pkg:org.apache.fineract.portfolio.savings.exception",
+            "pkg:org.apache.fineract.portfolio.savings.service",
+            "pkg:org.apache.fineract.portfolio.savings.service.search",
+            "pkg:org.apache.fineract.portfolio.search.data",
+            "pkg:org.apache.fineract.portfolio.search.service",
+            "pkg:org.apache.fineract.portfolio.shareaccounts.data",
+            "pkg:org.apache.fineract.portfolio.shareaccounts.domain",
+            "pkg:org.apache.fineract.portfolio.shareaccounts.serialization",
+            "pkg:org.apache.fineract.portfolio.shareaccounts.service",
+            "pkg:org.apache.fineract.portfolio.shareproducts.data",
+            "pkg:org.apache.fineract.portfolio.shareproducts.domain",
+            "pkg:org.apache.fineract.portfolio.shareproducts.exception",
+            "pkg:org.apache.fineract.portfolio.shareproducts.serialization",
+            "pkg:org.apache.fineract.portfolio.shareproducts.service",
+            "pkg:org.apache.fineract.portfolio.tax.api",
+            "pkg:org.apache.fineract.portfolio.tax.data",
+            "pkg:org.apache.fineract.portfolio.tax.domain",
+            "pkg:org.apache.fineract.portfolio.tax.exception",
+            "pkg:org.apache.fineract.portfolio.tax.mapper",
+            "pkg:org.apache.fineract.portfolio.tax.serialization",
+            "pkg:org.apache.fineract.portfolio.tax.service",
+            "pkg:org.apache.fineract.portfolio.util",
+            "pkg:org.apache.fineract.portfolio.workingcapitalloan.accounting",
+            "pkg:org.apache.fineract.portfolio.workingcapitalloan.api",
+            "pkg:org.apache.fineract.portfolio.workingcapitalloan.calc",
+            "pkg:org.apache.fineract.portfolio.workingcapitalloan.data",
+            "pkg:org.apache.fineract.portfolio.workingcapitalloan.domain",
+            "pkg:org.apache.fineract.portfolio.workingcapitalloan.exception",
+            "pkg:org.apache.fineract.portfolio.workingcapitalloan.mapper",
+            "pkg:org.apache.fineract.portfolio.workingcapitalloan.repository",
+            "pkg:org.apache.fineract.portfolio.workingcapitalloan.serialization",
+            "pkg:org.apache.fineract.portfolio.workingcapitalloan.service",
+            "pkg:org.apache.fineract.portfolio.workingcapitalloan.validator",
+            "pkg:org.apache.fineract.portfolio.workingcapitalloanbreach.data",
+            "pkg:org.apache.fineract.portfolio.workingcapitalloanbreach.domain",
+            "pkg:org.apache.fineract.portfolio.workingcapitalloanbreach.exception",
+            "pkg:org.apache.fineract.portfolio.workingcapitalloanbreach.mapper",
+            "pkg:org.apache.fineract.portfolio.workingcapitalloanbreach.repository",
+            "pkg:org.apache.fineract.portfolio.workingcapitalloanbreach.service",
+            "pkg:org.apache.fineract.portfolio.workingcapitalloanbreach.validator",
+            "pkg:org.apache.fineract.portfolio.workingcapitalloannearbreach.data",
+            "pkg:org.apache.fineract.portfolio.workingcapitalloannearbreach.domain",
+            "pkg:org.apache.fineract.portfolio.workingcapitalloannearbreach.exception",
+            "pkg:org.apache.fineract.portfolio.workingcapitalloannearbreach.mapper",
+            "pkg:org.apache.fineract.portfolio.workingcapitalloannearbreach.repository",
+            "pkg:org.apache.fineract.portfolio.workingcapitalloannearbreach.service",
+            "pkg:org.apache.fineract.portfolio.workingcapitalloannearbreach.validator",
+            "pkg:org.apache.fineract.portfolio.workingcapitalloanproduct.api",
+            "pkg:org.apache.fineract.portfolio.workingcapitalloanproduct.data",
+            "pkg:org.apache.fineract.portfolio.workingcapitalloanproduct.domain",
+            "pkg:org.apache.fineract.portfolio.workingcapitalloanproduct.exception",
+            "pkg:org.apache.fineract.portfolio.workingcapitalloanproduct.mapper",
+            "pkg:org.apache.fineract.portfolio.workingcapitalloanproduct.repository",
+            "pkg:org.apache.fineract.portfolio.workingcapitalloanproduct.serialization",
+            "pkg:org.apache.fineract.portfolio.workingcapitalloanproduct.service",
+            "pkg:org.apache.fineract.useradministration.api",
+            "pkg:org.apache.fineract.useradministration.data",
+            "pkg:org.apache.fineract.useradministration.domain",
+            "pkg:org.apache.fineract.useradministration.exception",
+            "pkg:org.apache.fineract.useradministration.serialization",
+            "pkg:org.apache.fineract.useradministration.service",
+            "pkg:org.springframework.batch.core.scope.context"
+          ]
+        },
+        {
+          "size": 27,
+          "members": [
+            "pkg:org.apache.fineract.integrationtests",
+            "pkg:org.apache.fineract.integrationtests.client",
+            "pkg:org.apache.fineract.integrationtests.client.feign",
+            "pkg:org.apache.fineract.integrationtests.client.feign.helpers",
+            "pkg:org.apache.fineract.integrationtests.client.feign.modules",
+            "pkg:org.apache.fineract.integrationtests.common",
+            "pkg:org.apache.fineract.integrationtests.common.accounting",
+            "pkg:org.apache.fineract.integrationtests.common.batch",
+            "pkg:org.apache.fineract.integrationtests.common.charges",
+            "pkg:org.apache.fineract.integrationtests.common.externalevents",
+            "pkg:org.apache.fineract.integrationtests.common.fixeddeposit",
+            "pkg:org.apache.fineract.integrationtests.common.funds",
+            "pkg:org.apache.fineract.integrationtests.common.loans",
+            "pkg:org.apache.fineract.integrationtests.common.organisation",
+            "pkg:org.apache.fineract.integrationtests.common.products",
+            "pkg:org.apache.fineract.integrationtests.common.provisioning",
+            "pkg:org.apache.fineract.integrationtests.common.savings",
+            "pkg:org.apache.fineract.integrationtests.common.shares",
+            "pkg:org.apache.fineract.integrationtests.common.system",
+            "pkg:org.apache.fineract.integrationtests.common.workingcapitalloan",
+            "pkg:org.apache.fineract.integrationtests.common.workingcapitalloanbreach",
+            "pkg:org.apache.fineract.integrationtests.common.workingcapitalloannearbreach",
+            "pkg:org.apache.fineract.integrationtests.common.workingcapitalloanproduct",
+            "pkg:org.apache.fineract.integrationtests.interoperation",
+            "pkg:org.apache.fineract.integrationtests.support.instancemode",
+            "pkg:org.apache.fineract.integrationtests.useradministration.roles",
+            "pkg:org.apache.fineract.integrationtests.useradministration.users"
+          ]
+        },
+        {
+          "size": 12,
+          "members": [
+            "pkg:org.apache.fineract.test.messaging",
+            "pkg:org.apache.fineract.test.messaging.event",
+            "pkg:org.apache.fineract.test.messaging.event.assetexternalization",
+            "pkg:org.apache.fineract.test.messaging.event.client",
+            "pkg:org.apache.fineract.test.messaging.event.loan",
+            "pkg:org.apache.fineract.test.messaging.event.loan.delinquency",
+            "pkg:org.apache.fineract.test.messaging.event.loan.transaction",
+            "pkg:org.apache.fineract.test.messaging.event.workingcapitalloan.charge",
+            "pkg:org.apache.fineract.test.messaging.event.workingcapitalloan.journalentry",
+            "pkg:org.apache.fineract.test.messaging.event.workingcapitalloan.loan",
+            "pkg:org.apache.fineract.test.messaging.event.workingcapitalloan.transaction",
+            "pkg:org.apache.fineract.test.messaging.store"
+          ]
+        },
+        {
+          "size": 4,
+          "members": [
+            "pkg:org.apache.fineract.adhocquery.api",
+            "pkg:org.apache.fineract.adhocquery.data",
+            "pkg:org.apache.fineract.adhocquery.domain",
+            "pkg:org.apache.fineract.adhocquery.service"
+          ]
+        },
+        {
+          "size": 4,
+          "members": [
+            "pkg:org.apache.fineract.infrastructure.survey.api",
+            "pkg:org.apache.fineract.infrastructure.survey.data",
+            "pkg:org.apache.fineract.infrastructure.survey.domain",
+            "pkg:org.apache.fineract.infrastructure.survey.service"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:org.apache.fineract.accounting.financialactivityaccount.api",
+            "pkg:org.apache.fineract.accounting.financialactivityaccount.serialization",
+            "pkg:org.apache.fineract.accounting.financialactivityaccount.service"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:org.apache.fineract.client.adapter",
+            "pkg:org.apache.fineract.client.feign",
+            "pkg:org.apache.fineract.client.feign.support"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:org.apache.fineract.infrastructure.jobs.service.aggregationjob",
+            "pkg:org.apache.fineract.infrastructure.jobs.service.aggregationjob.listener",
+            "pkg:org.apache.fineract.infrastructure.jobs.service.aggregationjob.tasklet"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.fineract.accounting.provisioning.service",
+            "pkg:org.apache.fineract.organisation.provisioning.service"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.fineract.infrastructure.campaigns.email.data",
+            "pkg:org.apache.fineract.infrastructure.campaigns.email.domain"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.fineract.infrastructure.creditbureau.data",
+            "pkg:org.apache.fineract.infrastructure.creditbureau.service"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.fineract.infrastructure.hooks.data",
+            "pkg:org.apache.fineract.infrastructure.hooks.domain"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.fineract.infrastructure.jobs.service.retainedearning",
+            "pkg:org.apache.fineract.infrastructure.jobs.service.retainedearning.services"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.fineract.portfolio.collateral.api",
+            "pkg:org.apache.fineract.portfolio.collateral.service"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.fineract.portfolio.loanorigination.enricher",
+            "pkg:org.apache.fineract.portfolio.loanorigination.helper"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.fineract.spm.domain",
+            "pkg:org.apache.fineract.spm.util"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.fineract.test.data",
+            "pkg:org.apache.fineract.test.data.delinquency"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.fineract.test.factory",
+            "pkg:org.apache.fineract.test.helper"
+          ]
+        }
+      ]
+    },
+    "B2": {
+      "id": "B2",
+      "name": "package-dependency-density",
+      "label": "包依赖密度",
+      "domain": "B",
+      "direction": "interval",
+      "value": 6.9582,
+      "numerator": 7995,
+      "denominator": 1149,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Package --all --field id,dependsOnPackageIds --snapshot c7e0ff54-d246-4ca0-9cdb-b311d9a07b8d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot c7e0ff54-d246-4ca0-9cdb-b311d9a07b8d"
+      ]
+    },
+    "B1.frontend": {
+      "id": "B1.frontend",
+      "name": "circular-dependency-density",
+      "label": "循环依赖密度（前端）",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": 0.0,
+      "numerator": 0,
+      "denominator": 1,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Module --all --field id,importedModuleIds --snapshot c7e0ff54-d246-4ca0-9cdb-b311d9a07b8d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Module --snapshot c7e0ff54-d246-4ca0-9cdb-b311d9a07b8d"
+      ],
+      "sccCount": 0
+    },
+    "B3": {
+      "id": "B3",
+      "name": "giant-class-ratio",
+      "label": "巨型类占比",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": 0.030914,
+      "numerator": 247,
+      "denominator": 7990,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Class --all --field id,lineCount --snapshot c7e0ff54-d246-4ca0-9cdb-b311d9a07b8d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --where 'lineCount>500' --snapshot c7e0ff54-d246-4ca0-9cdb-b311d9a07b8d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --snapshot c7e0ff54-d246-4ca0-9cdb-b311d9a07b8d"
+      ],
+      "threshold": "lineCount > 500",
+      "top": [
+        {
+          "lineCount": 8073,
+          "id": "cls:org.apache.fineract.integrationtests.ClientLoanIntegrationTest"
+        },
+        {
+          "lineCount": 6568,
+          "id": "cls:org.apache.fineract.portfolio.loanproduct.calc.ProgressiveEMICalculatorTest"
+        },
+        {
+          "lineCount": 6341,
+          "id": "cls:org.apache.fineract.integrationtests.AdvancedPaymentAllocationLoanRepaymentScheduleTest"
+        },
+        {
+          "lineCount": 6015,
+          "id": "cls:org.apache.fineract.test.stepdef.loan.LoanStepDef"
+        },
+        {
+          "lineCount": 5696,
+          "id": "cls:org.apache.fineract.test.stepdef.loan.WorkingCapitalLoanAccountStepDef"
+        }
+      ],
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --where 'lineCount>500' --snapshot c7e0ff54-d246-4ca0-9cdb-b311d9a07b8d",
+        "serverCount": 247,
+        "match": true
+      }
+    },
+    "C2": {
+      "id": "C2",
+      "name": "cyclomatic-complexity-p90",
+      "label": "圈复杂度 P90",
+      "domain": "C",
+      "direction": "lower-better",
+      "value": 3,
+      "denominator": 35235,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot c7e0ff54-d246-4ca0-9cdb-b311d9a07b8d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,lineCount,complexity --snapshot c7e0ff54-d246-4ca0-9cdb-b311d9a07b8d"
+      ],
+      "percentiles": {
+        "p25": 1,
+        "p50": 1,
+        "p75": 1,
+        "p90": 3
+      },
+      "mean": 1.7717,
+      "max": 106,
+      "top": [
+        {
+          "cyclomaticComplexity": 106,
+          "id": "mtd:org.apache.fineract.portfolio.loanproduct.serialization.LoanProductDataValidator.validateForUpdate(:JsonCommand:LoanProduct)"
+        },
+        {
+          "cyclomaticComplexity": 105,
+          "id": "mtd:org.apache.fineract.portfolio.loanaccount.serialization.LoanApplicationValidator.validateForModify(:JsonCommand:Loan)"
+        },
+        {
+          "cyclomaticComplexity": 103,
+          "id": "mtd:org.apache.fineract.portfolio.loanproduct.serialization.LoanProductDataValidator.validateForCreate(:JsonCommand)"
+        },
+        {
+          "cyclomaticComplexity": 82,
+          "id": "mtd:org.apache.fineract.portfolio.loanaccount.serialization.LoanApplicationValidator.validateForCreate(:JsonElement)"
+        },
+        {
+          "cyclomaticComplexity": 82,
+          "id": "mtd:org.apache.fineract.portfolio.loanaccount.service.LoanAssemblerImpl.updateFrom(:JsonCommand:Loan)"
+        }
+      ],
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot c7e0ff54-d246-4ca0-9cdb-b311d9a07b8d",
+        "serverCount": 35235,
+        "match": true
+      }
+    },
+    "C3": {
+      "id": "C3",
+      "name": "test-method-ratio",
+      "label": "测试方法占比",
+      "domain": "C",
+      "direction": "higher-better",
+      "value": 0.148567,
+      "numerator": 5732,
+      "denominator": 38582,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'isTest=true' --snapshot c7e0ff54-d246-4ca0-9cdb-b311d9a07b8d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot c7e0ff54-d246-4ca0-9cdb-b311d9a07b8d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,isTest,testType --snapshot c7e0ff54-d246-4ca0-9cdb-b311d9a07b8d"
+      ],
+      "testTypes": {
+        "UnitTest": 5716,
+        "IntegrationTest": 16
+      },
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'isTest=true' --snapshot c7e0ff54-d246-4ca0-9cdb-b311d9a07b8d",
+        "serverCount": 5732,
+        "match": true
+      }
+    },
+    "C4": {
+      "id": "C4",
+      "name": "giant-method-ratio",
+      "label": "巨型方法占比",
+      "domain": "C",
+      "direction": "lower-better",
+      "value": 0.016982,
+      "numerator": 599,
+      "denominator": 35272,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount>80' --snapshot c7e0ff54-d246-4ca0-9cdb-b311d9a07b8d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount=0' --snapshot c7e0ff54-d246-4ca0-9cdb-b311d9a07b8d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot c7e0ff54-d246-4ca0-9cdb-b311d9a07b8d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,lineCount --snapshot c7e0ff54-d246-4ca0-9cdb-b311d9a07b8d"
+      ],
+      "threshold": "lineCount > 80",
+      "excludedFromDenominator": {
+        "lineCountIsZero": 3310,
+        "lineCountIsNull": 0
+      },
+      "top": [
+        {
+          "lineCount": 5257,
+          "id": "mtd:org.apache.fineract.test.initializer.global.LoanProductGlobalInitializerStep.initialize"
+        },
+        {
+          "lineCount": 704,
+          "id": "mtd:org.apache.fineract.portfolio.loanproduct.serialization.LoanProductDataValidator.validateForUpdate(:JsonCommand:LoanProduct)"
+        },
+        {
+          "lineCount": 682,
+          "id": "mtd:org.apache.fineract.portfolio.loanproduct.serialization.LoanProductDataValidator.validateForCreate(:JsonCommand)"
+        },
+        {
+          "lineCount": 629,
+          "id": "mtd:org.apache.fineract.portfolio.loanaccount.serialization.LoanApplicationValidator.validateForModify(:JsonCommand:Loan)"
+        },
+        {
+          "lineCount": 627,
+          "id": "mtd:org.apache.fineract.integrationtests.common.shares.ShareAccountIntegrationTests.testCreateShareAccountWithCharges"
+        }
+      ],
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount>80' --snapshot c7e0ff54-d246-4ca0-9cdb-b311d9a07b8d",
+        "serverCount": 599,
+        "match": true
+      }
+    },
+    "D3": {
+      "id": "D3",
+      "name": "scale-profile",
+      "label": "规模画像",
+      "domain": "D",
+      "direction": "none",
+      "value": 48905,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" snapshot list --repo fineract",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Repository --snapshot c7e0ff54-d246-4ca0-9cdb-b311d9a07b8d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot c7e0ff54-d246-4ca0-9cdb-b311d9a07b8d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --snapshot c7e0ff54-d246-4ca0-9cdb-b311d9a07b8d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Interface --snapshot c7e0ff54-d246-4ca0-9cdb-b311d9a07b8d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot c7e0ff54-d246-4ca0-9cdb-b311d9a07b8d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Dependency --snapshot c7e0ff54-d246-4ca0-9cdb-b311d9a07b8d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot c7e0ff54-d246-4ca0-9cdb-b311d9a07b8d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Mapper --snapshot c7e0ff54-d246-4ca0-9cdb-b311d9a07b8d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Module --snapshot c7e0ff54-d246-4ca0-9cdb-b311d9a07b8d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Component --snapshot c7e0ff54-d246-4ca0-9cdb-b311d9a07b8d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Function --snapshot c7e0ff54-d246-4ca0-9cdb-b311d9a07b8d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Store --snapshot c7e0ff54-d246-4ca0-9cdb-b311d9a07b8d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Route --snapshot c7e0ff54-d246-4ca0-9cdb-b311d9a07b8d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot c7e0ff54-d246-4ca0-9cdb-b311d9a07b8d"
+      ],
+      "typeCounts": {
+        "Repository": 1,
+        "Package": 1149,
+        "Class": 7990,
+        "Interface": 916,
+        "Method": 38582,
+        "Dependency": 66,
+        "Table": 200,
+        "Mapper": 0,
+        "Module": 1,
+        "Component": 0,
+        "Function": 0,
+        "Store": 0,
+        "Route": 0,
+        "ApiEndpoint": 0
+      },
+      "linkCount": 192668
+    }
+  },
+  "nullMetrics": {
+    "A1": {
+      "id": "A1",
+      "name": "full-chain-coverage",
+      "label": "全链路贯通率",
+      "domain": "A",
+      "direction": "higher-better",
+      "value": null,
+      "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot c7e0ff54-d246-4ca0-9cdb-b311d9a07b8d"
+      ],
+      "evidence": {
+        "apiEndpointCount": 0
+      }
+    },
+    "A2": {
+      "id": "A2",
+      "name": "api-backend-breakrate",
+      "label": "前后端断链率",
+      "domain": "A",
+      "direction": "lower-better",
+      "value": null,
+      "reason": "无 ApiEndpoint 对象（纯后端仓库——按口径置空）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot c7e0ff54-d246-4ca0-9cdb-b311d9a07b8d"
+      ],
+      "evidence": {
+        "apiEndpointCount": 0
+      }
+    },
+    "B4": {
+      "id": "B4",
+      "name": "component-coupling-degree",
+      "label": "组件耦合度",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": null,
+      "reason": "无 Component 对象（纯后端仓库——按口径置空）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Component --snapshot c7e0ff54-d246-4ca0-9cdb-b311d9a07b8d"
+      ],
+      "evidence": {
+        "componentCount": 0
+      }
+    },
+    "C1": {
+      "id": "C1",
+      "name": "endpoint-table-hops",
+      "label": "端到端跳数",
+      "domain": "C",
+      "direction": "interval",
+      "value": null,
+      "reason": "无 ApiEndpoint 对象（贯通链分母为 0）",
+      "evidence": {
+        "apiEndpointCount": 0
+      }
+    },
+    "D1": {
+      "id": "D1",
+      "name": "framework-version-coverage",
+      "label": "技术栈版本覆盖率",
+      "domain": "D",
+      "direction": "higher-better",
+      "value": null,
+      "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Dependency --all --field id,name,version,scope --snapshot c7e0ff54-d246-4ca0-9cdb-b311d9a07b8d"
+      ],
+      "evidence": {
+        "total": 66,
+        "emptyVersion": 59,
+        "placeholder": 0,
+        "determinable": 7
+      }
+    },
+    "D2": {
+      "id": "D2",
+      "name": "dependency-homogeneity",
+      "label": "依赖同质度",
+      "domain": "D",
+      "direction": "none",
+      "value": null,
+      "reason": "cohort 级指标（依赖 cohort 众数集合——单体层不产出）",
+      "evidence": {
+        "dependencyCount": 66
+      }
+    },
+    "D4": {
+      "id": "D4",
+      "name": "evolution-trend",
+      "label": "年度演进趋势",
+      "domain": "D",
+      "direction": "none",
+      "value": null,
+      "reason": "单快照（首次导入——无时序）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" snapshot list --repo fineract"
+      ],
+      "evidence": {
+        "completeSnapshotCount": 1
+      }
+    }
+  },
+  "dataQuality": {
+    "dq.null-complexity-ratio": {
+      "id": "dq.null-complexity-ratio",
+      "name": "null-complexity-ratio",
+      "label": "complexity 为 null 的方法占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": 0.08675,
+      "numerator": 3347,
+      "denominator": 38582,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot c7e0ff54-d246-4ca0-9cdb-b311d9a07b8d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot c7e0ff54-d246-4ca0-9cdb-b311d9a07b8d"
+      ]
+    },
+    "dq.missing-version-ratio": {
+      "id": "dq.missing-version-ratio",
+      "name": "missing-version-ratio",
+      "label": "version 为空串的依赖占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": 0.893939,
+      "numerator": 59,
+      "denominator": 66,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Dependency --all --field id,name,version,scope --snapshot c7e0ff54-d246-4ca0-9cdb-b311d9a07b8d"
+      ],
+      "placeholderVersionCount": 0
+    },
+    "dq.ext-call-ratio": {
+      "id": "dq.ext-call-ratio",
+      "name": "ext-call-ratio",
+      "label": "ext: 虚拟调用过滤占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": null,
+      "reason": "不可观测（ext: 虚拟边在导入物化时已过滤——查询面天然免疫）"
+    }
+  }
+}
