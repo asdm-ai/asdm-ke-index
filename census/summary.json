@@ -14,79 +14,79 @@
       "owner": "apache",
       "repo": "dubbo",
       "sourceId": "dubbo",
-      "snapshotId": "59c1b92a-9f6d-44f6-8160-5817d1148ab5",
-      "objectCount": 33898,
-      "linkCount": 107726,
+      "snapshotId": "11e24cb9-e01f-497d-9b7a-be8c95422f4e",
+      "objectCount": 33947,
+      "linkCount": 136560,
       "schemaVersion": "draft-v1"
     },
     {
       "owner": "apache",
       "repo": "fineract",
       "sourceId": "fineract",
-      "snapshotId": "c7e0ff54-d246-4ca0-9cdb-b311d9a07b8d",
-      "objectCount": 48905,
-      "linkCount": 192668,
+      "snapshotId": "93a81a8c-60ed-4d76-868a-78ec89b698c5",
+      "objectCount": 51445,
+      "linkCount": 254633,
       "schemaVersion": "draft-v1"
     },
     {
       "owner": "dromara",
       "repo": "RuoYi-Vue-Plus",
       "sourceId": "RuoYi-Vue-Plus",
-      "snapshotId": "e21931f9-f790-4dda-a6c9-4e9799fda2f4",
-      "objectCount": 4632,
-      "linkCount": 21671,
+      "snapshotId": "0ec53155-b5a4-47f6-b714-0ec36994ef83",
+      "objectCount": 4741,
+      "linkCount": 22840,
       "schemaVersion": "draft-v1"
     },
     {
       "owner": "elunez",
       "repo": "eladmin",
       "sourceId": "eladmin",
-      "snapshotId": "cfdec4bb-8666-457b-bbd7-970338c89f6c",
-      "objectCount": 1356,
-      "linkCount": 4597,
+      "snapshotId": "7bc87e2f-4a46-4eee-a284-db7fcb8d5b75",
+      "objectCount": 1357,
+      "linkCount": 5096,
       "schemaVersion": "draft-v1"
     },
     {
       "owner": "jeecgboot",
       "repo": "JeecgBoot",
       "sourceId": "JeecgBoot",
-      "snapshotId": "e3b166ff-6881-4441-bf47-d98ef162a97d",
-      "objectCount": 15478,
-      "linkCount": 112659,
+      "snapshotId": "af9fdfe8-f060-4070-b042-6166233e7009",
+      "objectCount": 15637,
+      "linkCount": 116657,
       "schemaVersion": "draft-v1"
     },
     {
       "owner": "lenve",
       "repo": "vhr",
       "sourceId": "vhr",
-      "snapshotId": "e290ac2b-b118-4e7d-88ca-01dcba0087c8",
-      "objectCount": 966,
-      "linkCount": 1391,
+      "snapshotId": "cd66de5d-de5b-4c74-a342-b13152701d92",
+      "objectCount": 991,
+      "linkCount": 1436,
       "schemaVersion": "draft-v1"
     },
     {
       "owner": "macrozheng",
       "repo": "mall-swarm",
       "sourceId": "mall-swarm",
-      "snapshotId": "65cedc29-e41d-4ec9-b9b4-3ee15b876a2b",
+      "snapshotId": "21a1a085-5f2a-4df0-9c64-150703dcb3f5",
       "objectCount": 14878,
-      "linkCount": 35427,
+      "linkCount": 36007,
       "schemaVersion": "draft-v1"
     },
     {
       "owner": "macrozheng",
       "repo": "mall",
       "sourceId": "mall",
-      "snapshotId": "756e24db-8e74-4205-92cf-757e517a491b",
+      "snapshotId": "80940bc3-2c26-46f5-b5f2-1cdea1fd0df5",
       "objectCount": 14527,
-      "linkCount": 34538,
+      "linkCount": 35226,
       "schemaVersion": "draft-v1"
     },
     {
       "owner": "spring-projects",
       "repo": "spring-petclinic",
       "sourceId": "spring-petclinic",
-      "snapshotId": "38cf5bad-562e-4d0c-9d33-3fb329541faf",
+      "snapshotId": "64c61162-4eea-43a2-98f8-54a1ebcff27f",
       "objectCount": 283,
       "linkCount": 626,
       "schemaVersion": "draft-v1"
@@ -95,9 +95,9 @@
       "owner": "yangzongzhuan",
       "repo": "RuoYi-Vue",
       "sourceId": "RuoYi-Vue",
-      "snapshotId": "94a6a5de-32b9-427e-b574-3485662ccc79",
-      "objectCount": 2557,
-      "linkCount": 7200,
+      "snapshotId": "143cde85-e3f3-4a1b-b83e-245518613a73",
+      "objectCount": 2556,
+      "linkCount": 7747,
       "schemaVersion": "draft-v1"
     }
   ],
@@ -505,7 +505,7 @@
         },
         {
           "repo": "yangzongzhuan/RuoYi-Vue",
-          "reason": "无可判定版本（空串 15 / 属性占位 19 / 合计 34——分母为 0，按口径置空）"
+          "reason": "无可判定版本（空串 15 / 属性占位 20 / 合计 35——分母为 0，按口径置空）"
         }
       ],
       "mean": null,
