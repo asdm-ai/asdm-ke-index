@@ -10,9 +10,9 @@
     "sourceVersion": "head",
     "objectCount": 51445,
     "linkCount": 254633,
-    "completedAt": "2026-11-16T05:04:19.992Z"
+    "completedAt": "2026-11-16T07:33:39.721Z"
   },
-  "cliVersion": "0.3.4",
+  "cliVersion": "0.3.5",
   "metrics": {
     "A3": {
       "id": "A3",
