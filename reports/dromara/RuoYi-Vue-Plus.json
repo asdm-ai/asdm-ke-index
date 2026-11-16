@@ -8,11 +8,11 @@
     "snapshotId": "0ec53155-b5a4-47f6-b714-0ec36994ef83",
     "status": "complete",
     "sourceVersion": "head",
-    "objectCount": 4741,
-    "linkCount": 22840,
-    "completedAt": "2026-11-16T04:29:18.101Z"
+    "objectCount": 4777,
+    "linkCount": 22903,
+    "completedAt": "2026-11-16T06:40:16.772Z"
   },
-  "cliVersion": "0.3.4",
+  "cliVersion": "0.3.5",
   "metrics": {
     "A3": {
       "id": "A3",
@@ -20,8 +20,8 @@
       "label": "孤儿表率",
       "domain": "A",
       "direction": "lower-better",
-      "value": 0.985507,
-      "numerator": 68,
+      "value": 0.536232,
+      "numerator": 37,
       "denominator": 69,
       "commands": [
         "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Table --all --field id,name,matchedEntityClass --snapshot 0ec53155-b5a4-47f6-b714-0ec36994ef83",
@@ -35,8 +35,8 @@
       "label": "表↔实体映射率",
       "domain": "A",
       "direction": "higher-better",
-      "value": 0.014493,
-      "numerator": 1,
+      "value": 0.463768,
+      "numerator": 32,
       "denominator": 69,
       "commands": [
         "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Table --all --field id,name,matchedEntityClass --snapshot 0ec53155-b5a4-47f6-b714-0ec36994ef83",
@@ -46,7 +46,7 @@
       "evidence": {
         "mapperEdgeOnly": 0,
         "entityClassOnly": 0,
-        "both": 1
+        "both": 32
       }
     },
     "B1.backend": {
@@ -312,7 +312,7 @@
       "label": "规模画像",
       "domain": "D",
       "direction": "none",
-      "value": 4741,
+      "value": 4777,
       "commands": [
         "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" snapshot list --repo RuoYi-Vue-Plus",
         "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Repository --snapshot 0ec53155-b5a4-47f6-b714-0ec36994ef83",
@@ -338,7 +338,7 @@
         "Method": 3492,
         "Dependency": 125,
         "Table": 69,
-        "Mapper": 1,
+        "Mapper": 37,
         "Module": 0,
         "Component": 0,
         "Function": 0,
@@ -346,7 +346,7 @@
         "Route": 0,
         "ApiEndpoint": 0
       },
-      "linkCount": 22840
+      "linkCount": 22903
     }
   },
   "nullMetrics": {
@@ -505,7 +505,7 @@
       "direction": "none",
       "value": 0.0,
       "numerator": 0,
-      "denominator": 1,
+      "denominator": 37,
       "commands": [
         "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Mapper --all --field id,namespace --snapshot 0ec53155-b5a4-47f6-b714-0ec36994ef83",
         "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Interface --all --field id --snapshot 0ec53155-b5a4-47f6-b714-0ec36994ef83"
