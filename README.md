@@ -33,6 +33,22 @@ bash scripts/scan-one.sh
 - 触发：push 修改 `repos.yaml` / Actions 页手动触发；月度重扫随聚合轮启用
 - 并发护栏：`max-parallel: 4`；对账：Action 步骤末行 `objectCount` 与平台快照列表逐位对照
 
+### 重扫轨说明（分析器版本升级后的口径修正重扫）
+
+种子仓 HEAD 不变时，`ke import start` 撞五元组已 complete 会 **dedup skipped**（静默跳过——
+月度重扫的正确去重行为，但会吞掉分析器升级带来的口径修正）。因此**分析器版本升级后的重扫
+必须走 force 轨**（Actions 页手动触发时勾选 `scan_force`，或本地 `SCAN_FORCE=true`）：
+
+```bash
+# 本地单仓重扫（--force 透传——同 HEAD 强制重建 manifest/links）
+SCAN_FORCE=true OWNER=dromara REPO=RuoYi-Vue-Plus CLI_DIR=/tmp/ke-cli \
+KE_API_KEY=<member key> KE_SERVER_URL=https://console.kengine.ai \
+bash scripts/scan-one.sh
+```
+
+- 判别：force 轨 summary `status == "completed"`（重建）；默认轨同 HEAD 为 `"skipped"`（数值不变）
+- 口径分界：force 重扫 commit 即 A3/A4 前后口径的自然分界（git 历史可追溯）
+
 ## 仓库索引（种子批 10 仓——分层选样：admin/业务系统 6 + 大型 2 + JPA 2）
 
 | owner/repo | 分层 | Report | 快照 | 状态 |

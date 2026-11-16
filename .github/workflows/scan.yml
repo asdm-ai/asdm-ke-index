@@ -14,6 +14,11 @@ on:
     paths:
       - "repos.yaml"
   workflow_dispatch:
+    inputs:
+      scan_force:
+        description: "重扫轨（R3）：true 时 scan-one 透传 --force——同 HEAD 异分析器版本强制重建（分析器升级后的口径修正重扫用）"
+        type: boolean
+        default: false
   # schedule:
   #   - cron: "0 2 1 * *"   # 每月 1 日 02:00 UTC（聚合轮启用）
 
@@ -59,6 +64,7 @@ jobs:
           REPO: ${{ matrix.repo }}
           BRANCH: ${{ matrix.branch }}
           CLI_DIR: ${{ runner.temp }}/ke-cli
+          SCAN_FORCE: ${{ inputs.scan_force }}
         run: bash scripts/scan-one.sh
 
       # 任务 2.3.1：L1 指标计算——scan-one 成功后执行（dedup skipped 同样出报告：

@@ -3,11 +3,14 @@
 # 单仓扫描（CLI 直连三段上传——P2H-D1）
 # -----------------------------------------------------------------------------
 # 用法：OWNER=<o> REPO=<r> KE_API_KEY=<key> [BRANCH=<b>] [CLI_DIR=<dir>] \
-#         bash scripts/scan-one.sh
+#         [SCAN_FORCE=true] bash scripts/scan-one.sh
 # 流程：clone --depth 1 → ke --mode server import start --repo <clone目录>
 #       → stdout 末行 summary JSON 解析（import-cmd.ts 契约：
 #         {ok, status, jobId, snapshotId, objectCount, linkCount, ...}）
 #       → ok!=true 或 status!=completed 时 exit 1
+# 重扫轨（R3）：SCAN_FORCE=true 时 import start 透传 --force——同 HEAD 异分析器
+#       版本强制重建 manifest/links（默认 dedup skipped 会静默吞掉分析器修复）；
+#       缺省（空/false）为月度重扫轨——同 HEAD dedup skipped 属正确行为不视为失败
 # 出参：步骤末行回显原始 summary JSON（Action 日志对账锚——objectCount）
 # =============================================================================
 set -euo pipefail
@@ -32,10 +35,14 @@ else
   git clone --depth 1 "https://github.com/$OWNER/$REPO.git" "$REPO_DIR"
 fi
 
-echo "== ke import start（--mode server → ${KE_SERVER_URL}）=="
+echo "== ke import start（--mode server → ${KE_SERVER_URL}${SCAN_FORCE:+，--force 重扫轨}）=="
+FORCE_ARG=""
+if [ "${SCAN_FORCE:-}" = "true" ]; then
+  FORCE_ARG="--force"
+fi
 set +e
 node "$CLI_DIR/bin/ke.cjs" --mode server --url "$KE_SERVER_URL" --token "$KE_API_KEY" \
-  import start --repo "$REPO_DIR" > "$WORK/import.log" 2>&1
+  import start --repo "$REPO_DIR" $FORCE_ARG > "$WORK/import.log" 2>&1
 RC=$?
 set -e
 tail -n 15 "$WORK/import.log"

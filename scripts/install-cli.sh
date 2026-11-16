@@ -12,9 +12,9 @@ set -euo pipefail
 
 : "${KE_API_KEY:?KE_API_KEY is required}"
 KE_SERVER_URL="${KE_SERVER_URL:-https://console.kengine.ai}"
-# 版本锚点随生产发版联动升级（R6）：0.3.1 = 1.3.9-1019-002（tenant-slug console
-# ——import/query/count 命令契约与 0.3.0 相比零改动，仅版本 bump）
-EXPECTED_VERSION="${EXPECTED_CLI_VERSION:-0.3.1}"
+# 版本锚点随生产发版联动升级（R6）：0.3.4 = Phase3 MyBatis-Plus 注解 SQL 识别修复
+# （@TableName / BaseMapper 泛型 / @Select 注解三轨——A3/A4 口径修正，命令契约零改动）
+EXPECTED_VERSION="${EXPECTED_CLI_VERSION:-0.3.4}"
 DEST="${1:-$PWD/ke-cli}"
 
 if command -v shasum >/dev/null 2>&1; then
