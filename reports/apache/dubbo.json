@@ -10,9 +10,9 @@
     "sourceVersion": "head",
     "objectCount": 33947,
     "linkCount": 136560,
-    "completedAt": "2026-11-16T04:48:29.012Z"
+    "completedAt": "2026-11-16T07:19:02.604Z"
   },
-  "cliVersion": "0.3.4",
+  "cliVersion": "0.3.5",
   "metrics": {
     "B1.backend": {
       "id": "B1.backend",
