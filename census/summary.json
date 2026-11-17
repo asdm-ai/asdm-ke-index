@@ -2,14 +2,23 @@
   "schemaVersion": "draft-v1",
   "implementation": "ke-index census.py (transitional; L2 aggregation over compute-metrics reports)",
   "status": "accumulating",
-  "samples": 10,
+  "samples": 20,
   "gate": {
     "publishThreshold": 30,
     "privacyFloor": 5,
-    "statusReason": "N=10 < 30（accumulating——不出分位，仅样本计数与缺失标注）",
+    "statusReason": "N=20 < 30（accumulating——不出分位，仅样本计数与缺失标注）",
     "note": "publishThreshold 为统计充分性门槛（P2-D10）；privacyFloor 为 k-匿名隐私护栏（Schema §4.2）——两者显式区分，不混用"
   },
   "repos": [
+    {
+      "owner": "YunaiV",
+      "repo": "ruoyi-vue-pro",
+      "sourceId": "ruoyi-vue-pro",
+      "snapshotId": "8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
+      "objectCount": 41911,
+      "linkCount": 206379,
+      "schemaVersion": "draft-v1"
+    },
     {
       "owner": "apache",
       "repo": "dubbo",
@@ -29,12 +38,30 @@
       "schemaVersion": "draft-v1"
     },
     {
+      "owner": "chillzhuang",
+      "repo": "SpringBlade",
+      "sourceId": "SpringBlade",
+      "snapshotId": "8719cbdf-3a7c-4a8b-8a83-b3bab0658663",
+      "objectCount": 1073,
+      "linkCount": 3002,
+      "schemaVersion": "draft-v1"
+    },
+    {
       "owner": "dromara",
       "repo": "RuoYi-Vue-Plus",
       "sourceId": "RuoYi-Vue-Plus",
       "snapshotId": "0ec53155-b5a4-47f6-b714-0ec36994ef83",
       "objectCount": 4777,
       "linkCount": 22903,
+      "schemaVersion": "draft-v1"
+    },
+    {
+      "owner": "dromara",
+      "repo": "dante-cloud",
+      "sourceId": "dante-cloud",
+      "snapshotId": "7d066261-b51c-4c8c-a014-9bfe3593dfd3",
+      "objectCount": 545,
+      "linkCount": 860,
       "schemaVersion": "draft-v1"
     },
     {
@@ -83,12 +110,75 @@
       "schemaVersion": "draft-v1"
     },
     {
+      "owner": "newbee-ltd",
+      "repo": "newbee-mall",
+      "sourceId": "newbee-mall",
+      "snapshotId": "c6688bbc-9350-4dd9-81bf-6b0d7cdbc8a6",
+      "objectCount": 933,
+      "linkCount": 1470,
+      "schemaVersion": "draft-v1"
+    },
+    {
+      "owner": "o2oa",
+      "repo": "o2oa",
+      "sourceId": "o2oa",
+      "snapshotId": "085955ed-e5af-4d46-a8b3-874e40b089f0",
+      "objectCount": 70501,
+      "linkCount": 710059,
+      "schemaVersion": "draft-v1"
+    },
+    {
+      "owner": "pig-mesh",
+      "repo": "pig",
+      "sourceId": "pig",
+      "snapshotId": "a96d5ed4-8c0d-432a-83d5-2bad8793b320",
+      "objectCount": 2531,
+      "linkCount": 7769,
+      "schemaVersion": "draft-v1"
+    },
+    {
+      "owner": "renrenio",
+      "repo": "renren-fast",
+      "sourceId": "renren-fast",
+      "snapshotId": "0c95df2a-f1d5-44e0-b832-3f2c2b9443aa",
+      "objectCount": 777,
+      "linkCount": 3326,
+      "schemaVersion": "draft-v1"
+    },
+    {
       "owner": "spring-projects",
       "repo": "spring-petclinic",
       "sourceId": "spring-petclinic",
       "snapshotId": "64c61162-4eea-43a2-98f8-54a1ebcff27f",
       "objectCount": 283,
       "linkCount": 626,
+      "schemaVersion": "draft-v1"
+    },
+    {
+      "owner": "stylefeng",
+      "repo": "Guns",
+      "sourceId": "Guns",
+      "snapshotId": "6901ed73-6c7d-4ba4-8232-345364d5cd37",
+      "objectCount": 1377,
+      "linkCount": 10042,
+      "schemaVersion": "draft-v1"
+    },
+    {
+      "owner": "thinkgem",
+      "repo": "jeesite",
+      "sourceId": "jeesite",
+      "snapshotId": "e9065968-9239-4d62-8cd7-72dc81822566",
+      "objectCount": 2670,
+      "linkCount": 14623,
+      "schemaVersion": "draft-v1"
+    },
+    {
+      "owner": "yangzongzhuan",
+      "repo": "RuoYi-Cloud",
+      "sourceId": "RuoYi-Cloud",
+      "snapshotId": "41743cb0-0c4d-4ef3-854a-0432971c709b",
+      "objectCount": 2528,
+      "linkCount": 8723,
       "schemaVersion": "draft-v1"
     },
     {
@@ -109,8 +199,12 @@
       "domain": "A",
       "direction": "higher-better",
       "N": 0,
-      "missing": 10,
+      "missing": 20,
       "missingRepos": [
+        {
+          "repo": "YunaiV/ruoyi-vue-pro",
+          "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）"
+        },
         {
           "repo": "apache/dubbo",
           "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）"
@@ -120,7 +214,15 @@
           "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）"
         },
         {
+          "repo": "chillzhuang/SpringBlade",
+          "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）"
+        },
+        {
           "repo": "dromara/RuoYi-Vue-Plus",
+          "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）"
+        },
+        {
+          "repo": "dromara/dante-cloud",
           "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）"
         },
         {
@@ -144,7 +246,35 @@
           "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）"
         },
         {
+          "repo": "newbee-ltd/newbee-mall",
+          "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）"
+        },
+        {
+          "repo": "o2oa/o2oa",
+          "reason": "calls 传递闭包与 Method→Mapper 名字 join 未实现（过渡实现——待 ke checkup）"
+        },
+        {
+          "repo": "pig-mesh/pig",
+          "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）"
+        },
+        {
+          "repo": "renrenio/renren-fast",
+          "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）"
+        },
+        {
           "repo": "spring-projects/spring-petclinic",
+          "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）"
+        },
+        {
+          "repo": "stylefeng/Guns",
+          "reason": "calls 传递闭包与 Method→Mapper 名字 join 未实现（过渡实现——待 ke checkup）"
+        },
+        {
+          "repo": "thinkgem/jeesite",
+          "reason": "calls 传递闭包与 Method→Mapper 名字 join 未实现（过渡实现——待 ke checkup）"
+        },
+        {
+          "repo": "yangzongzhuan/RuoYi-Cloud",
           "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）"
         },
         {
@@ -162,9 +292,13 @@
       "label": "前后端断链率",
       "domain": "A",
       "direction": "lower-better",
-      "N": 2,
-      "missing": 8,
+      "N": 5,
+      "missing": 15,
       "missingRepos": [
+        {
+          "repo": "YunaiV/ruoyi-vue-pro",
+          "reason": "无 ApiEndpoint 对象（纯后端仓库——按口径置空）"
+        },
         {
           "repo": "apache/dubbo",
           "reason": "无 ApiEndpoint 对象（纯后端仓库——按口径置空）"
@@ -174,7 +308,15 @@
           "reason": "无 ApiEndpoint 对象（纯后端仓库——按口径置空）"
         },
         {
+          "repo": "chillzhuang/SpringBlade",
+          "reason": "无 ApiEndpoint 对象（纯后端仓库——按口径置空）"
+        },
+        {
           "repo": "dromara/RuoYi-Vue-Plus",
+          "reason": "无 ApiEndpoint 对象（纯后端仓库——按口径置空）"
+        },
+        {
+          "repo": "dromara/dante-cloud",
           "reason": "无 ApiEndpoint 对象（纯后端仓库——按口径置空）"
         },
         {
@@ -190,7 +332,23 @@
           "reason": "无 ApiEndpoint 对象（纯后端仓库——按口径置空）"
         },
         {
+          "repo": "newbee-ltd/newbee-mall",
+          "reason": "无 ApiEndpoint 对象（纯后端仓库——按口径置空）"
+        },
+        {
+          "repo": "pig-mesh/pig",
+          "reason": "无 ApiEndpoint 对象（纯后端仓库——按口径置空）"
+        },
+        {
+          "repo": "renrenio/renren-fast",
+          "reason": "无 ApiEndpoint 对象（纯后端仓库——按口径置空）"
+        },
+        {
           "repo": "spring-projects/spring-petclinic",
+          "reason": "无 ApiEndpoint 对象（纯后端仓库——按口径置空）"
+        },
+        {
+          "repo": "yangzongzhuan/RuoYi-Cloud",
           "reason": "无 ApiEndpoint 对象（纯后端仓库——按口径置空）"
         },
         {
@@ -208,11 +366,19 @@
       "label": "孤儿表率",
       "domain": "A",
       "direction": "lower-better",
-      "N": 9,
-      "missing": 1,
+      "N": 17,
+      "missing": 3,
       "missingRepos": [
         {
           "repo": "apache/dubbo",
+          "reason": "无 Table 对象（分母为 0）"
+        },
+        {
+          "repo": "o2oa/o2oa",
+          "reason": "无 Table 对象（分母为 0）"
+        },
+        {
+          "repo": "thinkgem/jeesite",
           "reason": "无 Table 对象（分母为 0）"
         }
       ],
@@ -226,11 +392,19 @@
       "label": "表↔实体映射率",
       "domain": "A",
       "direction": "higher-better",
-      "N": 9,
-      "missing": 1,
+      "N": 17,
+      "missing": 3,
       "missingRepos": [
         {
           "repo": "apache/dubbo",
+          "reason": "无 Table 对象（分母为 0）"
+        },
+        {
+          "repo": "o2oa/o2oa",
+          "reason": "无 Table 对象（分母为 0）"
+        },
+        {
+          "repo": "thinkgem/jeesite",
           "reason": "无 Table 对象（分母为 0）"
         }
       ],
@@ -244,9 +418,14 @@
       "label": "循环依赖密度（后端）",
       "domain": "B",
       "direction": "lower-better",
-      "N": 10,
-      "missing": 0,
-      "missingRepos": [],
+      "N": 19,
+      "missing": 1,
+      "missingRepos": [
+        {
+          "repo": "thinkgem/jeesite",
+          "reason": "无 Package 对象（分母为 0）"
+        }
+      ],
       "mean": null,
       "percentiles": null,
       "percentileMethod": "nearest-rank (Schema §4.2)"
@@ -257,15 +436,23 @@
       "label": "循环依赖密度（前端）",
       "domain": "B",
       "direction": "lower-better",
-      "N": 3,
-      "missing": 7,
+      "N": 10,
+      "missing": 10,
       "missingRepos": [
         {
           "repo": "apache/dubbo",
           "reason": "无 Module 对象（纯后端仓库——按口径置空）"
         },
         {
+          "repo": "chillzhuang/SpringBlade",
+          "reason": "无 Module 对象（纯后端仓库——按口径置空）"
+        },
+        {
           "repo": "dromara/RuoYi-Vue-Plus",
+          "reason": "无 Module 对象（纯后端仓库——按口径置空）"
+        },
+        {
+          "repo": "dromara/dante-cloud",
           "reason": "无 Module 对象（纯后端仓库——按口径置空）"
         },
         {
@@ -282,6 +469,10 @@
         },
         {
           "repo": "spring-projects/spring-petclinic",
+          "reason": "无 Module 对象（纯后端仓库——按口径置空）"
+        },
+        {
+          "repo": "yangzongzhuan/RuoYi-Cloud",
           "reason": "无 Module 对象（纯后端仓库——按口径置空）"
         },
         {
@@ -299,9 +490,14 @@
       "label": "包依赖密度",
       "domain": "B",
       "direction": "interval",
-      "N": 10,
-      "missing": 0,
-      "missingRepos": [],
+      "N": 19,
+      "missing": 1,
+      "missingRepos": [
+        {
+          "repo": "thinkgem/jeesite",
+          "reason": "无 Package 对象（分母为 0）"
+        }
+      ],
       "mean": null,
       "percentiles": null,
       "percentileMethod": "nearest-rank (Schema §4.2)"
@@ -312,9 +508,14 @@
       "label": "巨型类占比",
       "domain": "B",
       "direction": "lower-better",
-      "N": 10,
-      "missing": 0,
-      "missingRepos": [],
+      "N": 19,
+      "missing": 1,
+      "missingRepos": [
+        {
+          "repo": "thinkgem/jeesite",
+          "reason": "无 Class 对象（分母为 0）"
+        }
+      ],
       "mean": null,
       "percentiles": null,
       "percentileMethod": "nearest-rank (Schema §4.2)"
@@ -325,8 +526,8 @@
       "label": "组件耦合度",
       "domain": "B",
       "direction": "lower-better",
-      "N": 2,
-      "missing": 8,
+      "N": 6,
+      "missing": 14,
       "missingRepos": [
         {
           "repo": "apache/dubbo",
@@ -337,7 +538,15 @@
           "reason": "无 Component 对象（纯后端仓库——按口径置空）"
         },
         {
+          "repo": "chillzhuang/SpringBlade",
+          "reason": "无 Component 对象（纯后端仓库——按口径置空）"
+        },
+        {
           "repo": "dromara/RuoYi-Vue-Plus",
+          "reason": "无 Component 对象（纯后端仓库——按口径置空）"
+        },
+        {
+          "repo": "dromara/dante-cloud",
           "reason": "无 Component 对象（纯后端仓库——按口径置空）"
         },
         {
@@ -353,7 +562,23 @@
           "reason": "无 Component 对象（纯后端仓库——按口径置空）"
         },
         {
+          "repo": "newbee-ltd/newbee-mall",
+          "reason": "无 Component 对象（纯后端仓库——按口径置空）"
+        },
+        {
+          "repo": "pig-mesh/pig",
+          "reason": "无 Component 对象（纯后端仓库——按口径置空）"
+        },
+        {
+          "repo": "renrenio/renren-fast",
+          "reason": "无 Component 对象（纯后端仓库——按口径置空）"
+        },
+        {
           "repo": "spring-projects/spring-petclinic",
+          "reason": "无 Component 对象（纯后端仓库——按口径置空）"
+        },
+        {
+          "repo": "yangzongzhuan/RuoYi-Cloud",
           "reason": "无 Component 对象（纯后端仓库——按口径置空）"
         },
         {
@@ -372,8 +597,12 @@
       "domain": "C",
       "direction": "interval",
       "N": 0,
-      "missing": 10,
+      "missing": 20,
       "missingRepos": [
+        {
+          "repo": "YunaiV/ruoyi-vue-pro",
+          "reason": "无 ApiEndpoint 对象（贯通链分母为 0）"
+        },
         {
           "repo": "apache/dubbo",
           "reason": "无 ApiEndpoint 对象（贯通链分母为 0）"
@@ -383,7 +612,15 @@
           "reason": "无 ApiEndpoint 对象（贯通链分母为 0）"
         },
         {
+          "repo": "chillzhuang/SpringBlade",
+          "reason": "无 ApiEndpoint 对象（贯通链分母为 0）"
+        },
+        {
           "repo": "dromara/RuoYi-Vue-Plus",
+          "reason": "无 ApiEndpoint 对象（贯通链分母为 0）"
+        },
+        {
+          "repo": "dromara/dante-cloud",
           "reason": "无 ApiEndpoint 对象（贯通链分母为 0）"
         },
         {
@@ -407,7 +644,35 @@
           "reason": "无 ApiEndpoint 对象（贯通链分母为 0）"
         },
         {
+          "repo": "newbee-ltd/newbee-mall",
+          "reason": "无 ApiEndpoint 对象（贯通链分母为 0）"
+        },
+        {
+          "repo": "o2oa/o2oa",
+          "reason": "依赖 A1 贯通链算法（过渡实现未含——待 ke checkup）"
+        },
+        {
+          "repo": "pig-mesh/pig",
+          "reason": "无 ApiEndpoint 对象（贯通链分母为 0）"
+        },
+        {
+          "repo": "renrenio/renren-fast",
+          "reason": "无 ApiEndpoint 对象（贯通链分母为 0）"
+        },
+        {
           "repo": "spring-projects/spring-petclinic",
+          "reason": "无 ApiEndpoint 对象（贯通链分母为 0）"
+        },
+        {
+          "repo": "stylefeng/Guns",
+          "reason": "依赖 A1 贯通链算法（过渡实现未含——待 ke checkup）"
+        },
+        {
+          "repo": "thinkgem/jeesite",
+          "reason": "依赖 A1 贯通链算法（过渡实现未含——待 ke checkup）"
+        },
+        {
+          "repo": "yangzongzhuan/RuoYi-Cloud",
           "reason": "无 ApiEndpoint 对象（贯通链分母为 0）"
         },
         {
@@ -425,9 +690,14 @@
       "label": "圈复杂度 P90",
       "domain": "C",
       "direction": "lower-better",
-      "N": 10,
-      "missing": 0,
-      "missingRepos": [],
+      "N": 19,
+      "missing": 1,
+      "missingRepos": [
+        {
+          "repo": "thinkgem/jeesite",
+          "reason": "无 complexity 非 null 的 Method（分母为 0）"
+        }
+      ],
       "mean": null,
       "percentiles": null,
       "percentileMethod": "nearest-rank (Schema §4.2)"
@@ -438,9 +708,14 @@
       "label": "测试方法占比",
       "domain": "C",
       "direction": "higher-better",
-      "N": 10,
-      "missing": 0,
-      "missingRepos": [],
+      "N": 19,
+      "missing": 1,
+      "missingRepos": [
+        {
+          "repo": "thinkgem/jeesite",
+          "reason": "无 Method 对象（分母为 0）"
+        }
+      ],
       "mean": null,
       "percentiles": null,
       "percentileMethod": "nearest-rank (Schema §4.2)"
@@ -451,9 +726,14 @@
       "label": "巨型方法占比",
       "domain": "C",
       "direction": "lower-better",
-      "N": 10,
-      "missing": 0,
-      "missingRepos": [],
+      "N": 19,
+      "missing": 1,
+      "missingRepos": [
+        {
+          "repo": "thinkgem/jeesite",
+          "reason": "无 Method 对象（分母为 0）"
+        }
+      ],
       "mean": null,
       "percentiles": null,
       "percentileMethod": "nearest-rank (Schema §4.2)"
@@ -465,8 +745,12 @@
       "domain": "D",
       "direction": "higher-better",
       "N": 0,
-      "missing": 10,
+      "missing": 20,
       "missingRepos": [
+        {
+          "repo": "YunaiV/ruoyi-vue-pro",
+          "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）"
+        },
         {
           "repo": "apache/dubbo",
           "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）"
@@ -476,8 +760,16 @@
           "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）"
         },
         {
+          "repo": "chillzhuang/SpringBlade",
+          "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）"
+        },
+        {
           "repo": "dromara/RuoYi-Vue-Plus",
           "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）"
+        },
+        {
+          "repo": "dromara/dante-cloud",
+          "reason": "无可判定版本（空串 41 / 属性占位 13 / 合计 54——分母为 0，按口径置空）"
         },
         {
           "repo": "elunez/eladmin",
@@ -500,8 +792,36 @@
           "reason": "无可判定版本（空串 19 / 属性占位 27 / 合计 46——分母为 0，按口径置空）"
         },
         {
+          "repo": "newbee-ltd/newbee-mall",
+          "reason": "无可判定版本（空串 5 / 属性占位 2 / 合计 7——分母为 0，按口径置空）"
+        },
+        {
+          "repo": "o2oa/o2oa",
+          "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）"
+        },
+        {
+          "repo": "pig-mesh/pig",
+          "reason": "无可判定版本（空串 49 / 属性占位 88 / 合计 137——分母为 0，按口径置空）"
+        },
+        {
+          "repo": "renrenio/renren-fast",
+          "reason": "无可判定版本（空串 9 / 属性占位 25 / 合计 34——分母为 0，按口径置空）"
+        },
+        {
           "repo": "spring-projects/spring-petclinic",
           "reason": "无可判定版本（空串 25 / 属性占位 5 / 合计 30——分母为 0，按口径置空）"
+        },
+        {
+          "repo": "stylefeng/Guns",
+          "reason": "无可判定版本（空串 2 / 属性占位 3 / 合计 5——分母为 0，按口径置空）"
+        },
+        {
+          "repo": "thinkgem/jeesite",
+          "reason": "无可判定版本（空串 0 / 属性占位 0 / 合计 0——分母为 0，按口径置空）"
+        },
+        {
+          "repo": "yangzongzhuan/RuoYi-Cloud",
+          "reason": "无可判定版本（空串 25 / 属性占位 28 / 合计 53——分母为 0，按口径置空）"
         },
         {
           "repo": "yangzongzhuan/RuoYi-Vue",
