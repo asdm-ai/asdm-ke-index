@@ -1,0 +1,467 @@
+{
+  "schemaVersion": "draft-v1",
+  "implementation": "ke-index compute-metrics.py (transitional; to be superseded by ke checkup)",
+  "owner": "chillzhuang",
+  "repo": "SpringBlade",
+  "sourceId": "SpringBlade",
+  "snapshot": {
+    "snapshotId": "8719cbdf-3a7c-4a8b-8a83-b3bab0658663",
+    "status": "complete",
+    "sourceVersion": "head",
+    "objectCount": 1073,
+    "linkCount": 3002,
+    "completedAt": "2026-11-17T06:43:01.149Z"
+  },
+  "cliVersion": "0.3.5",
+  "metrics": {
+    "A3": {
+      "id": "A3",
+      "name": "orphan-table-rate",
+      "label": "孤儿表率",
+      "domain": "A",
+      "direction": "lower-better",
+      "value": 0.266667,
+      "numerator": 8,
+      "denominator": 30,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Table --all --field id,name,matchedEntityClass --snapshot 8719cbdf-3a7c-4a8b-8a83-b3bab0658663",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Mapper --all --field id,namespace,mappedTableIds --snapshot 8719cbdf-3a7c-4a8b-8a83-b3bab0658663",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot 8719cbdf-3a7c-4a8b-8a83-b3bab0658663"
+      ]
+    },
+    "A4": {
+      "id": "A4",
+      "name": "table-entity-mapping-rate",
+      "label": "表↔实体映射率",
+      "domain": "A",
+      "direction": "higher-better",
+      "value": 0.733333,
+      "numerator": 22,
+      "denominator": 30,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Table --all --field id,name,matchedEntityClass --snapshot 8719cbdf-3a7c-4a8b-8a83-b3bab0658663",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Mapper --all --field id,namespace,mappedTableIds --snapshot 8719cbdf-3a7c-4a8b-8a83-b3bab0658663",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot 8719cbdf-3a7c-4a8b-8a83-b3bab0658663"
+      ],
+      "evidence": {
+        "mapperEdgeOnly": 0,
+        "entityClassOnly": 0,
+        "both": 22
+      }
+    },
+    "B1.backend": {
+      "id": "B1.backend",
+      "name": "circular-dependency-density",
+      "label": "循环依赖密度（后端）",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": 0.022472,
+      "numerator": 2,
+      "denominator": 89,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Package --all --field id,dependsOnPackageIds --snapshot 8719cbdf-3a7c-4a8b-8a83-b3bab0658663",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot 8719cbdf-3a7c-4a8b-8a83-b3bab0658663"
+      ],
+      "sccCount": 1,
+      "sccs": [
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.springblade.system.excel",
+            "pkg:org.springblade.system.service"
+          ]
+        }
+      ]
+    },
+    "B2": {
+      "id": "B2",
+      "name": "package-dependency-density",
+      "label": "包依赖密度",
+      "domain": "B",
+      "direction": "interval",
+      "value": 1.427,
+      "numerator": 127,
+      "denominator": 89,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Package --all --field id,dependsOnPackageIds --snapshot 8719cbdf-3a7c-4a8b-8a83-b3bab0658663",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot 8719cbdf-3a7c-4a8b-8a83-b3bab0658663"
+      ]
+    },
+    "B3": {
+      "id": "B3",
+      "name": "giant-class-ratio",
+      "label": "巨型类占比",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": 0.0,
+      "numerator": 0,
+      "denominator": 193,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Class --all --field id,lineCount --snapshot 8719cbdf-3a7c-4a8b-8a83-b3bab0658663",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --where 'lineCount>500' --snapshot 8719cbdf-3a7c-4a8b-8a83-b3bab0658663",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --snapshot 8719cbdf-3a7c-4a8b-8a83-b3bab0658663"
+      ],
+      "threshold": "lineCount > 500",
+      "top": [
+        {
+          "lineCount": 272,
+          "id": "cls:org.springblade.system.service.impl.UserServiceImpl"
+        },
+        {
+          "lineCount": 213,
+          "id": "cls:org.springblade.system.controller.UserController"
+        },
+        {
+          "lineCount": 194,
+          "id": "cls:org.springblade.system.controller.MenuController"
+        },
+        {
+          "lineCount": 171,
+          "id": "cls:org.springblade.system.service.impl.RoleServiceImpl"
+        },
+        {
+          "lineCount": 166,
+          "id": "cls:org.springblade.gateway.utils.JwtCrypto"
+        }
+      ],
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --where 'lineCount>500' --snapshot 8719cbdf-3a7c-4a8b-8a83-b3bab0658663",
+        "serverCount": 0,
+        "match": true
+      }
+    },
+    "C2": {
+      "id": "C2",
+      "name": "cyclomatic-complexity-p90",
+      "label": "圈复杂度 P90",
+      "domain": "C",
+      "direction": "lower-better",
+      "value": 2,
+      "denominator": 465,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot 8719cbdf-3a7c-4a8b-8a83-b3bab0658663",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,lineCount,complexity --snapshot 8719cbdf-3a7c-4a8b-8a83-b3bab0658663"
+      ],
+      "percentiles": {
+        "p25": 1,
+        "p50": 1,
+        "p75": 1,
+        "p90": 2
+      },
+      "mean": 1.4043,
+      "max": 9,
+      "top": [
+        {
+          "cyclomaticComplexity": 9,
+          "id": "mtd:org.springblade.system.service.impl.RegionServiceImpl.submit(:Region)"
+        },
+        {
+          "cyclomaticComplexity": 8,
+          "id": "mtd:org.springblade.auth.granter.CaptchaTokenGranter.grant(:TokenParameter)"
+        },
+        {
+          "cyclomaticComplexity": 8,
+          "id": "mtd:org.springblade.system.service.impl.UserServiceImpl.registerGuest(:User:Long)"
+        },
+        {
+          "cyclomaticComplexity": 7,
+          "id": "mtd:org.springblade.system.service.impl.DeptServiceImpl.submit(:Dept)"
+        },
+        {
+          "cyclomaticComplexity": 6,
+          "id": "mtd:org.springblade.auth.granter.PasswordTokenGranter.grant(:TokenParameter)"
+        }
+      ],
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot 8719cbdf-3a7c-4a8b-8a83-b3bab0658663",
+        "serverCount": 465,
+        "match": true
+      }
+    },
+    "C3": {
+      "id": "C3",
+      "name": "test-method-ratio",
+      "label": "测试方法占比",
+      "domain": "C",
+      "direction": "higher-better",
+      "value": 0.00161,
+      "numerator": 1,
+      "denominator": 621,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'isTest=true' --snapshot 8719cbdf-3a7c-4a8b-8a83-b3bab0658663",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot 8719cbdf-3a7c-4a8b-8a83-b3bab0658663",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,isTest,testType --snapshot 8719cbdf-3a7c-4a8b-8a83-b3bab0658663"
+      ],
+      "testTypes": {
+        "UnitTest": 1
+      },
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'isTest=true' --snapshot 8719cbdf-3a7c-4a8b-8a83-b3bab0658663",
+        "serverCount": 1,
+        "match": true
+      }
+    },
+    "C4": {
+      "id": "C4",
+      "name": "giant-method-ratio",
+      "label": "巨型方法占比",
+      "domain": "C",
+      "direction": "lower-better",
+      "value": 0.0,
+      "numerator": 0,
+      "denominator": 465,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount>80' --snapshot 8719cbdf-3a7c-4a8b-8a83-b3bab0658663",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount=0' --snapshot 8719cbdf-3a7c-4a8b-8a83-b3bab0658663",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot 8719cbdf-3a7c-4a8b-8a83-b3bab0658663",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,lineCount --snapshot 8719cbdf-3a7c-4a8b-8a83-b3bab0658663"
+      ],
+      "threshold": "lineCount > 80",
+      "excludedFromDenominator": {
+        "lineCountIsZero": 156,
+        "lineCountIsNull": 0
+      },
+      "top": [
+        {
+          "lineCount": 56,
+          "id": "mtd:org.springblade.system.service.impl.TenantServiceImpl.saveTenant(:Tenant)"
+        },
+        {
+          "lineCount": 54,
+          "id": "mtd:org.springblade.desk.controller.DashBoardController.myNotices"
+        },
+        {
+          "lineCount": 54,
+          "id": "mtd:org.springblade.desk.controller.DashBoardController.notices"
+        },
+        {
+          "lineCount": 50,
+          "id": "mtd:org.springblade.auth.granter.CaptchaTokenGranter.grant(:TokenParameter)"
+        },
+        {
+          "lineCount": 39,
+          "id": "mtd:org.springblade.auth.granter.PasswordTokenGranter.grant(:TokenParameter)"
+        }
+      ],
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount>80' --snapshot 8719cbdf-3a7c-4a8b-8a83-b3bab0658663",
+        "serverCount": 0,
+        "match": true
+      }
+    },
+    "D3": {
+      "id": "D3",
+      "name": "scale-profile",
+      "label": "规模画像",
+      "domain": "D",
+      "direction": "none",
+      "value": 1073,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" snapshot list --repo SpringBlade",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Repository --snapshot 8719cbdf-3a7c-4a8b-8a83-b3bab0658663",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot 8719cbdf-3a7c-4a8b-8a83-b3bab0658663",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --snapshot 8719cbdf-3a7c-4a8b-8a83-b3bab0658663",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Interface --snapshot 8719cbdf-3a7c-4a8b-8a83-b3bab0658663",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot 8719cbdf-3a7c-4a8b-8a83-b3bab0658663",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Dependency --snapshot 8719cbdf-3a7c-4a8b-8a83-b3bab0658663",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot 8719cbdf-3a7c-4a8b-8a83-b3bab0658663",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Mapper --snapshot 8719cbdf-3a7c-4a8b-8a83-b3bab0658663",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Module --snapshot 8719cbdf-3a7c-4a8b-8a83-b3bab0658663",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Component --snapshot 8719cbdf-3a7c-4a8b-8a83-b3bab0658663",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Function --snapshot 8719cbdf-3a7c-4a8b-8a83-b3bab0658663",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Store --snapshot 8719cbdf-3a7c-4a8b-8a83-b3bab0658663",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Route --snapshot 8719cbdf-3a7c-4a8b-8a83-b3bab0658663",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot 8719cbdf-3a7c-4a8b-8a83-b3bab0658663"
+      ],
+      "typeCounts": {
+        "Repository": 1,
+        "Package": 89,
+        "Class": 193,
+        "Interface": 65,
+        "Method": 621,
+        "Dependency": 48,
+        "Table": 30,
+        "Mapper": 26,
+        "Module": 0,
+        "Component": 0,
+        "Function": 0,
+        "Store": 0,
+        "Route": 0,
+        "ApiEndpoint": 0
+      },
+      "linkCount": 3002
+    }
+  },
+  "nullMetrics": {
+    "A1": {
+      "id": "A1",
+      "name": "full-chain-coverage",
+      "label": "全链路贯通率",
+      "domain": "A",
+      "direction": "higher-better",
+      "value": null,
+      "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot 8719cbdf-3a7c-4a8b-8a83-b3bab0658663"
+      ],
+      "evidence": {
+        "apiEndpointCount": 0
+      }
+    },
+    "A2": {
+      "id": "A2",
+      "name": "api-backend-breakrate",
+      "label": "前后端断链率",
+      "domain": "A",
+      "direction": "lower-better",
+      "value": null,
+      "reason": "无 ApiEndpoint 对象（纯后端仓库——按口径置空）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot 8719cbdf-3a7c-4a8b-8a83-b3bab0658663"
+      ],
+      "evidence": {
+        "apiEndpointCount": 0
+      }
+    },
+    "B1.frontend": {
+      "id": "B1.frontend",
+      "name": "circular-dependency-density",
+      "label": "循环依赖密度（前端）",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": null,
+      "reason": "无 Module 对象（纯后端仓库——按口径置空）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Module --snapshot 8719cbdf-3a7c-4a8b-8a83-b3bab0658663"
+      ],
+      "evidence": {
+        "moduleCount": 0
+      }
+    },
+    "B4": {
+      "id": "B4",
+      "name": "component-coupling-degree",
+      "label": "组件耦合度",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": null,
+      "reason": "无 Component 对象（纯后端仓库——按口径置空）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Component --snapshot 8719cbdf-3a7c-4a8b-8a83-b3bab0658663"
+      ],
+      "evidence": {
+        "componentCount": 0
+      }
+    },
+    "C1": {
+      "id": "C1",
+      "name": "endpoint-table-hops",
+      "label": "端到端跳数",
+      "domain": "C",
+      "direction": "interval",
+      "value": null,
+      "reason": "无 ApiEndpoint 对象（贯通链分母为 0）",
+      "evidence": {
+        "apiEndpointCount": 0
+      }
+    },
+    "D1": {
+      "id": "D1",
+      "name": "framework-version-coverage",
+      "label": "技术栈版本覆盖率",
+      "domain": "D",
+      "direction": "higher-better",
+      "value": null,
+      "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Dependency --all --field id,name,version,scope --snapshot 8719cbdf-3a7c-4a8b-8a83-b3bab0658663"
+      ],
+      "evidence": {
+        "total": 48,
+        "emptyVersion": 38,
+        "placeholder": 8,
+        "determinable": 2
+      }
+    },
+    "D2": {
+      "id": "D2",
+      "name": "dependency-homogeneity",
+      "label": "依赖同质度",
+      "domain": "D",
+      "direction": "none",
+      "value": null,
+      "reason": "cohort 级指标（依赖 cohort 众数集合——单体层不产出）",
+      "evidence": {
+        "dependencyCount": 48
+      }
+    },
+    "D4": {
+      "id": "D4",
+      "name": "evolution-trend",
+      "label": "年度演进趋势",
+      "domain": "D",
+      "direction": "none",
+      "value": null,
+      "reason": "单快照（首次导入——无时序）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" snapshot list --repo SpringBlade"
+      ],
+      "evidence": {
+        "completeSnapshotCount": 1
+      }
+    }
+  },
+  "dataQuality": {
+    "dq.null-complexity-ratio": {
+      "id": "dq.null-complexity-ratio",
+      "name": "null-complexity-ratio",
+      "label": "complexity 为 null 的方法占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": 0.251208,
+      "numerator": 156,
+      "denominator": 621,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot 8719cbdf-3a7c-4a8b-8a83-b3bab0658663",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot 8719cbdf-3a7c-4a8b-8a83-b3bab0658663"
+      ]
+    },
+    "dq.missing-version-ratio": {
+      "id": "dq.missing-version-ratio",
+      "name": "missing-version-ratio",
+      "label": "version 为空串的依赖占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": 0.791667,
+      "numerator": 38,
+      "denominator": 48,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Dependency --all --field id,name,version,scope --snapshot 8719cbdf-3a7c-4a8b-8a83-b3bab0658663"
+      ],
+      "placeholderVersionCount": 8
+    },
+    "dq.mapper-join-miss-ratio": {
+      "id": "dq.mapper-join-miss-ratio",
+      "name": "mapper-join-miss-ratio",
+      "label": "Mapper namespace 与接口 FQN join 未命中占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": 0.0,
+      "numerator": 0,
+      "denominator": 26,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Mapper --all --field id,namespace --snapshot 8719cbdf-3a7c-4a8b-8a83-b3bab0658663",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Interface --all --field id --snapshot 8719cbdf-3a7c-4a8b-8a83-b3bab0658663"
+      ]
+    },
+    "dq.ext-call-ratio": {
+      "id": "dq.ext-call-ratio",
+      "name": "ext-call-ratio",
+      "label": "ext: 虚拟调用过滤占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": null,
+      "reason": "不可观测（ext: 虚拟边在导入物化时已过滤——查询面天然免疫）"
+    }
+  }
+}
