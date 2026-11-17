@@ -20,11 +20,11 @@
 #   C. JPA 数据访问层 8——与 MyBatis 系对照的 JPA 形态（含 JPA 实现本体）
 #   D. 前后端配对 7——A 层仓的官方前端仓（配对聚合轮未启用，先单列为前端形态样本）
 #
-#   当前批次：1/4（20 仓落库）——分批 push ≤10 新仓/批，批序即提交序
+#   当前批次：2/4（30 仓落库）——分批 push ≤10 新仓/批，批序即提交序
 # =============================================================================
 
 repos:
-  # ---- 分层 A：Java admin/业务系统（16 of 18）----
+  # ---- 分层 A：Java admin/业务系统（18 of 18）----
   - owner: macrozheng
     repo: mall
     branch: master
@@ -91,7 +91,15 @@ repos:
     repo: dante-cloud
     skip: false
     notes: "A·微服务全家桶（Spring Cloud Tencent + MyBatis-Plus——dromara 系业务形态）"
-  # ---- 分层 B：大型仓（2 of 8）----
+  - owner: linlinjava
+    repo: litemall
+    skip: false
+    notes: "A·小商场系统（SpringBoot + MyBatis——四端小体量电商，教学向业务形态对照）"
+  - owner: metersphere
+    repo: metersphere
+    skip: false
+    notes: "A·开源测试平台（SpringBoot + MyBatis——非商城/admin 的工具型业务系统形态）"
+  # ---- 分层 B：大型仓（8 of 8）----
   - owner: apache
     repo: dubbo
     skip: false
@@ -100,7 +108,31 @@ repos:
     repo: fineract
     skip: false
     notes: "B·Apache 金融核心系统（Gradle 多模块超大型业务系统——大表量 DDL 轨）"
-  # ---- 分层 C：JPA 数据访问层（2 of 8）----
+  - owner: apache
+    repo: rocketmq
+    skip: false
+    notes: "B·Apache 消息中间件（Gradle 多模块大型——中间件形态，与 dubbo 同域对照）"
+  - owner: alibaba
+    repo: nacos
+    skip: false
+    notes: "B·注册/配置中心（Gradle 大型业务无关系统——中间件的存储轻量极端）"
+  - owner: apache
+    repo: shardingsphere
+    skip: false
+    notes: "B·Apache 数据库中间件（Gradle 超大型——生态基石级多模块）"
+  - owner: spring-projects
+    repo: spring-boot
+    skip: false
+    notes: "B·Spring Boot 本体（Gradle 超大型——Java 生态基石，模块化巅峰样本）"
+  - owner: spring-projects
+    repo: spring-framework
+    skip: false
+    notes: "B·Spring Framework 本体（Gradle 超大型——框架祖师仓，与 spring-boot 同族对照）"
+  - owner: alibaba
+    repo: druid
+    skip: false
+    notes: "B·数据库连接池（Maven 大型单仓——连接池/SQL 解析器形态，无业务表极端）"
+  # ---- 分层 C：JPA 数据访问层（4 of 8）----
   - owner: spring-projects
     repo: spring-petclinic
     skip: false
@@ -109,3 +141,11 @@ repos:
     repo: eladmin
     skip: false
     notes: "C·SpringBoot + Spring Data JPA admin 系统（JPA 业务系统代表——与 MyBatis 系对照）"
+  - owner: keycloak
+    repo: keycloak
+    skip: false
+    notes: "C·IAM 身份访问管理平台（Hibernate/JPA 重度大型系统——JPA 业务侧旗舰样本）"
+  - owner: flowable
+    repo: flowable-engine
+    skip: false
+    notes: "C·BPM 流程引擎（Hibernate/JPA——引擎型 JPA 形态对照）"
