@@ -1,0 +1,1225 @@
+{
+  "schemaVersion": "draft-v1",
+  "implementation": "ke-index compute-metrics.py (transitional; to be superseded by ke checkup)",
+  "owner": "YunaiV",
+  "repo": "ruoyi-vue-pro",
+  "sourceId": "ruoyi-vue-pro",
+  "snapshot": {
+    "snapshotId": "8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
+    "status": "complete",
+    "sourceVersion": "head",
+    "objectCount": 41911,
+    "linkCount": 206379,
+    "completedAt": "2026-11-17T07:39:44.544Z"
+  },
+  "cliVersion": "0.3.5",
+  "metrics": {
+    "A3": {
+      "id": "A3",
+      "name": "orphan-table-rate",
+      "label": "孤儿表率",
+      "domain": "A",
+      "direction": "lower-better",
+      "value": 0.488372,
+      "numerator": 21,
+      "denominator": 43,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Table --all --field id,name,matchedEntityClass --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Mapper --all --field id,namespace,mappedTableIds --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e"
+      ]
+    },
+    "A4": {
+      "id": "A4",
+      "name": "table-entity-mapping-rate",
+      "label": "表↔实体映射率",
+      "domain": "A",
+      "direction": "higher-better",
+      "value": 0.511628,
+      "numerator": 22,
+      "denominator": 43,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Table --all --field id,name,matchedEntityClass --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Mapper --all --field id,namespace,mappedTableIds --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e"
+      ],
+      "evidence": {
+        "mapperEdgeOnly": 0,
+        "entityClassOnly": 22,
+        "both": 0
+      }
+    },
+    "B1.backend": {
+      "id": "B1.backend",
+      "name": "circular-dependency-density",
+      "label": "循环依赖密度（后端）",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": 0.146157,
+      "numerator": 405,
+      "denominator": 2771,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Package --all --field id,dependsOnPackageIds --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e"
+      ],
+      "sccCount": 72,
+      "sccs": [
+        {
+          "size": 39,
+          "members": [
+            "pkg:cn.iocoder.yudao.module.iot.gateway.config",
+            "pkg:cn.iocoder.yudao.module.iot.gateway.protocol",
+            "pkg:cn.iocoder.yudao.module.iot.gateway.protocol.coap",
+            "pkg:cn.iocoder.yudao.module.iot.gateway.protocol.coap.handler.downstream",
+            "pkg:cn.iocoder.yudao.module.iot.gateway.protocol.coap.handler.upstream",
+            "pkg:cn.iocoder.yudao.module.iot.gateway.protocol.emqx",
+            "pkg:cn.iocoder.yudao.module.iot.gateway.protocol.emqx.handler.downstream",
+            "pkg:cn.iocoder.yudao.module.iot.gateway.protocol.emqx.handler.upstream",
+            "pkg:cn.iocoder.yudao.module.iot.gateway.protocol.http",
+            "pkg:cn.iocoder.yudao.module.iot.gateway.protocol.http.handler.downstream",
+            "pkg:cn.iocoder.yudao.module.iot.gateway.protocol.http.handler.upstream",
+            "pkg:cn.iocoder.yudao.module.iot.gateway.protocol.modbus.common.manager",
+            "pkg:cn.iocoder.yudao.module.iot.gateway.protocol.modbus.common.utils",
+            "pkg:cn.iocoder.yudao.module.iot.gateway.protocol.modbus.tcpclient",
+            "pkg:cn.iocoder.yudao.module.iot.gateway.protocol.modbus.tcpclient.handler.downstream",
+            "pkg:cn.iocoder.yudao.module.iot.gateway.protocol.modbus.tcpclient.handler.upstream",
+            "pkg:cn.iocoder.yudao.module.iot.gateway.protocol.modbus.tcpclient.manager",
+            "pkg:cn.iocoder.yudao.module.iot.gateway.protocol.modbus.tcpserver",
+            "pkg:cn.iocoder.yudao.module.iot.gateway.protocol.modbus.tcpserver.codec",
+            "pkg:cn.iocoder.yudao.module.iot.gateway.protocol.modbus.tcpserver.handler.downstream",
+            "pkg:cn.iocoder.yudao.module.iot.gateway.protocol.modbus.tcpserver.handler.upstream",
+            "pkg:cn.iocoder.yudao.module.iot.gateway.protocol.modbus.tcpserver.manager",
+            "pkg:cn.iocoder.yudao.module.iot.gateway.protocol.mqtt",
+            "pkg:cn.iocoder.yudao.module.iot.gateway.protocol.mqtt.handler.downstream",
+            "pkg:cn.iocoder.yudao.module.iot.gateway.protocol.mqtt.handler.upstream",
+            "pkg:cn.iocoder.yudao.module.iot.gateway.protocol.tcp",
+            "pkg:cn.iocoder.yudao.module.iot.gateway.protocol.tcp.codec",
+            "pkg:cn.iocoder.yudao.module.iot.gateway.protocol.tcp.codec.delimiter",
+            "pkg:cn.iocoder.yudao.module.iot.gateway.protocol.tcp.codec.length",
+            "pkg:cn.iocoder.yudao.module.iot.gateway.protocol.tcp.handler.downstream",
+            "pkg:cn.iocoder.yudao.module.iot.gateway.protocol.tcp.handler.upstream",
+            "pkg:cn.iocoder.yudao.module.iot.gateway.protocol.udp",
+            "pkg:cn.iocoder.yudao.module.iot.gateway.protocol.udp.handler.downstream",
+            "pkg:cn.iocoder.yudao.module.iot.gateway.protocol.udp.handler.upstream",
+            "pkg:cn.iocoder.yudao.module.iot.gateway.protocol.websocket",
+            "pkg:cn.iocoder.yudao.module.iot.gateway.protocol.websocket.handler.downstream",
+            "pkg:cn.iocoder.yudao.module.iot.gateway.protocol.websocket.handler.upstream",
+            "pkg:cn.iocoder.yudao.module.iot.gateway.service.auth",
+            "pkg:cn.iocoder.yudao.module.iot.gateway.service.device.message"
+          ]
+        },
+        {
+          "size": 37,
+          "members": [
+            "pkg:cn.iocoder.yudao.module.mes.service.dv.checkplan",
+            "pkg:cn.iocoder.yudao.module.mes.service.dv.checkrecord",
+            "pkg:cn.iocoder.yudao.module.mes.service.dv.machinery",
+            "pkg:cn.iocoder.yudao.module.mes.service.dv.maintenrecord",
+            "pkg:cn.iocoder.yudao.module.mes.service.dv.repair",
+            "pkg:cn.iocoder.yudao.module.mes.service.dv.subject",
+            "pkg:cn.iocoder.yudao.module.mes.service.md.item",
+            "pkg:cn.iocoder.yudao.module.mes.service.md.unitmeasure",
+            "pkg:cn.iocoder.yudao.module.mes.service.md.vendor",
+            "pkg:cn.iocoder.yudao.module.mes.service.md.workstation",
+            "pkg:cn.iocoder.yudao.module.mes.service.pro.feedback",
+            "pkg:cn.iocoder.yudao.module.mes.service.pro.process",
+            "pkg:cn.iocoder.yudao.module.mes.service.pro.route",
+            "pkg:cn.iocoder.yudao.module.mes.service.pro.task",
+            "pkg:cn.iocoder.yudao.module.mes.service.pro.workorder",
+            "pkg:cn.iocoder.yudao.module.mes.service.qc.defectrecord",
+            "pkg:cn.iocoder.yudao.module.mes.service.qc.indicatorresult",
+            "pkg:cn.iocoder.yudao.module.mes.service.qc.ipqc",
+            "pkg:cn.iocoder.yudao.module.mes.service.qc.iqc",
+            "pkg:cn.iocoder.yudao.module.mes.service.qc.oqc",
+            "pkg:cn.iocoder.yudao.module.mes.service.qc.rqc",
+            "pkg:cn.iocoder.yudao.module.mes.service.tm.tool",
+            "pkg:cn.iocoder.yudao.module.mes.service.wm.arrivalnotice",
+            "pkg:cn.iocoder.yudao.module.mes.service.wm.batch",
+            "pkg:cn.iocoder.yudao.module.mes.service.wm.itemconsume",
+            "pkg:cn.iocoder.yudao.module.mes.service.wm.itemreceipt",
+            "pkg:cn.iocoder.yudao.module.mes.service.wm.materialstock",
+            "pkg:cn.iocoder.yudao.module.mes.service.wm.outsourceissue",
+            "pkg:cn.iocoder.yudao.module.mes.service.wm.outsourcereceipt",
+            "pkg:cn.iocoder.yudao.module.mes.service.wm.productproduce",
+            "pkg:cn.iocoder.yudao.module.mes.service.wm.productsales",
+            "pkg:cn.iocoder.yudao.module.mes.service.wm.returnissue",
+            "pkg:cn.iocoder.yudao.module.mes.service.wm.returnsales",
+            "pkg:cn.iocoder.yudao.module.mes.service.wm.returnvendor",
+            "pkg:cn.iocoder.yudao.module.mes.service.wm.salesnotice",
+            "pkg:cn.iocoder.yudao.module.mes.service.wm.transaction",
+            "pkg:cn.iocoder.yudao.module.mes.service.wm.warehouse"
+          ]
+        },
+        {
+          "size": 32,
+          "members": [
+            "pkg:cn.iocoder.yudao.module.pay.api.refund",
+            "pkg:cn.iocoder.yudao.module.pay.controller.admin.order",
+            "pkg:cn.iocoder.yudao.module.pay.convert.app",
+            "pkg:cn.iocoder.yudao.module.pay.convert.channel",
+            "pkg:cn.iocoder.yudao.module.pay.convert.order",
+            "pkg:cn.iocoder.yudao.module.pay.convert.refund",
+            "pkg:cn.iocoder.yudao.module.pay.convert.wallet",
+            "pkg:cn.iocoder.yudao.module.pay.dal.dataobject.channel",
+            "pkg:cn.iocoder.yudao.module.pay.dal.dataobject.notify",
+            "pkg:cn.iocoder.yudao.module.pay.dal.dataobject.order",
+            "pkg:cn.iocoder.yudao.module.pay.dal.dataobject.refund",
+            "pkg:cn.iocoder.yudao.module.pay.dal.dataobject.transfer",
+            "pkg:cn.iocoder.yudao.module.pay.dal.dataobject.wallet",
+            "pkg:cn.iocoder.yudao.module.pay.dal.mysql.channel",
+            "pkg:cn.iocoder.yudao.module.pay.dal.mysql.notify",
+            "pkg:cn.iocoder.yudao.module.pay.dal.mysql.order",
+            "pkg:cn.iocoder.yudao.module.pay.dal.mysql.refund",
+            "pkg:cn.iocoder.yudao.module.pay.dal.mysql.transfer",
+            "pkg:cn.iocoder.yudao.module.pay.dal.mysql.wallet",
+            "pkg:cn.iocoder.yudao.module.pay.framework.pay.config",
+            "pkg:cn.iocoder.yudao.module.pay.framework.pay.core.client.impl",
+            "pkg:cn.iocoder.yudao.module.pay.framework.pay.core.client.impl.alipay",
+            "pkg:cn.iocoder.yudao.module.pay.framework.pay.core.client.impl.mock",
+            "pkg:cn.iocoder.yudao.module.pay.framework.pay.core.client.impl.wallet",
+            "pkg:cn.iocoder.yudao.module.pay.framework.pay.core.client.impl.weixin",
+            "pkg:cn.iocoder.yudao.module.pay.service.app",
+            "pkg:cn.iocoder.yudao.module.pay.service.channel",
+            "pkg:cn.iocoder.yudao.module.pay.service.notify",
+            "pkg:cn.iocoder.yudao.module.pay.service.order",
+            "pkg:cn.iocoder.yudao.module.pay.service.refund",
+            "pkg:cn.iocoder.yudao.module.pay.service.transfer",
+            "pkg:cn.iocoder.yudao.module.pay.service.wallet"
+          ]
+        },
+        {
+          "size": 21,
+          "members": [
+            "pkg:cn.iocoder.yudao.module.crm.controller.admin.business.vo.business",
+            "pkg:cn.iocoder.yudao.module.crm.controller.admin.contract.vo.contract",
+            "pkg:cn.iocoder.yudao.module.crm.controller.admin.customer.vo.customer",
+            "pkg:cn.iocoder.yudao.module.crm.controller.admin.customer.vo.limitconfig",
+            "pkg:cn.iocoder.yudao.module.crm.controller.admin.product.vo.product",
+            "pkg:cn.iocoder.yudao.module.crm.controller.admin.receivable.vo.plan",
+            "pkg:cn.iocoder.yudao.module.crm.controller.admin.receivable.vo.receivable",
+            "pkg:cn.iocoder.yudao.module.crm.dal.mysql.business",
+            "pkg:cn.iocoder.yudao.module.crm.dal.mysql.contract",
+            "pkg:cn.iocoder.yudao.module.crm.dal.mysql.customer",
+            "pkg:cn.iocoder.yudao.module.crm.dal.mysql.product",
+            "pkg:cn.iocoder.yudao.module.crm.dal.mysql.receivable",
+            "pkg:cn.iocoder.yudao.module.crm.framework.operatelog.core",
+            "pkg:cn.iocoder.yudao.module.crm.framework.permission.core.aop",
+            "pkg:cn.iocoder.yudao.module.crm.service.business",
+            "pkg:cn.iocoder.yudao.module.crm.service.contact",
+            "pkg:cn.iocoder.yudao.module.crm.service.contract",
+            "pkg:cn.iocoder.yudao.module.crm.service.customer",
+            "pkg:cn.iocoder.yudao.module.crm.service.permission",
+            "pkg:cn.iocoder.yudao.module.crm.service.product",
+            "pkg:cn.iocoder.yudao.module.crm.service.receivable"
+          ]
+        },
+        {
+          "size": 17,
+          "members": [
+            "pkg:cn.iocoder.yudao.module.iot.controller.admin.product",
+            "pkg:cn.iocoder.yudao.module.iot.job.rule",
+            "pkg:cn.iocoder.yudao.module.iot.service.alert",
+            "pkg:cn.iocoder.yudao.module.iot.service.device",
+            "pkg:cn.iocoder.yudao.module.iot.service.device.message",
+            "pkg:cn.iocoder.yudao.module.iot.service.device.property",
+            "pkg:cn.iocoder.yudao.module.iot.service.device.shadow",
+            "pkg:cn.iocoder.yudao.module.iot.service.ota",
+            "pkg:cn.iocoder.yudao.module.iot.service.product",
+            "pkg:cn.iocoder.yudao.module.iot.service.rule.data",
+            "pkg:cn.iocoder.yudao.module.iot.service.rule.scene",
+            "pkg:cn.iocoder.yudao.module.iot.service.rule.scene.action",
+            "pkg:cn.iocoder.yudao.module.iot.service.rule.scene.matcher",
+            "pkg:cn.iocoder.yudao.module.iot.service.rule.scene.matcher.condition",
+            "pkg:cn.iocoder.yudao.module.iot.service.rule.scene.matcher.trigger",
+            "pkg:cn.iocoder.yudao.module.iot.service.rule.scene.timer",
+            "pkg:cn.iocoder.yudao.module.iot.service.thingmodel"
+          ]
+        },
+        {
+          "size": 17,
+          "members": [
+            "pkg:cn.iocoder.yudao.module.promotion.api.combination",
+            "pkg:cn.iocoder.yudao.module.promotion.service.combination",
+            "pkg:cn.iocoder.yudao.module.trade.api.order",
+            "pkg:cn.iocoder.yudao.module.trade.controller.admin.order",
+            "pkg:cn.iocoder.yudao.module.trade.controller.app.order",
+            "pkg:cn.iocoder.yudao.module.trade.convert.order",
+            "pkg:cn.iocoder.yudao.module.trade.framework.aftersale.core.annotations",
+            "pkg:cn.iocoder.yudao.module.trade.framework.aftersale.core.aop",
+            "pkg:cn.iocoder.yudao.module.trade.framework.aftersale.core.utils",
+            "pkg:cn.iocoder.yudao.module.trade.framework.order.core.annotations",
+            "pkg:cn.iocoder.yudao.module.trade.framework.order.core.aop",
+            "pkg:cn.iocoder.yudao.module.trade.framework.order.core.utils",
+            "pkg:cn.iocoder.yudao.module.trade.service.aftersale",
+            "pkg:cn.iocoder.yudao.module.trade.service.order",
+            "pkg:cn.iocoder.yudao.module.trade.service.order.handler",
+            "pkg:cn.iocoder.yudao.module.trade.service.price",
+            "pkg:cn.iocoder.yudao.module.trade.service.price.calculator"
+          ]
+        },
+        {
+          "size": 14,
+          "members": [
+            "pkg:cn.iocoder.yudao.module.bpm.convert.definition",
+            "pkg:cn.iocoder.yudao.module.bpm.convert.task",
+            "pkg:cn.iocoder.yudao.module.bpm.framework.flowable",
+            "pkg:cn.iocoder.yudao.module.bpm.framework.flowable.config",
+            "pkg:cn.iocoder.yudao.module.bpm.framework.flowable.core.behavior",
+            "pkg:cn.iocoder.yudao.module.bpm.framework.flowable.core.candidate",
+            "pkg:cn.iocoder.yudao.module.bpm.framework.flowable.core.candidate.strategy.other",
+            "pkg:cn.iocoder.yudao.module.bpm.framework.flowable.core.candidate.strategy.user",
+            "pkg:cn.iocoder.yudao.module.bpm.framework.flowable.core.listener",
+            "pkg:cn.iocoder.yudao.module.bpm.framework.flowable.core.util",
+            "pkg:cn.iocoder.yudao.module.bpm.service.comment",
+            "pkg:cn.iocoder.yudao.module.bpm.service.definition",
+            "pkg:cn.iocoder.yudao.module.bpm.service.task",
+            "pkg:cn.iocoder.yudao.module.bpm.service.task.listener"
+          ]
+        },
+        {
+          "size": 14,
+          "members": [
+            "pkg:cn.iocoder.yudao.module.hrm.controller.admin.employee.vo.employee",
+            "pkg:cn.iocoder.yudao.module.hrm.controller.admin.recruit.vo.candidate",
+            "pkg:cn.iocoder.yudao.module.hrm.dal.mysql.employee.info",
+            "pkg:cn.iocoder.yudao.module.hrm.dal.mysql.recruit.candidate",
+            "pkg:cn.iocoder.yudao.module.hrm.framework.excel.core",
+            "pkg:cn.iocoder.yudao.module.hrm.service.employee.config",
+            "pkg:cn.iocoder.yudao.module.hrm.service.employee.employment",
+            "pkg:cn.iocoder.yudao.module.hrm.service.employee.info",
+            "pkg:cn.iocoder.yudao.module.hrm.service.insurance.config",
+            "pkg:cn.iocoder.yudao.module.hrm.service.insurance.employee",
+            "pkg:cn.iocoder.yudao.module.hrm.service.insurance.monthrecord",
+            "pkg:cn.iocoder.yudao.module.hrm.service.recruit.candidate",
+            "pkg:cn.iocoder.yudao.module.hrm.service.recruit.config",
+            "pkg:cn.iocoder.yudao.module.hrm.service.recruit.post"
+          ]
+        },
+        {
+          "size": 13,
+          "members": [
+            "pkg:cn.iocoder.yudao.module.system.api.sms",
+            "pkg:cn.iocoder.yudao.module.system.controller.admin.auth",
+            "pkg:cn.iocoder.yudao.module.system.controller.admin.user.vo.user",
+            "pkg:cn.iocoder.yudao.module.system.convert.tenant",
+            "pkg:cn.iocoder.yudao.module.system.dal.mysql.user",
+            "pkg:cn.iocoder.yudao.module.system.framework.operatelog.core",
+            "pkg:cn.iocoder.yudao.module.system.service.auth",
+            "pkg:cn.iocoder.yudao.module.system.service.dept",
+            "pkg:cn.iocoder.yudao.module.system.service.oauth2",
+            "pkg:cn.iocoder.yudao.module.system.service.permission",
+            "pkg:cn.iocoder.yudao.module.system.service.sms",
+            "pkg:cn.iocoder.yudao.module.system.service.tenant",
+            "pkg:cn.iocoder.yudao.module.system.service.user"
+          ]
+        },
+        {
+          "size": 10,
+          "members": [
+            "pkg:cn.iocoder.yudao.module.ai1.harness.memory",
+            "pkg:cn.iocoder.yudao.module.ai1.harness.rag",
+            "pkg:cn.iocoder.yudao.module.ai1.harness.session",
+            "pkg:cn.iocoder.yudao.module.ai1.harness.skill",
+            "pkg:cn.iocoder.yudao.module.ai1.service.agent",
+            "pkg:cn.iocoder.yudao.module.ai1.service.knowledge",
+            "pkg:cn.iocoder.yudao.module.ai1.service.memory",
+            "pkg:cn.iocoder.yudao.module.ai1.service.model",
+            "pkg:cn.iocoder.yudao.module.ai1.service.session",
+            "pkg:cn.iocoder.yudao.module.ai1.service.skill"
+          ]
+        },
+        {
+          "size": 10,
+          "members": [
+            "pkg:cn.iocoder.yudao.module.infra.controller.admin.file.vo.config",
+            "pkg:cn.iocoder.yudao.module.infra.dal.dataobject.file",
+            "pkg:cn.iocoder.yudao.module.infra.dal.mysql.file",
+            "pkg:cn.iocoder.yudao.module.infra.framework.file.core.client",
+            "pkg:cn.iocoder.yudao.module.infra.framework.file.core.client.db",
+            "pkg:cn.iocoder.yudao.module.infra.framework.file.core.client.ftp",
+            "pkg:cn.iocoder.yudao.module.infra.framework.file.core.client.local",
+            "pkg:cn.iocoder.yudao.module.infra.framework.file.core.client.s3",
+            "pkg:cn.iocoder.yudao.module.infra.framework.file.core.client.sftp",
+            "pkg:cn.iocoder.yudao.module.infra.framework.file.core.enums"
+          ]
+        },
+        {
+          "size": 9,
+          "members": [
+            "pkg:cn.iocoder.yudao.module.mp.framework.mp.core",
+            "pkg:cn.iocoder.yudao.module.mp.service.account",
+            "pkg:cn.iocoder.yudao.module.mp.service.handler.menu",
+            "pkg:cn.iocoder.yudao.module.mp.service.handler.message",
+            "pkg:cn.iocoder.yudao.module.mp.service.handler.user",
+            "pkg:cn.iocoder.yudao.module.mp.service.material",
+            "pkg:cn.iocoder.yudao.module.mp.service.menu",
+            "pkg:cn.iocoder.yudao.module.mp.service.message",
+            "pkg:cn.iocoder.yudao.module.mp.service.user"
+          ]
+        },
+        {
+          "size": 8,
+          "members": [
+            "pkg:cn.iocoder.yudao.module.wms.service.inventory",
+            "pkg:cn.iocoder.yudao.module.wms.service.md.item",
+            "pkg:cn.iocoder.yudao.module.wms.service.md.merchant",
+            "pkg:cn.iocoder.yudao.module.wms.service.md.warehouse",
+            "pkg:cn.iocoder.yudao.module.wms.service.order.check",
+            "pkg:cn.iocoder.yudao.module.wms.service.order.movement",
+            "pkg:cn.iocoder.yudao.module.wms.service.order.receipt",
+            "pkg:cn.iocoder.yudao.module.wms.service.order.shipment"
+          ]
+        },
+        {
+          "size": 6,
+          "members": [
+            "pkg:cn.iocoder.yudao.module.member.controller.app.auth",
+            "pkg:cn.iocoder.yudao.module.member.controller.app.user",
+            "pkg:cn.iocoder.yudao.module.member.convert.auth",
+            "pkg:cn.iocoder.yudao.module.member.service.auth",
+            "pkg:cn.iocoder.yudao.module.member.service.level",
+            "pkg:cn.iocoder.yudao.module.member.service.user"
+          ]
+        },
+        {
+          "size": 5,
+          "members": [
+            "pkg:cn.iocoder.yudao.framework.tenant.config",
+            "pkg:cn.iocoder.yudao.framework.tenant.core.aop",
+            "pkg:cn.iocoder.yudao.framework.tenant.core.db",
+            "pkg:cn.iocoder.yudao.framework.tenant.core.security",
+            "pkg:cn.iocoder.yudao.framework.tenant.core.web"
+          ]
+        },
+        {
+          "size": 5,
+          "members": [
+            "pkg:cn.iocoder.yudao.module.erp.service.finance",
+            "pkg:cn.iocoder.yudao.module.erp.service.product",
+            "pkg:cn.iocoder.yudao.module.erp.service.purchase",
+            "pkg:cn.iocoder.yudao.module.erp.service.sale",
+            "pkg:cn.iocoder.yudao.module.erp.service.stock"
+          ]
+        },
+        {
+          "size": 5,
+          "members": [
+            "pkg:cn.iocoder.yudao.module.fms.service.closing",
+            "pkg:cn.iocoder.yudao.module.fms.service.config",
+            "pkg:cn.iocoder.yudao.module.fms.service.ledger",
+            "pkg:cn.iocoder.yudao.module.fms.service.report",
+            "pkg:cn.iocoder.yudao.module.fms.service.voucher"
+          ]
+        },
+        {
+          "size": 4,
+          "members": [
+            "pkg:cn.iocoder.yudao.framework.web.config",
+            "pkg:cn.iocoder.yudao.framework.web.core.filter",
+            "pkg:cn.iocoder.yudao.framework.web.core.handler",
+            "pkg:cn.iocoder.yudao.framework.web.core.util"
+          ]
+        },
+        {
+          "size": 4,
+          "members": [
+            "pkg:cn.iocoder.yudao.module.ai.dal.dataobject.chat",
+            "pkg:cn.iocoder.yudao.module.ai.dal.dataobject.mindmap",
+            "pkg:cn.iocoder.yudao.module.ai.dal.dataobject.requestlog",
+            "pkg:cn.iocoder.yudao.module.ai.dal.dataobject.write"
+          ]
+        },
+        {
+          "size": 4,
+          "members": [
+            "pkg:cn.iocoder.yudao.module.ai.dal.dataobject.knowledge",
+            "pkg:cn.iocoder.yudao.module.ai.dal.dataobject.model",
+            "pkg:cn.iocoder.yudao.module.ai.tool.function",
+            "pkg:cn.iocoder.yudao.module.ai.util"
+          ]
+        },
+        {
+          "size": 4,
+          "members": [
+            "pkg:cn.iocoder.yudao.module.erp.dal.dataobject.finance",
+            "pkg:cn.iocoder.yudao.module.erp.dal.dataobject.purchase",
+            "pkg:cn.iocoder.yudao.module.erp.dal.dataobject.sale",
+            "pkg:cn.iocoder.yudao.module.erp.dal.dataobject.stock"
+          ]
+        },
+        {
+          "size": 4,
+          "members": [
+            "pkg:cn.iocoder.yudao.module.iot.dal.dataobject.device",
+            "pkg:cn.iocoder.yudao.module.iot.dal.dataobject.ota",
+            "pkg:cn.iocoder.yudao.module.iot.dal.redis",
+            "pkg:cn.iocoder.yudao.module.iot.dal.redis.device"
+          ]
+        },
+        {
+          "size": 4,
+          "members": [
+            "pkg:cn.iocoder.yudao.module.pms.service.kb.content",
+            "pkg:cn.iocoder.yudao.module.pms.service.kb.interaction",
+            "pkg:cn.iocoder.yudao.module.pms.service.kb.library",
+            "pkg:cn.iocoder.yudao.module.pms.service.kb.recycle"
+          ]
+        },
+        {
+          "size": 4,
+          "members": [
+            "pkg:cn.iocoder.yudao.module.product.service.category",
+            "pkg:cn.iocoder.yudao.module.product.service.property",
+            "pkg:cn.iocoder.yudao.module.product.service.sku",
+            "pkg:cn.iocoder.yudao.module.product.service.spu"
+          ]
+        },
+        {
+          "size": 4,
+          "members": [
+            "pkg:cn.iocoder.yudao.module.trade.framework.delivery.config",
+            "pkg:cn.iocoder.yudao.module.trade.framework.delivery.core.client.impl",
+            "pkg:cn.iocoder.yudao.module.trade.framework.delivery.core.client.impl.kd100",
+            "pkg:cn.iocoder.yudao.module.trade.framework.delivery.core.client.impl.kdniao"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:cn.iocoder.yudao.framework.datapermission.core.annotation",
+            "pkg:cn.iocoder.yudao.framework.datapermission.core.aop",
+            "pkg:cn.iocoder.yudao.framework.datapermission.core.rule"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:cn.iocoder.yudao.framework.desensitize.core",
+            "pkg:cn.iocoder.yudao.framework.desensitize.core.annotation",
+            "pkg:cn.iocoder.yudao.framework.desensitize.core.handler"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:cn.iocoder.yudao.framework.idempotent.core.annotation",
+            "pkg:cn.iocoder.yudao.framework.idempotent.core.keyresolver",
+            "pkg:cn.iocoder.yudao.framework.idempotent.core.keyresolver.impl"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:cn.iocoder.yudao.framework.mq.redis.core",
+            "pkg:cn.iocoder.yudao.framework.mq.redis.core.pubsub",
+            "pkg:cn.iocoder.yudao.framework.mq.redis.core.stream"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:cn.iocoder.yudao.framework.ratelimiter.core.annotation",
+            "pkg:cn.iocoder.yudao.framework.ratelimiter.core.keyresolver",
+            "pkg:cn.iocoder.yudao.framework.ratelimiter.core.keyresolver.impl"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:cn.iocoder.yudao.framework.xss.config",
+            "pkg:cn.iocoder.yudao.framework.xss.core.filter",
+            "pkg:cn.iocoder.yudao.framework.xss.core.json"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:cn.iocoder.yudao.module.hrm.dal.dataobject.employee.info",
+            "pkg:cn.iocoder.yudao.module.hrm.dal.dataobject.recruit.candidate",
+            "pkg:cn.iocoder.yudao.module.hrm.dal.dataobject.recruit.post"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:cn.iocoder.yudao.module.hrm.service.performance.assessment",
+            "pkg:cn.iocoder.yudao.module.hrm.service.performance.config",
+            "pkg:cn.iocoder.yudao.module.hrm.service.performance.plan"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:cn.iocoder.yudao.module.hrm.service.salary.config",
+            "pkg:cn.iocoder.yudao.module.hrm.service.salary.employee",
+            "pkg:cn.iocoder.yudao.module.hrm.service.salary.monthrecord"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:cn.iocoder.yudao.module.im.service.friend",
+            "pkg:cn.iocoder.yudao.module.im.service.group",
+            "pkg:cn.iocoder.yudao.module.im.service.message"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:cn.iocoder.yudao.module.iot.core.messagebus.config",
+            "pkg:cn.iocoder.yudao.module.iot.core.messagebus.core.local",
+            "pkg:cn.iocoder.yudao.module.iot.core.messagebus.core.rocketmq"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:cn.iocoder.yudao.module.iot.gateway.serialize",
+            "pkg:cn.iocoder.yudao.module.iot.gateway.serialize.binary",
+            "pkg:cn.iocoder.yudao.module.iot.gateway.serialize.json"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:cn.iocoder.yudao.module.mes.service.cal.holiday",
+            "pkg:cn.iocoder.yudao.module.mes.service.cal.plan",
+            "pkg:cn.iocoder.yudao.module.mes.service.cal.team"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:cn.iocoder.yudao.module.oa.controller.admin.seal",
+            "pkg:cn.iocoder.yudao.module.oa.service.seal",
+            "pkg:cn.iocoder.yudao.module.oa.service.seal.listener"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:cn.iocoder.yudao.module.oa.controller.admin.vehicle",
+            "pkg:cn.iocoder.yudao.module.oa.service.vehicle",
+            "pkg:cn.iocoder.yudao.module.oa.service.vehicle.listener"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:cn.iocoder.yudao.module.oa.service.attendance",
+            "pkg:cn.iocoder.yudao.module.oa.service.leave",
+            "pkg:cn.iocoder.yudao.module.oa.service.travel"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:cn.iocoder.yudao.module.pms.service.pm.iteration",
+            "pkg:cn.iocoder.yudao.module.pms.service.pm.project",
+            "pkg:cn.iocoder.yudao.module.pms.service.pm.workitem"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:cn.iocoder.yudao.framework.common.exception",
+            "pkg:cn.iocoder.yudao.framework.common.exception.enums"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:cn.iocoder.yudao.framework.desensitize.core.base.annotation",
+            "pkg:cn.iocoder.yudao.framework.desensitize.core.base.serializer"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:cn.iocoder.yudao.framework.desensitize.core.regex.annotation",
+            "pkg:cn.iocoder.yudao.framework.desensitize.core.regex.handler"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:cn.iocoder.yudao.framework.desensitize.core.slider.annotation",
+            "pkg:cn.iocoder.yudao.framework.desensitize.core.slider.handler"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:cn.iocoder.yudao.framework.encrypt.config",
+            "pkg:cn.iocoder.yudao.framework.encrypt.core.filter"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:cn.iocoder.yudao.framework.security.config",
+            "pkg:cn.iocoder.yudao.framework.security.core.filter"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:cn.iocoder.yudao.framework.websocket.config",
+            "pkg:cn.iocoder.yudao.framework.websocket.core.security"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:cn.iocoder.yudao.framework.websocket.core.listener",
+            "pkg:cn.iocoder.yudao.framework.websocket.core.message"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:cn.iocoder.yudao.module.ai.controller.admin.image",
+            "pkg:cn.iocoder.yudao.module.ai.service.image"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:cn.iocoder.yudao.module.ai.controller.admin.music",
+            "pkg:cn.iocoder.yudao.module.ai.service.music"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:cn.iocoder.yudao.module.ai.framework.ai.config",
+            "pkg:cn.iocoder.yudao.module.ai.framework.ai.core.model"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:cn.iocoder.yudao.module.ai.service.knowledge",
+            "pkg:cn.iocoder.yudao.module.ai.service.model"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:cn.iocoder.yudao.module.ai1.harness.mcp",
+            "pkg:cn.iocoder.yudao.module.ai1.service.mcp"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:cn.iocoder.yudao.module.bpm.controller.admin.definition.vo.model",
+            "pkg:cn.iocoder.yudao.module.bpm.controller.admin.definition.vo.process"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:cn.iocoder.yudao.module.crm.service.clue",
+            "pkg:cn.iocoder.yudao.module.crm.service.followup"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:cn.iocoder.yudao.module.im.dal.dataobject.channel",
+            "pkg:cn.iocoder.yudao.module.im.dal.dataobject.message"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:cn.iocoder.yudao.module.infra.job.job",
+            "pkg:cn.iocoder.yudao.module.infra.service.job"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:cn.iocoder.yudao.module.iot.core.mq.message",
+            "pkg:cn.iocoder.yudao.module.iot.core.util"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:cn.iocoder.yudao.module.iot.dal.dataobject.alert",
+            "pkg:cn.iocoder.yudao.module.iot.dal.dataobject.rule"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:cn.iocoder.yudao.module.member.dal.dataobject.level",
+            "pkg:cn.iocoder.yudao.module.member.dal.dataobject.user"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:cn.iocoder.yudao.module.mes.dal.dataobject.cal.plan",
+            "pkg:cn.iocoder.yudao.module.mes.dal.dataobject.cal.team"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:cn.iocoder.yudao.module.mes.dal.dataobject.qc.iqc",
+            "pkg:cn.iocoder.yudao.module.mes.dal.dataobject.wm.arrivalnotice"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:cn.iocoder.yudao.module.oa.service.meetingroom",
+            "pkg:cn.iocoder.yudao.module.oa.service.meetingroom.listener"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:cn.iocoder.yudao.module.product.controller.admin.brand",
+            "pkg:cn.iocoder.yudao.module.product.service.brand"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:cn.iocoder.yudao.module.product.dal.dataobject.sku",
+            "pkg:cn.iocoder.yudao.module.product.dal.dataobject.spu"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:cn.iocoder.yudao.module.report.framework.ureport2.core.provider",
+            "pkg:cn.iocoder.yudao.module.report.service.ureport2"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:cn.iocoder.yudao.module.statistics.controller.admin.member",
+            "pkg:cn.iocoder.yudao.module.statistics.service.member"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:cn.iocoder.yudao.module.statistics.controller.admin.trade",
+            "pkg:cn.iocoder.yudao.module.statistics.service.trade"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:cn.iocoder.yudao.module.trade.controller.app.cart",
+            "pkg:cn.iocoder.yudao.module.trade.service.cart"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:cn.iocoder.yudao.module.trade.dal.dataobject.aftersale",
+            "pkg:cn.iocoder.yudao.module.trade.dal.dataobject.order"
+          ]
+        }
+      ]
+    },
+    "B2": {
+      "id": "B2",
+      "name": "package-dependency-density",
+      "label": "包依赖密度",
+      "domain": "B",
+      "direction": "interval",
+      "value": 5.066,
+      "numerator": 14038,
+      "denominator": 2771,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Package --all --field id,dependsOnPackageIds --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e"
+      ]
+    },
+    "B1.frontend": {
+      "id": "B1.frontend",
+      "name": "circular-dependency-density",
+      "label": "循环依赖密度（前端）",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": 0.0,
+      "numerator": 0,
+      "denominator": 5,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Module --all --field id,importedModuleIds --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Module --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e"
+      ],
+      "sccCount": 0
+    },
+    "B3": {
+      "id": "B3",
+      "name": "giant-class-ratio",
+      "label": "巨型类占比",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": 0.015323,
+      "numerator": 99,
+      "denominator": 6461,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Class --all --field id,lineCount --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --where 'lineCount>500' --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e"
+      ],
+      "threshold": "lineCount > 500",
+      "top": [
+        {
+          "lineCount": 1811,
+          "id": "cls:cn.iocoder.yudao.module.pay.service.order.PayOrderServiceTest"
+        },
+        {
+          "lineCount": 1781,
+          "id": "cls:cn.iocoder.yudao.module.fms.service.ledger.FmsLedgerServiceImpl"
+        },
+        {
+          "lineCount": 1735,
+          "id": "cls:cn.iocoder.yudao.module.pay.service.refund.PayRefundServiceTest"
+        },
+        {
+          "lineCount": 1723,
+          "id": "cls:cn.iocoder.yudao.module.bpm.service.task.BpmTaskServiceImpl"
+        },
+        {
+          "lineCount": 1587,
+          "id": "cls:cn.iocoder.yudao.module.hrm.service.employee.info.HrmEmployeeServiceImplTest"
+        }
+      ],
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --where 'lineCount>500' --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
+        "serverCount": 99,
+        "match": true
+      }
+    },
+    "B4": {
+      "id": "B4",
+      "name": "component-coupling-degree",
+      "label": "组件耦合度",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": 0.0,
+      "numerator": 0,
+      "denominator": 1,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Component --all --field id,referencedComponentIds,isGlobal --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Component --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e"
+      ],
+      "globalRegistrationRatio": 0.0
+    },
+    "C2": {
+      "id": "C2",
+      "name": "cyclomatic-complexity-p90",
+      "label": "圈复杂度 P90",
+      "domain": "C",
+      "direction": "lower-better",
+      "value": 3,
+      "denominator": 22748,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,lineCount,complexity --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e"
+      ],
+      "percentiles": {
+        "p25": 1,
+        "p50": 1,
+        "p75": 2,
+        "p90": 3
+      },
+      "mean": 1.6744,
+      "max": 56,
+      "top": [
+        {
+          "cyclomaticComplexity": 56,
+          "id": "mtd:cn.iocoder.yudao.module.system.framework.justauth.core.AuthRequestFactory.getDefaultRequest(:String)"
+        },
+        {
+          "cyclomaticComplexity": 41,
+          "id": "mtd:cn.iocoder.yudao.module.oa.service.file.OaFileNodeServiceImpl.getFileNodePage(:OaFileNodePageReqVO:Long)"
+        },
+        {
+          "cyclomaticComplexity": 33,
+          "id": "mtd:cn.iocoder.yudao.framework.mybatis.core.interceptor.ForUpdateInnerInterceptor.rewriteForSqlServer(:String:boolean)"
+        },
+        {
+          "cyclomaticComplexity": 31,
+          "id": "mtd:cn.iocoder.yudao.module.mes.service.wm.batch.MesWmBatchServiceImpl.getOrGenerateBatchCode(:MesWmBatchGenerateReqVO)"
+        },
+        {
+          "cyclomaticComplexity": 27,
+          "id": "mtd:cn.iocoder.yudao.module.ai.util.AiChatUtils.buildChatOptions(:AiPlatformEnum:String:Double:Integer:List<ToolCallback>:Map<String, Object>:boolean:Map<String, Object>)"
+        }
+      ],
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
+        "serverCount": 22748,
+        "match": true
+      }
+    },
+    "C3": {
+      "id": "C3",
+      "name": "test-method-ratio",
+      "label": "测试方法占比",
+      "domain": "C",
+      "direction": "higher-better",
+      "value": 0.187019,
+      "numerator": 5789,
+      "denominator": 30954,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'isTest=true' --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,isTest,testType --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e"
+      ],
+      "testTypes": {
+        "UnitTest": 5789
+      },
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'isTest=true' --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
+        "serverCount": 5789,
+        "match": true
+      }
+    },
+    "C4": {
+      "id": "C4",
+      "name": "giant-method-ratio",
+      "label": "巨型方法占比",
+      "domain": "C",
+      "direction": "lower-better",
+      "value": 0.001493,
+      "numerator": 34,
+      "denominator": 22779,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount>80' --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount=0' --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,lineCount --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e"
+      ],
+      "threshold": "lineCount > 80",
+      "excludedFromDenominator": {
+        "lineCountIsZero": 8175,
+        "lineCountIsNull": 0
+      },
+      "top": [
+        {
+          "lineCount": 138,
+          "id": "mtd:cn.iocoder.yudao.module.bpm.service.task.BpmTaskServiceImpl.processTaskAssigned(:Task)"
+        },
+        {
+          "lineCount": 133,
+          "id": "mtd:cn.iocoder.yudao.module.system.framework.justauth.core.AuthRequestFactory.getDefaultRequest(:String)"
+        },
+        {
+          "lineCount": 128,
+          "id": "mtd:cn.iocoder.yudao.module.mes.service.wm.batch.MesWmBatchServiceImpl.getOrGenerateBatchCode(:MesWmBatchGenerateReqVO)"
+        },
+        {
+          "lineCount": 120,
+          "id": "mtd:cn.iocoder.yudao.module.ai1.harness.session.Ai1SessionStreamTool.executeTask(:StreamMessageId:Map<String, String>:Long:RLock:long:boolean)"
+        },
+        {
+          "lineCount": 120,
+          "id": "mtd:cn.iocoder.yudao.module.ai.service.chat.AiChatMessageServiceImpl.sendChatMessageStream(:AiChatMessageSendReqVO:Long)"
+        }
+      ],
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount>80' --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
+        "serverCount": 34,
+        "match": true
+      }
+    },
+    "D3": {
+      "id": "D3",
+      "name": "scale-profile",
+      "label": "规模画像",
+      "domain": "D",
+      "direction": "none",
+      "value": 41911,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" snapshot list --repo ruoyi-vue-pro",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Repository --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Interface --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Dependency --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Mapper --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Module --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Component --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Function --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Store --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Route --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e"
+      ],
+      "typeCounts": {
+        "Repository": 1,
+        "Package": 2771,
+        "Class": 6461,
+        "Interface": 1474,
+        "Method": 30954,
+        "Dependency": 186,
+        "Table": 43,
+        "Mapper": 7,
+        "Module": 5,
+        "Component": 1,
+        "Function": 8,
+        "Store": 0,
+        "Route": 0,
+        "ApiEndpoint": 0
+      },
+      "linkCount": 206379
+    }
+  },
+  "nullMetrics": {
+    "A1": {
+      "id": "A1",
+      "name": "full-chain-coverage",
+      "label": "全链路贯通率",
+      "domain": "A",
+      "direction": "higher-better",
+      "value": null,
+      "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e"
+      ],
+      "evidence": {
+        "apiEndpointCount": 0
+      }
+    },
+    "A2": {
+      "id": "A2",
+      "name": "api-backend-breakrate",
+      "label": "前后端断链率",
+      "domain": "A",
+      "direction": "lower-better",
+      "value": null,
+      "reason": "无 ApiEndpoint 对象（纯后端仓库——按口径置空）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e"
+      ],
+      "evidence": {
+        "apiEndpointCount": 0
+      }
+    },
+    "C1": {
+      "id": "C1",
+      "name": "endpoint-table-hops",
+      "label": "端到端跳数",
+      "domain": "C",
+      "direction": "interval",
+      "value": null,
+      "reason": "无 ApiEndpoint 对象（贯通链分母为 0）",
+      "evidence": {
+        "apiEndpointCount": 0
+      }
+    },
+    "D1": {
+      "id": "D1",
+      "name": "framework-version-coverage",
+      "label": "技术栈版本覆盖率",
+      "domain": "D",
+      "direction": "higher-better",
+      "value": null,
+      "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Dependency --all --field id,name,version,scope --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e"
+      ],
+      "evidence": {
+        "total": 186,
+        "emptyVersion": 38,
+        "placeholder": 146,
+        "determinable": 2
+      }
+    },
+    "D2": {
+      "id": "D2",
+      "name": "dependency-homogeneity",
+      "label": "依赖同质度",
+      "domain": "D",
+      "direction": "none",
+      "value": null,
+      "reason": "cohort 级指标（依赖 cohort 众数集合——单体层不产出）",
+      "evidence": {
+        "dependencyCount": 186
+      }
+    },
+    "D4": {
+      "id": "D4",
+      "name": "evolution-trend",
+      "label": "年度演进趋势",
+      "domain": "D",
+      "direction": "none",
+      "value": null,
+      "reason": "单快照（首次导入——无时序）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" snapshot list --repo ruoyi-vue-pro"
+      ],
+      "evidence": {
+        "completeSnapshotCount": 1
+      }
+    }
+  },
+  "dataQuality": {
+    "dq.null-complexity-ratio": {
+      "id": "dq.null-complexity-ratio",
+      "name": "null-complexity-ratio",
+      "label": "complexity 为 null 的方法占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": 0.265103,
+      "numerator": 8206,
+      "denominator": 30954,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e"
+      ]
+    },
+    "dq.missing-version-ratio": {
+      "id": "dq.missing-version-ratio",
+      "name": "missing-version-ratio",
+      "label": "version 为空串的依赖占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": 0.204301,
+      "numerator": 38,
+      "denominator": 186,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Dependency --all --field id,name,version,scope --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e"
+      ],
+      "placeholderVersionCount": 146
+    },
+    "dq.mapper-join-miss-ratio": {
+      "id": "dq.mapper-join-miss-ratio",
+      "name": "mapper-join-miss-ratio",
+      "label": "Mapper namespace 与接口 FQN join 未命中占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": 0.0,
+      "numerator": 0,
+      "denominator": 7,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Mapper --all --field id,namespace --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Interface --all --field id --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e"
+      ]
+    },
+    "dq.ext-call-ratio": {
+      "id": "dq.ext-call-ratio",
+      "name": "ext-call-ratio",
+      "label": "ext: 虚拟调用过滤占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": null,
+      "reason": "不可观测（ext: 虚拟边在导入物化时已过滤——查询面天然免疫）"
+    }
+  }
+}
