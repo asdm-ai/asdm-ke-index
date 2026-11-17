@@ -1,0 +1,470 @@
+{
+  "schemaVersion": "draft-v1",
+  "implementation": "ke-index compute-metrics.py (transitional; to be superseded by ke checkup)",
+  "owner": "linlinjava",
+  "repo": "litemall",
+  "sourceId": "litemall",
+  "snapshot": {
+    "snapshotId": "c1024294-9020-466d-8010-a4a3f8a1006d",
+    "status": "complete",
+    "sourceVersion": "head",
+    "objectCount": 13172,
+    "linkCount": 34102,
+    "completedAt": "2026-11-17T14:15:48.141Z"
+  },
+  "cliVersion": "0.3.5",
+  "metrics": {
+    "A2": {
+      "id": "A2",
+      "name": "api-backend-breakrate",
+      "label": "前后端断链率",
+      "domain": "A",
+      "direction": "lower-better",
+      "value": 1.0,
+      "numerator": 123,
+      "denominator": 123,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query ApiEndpoint --all --field id,backendMethodId,matchedVia --snapshot c1024294-9020-466d-8010-a4a3f8a1006d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot c1024294-9020-466d-8010-a4a3f8a1006d"
+      ]
+    },
+    "A3": {
+      "id": "A3",
+      "name": "orphan-table-rate",
+      "label": "孤儿表率",
+      "domain": "A",
+      "direction": "lower-better",
+      "value": 0.0,
+      "numerator": 0,
+      "denominator": 34,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Table --all --field id,name,matchedEntityClass --snapshot c1024294-9020-466d-8010-a4a3f8a1006d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Mapper --all --field id,namespace,mappedTableIds --snapshot c1024294-9020-466d-8010-a4a3f8a1006d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot c1024294-9020-466d-8010-a4a3f8a1006d"
+      ]
+    },
+    "A4": {
+      "id": "A4",
+      "name": "table-entity-mapping-rate",
+      "label": "表↔实体映射率",
+      "domain": "A",
+      "direction": "higher-better",
+      "value": 1.0,
+      "numerator": 34,
+      "denominator": 34,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Table --all --field id,name,matchedEntityClass --snapshot c1024294-9020-466d-8010-a4a3f8a1006d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Mapper --all --field id,namespace,mappedTableIds --snapshot c1024294-9020-466d-8010-a4a3f8a1006d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot c1024294-9020-466d-8010-a4a3f8a1006d"
+      ],
+      "evidence": {
+        "mapperEdgeOnly": 0,
+        "entityClassOnly": 0,
+        "both": 34
+      }
+    },
+    "B1.backend": {
+      "id": "B1.backend",
+      "name": "circular-dependency-density",
+      "label": "循环依赖密度（后端）",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": 0.090909,
+      "numerator": 4,
+      "denominator": 44,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Package --all --field id,dependsOnPackageIds --snapshot c1024294-9020-466d-8010-a4a3f8a1006d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot c1024294-9020-466d-8010-a4a3f8a1006d"
+      ],
+      "sccCount": 2,
+      "sccs": [
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.linlinjava.litemall.core.express",
+            "pkg:org.linlinjava.litemall.core.express.config"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.linlinjava.litemall.wx.service",
+            "pkg:org.linlinjava.litemall.wx.task"
+          ]
+        }
+      ]
+    },
+    "B2": {
+      "id": "B2",
+      "name": "package-dependency-density",
+      "label": "包依赖密度",
+      "domain": "B",
+      "direction": "interval",
+      "value": 2.8409,
+      "numerator": 125,
+      "denominator": 44,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Package --all --field id,dependsOnPackageIds --snapshot c1024294-9020-466d-8010-a4a3f8a1006d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot c1024294-9020-466d-8010-a4a3f8a1006d"
+      ]
+    },
+    "B1.frontend": {
+      "id": "B1.frontend",
+      "name": "circular-dependency-density",
+      "label": "循环依赖密度（前端）",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": 0.0,
+      "numerator": 0,
+      "denominator": 459,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Module --all --field id,importedModuleIds --snapshot c1024294-9020-466d-8010-a4a3f8a1006d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Module --snapshot c1024294-9020-466d-8010-a4a3f8a1006d"
+      ],
+      "sccCount": 0
+    },
+    "B3": {
+      "id": "B3",
+      "name": "giant-class-ratio",
+      "label": "巨型类占比",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": 0.223404,
+      "numerator": 105,
+      "denominator": 470,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Class --all --field id,lineCount --snapshot c1024294-9020-466d-8010-a4a3f8a1006d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --where 'lineCount>500' --snapshot c1024294-9020-466d-8010-a4a3f8a1006d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --snapshot c1024294-9020-466d-8010-a4a3f8a1006d"
+      ],
+      "threshold": "lineCount > 500",
+      "top": [
+        {
+          "lineCount": 4478,
+          "id": "cls:org.linlinjava.litemall.db.domain.LitemallOrderExample"
+        },
+        {
+          "lineCount": 4047,
+          "id": "cls:org.linlinjava.litemall.db.domain.LitemallOrderExample$GeneratedCriteria"
+        },
+        {
+          "lineCount": 3106,
+          "id": "cls:org.linlinjava.litemall.db.domain.LitemallGoodsExample"
+        },
+        {
+          "lineCount": 3076,
+          "id": "cls:org.linlinjava.litemall.db.domain.LitemallCouponExample"
+        },
+        {
+          "lineCount": 2694,
+          "id": "cls:org.linlinjava.litemall.db.domain.LitemallUserExample"
+        }
+      ],
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --where 'lineCount>500' --snapshot c1024294-9020-466d-8010-a4a3f8a1006d",
+        "serverCount": 105,
+        "match": true
+      }
+    },
+    "B4": {
+      "id": "B4",
+      "name": "component-coupling-degree",
+      "label": "组件耦合度",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": 0.122,
+      "numerator": 10,
+      "denominator": 82,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Component --all --field id,referencedComponentIds,isGlobal --snapshot c1024294-9020-466d-8010-a4a3f8a1006d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Component --snapshot c1024294-9020-466d-8010-a4a3f8a1006d"
+      ],
+      "globalRegistrationRatio": 0.0
+    },
+    "C2": {
+      "id": "C2",
+      "name": "cyclomatic-complexity-p90",
+      "label": "圈复杂度 P90",
+      "domain": "C",
+      "direction": "lower-better",
+      "value": 1,
+      "denominator": 10758,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot c1024294-9020-466d-8010-a4a3f8a1006d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,lineCount,complexity --snapshot c1024294-9020-466d-8010-a4a3f8a1006d"
+      ],
+      "percentiles": {
+        "p25": 1,
+        "p50": 1,
+        "p75": 1,
+        "p90": 1
+      },
+      "mean": 1.1956,
+      "max": 45,
+      "top": [
+        {
+          "cyclomaticComplexity": 45,
+          "id": "mtd:org.linlinjava.litemall.wx.service.WxOrderService.submit(:Integer:String)"
+        },
+        {
+          "cyclomaticComplexity": 34,
+          "id": "mtd:org.linlinjava.litemall.db.domain.LitemallOrder.equals(:Object)"
+        },
+        {
+          "cyclomaticComplexity": 24,
+          "id": "mtd:org.linlinjava.litemall.db.domain.LitemallGoods.equals(:Object)"
+        },
+        {
+          "cyclomaticComplexity": 23,
+          "id": "mtd:org.linlinjava.litemall.db.domain.LitemallCoupon.equals(:Object)"
+        },
+        {
+          "cyclomaticComplexity": 20,
+          "id": "mtd:org.linlinjava.litemall.db.domain.LitemallUser.equals(:Object)"
+        }
+      ],
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot c1024294-9020-466d-8010-a4a3f8a1006d",
+        "serverCount": 10758,
+        "match": true
+      }
+    },
+    "C3": {
+      "id": "C3",
+      "name": "test-method-ratio",
+      "label": "测试方法占比",
+      "domain": "C",
+      "direction": "higher-better",
+      "value": 0.004376,
+      "numerator": 50,
+      "denominator": 11427,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'isTest=true' --snapshot c1024294-9020-466d-8010-a4a3f8a1006d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot c1024294-9020-466d-8010-a4a3f8a1006d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,isTest,testType --snapshot c1024294-9020-466d-8010-a4a3f8a1006d"
+      ],
+      "testTypes": {
+        "UnitTest": 50
+      },
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'isTest=true' --snapshot c1024294-9020-466d-8010-a4a3f8a1006d",
+        "serverCount": 50,
+        "match": true
+      }
+    },
+    "C4": {
+      "id": "C4",
+      "name": "giant-method-ratio",
+      "label": "巨型方法占比",
+      "domain": "C",
+      "direction": "lower-better",
+      "value": 0.000744,
+      "numerator": 8,
+      "denominator": 10758,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount>80' --snapshot c1024294-9020-466d-8010-a4a3f8a1006d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount=0' --snapshot c1024294-9020-466d-8010-a4a3f8a1006d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot c1024294-9020-466d-8010-a4a3f8a1006d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,lineCount --snapshot c1024294-9020-466d-8010-a4a3f8a1006d"
+      ],
+      "threshold": "lineCount > 80",
+      "excludedFromDenominator": {
+        "lineCountIsZero": 669,
+        "lineCountIsNull": 0
+      },
+      "top": [
+        {
+          "lineCount": 288,
+          "id": "mtd:org.linlinjava.litemall.wx.service.WxOrderService.submit(:Integer:String)"
+        },
+        {
+          "lineCount": 132,
+          "id": "mtd:org.linlinjava.litemall.wx.web.WxCartController.checkout(:Integer:Integer:Integer:Integer:Integer:Integer)"
+        },
+        {
+          "lineCount": 110,
+          "id": "mtd:org.linlinjava.litemall.wx.web.WxGoodsController.detail(:Integer:Integer)"
+        },
+        {
+          "lineCount": 97,
+          "id": "mtd:org.linlinjava.litemall.wx.service.WxOrderService.payNotify(:HttpServletRequest:HttpServletResponse)"
+        },
+        {
+          "lineCount": 91,
+          "id": "mtd:org.linlinjava.litemall.wx.web.WxAuthController.register(:String:HttpServletRequest)"
+        }
+      ],
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount>80' --snapshot c1024294-9020-466d-8010-a4a3f8a1006d",
+        "serverCount": 8,
+        "match": true
+      }
+    },
+    "D3": {
+      "id": "D3",
+      "name": "scale-profile",
+      "label": "规模画像",
+      "domain": "D",
+      "direction": "none",
+      "value": 13172,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" snapshot list --repo litemall",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Repository --snapshot c1024294-9020-466d-8010-a4a3f8a1006d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot c1024294-9020-466d-8010-a4a3f8a1006d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --snapshot c1024294-9020-466d-8010-a4a3f8a1006d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Interface --snapshot c1024294-9020-466d-8010-a4a3f8a1006d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot c1024294-9020-466d-8010-a4a3f8a1006d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Dependency --snapshot c1024294-9020-466d-8010-a4a3f8a1006d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot c1024294-9020-466d-8010-a4a3f8a1006d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Mapper --snapshot c1024294-9020-466d-8010-a4a3f8a1006d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Module --snapshot c1024294-9020-466d-8010-a4a3f8a1006d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Component --snapshot c1024294-9020-466d-8010-a4a3f8a1006d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Function --snapshot c1024294-9020-466d-8010-a4a3f8a1006d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Store --snapshot c1024294-9020-466d-8010-a4a3f8a1006d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Route --snapshot c1024294-9020-466d-8010-a4a3f8a1006d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot c1024294-9020-466d-8010-a4a3f8a1006d"
+      ],
+      "typeCounts": {
+        "Repository": 1,
+        "Package": 44,
+        "Class": 470,
+        "Interface": 46,
+        "Method": 11427,
+        "Dependency": 34,
+        "Table": 34,
+        "Mapper": 35,
+        "Module": 459,
+        "Component": 82,
+        "Function": 384,
+        "Store": 5,
+        "Route": 28,
+        "ApiEndpoint": 123
+      },
+      "linkCount": 34102
+    }
+  },
+  "nullMetrics": {
+    "A1": {
+      "id": "A1",
+      "name": "full-chain-coverage",
+      "label": "全链路贯通率",
+      "domain": "A",
+      "direction": "higher-better",
+      "value": null,
+      "reason": "calls 传递闭包与 Method→Mapper 名字 join 未实现（过渡实现——待 ke checkup）",
+      "evidence": {
+        "apiEndpointCount": 123
+      }
+    },
+    "C1": {
+      "id": "C1",
+      "name": "endpoint-table-hops",
+      "label": "端到端跳数",
+      "domain": "C",
+      "direction": "interval",
+      "value": null,
+      "reason": "依赖 A1 贯通链算法（过渡实现未含——待 ke checkup）",
+      "evidence": {
+        "apiEndpointCount": 123
+      }
+    },
+    "D1": {
+      "id": "D1",
+      "name": "framework-version-coverage",
+      "label": "技术栈版本覆盖率",
+      "domain": "D",
+      "direction": "higher-better",
+      "value": null,
+      "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Dependency --all --field id,name,version,scope --snapshot c1024294-9020-466d-8010-a4a3f8a1006d"
+      ],
+      "evidence": {
+        "total": 34,
+        "emptyVersion": 4,
+        "placeholder": 5,
+        "determinable": 25
+      }
+    },
+    "D2": {
+      "id": "D2",
+      "name": "dependency-homogeneity",
+      "label": "依赖同质度",
+      "domain": "D",
+      "direction": "none",
+      "value": null,
+      "reason": "cohort 级指标（依赖 cohort 众数集合——单体层不产出）",
+      "evidence": {
+        "dependencyCount": 34
+      }
+    },
+    "D4": {
+      "id": "D4",
+      "name": "evolution-trend",
+      "label": "年度演进趋势",
+      "domain": "D",
+      "direction": "none",
+      "value": null,
+      "reason": "单快照（首次导入——无时序）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" snapshot list --repo litemall"
+      ],
+      "evidence": {
+        "completeSnapshotCount": 1
+      }
+    }
+  },
+  "dataQuality": {
+    "dq.null-complexity-ratio": {
+      "id": "dq.null-complexity-ratio",
+      "name": "null-complexity-ratio",
+      "label": "complexity 为 null 的方法占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": 0.058546,
+      "numerator": 669,
+      "denominator": 11427,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot c1024294-9020-466d-8010-a4a3f8a1006d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot c1024294-9020-466d-8010-a4a3f8a1006d"
+      ]
+    },
+    "dq.missing-version-ratio": {
+      "id": "dq.missing-version-ratio",
+      "name": "missing-version-ratio",
+      "label": "version 为空串的依赖占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": 0.117647,
+      "numerator": 4,
+      "denominator": 34,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Dependency --all --field id,name,version,scope --snapshot c1024294-9020-466d-8010-a4a3f8a1006d"
+      ],
+      "placeholderVersionCount": 5
+    },
+    "dq.mapper-join-miss-ratio": {
+      "id": "dq.mapper-join-miss-ratio",
+      "name": "mapper-join-miss-ratio",
+      "label": "Mapper namespace 与接口 FQN join 未命中占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": 0.0,
+      "numerator": 0,
+      "denominator": 35,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Mapper --all --field id,namespace --snapshot c1024294-9020-466d-8010-a4a3f8a1006d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Interface --all --field id --snapshot c1024294-9020-466d-8010-a4a3f8a1006d"
+      ]
+    },
+    "dq.ext-call-ratio": {
+      "id": "dq.ext-call-ratio",
+      "name": "ext-call-ratio",
+      "label": "ext: 虚拟调用过滤占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": null,
+      "reason": "不可观测（ext: 虚拟边在导入物化时已过滤——查询面天然免疫）"
+    }
+  }
+}
