@@ -1,0 +1,934 @@
+{
+  "schemaVersion": "draft-v1",
+  "implementation": "ke-index compute-metrics.py (transitional; to be superseded by ke checkup)",
+  "owner": "alibaba",
+  "repo": "nacos",
+  "sourceId": "nacos",
+  "snapshot": {
+    "snapshotId": "93839017-149f-4503-940f-460207e07e1d",
+    "status": "complete",
+    "sourceVersion": "head",
+    "objectCount": 57010,
+    "linkCount": 431791,
+    "completedAt": "2026-11-17T23:34:24.231Z"
+  },
+  "cliVersion": "0.3.5",
+  "metrics": {
+    "A2": {
+      "id": "A2",
+      "name": "api-backend-breakrate",
+      "label": "前后端断链率",
+      "domain": "A",
+      "direction": "lower-better",
+      "value": 0.903846,
+      "numerator": 47,
+      "denominator": 52,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query ApiEndpoint --all --field id,backendMethodId,matchedVia --snapshot 93839017-149f-4503-940f-460207e07e1d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot 93839017-149f-4503-940f-460207e07e1d"
+      ]
+    },
+    "A3": {
+      "id": "A3",
+      "name": "orphan-table-rate",
+      "label": "孤儿表率",
+      "domain": "A",
+      "direction": "lower-better",
+      "value": 1.0,
+      "numerator": 16,
+      "denominator": 16,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Table --all --field id,name,matchedEntityClass --snapshot 93839017-149f-4503-940f-460207e07e1d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Mapper --all --field id,namespace,mappedTableIds --snapshot 93839017-149f-4503-940f-460207e07e1d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot 93839017-149f-4503-940f-460207e07e1d"
+      ]
+    },
+    "A4": {
+      "id": "A4",
+      "name": "table-entity-mapping-rate",
+      "label": "表↔实体映射率",
+      "domain": "A",
+      "direction": "higher-better",
+      "value": 0.0,
+      "numerator": 0,
+      "denominator": 16,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Table --all --field id,name,matchedEntityClass --snapshot 93839017-149f-4503-940f-460207e07e1d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Mapper --all --field id,namespace,mappedTableIds --snapshot 93839017-149f-4503-940f-460207e07e1d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot 93839017-149f-4503-940f-460207e07e1d"
+      ],
+      "evidence": {
+        "mapperEdgeOnly": 0,
+        "entityClassOnly": 0,
+        "both": 0
+      }
+    },
+    "B1.backend": {
+      "id": "B1.backend",
+      "name": "circular-dependency-density",
+      "label": "循环依赖密度（后端）",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": 0.437418,
+      "numerator": 332,
+      "denominator": 759,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Package --all --field id,dependsOnPackageIds --snapshot 93839017-149f-4503-940f-460207e07e1d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot 93839017-149f-4503-940f-460207e07e1d"
+      ],
+      "sccCount": 32,
+      "sccs": [
+        {
+          "size": 93,
+          "members": [
+            "pkg:com.alibaba.nacos.api",
+            "pkg:com.alibaba.nacos.api.ai.model.agent",
+            "pkg:com.alibaba.nacos.api.ai.model.agent.admin",
+            "pkg:com.alibaba.nacos.api.ai.model.agent.base",
+            "pkg:com.alibaba.nacos.api.ai.model.agent.client",
+            "pkg:com.alibaba.nacos.api.ai.remote",
+            "pkg:com.alibaba.nacos.api.ai.remote.request",
+            "pkg:com.alibaba.nacos.api.ai.remote.response",
+            "pkg:com.alibaba.nacos.api.ai.utils",
+            "pkg:com.alibaba.nacos.api.annotation",
+            "pkg:com.alibaba.nacos.api.config",
+            "pkg:com.alibaba.nacos.api.config.listener",
+            "pkg:com.alibaba.nacos.api.lock",
+            "pkg:com.alibaba.nacos.api.lock.model",
+            "pkg:com.alibaba.nacos.api.lock.remote.request",
+            "pkg:com.alibaba.nacos.api.lock.remote.response",
+            "pkg:com.alibaba.nacos.api.naming",
+            "pkg:com.alibaba.nacos.api.naming.listener",
+            "pkg:com.alibaba.nacos.api.naming.pojo",
+            "pkg:com.alibaba.nacos.api.naming.pojo.builder",
+            "pkg:com.alibaba.nacos.api.naming.pojo.healthcheck",
+            "pkg:com.alibaba.nacos.api.naming.pojo.healthcheck.impl",
+            "pkg:com.alibaba.nacos.api.naming.remote.request",
+            "pkg:com.alibaba.nacos.api.naming.remote.response",
+            "pkg:com.alibaba.nacos.api.naming.selector",
+            "pkg:com.alibaba.nacos.api.naming.utils",
+            "pkg:com.alibaba.nacos.api.selector",
+            "pkg:com.alibaba.nacos.api.selector.context",
+            "pkg:com.alibaba.nacos.api.utils.json",
+            "pkg:com.alibaba.nacos.client.address",
+            "pkg:com.alibaba.nacos.client.auth.impl",
+            "pkg:com.alibaba.nacos.client.auth.impl.process",
+            "pkg:com.alibaba.nacos.client.auth.ram",
+            "pkg:com.alibaba.nacos.client.auth.ram.identify",
+            "pkg:com.alibaba.nacos.client.auth.ram.injector",
+            "pkg:com.alibaba.nacos.client.auth.ram.utils",
+            "pkg:com.alibaba.nacos.client.config",
+            "pkg:com.alibaba.nacos.client.config.common",
+            "pkg:com.alibaba.nacos.client.config.filter.impl",
+            "pkg:com.alibaba.nacos.client.config.impl",
+            "pkg:com.alibaba.nacos.client.config.listener.impl",
+            "pkg:com.alibaba.nacos.client.config.utils",
+            "pkg:com.alibaba.nacos.client.env",
+            "pkg:com.alibaba.nacos.client.env.convert",
+            "pkg:com.alibaba.nacos.client.lock",
+            "pkg:com.alibaba.nacos.client.lock.core",
+            "pkg:com.alibaba.nacos.client.lock.remote",
+            "pkg:com.alibaba.nacos.client.lock.remote.grpc",
+            "pkg:com.alibaba.nacos.client.logging",
+            "pkg:com.alibaba.nacos.client.naming",
+            "pkg:com.alibaba.nacos.client.naming.backups",
+            "pkg:com.alibaba.nacos.client.naming.cache",
+            "pkg:com.alibaba.nacos.client.naming.core",
+            "pkg:com.alibaba.nacos.client.naming.event",
+            "pkg:com.alibaba.nacos.client.naming.listener",
+            "pkg:com.alibaba.nacos.client.naming.remote",
+            "pkg:com.alibaba.nacos.client.naming.remote.gprc",
+            "pkg:com.alibaba.nacos.client.naming.remote.gprc.redo",
+            "pkg:com.alibaba.nacos.client.naming.remote.gprc.redo.data",
+            "pkg:com.alibaba.nacos.client.naming.remote.http",
+            "pkg:com.alibaba.nacos.client.naming.selector",
+            "pkg:com.alibaba.nacos.client.naming.utils",
+            "pkg:com.alibaba.nacos.client.remote",
+            "pkg:com.alibaba.nacos.client.security",
+            "pkg:com.alibaba.nacos.client.selector",
+            "pkg:com.alibaba.nacos.client.utils",
+            "pkg:com.alibaba.nacos.common.ability",
+            "pkg:com.alibaba.nacos.common.ability.discover",
+            "pkg:com.alibaba.nacos.common.executor",
+            "pkg:com.alibaba.nacos.common.http",
+            "pkg:com.alibaba.nacos.common.http.client",
+            "pkg:com.alibaba.nacos.common.http.client.handler",
+            "pkg:com.alibaba.nacos.common.http.client.request",
+            "pkg:com.alibaba.nacos.common.http.client.response",
+            "pkg:com.alibaba.nacos.common.http.param",
+            "pkg:com.alibaba.nacos.common.json",
+            "pkg:com.alibaba.nacos.common.labels.impl",
+            "pkg:com.alibaba.nacos.common.logging",
+            "pkg:com.alibaba.nacos.common.model",
+            "pkg:com.alibaba.nacos.common.notify",
+            "pkg:com.alibaba.nacos.common.notify.listener",
+            "pkg:com.alibaba.nacos.common.packagescan.resource",
+            "pkg:com.alibaba.nacos.common.packagescan.util",
+            "pkg:com.alibaba.nacos.common.remote",
+            "pkg:com.alibaba.nacos.common.remote.client",
+            "pkg:com.alibaba.nacos.common.remote.client.grpc",
+            "pkg:com.alibaba.nacos.common.spi",
+            "pkg:com.alibaba.nacos.common.tls",
+            "pkg:com.alibaba.nacos.common.utils",
+            "pkg:com.alibaba.nacos.plugin.auth.api",
+            "pkg:com.alibaba.nacos.plugin.auth.spi.client",
+            "pkg:com.alibaba.nacos.plugin.encryption",
+            "pkg:com.alibaba.nacos.plugin.encryption.handler"
+          ]
+        },
+        {
+          "size": 41,
+          "members": [
+            "pkg:com.alibaba.nacos.naming",
+            "pkg:com.alibaba.nacos.naming.cluster",
+            "pkg:com.alibaba.nacos.naming.cluster.transport",
+            "pkg:com.alibaba.nacos.naming.consistency",
+            "pkg:com.alibaba.nacos.naming.consistency.ephemeral.distro.v2",
+            "pkg:com.alibaba.nacos.naming.consistency.persistent.impl",
+            "pkg:com.alibaba.nacos.naming.core",
+            "pkg:com.alibaba.nacos.naming.core.v2",
+            "pkg:com.alibaba.nacos.naming.core.v2.client",
+            "pkg:com.alibaba.nacos.naming.core.v2.client.factory",
+            "pkg:com.alibaba.nacos.naming.core.v2.client.impl",
+            "pkg:com.alibaba.nacos.naming.core.v2.client.manager",
+            "pkg:com.alibaba.nacos.naming.core.v2.client.manager.impl",
+            "pkg:com.alibaba.nacos.naming.core.v2.event.client",
+            "pkg:com.alibaba.nacos.naming.core.v2.event.metadata",
+            "pkg:com.alibaba.nacos.naming.core.v2.event.publisher",
+            "pkg:com.alibaba.nacos.naming.core.v2.event.service",
+            "pkg:com.alibaba.nacos.naming.core.v2.index",
+            "pkg:com.alibaba.nacos.naming.core.v2.metadata",
+            "pkg:com.alibaba.nacos.naming.core.v2.pojo",
+            "pkg:com.alibaba.nacos.naming.core.v2.service",
+            "pkg:com.alibaba.nacos.naming.core.v2.service.impl",
+            "pkg:com.alibaba.nacos.naming.healthcheck",
+            "pkg:com.alibaba.nacos.naming.healthcheck.extend",
+            "pkg:com.alibaba.nacos.naming.healthcheck.heartbeat",
+            "pkg:com.alibaba.nacos.naming.healthcheck.interceptor",
+            "pkg:com.alibaba.nacos.naming.healthcheck.v2",
+            "pkg:com.alibaba.nacos.naming.healthcheck.v2.processor",
+            "pkg:com.alibaba.nacos.naming.misc",
+            "pkg:com.alibaba.nacos.naming.model.form",
+            "pkg:com.alibaba.nacos.naming.monitor",
+            "pkg:com.alibaba.nacos.naming.pojo",
+            "pkg:com.alibaba.nacos.naming.pojo.instance",
+            "pkg:com.alibaba.nacos.naming.push",
+            "pkg:com.alibaba.nacos.naming.push.v2",
+            "pkg:com.alibaba.nacos.naming.push.v2.executor",
+            "pkg:com.alibaba.nacos.naming.push.v2.hook",
+            "pkg:com.alibaba.nacos.naming.push.v2.task",
+            "pkg:com.alibaba.nacos.naming.selector",
+            "pkg:com.alibaba.nacos.naming.utils",
+            "pkg:com.alibaba.nacos.naming.web"
+          ]
+        },
+        {
+          "size": 35,
+          "members": [
+            "pkg:com.alibaba.nacos.ai.config",
+            "pkg:com.alibaba.nacos.ai.controller",
+            "pkg:com.alibaba.nacos.ai.form",
+            "pkg:com.alibaba.nacos.ai.form.agent.admin",
+            "pkg:com.alibaba.nacos.ai.form.agent.client",
+            "pkg:com.alibaba.nacos.ai.form.agentspecs.admin",
+            "pkg:com.alibaba.nacos.ai.form.prompt",
+            "pkg:com.alibaba.nacos.ai.form.skills.admin",
+            "pkg:com.alibaba.nacos.ai.importer.manager",
+            "pkg:com.alibaba.nacos.ai.importer.operator",
+            "pkg:com.alibaba.nacos.ai.index",
+            "pkg:com.alibaba.nacos.ai.param",
+            "pkg:com.alibaba.nacos.ai.pipeline",
+            "pkg:com.alibaba.nacos.ai.remote.handler.agent",
+            "pkg:com.alibaba.nacos.ai.service",
+            "pkg:com.alibaba.nacos.ai.service.a2a",
+            "pkg:com.alibaba.nacos.ai.service.a2a.migration",
+            "pkg:com.alibaba.nacos.ai.service.agent",
+            "pkg:com.alibaba.nacos.ai.service.agent.runtime",
+            "pkg:com.alibaba.nacos.ai.service.agent.storage",
+            "pkg:com.alibaba.nacos.ai.service.agent.watch",
+            "pkg:com.alibaba.nacos.ai.service.agentspecs",
+            "pkg:com.alibaba.nacos.ai.service.mcp",
+            "pkg:com.alibaba.nacos.ai.service.mcp.storage",
+            "pkg:com.alibaba.nacos.ai.service.prompt",
+            "pkg:com.alibaba.nacos.ai.service.repository",
+            "pkg:com.alibaba.nacos.ai.service.resource",
+            "pkg:com.alibaba.nacos.ai.service.runtime",
+            "pkg:com.alibaba.nacos.ai.service.search",
+            "pkg:com.alibaba.nacos.ai.service.search.vector",
+            "pkg:com.alibaba.nacos.ai.service.skills",
+            "pkg:com.alibaba.nacos.ai.service.trace",
+            "pkg:com.alibaba.nacos.ai.service.visibility",
+            "pkg:com.alibaba.nacos.ai.storage",
+            "pkg:com.alibaba.nacos.ai.utils"
+          ]
+        },
+        {
+          "size": 35,
+          "members": [
+            "pkg:com.alibaba.nacos.core.auth",
+            "pkg:com.alibaba.nacos.core.cluster",
+            "pkg:com.alibaba.nacos.core.cluster.lookup",
+            "pkg:com.alibaba.nacos.core.cluster.remote",
+            "pkg:com.alibaba.nacos.core.cluster.remote.request",
+            "pkg:com.alibaba.nacos.core.cluster.remote.response",
+            "pkg:com.alibaba.nacos.core.code",
+            "pkg:com.alibaba.nacos.core.config",
+            "pkg:com.alibaba.nacos.core.controller.v3",
+            "pkg:com.alibaba.nacos.core.distributed",
+            "pkg:com.alibaba.nacos.core.distributed.distro",
+            "pkg:com.alibaba.nacos.core.distributed.distro.task.load",
+            "pkg:com.alibaba.nacos.core.distributed.distro.task.verify",
+            "pkg:com.alibaba.nacos.core.distributed.raft",
+            "pkg:com.alibaba.nacos.core.distributed.raft.auth",
+            "pkg:com.alibaba.nacos.core.distributed.raft.processor",
+            "pkg:com.alibaba.nacos.core.distributed.raft.utils",
+            "pkg:com.alibaba.nacos.core.exception",
+            "pkg:com.alibaba.nacos.core.listener",
+            "pkg:com.alibaba.nacos.core.listener.startup",
+            "pkg:com.alibaba.nacos.core.model.form.v3",
+            "pkg:com.alibaba.nacos.core.monitor",
+            "pkg:com.alibaba.nacos.core.paramcheck",
+            "pkg:com.alibaba.nacos.core.paramcheck.impl",
+            "pkg:com.alibaba.nacos.core.plugin",
+            "pkg:com.alibaba.nacos.core.plugin.config",
+            "pkg:com.alibaba.nacos.core.plugin.sync",
+            "pkg:com.alibaba.nacos.core.remote",
+            "pkg:com.alibaba.nacos.core.remote.core",
+            "pkg:com.alibaba.nacos.core.remote.grpc",
+            "pkg:com.alibaba.nacos.core.remote.grpc.negotiator",
+            "pkg:com.alibaba.nacos.core.remote.grpc.negotiator.tls",
+            "pkg:com.alibaba.nacos.core.remote.tls",
+            "pkg:com.alibaba.nacos.core.service",
+            "pkg:com.alibaba.nacos.core.web"
+          ]
+        },
+        {
+          "size": 23,
+          "members": [
+            "pkg:com.alibaba.nacos.config.server.configuration",
+            "pkg:com.alibaba.nacos.config.server.constant",
+            "pkg:com.alibaba.nacos.config.server.exception",
+            "pkg:com.alibaba.nacos.config.server.filter",
+            "pkg:com.alibaba.nacos.config.server.manager",
+            "pkg:com.alibaba.nacos.config.server.model",
+            "pkg:com.alibaba.nacos.config.server.model.form",
+            "pkg:com.alibaba.nacos.config.server.monitor",
+            "pkg:com.alibaba.nacos.config.server.remote",
+            "pkg:com.alibaba.nacos.config.server.service",
+            "pkg:com.alibaba.nacos.config.server.service.capacity",
+            "pkg:com.alibaba.nacos.config.server.service.dump",
+            "pkg:com.alibaba.nacos.config.server.service.dump.disk",
+            "pkg:com.alibaba.nacos.config.server.service.dump.processor",
+            "pkg:com.alibaba.nacos.config.server.service.notify",
+            "pkg:com.alibaba.nacos.config.server.service.query",
+            "pkg:com.alibaba.nacos.config.server.service.query.handler",
+            "pkg:com.alibaba.nacos.config.server.service.query.model",
+            "pkg:com.alibaba.nacos.config.server.service.repository",
+            "pkg:com.alibaba.nacos.config.server.service.repository.embedded",
+            "pkg:com.alibaba.nacos.config.server.service.sql",
+            "pkg:com.alibaba.nacos.config.server.service.trace",
+            "pkg:com.alibaba.nacos.config.server.utils"
+          ]
+        },
+        {
+          "size": 18,
+          "members": [
+            "pkg:com.alibaba.nacos.plugin.auth.impl",
+            "pkg:com.alibaba.nacos.plugin.auth.impl.authenticate",
+            "pkg:com.alibaba.nacos.plugin.auth.impl.condition",
+            "pkg:com.alibaba.nacos.plugin.auth.impl.configuration",
+            "pkg:com.alibaba.nacos.plugin.auth.impl.constant",
+            "pkg:com.alibaba.nacos.plugin.auth.impl.jwt",
+            "pkg:com.alibaba.nacos.plugin.auth.impl.ldap",
+            "pkg:com.alibaba.nacos.plugin.auth.impl.persistence",
+            "pkg:com.alibaba.nacos.plugin.auth.impl.persistence.embedded",
+            "pkg:com.alibaba.nacos.plugin.auth.impl.persistence.extrnal",
+            "pkg:com.alibaba.nacos.plugin.auth.impl.persistence.handler",
+            "pkg:com.alibaba.nacos.plugin.auth.impl.persistence.handler.support",
+            "pkg:com.alibaba.nacos.plugin.auth.impl.roles",
+            "pkg:com.alibaba.nacos.plugin.auth.impl.token",
+            "pkg:com.alibaba.nacos.plugin.auth.impl.token.impl",
+            "pkg:com.alibaba.nacos.plugin.auth.impl.users",
+            "pkg:com.alibaba.nacos.plugin.auth.impl.utils",
+            "pkg:com.alibaba.nacos.plugin.auth.impl.visibility"
+          ]
+        },
+        {
+          "size": 8,
+          "members": [
+            "pkg:com.alibaba.nacos.plugin.auth.impl.oidc",
+            "pkg:com.alibaba.nacos.plugin.auth.impl.oidc.authenticate",
+            "pkg:com.alibaba.nacos.plugin.auth.impl.oidc.authorization",
+            "pkg:com.alibaba.nacos.plugin.auth.impl.oidc.config",
+            "pkg:com.alibaba.nacos.plugin.auth.impl.oidc.constant",
+            "pkg:com.alibaba.nacos.plugin.auth.impl.oidc.controller",
+            "pkg:com.alibaba.nacos.plugin.auth.impl.oidc.identity",
+            "pkg:com.alibaba.nacos.plugin.auth.impl.oidc.token"
+          ]
+        },
+        {
+          "size": 8,
+          "members": [
+            "pkg:com.alibaba.nacos.plugin.control",
+            "pkg:com.alibaba.nacos.plugin.control.connection",
+            "pkg:com.alibaba.nacos.plugin.control.rule",
+            "pkg:com.alibaba.nacos.plugin.control.rule.storage",
+            "pkg:com.alibaba.nacos.plugin.control.spi",
+            "pkg:com.alibaba.nacos.plugin.control.tps",
+            "pkg:com.alibaba.nacos.plugin.control.tps.barrier",
+            "pkg:com.alibaba.nacos.plugin.control.tps.barrier.creator"
+          ]
+        },
+        {
+          "size": 7,
+          "members": [
+            "pkg:com.alibaba.nacos.api.ai",
+            "pkg:com.alibaba.nacos.api.ai.converter",
+            "pkg:com.alibaba.nacos.client.ai",
+            "pkg:com.alibaba.nacos.client.ai.cache",
+            "pkg:com.alibaba.nacos.client.ai.remote",
+            "pkg:com.alibaba.nacos.client.ai.remote.redo",
+            "pkg:com.alibaba.nacos.client.ai.watch"
+          ]
+        },
+        {
+          "size": 7,
+          "members": [
+            "pkg:com.alibaba.nacos.istio",
+            "pkg:com.alibaba.nacos.istio.api",
+            "pkg:com.alibaba.nacos.istio.common",
+            "pkg:com.alibaba.nacos.istio.mcp",
+            "pkg:com.alibaba.nacos.istio.model",
+            "pkg:com.alibaba.nacos.istio.util",
+            "pkg:com.alibaba.nacos.istio.xds"
+          ]
+        },
+        {
+          "size": 4,
+          "members": [
+            "pkg:com.alibaba.nacos.lock",
+            "pkg:com.alibaba.nacos.lock.core.reentrant",
+            "pkg:com.alibaba.nacos.lock.core.reentrant.mutex",
+            "pkg:com.alibaba.nacos.lock.factory"
+          ]
+        },
+        {
+          "size": 4,
+          "members": [
+            "pkg:com.alibaba.nacos.persistence",
+            "pkg:com.alibaba.nacos.persistence.datasource",
+            "pkg:com.alibaba.nacos.persistence.repository.embedded",
+            "pkg:com.alibaba.nacos.persistence.repository.embedded.operate"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:com.alibaba.nacos.ai.form.agentspecs.client",
+            "pkg:com.alibaba.nacos.ai.form.mcp.client",
+            "pkg:com.alibaba.nacos.ai.form.search.client"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:com.alibaba.nacos.airegistry.config",
+            "pkg:com.alibaba.nacos.airegistry.controller",
+            "pkg:com.alibaba.nacos.airegistry.service.ard"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:com.alibaba.nacos.api.ability",
+            "pkg:com.alibaba.nacos.api.config.ability",
+            "pkg:com.alibaba.nacos.api.remote.ability"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:com.alibaba.nacos.api.remote",
+            "pkg:com.alibaba.nacos.api.remote.request",
+            "pkg:com.alibaba.nacos.api.remote.response"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:com.alibaba.nacos.config.server.model.gray",
+            "pkg:com.alibaba.nacos.config.server.model.gray.multitag",
+            "pkg:com.alibaba.nacos.config.server.model.gray.singletag"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:com.alibaba.nacos.console.cluster",
+            "pkg:com.alibaba.nacos.console.config",
+            "pkg:com.alibaba.nacos.console.handler.impl.remote"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:com.alibaba.nacos.core.ability",
+            "pkg:com.alibaba.nacos.core.ability.config",
+            "pkg:com.alibaba.nacos.core.ability.control"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:com.alibaba.nacos.plugin.ai.importer.defaultimpl",
+            "pkg:com.alibaba.nacos.plugin.ai.importer.defaultimpl.mcp",
+            "pkg:com.alibaba.nacos.plugin.ai.importer.defaultimpl.skill"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:com.alibaba.nacos.sys.env",
+            "pkg:com.alibaba.nacos.sys.module",
+            "pkg:com.alibaba.nacos.sys.utils"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:com.alibaba.nacos.auth.annotation",
+            "pkg:com.alibaba.nacos.auth.parser"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:com.alibaba.nacos.common.pathencoder",
+            "pkg:com.alibaba.nacos.common.pathencoder.impl"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:com.alibaba.nacos.consistency",
+            "pkg:com.alibaba.nacos.consistency.serialize"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:com.alibaba.nacos.copilot.config",
+            "pkg:com.alibaba.nacos.copilot.connection"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:com.alibaba.nacos.core.distributed.distro.task",
+            "pkg:com.alibaba.nacos.core.distributed.distro.task.delay"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:com.alibaba.nacos.maintainer.client.address",
+            "pkg:com.alibaba.nacos.maintainer.client.remote"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:com.alibaba.nacos.plugin.ai.pipeline.model",
+            "pkg:com.alibaba.nacos.plugin.ai.pipeline.spi"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:com.alibaba.nacos.plugin.ai.vector",
+            "pkg:com.alibaba.nacos.plugin.ai.vector.spi"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:com.alibaba.nacos.plugin.auth.spi.mock",
+            "pkg:com.alibaba.nacos.plugin.auth.spi.server"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:com.alibaba.nacos.plugin.datasource.mapper",
+            "pkg:com.alibaba.nacos.plugin.datasource.mapper.ext"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:com.alibaba.nacos.sys.filter",
+            "pkg:com.alibaba.nacos.sys.filter.mock"
+          ]
+        }
+      ]
+    },
+    "B2": {
+      "id": "B2",
+      "name": "package-dependency-density",
+      "label": "包依赖密度",
+      "domain": "B",
+      "direction": "interval",
+      "value": 8.1001,
+      "numerator": 6148,
+      "denominator": 759,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Package --all --field id,dependsOnPackageIds --snapshot 93839017-149f-4503-940f-460207e07e1d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot 93839017-149f-4503-940f-460207e07e1d"
+      ]
+    },
+    "B1.frontend": {
+      "id": "B1.frontend",
+      "name": "circular-dependency-density",
+      "label": "循环依赖密度（前端）",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": 0.0,
+      "numerator": 0,
+      "denominator": 966,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Module --all --field id,importedModuleIds --snapshot 93839017-149f-4503-940f-460207e07e1d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Module --snapshot 93839017-149f-4503-940f-460207e07e1d"
+      ],
+      "sccCount": 0
+    },
+    "B3": {
+      "id": "B3",
+      "name": "giant-class-ratio",
+      "label": "巨型类占比",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": 0.031035,
+      "numerator": 185,
+      "denominator": 5961,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Class --all --field id,lineCount --snapshot 93839017-149f-4503-940f-460207e07e1d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --where 'lineCount>500' --snapshot 93839017-149f-4503-940f-460207e07e1d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --snapshot 93839017-149f-4503-940f-460207e07e1d"
+      ],
+      "threshold": "lineCount > 500",
+      "top": [
+        {
+          "lineCount": 3721,
+          "id": "cls:com.alibaba.nacos.test.sdk.ai.AgentDiscoveryServiceJavaSdkITCase"
+        },
+        {
+          "lineCount": 3289,
+          "id": "cls:com.alibaba.nacos.ai.service.skills.SkillOperationServiceImplTest"
+        },
+        {
+          "lineCount": 3043,
+          "id": "cls:com.alibaba.nacos.ai.service.agent.AgentPersistenceServiceTest"
+        },
+        {
+          "lineCount": 2909,
+          "id": "cls:com.alibaba.nacos.ai.service.resource.AiResourceManagerTest"
+        },
+        {
+          "lineCount": 2527,
+          "id": "cls:com.alibaba.nacos.client.ai.watch.AgentWatchManagerTest"
+        }
+      ],
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --where 'lineCount>500' --snapshot 93839017-149f-4503-940f-460207e07e1d",
+        "serverCount": 185,
+        "match": true
+      }
+    },
+    "B4": {
+      "id": "B4",
+      "name": "component-coupling-degree",
+      "label": "组件耦合度",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": 0.1765,
+      "numerator": 3,
+      "denominator": 17,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Component --all --field id,referencedComponentIds,isGlobal --snapshot 93839017-149f-4503-940f-460207e07e1d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Component --snapshot 93839017-149f-4503-940f-460207e07e1d"
+      ],
+      "globalRegistrationRatio": 0.0
+    },
+    "C2": {
+      "id": "C2",
+      "name": "cyclomatic-complexity-p90",
+      "label": "圈复杂度 P90",
+      "domain": "C",
+      "direction": "lower-better",
+      "value": 3,
+      "denominator": 43771,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot 93839017-149f-4503-940f-460207e07e1d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,lineCount,complexity --snapshot 93839017-149f-4503-940f-460207e07e1d"
+      ],
+      "percentiles": {
+        "p25": 1,
+        "p50": 1,
+        "p75": 1,
+        "p90": 3
+      },
+      "mean": 1.4831,
+      "max": 54,
+      "top": [
+        {
+          "cyclomaticComplexity": 54,
+          "id": "mtd:com.alibaba.nacos.copilot.service.SkillOptimizationServiceImpl.buildConversationMessages(:Skill:SkillOptimizationRequest)"
+        },
+        {
+          "cyclomaticComplexity": 46,
+          "id": "mtd:com.alibaba.nacos.naming.misc.SwitchManager.update(:String:String:boolean)"
+        },
+        {
+          "cyclomaticComplexity": 39,
+          "id": "mtd:com.alibaba.nacos.common.packagescan.resource.AntPathMatcher.doMatch(:String:String:boolean:Map<String, String>)"
+        },
+        {
+          "cyclomaticComplexity": 26,
+          "id": "mtd:com.alibaba.nacos.api.ai.utils.AgentVersionRange.parse(:String)"
+        },
+        {
+          "cyclomaticComplexity": 25,
+          "id": "mtd:com.alibaba.nacos.api.ai.utils.RadModelValidator.validate(:AgentSummary)"
+        }
+      ],
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot 93839017-149f-4503-940f-460207e07e1d",
+        "serverCount": 43771,
+        "match": true
+      }
+    },
+    "C3": {
+      "id": "C3",
+      "name": "test-method-ratio",
+      "label": "测试方法占比",
+      "domain": "C",
+      "direction": "higher-better",
+      "value": 0.350408,
+      "numerator": 16130,
+      "denominator": 46032,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'isTest=true' --snapshot 93839017-149f-4503-940f-460207e07e1d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot 93839017-149f-4503-940f-460207e07e1d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,isTest,testType --snapshot 93839017-149f-4503-940f-460207e07e1d"
+      ],
+      "testTypes": {
+        "UnitTest": 16130
+      },
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'isTest=true' --snapshot 93839017-149f-4503-940f-460207e07e1d",
+        "serverCount": 16130,
+        "match": true
+      }
+    },
+    "C4": {
+      "id": "C4",
+      "name": "giant-method-ratio",
+      "label": "巨型方法占比",
+      "domain": "C",
+      "direction": "lower-better",
+      "value": 0.002846,
+      "numerator": 125,
+      "denominator": 43924,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount>80' --snapshot 93839017-149f-4503-940f-460207e07e1d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount=0' --snapshot 93839017-149f-4503-940f-460207e07e1d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot 93839017-149f-4503-940f-460207e07e1d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,lineCount --snapshot 93839017-149f-4503-940f-460207e07e1d"
+      ],
+      "threshold": "lineCount > 80",
+      "excludedFromDenominator": {
+        "lineCountIsZero": 2108,
+        "lineCountIsNull": 0
+      },
+      "top": [
+        {
+          "lineCount": 239,
+          "id": "mtd:com.alibaba.nacos.copilot.service.SkillOptimizationServiceImpl.buildConversationMessages(:Skill:SkillOptimizationRequest)"
+        },
+        {
+          "lineCount": 233,
+          "id": "mtd:com.alibaba.nacos.common.utils.ConvertUtilsTest.testToBooleanObject"
+        },
+        {
+          "lineCount": 228,
+          "id": "mtd:com.alibaba.nacos.naming.misc.SwitchManager.update(:String:String:boolean)"
+        },
+        {
+          "lineCount": 197,
+          "id": "mtd:com.alibaba.nacos.k8s.sync.K8sSyncServer.startInformer"
+        },
+        {
+          "lineCount": 173,
+          "id": "mtd:com.alibaba.nacos.test.sdk.ai.AgentDiscoveryServiceJavaSdkITCase.shouldRestoreGrpcAndHttpPublicationsAndWatchesAfterRealServerRestart"
+        }
+      ],
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount>80' --snapshot 93839017-149f-4503-940f-460207e07e1d",
+        "serverCount": 125,
+        "match": true
+      }
+    },
+    "D3": {
+      "id": "D3",
+      "name": "scale-profile",
+      "label": "规模画像",
+      "domain": "D",
+      "direction": "none",
+      "value": 57010,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" snapshot list --repo nacos",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Repository --snapshot 93839017-149f-4503-940f-460207e07e1d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot 93839017-149f-4503-940f-460207e07e1d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --snapshot 93839017-149f-4503-940f-460207e07e1d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Interface --snapshot 93839017-149f-4503-940f-460207e07e1d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot 93839017-149f-4503-940f-460207e07e1d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Dependency --snapshot 93839017-149f-4503-940f-460207e07e1d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot 93839017-149f-4503-940f-460207e07e1d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Mapper --snapshot 93839017-149f-4503-940f-460207e07e1d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Module --snapshot 93839017-149f-4503-940f-460207e07e1d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Component --snapshot 93839017-149f-4503-940f-460207e07e1d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Function --snapshot 93839017-149f-4503-940f-460207e07e1d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Store --snapshot 93839017-149f-4503-940f-460207e07e1d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Route --snapshot 93839017-149f-4503-940f-460207e07e1d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot 93839017-149f-4503-940f-460207e07e1d"
+      ],
+      "typeCounts": {
+        "Repository": 1,
+        "Package": 759,
+        "Class": 5961,
+        "Interface": 434,
+        "Method": 46032,
+        "Dependency": 178,
+        "Table": 16,
+        "Mapper": 0,
+        "Module": 966,
+        "Component": 17,
+        "Function": 2589,
+        "Store": 0,
+        "Route": 5,
+        "ApiEndpoint": 52
+      },
+      "linkCount": 431791
+    }
+  },
+  "nullMetrics": {
+    "A1": {
+      "id": "A1",
+      "name": "full-chain-coverage",
+      "label": "全链路贯通率",
+      "domain": "A",
+      "direction": "higher-better",
+      "value": null,
+      "reason": "calls 传递闭包与 Method→Mapper 名字 join 未实现（过渡实现——待 ke checkup）",
+      "evidence": {
+        "apiEndpointCount": 52
+      }
+    },
+    "C1": {
+      "id": "C1",
+      "name": "endpoint-table-hops",
+      "label": "端到端跳数",
+      "domain": "C",
+      "direction": "interval",
+      "value": null,
+      "reason": "依赖 A1 贯通链算法（过渡实现未含——待 ke checkup）",
+      "evidence": {
+        "apiEndpointCount": 52
+      }
+    },
+    "D1": {
+      "id": "D1",
+      "name": "framework-version-coverage",
+      "label": "技术栈版本覆盖率",
+      "domain": "D",
+      "direction": "higher-better",
+      "value": null,
+      "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Dependency --all --field id,name,version,scope --snapshot 93839017-149f-4503-940f-460207e07e1d"
+      ],
+      "evidence": {
+        "total": 178,
+        "emptyVersion": 59,
+        "placeholder": 100,
+        "determinable": 19
+      }
+    },
+    "D2": {
+      "id": "D2",
+      "name": "dependency-homogeneity",
+      "label": "依赖同质度",
+      "domain": "D",
+      "direction": "none",
+      "value": null,
+      "reason": "cohort 级指标（依赖 cohort 众数集合——单体层不产出）",
+      "evidence": {
+        "dependencyCount": 178
+      }
+    },
+    "D4": {
+      "id": "D4",
+      "name": "evolution-trend",
+      "label": "年度演进趋势",
+      "domain": "D",
+      "direction": "none",
+      "value": null,
+      "reason": "单快照（首次导入——无时序）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" snapshot list --repo nacos"
+      ],
+      "evidence": {
+        "completeSnapshotCount": 1
+      }
+    }
+  },
+  "dataQuality": {
+    "dq.null-complexity-ratio": {
+      "id": "dq.null-complexity-ratio",
+      "name": "null-complexity-ratio",
+      "label": "complexity 为 null 的方法占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": 0.049118,
+      "numerator": 2261,
+      "denominator": 46032,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot 93839017-149f-4503-940f-460207e07e1d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot 93839017-149f-4503-940f-460207e07e1d"
+      ]
+    },
+    "dq.missing-version-ratio": {
+      "id": "dq.missing-version-ratio",
+      "name": "missing-version-ratio",
+      "label": "version 为空串的依赖占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": 0.331461,
+      "numerator": 59,
+      "denominator": 178,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Dependency --all --field id,name,version,scope --snapshot 93839017-149f-4503-940f-460207e07e1d"
+      ],
+      "placeholderVersionCount": 100
+    },
+    "dq.ext-call-ratio": {
+      "id": "dq.ext-call-ratio",
+      "name": "ext-call-ratio",
+      "label": "ext: 虚拟调用过滤占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": null,
+      "reason": "不可观测（ext: 虚拟边在导入物化时已过滤——查询面天然免疫）"
+    }
+  }
+}
