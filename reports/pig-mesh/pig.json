@@ -1,0 +1,527 @@
+{
+  "schemaVersion": "draft-v1",
+  "implementation": "ke-index compute-metrics.py (transitional; to be superseded by ke checkup)",
+  "owner": "pig-mesh",
+  "repo": "pig",
+  "sourceId": "pig",
+  "snapshot": {
+    "snapshotId": "a96d5ed4-8c0d-432a-83d5-2bad8793b320",
+    "status": "complete",
+    "sourceVersion": "head",
+    "objectCount": 2531,
+    "linkCount": 7769,
+    "completedAt": "2026-11-17T06:38:23.395Z"
+  },
+  "cliVersion": "0.3.5",
+  "metrics": {
+    "A3": {
+      "id": "A3",
+      "name": "orphan-table-rate",
+      "label": "孤儿表率",
+      "domain": "A",
+      "direction": "lower-better",
+      "value": 0.383333,
+      "numerator": 23,
+      "denominator": 60,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Table --all --field id,name,matchedEntityClass --snapshot a96d5ed4-8c0d-432a-83d5-2bad8793b320",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Mapper --all --field id,namespace,mappedTableIds --snapshot a96d5ed4-8c0d-432a-83d5-2bad8793b320",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot a96d5ed4-8c0d-432a-83d5-2bad8793b320"
+      ]
+    },
+    "A4": {
+      "id": "A4",
+      "name": "table-entity-mapping-rate",
+      "label": "表↔实体映射率",
+      "domain": "A",
+      "direction": "higher-better",
+      "value": 0.616667,
+      "numerator": 37,
+      "denominator": 60,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Table --all --field id,name,matchedEntityClass --snapshot a96d5ed4-8c0d-432a-83d5-2bad8793b320",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Mapper --all --field id,namespace,mappedTableIds --snapshot a96d5ed4-8c0d-432a-83d5-2bad8793b320",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot a96d5ed4-8c0d-432a-83d5-2bad8793b320"
+      ],
+      "evidence": {
+        "mapperEdgeOnly": 0,
+        "entityClassOnly": 0,
+        "both": 37
+      }
+    },
+    "B1.backend": {
+      "id": "B1.backend",
+      "name": "circular-dependency-density",
+      "label": "循环依赖密度（后端）",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": 0.214286,
+      "numerator": 27,
+      "denominator": 126,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Package --all --field id,dependsOnPackageIds --snapshot a96d5ed4-8c0d-432a-83d5-2bad8793b320",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot a96d5ed4-8c0d-432a-83d5-2bad8793b320"
+      ],
+      "sccCount": 8,
+      "sccs": [
+        {
+          "size": 6,
+          "members": [
+            "pkg:com.pig4cloud.pig.common.file",
+            "pkg:com.pig4cloud.pig.common.file.core",
+            "pkg:com.pig4cloud.pig.common.file.local",
+            "pkg:com.pig4cloud.pig.common.file.oss",
+            "pkg:com.pig4cloud.pig.common.file.oss.http",
+            "pkg:com.pig4cloud.pig.common.file.oss.service"
+          ]
+        },
+        {
+          "size": 4,
+          "members": [
+            "pkg:com.pig4cloud.pig.common.excel.annotation",
+            "pkg:com.pig4cloud.pig.common.excel.aop",
+            "pkg:com.pig4cloud.pig.common.excel.enhance",
+            "pkg:com.pig4cloud.pig.common.excel.handler"
+          ]
+        },
+        {
+          "size": 4,
+          "members": [
+            "pkg:com.pig4cloud.pig.daemon.quartz.config",
+            "pkg:com.pig4cloud.pig.daemon.quartz.event",
+            "pkg:com.pig4cloud.pig.daemon.quartz.support",
+            "pkg:com.pig4cloud.pig.daemon.quartz.util"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:com.pig4cloud.pig.auth.endpoint",
+            "pkg:com.pig4cloud.pig.auth.support.core",
+            "pkg:com.pig4cloud.pig.auth.support.filter"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:com.pig4cloud.pig.common.feign",
+            "pkg:com.pig4cloud.pig.common.feign.annotation",
+            "pkg:com.pig4cloud.pig.common.feign.interceptor"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:com.pig4cloud.pig.monitor.config",
+            "pkg:com.pig4cloud.pig.monitor.service.impl",
+            "pkg:com.pig4cloud.pig.monitor.support"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:com.pig4cloud.pig.common.security.annotation",
+            "pkg:com.pig4cloud.pig.common.security.component"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:com.pig4cloud.pig.common.swagger.annotation",
+            "pkg:com.pig4cloud.pig.common.swagger.config"
+          ]
+        }
+      ]
+    },
+    "B2": {
+      "id": "B2",
+      "name": "package-dependency-density",
+      "label": "包依赖密度",
+      "domain": "B",
+      "direction": "interval",
+      "value": 2.7381,
+      "numerator": 345,
+      "denominator": 126,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Package --all --field id,dependsOnPackageIds --snapshot a96d5ed4-8c0d-432a-83d5-2bad8793b320",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot a96d5ed4-8c0d-432a-83d5-2bad8793b320"
+      ]
+    },
+    "B1.frontend": {
+      "id": "B1.frontend",
+      "name": "circular-dependency-density",
+      "label": "循环依赖密度（前端）",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": 0.0,
+      "numerator": 0,
+      "denominator": 5,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Module --all --field id,importedModuleIds --snapshot a96d5ed4-8c0d-432a-83d5-2bad8793b320",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Module --snapshot a96d5ed4-8c0d-432a-83d5-2bad8793b320"
+      ],
+      "sccCount": 0
+    },
+    "B3": {
+      "id": "B3",
+      "name": "giant-class-ratio",
+      "label": "巨型类占比",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": 0.006479,
+      "numerator": 3,
+      "denominator": 463,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Class --all --field id,lineCount --snapshot a96d5ed4-8c0d-432a-83d5-2bad8793b320",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --where 'lineCount>500' --snapshot a96d5ed4-8c0d-432a-83d5-2bad8793b320",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --snapshot a96d5ed4-8c0d-432a-83d5-2bad8793b320"
+      ],
+      "threshold": "lineCount > 500",
+      "top": [
+        {
+          "lineCount": 693,
+          "id": "cls:com.pig4cloud.pig.admin.service.impl.SysUserServiceImpl"
+        },
+        {
+          "lineCount": 656,
+          "id": "cls:com.pig4cloud.pig.common.data.cache.RedisUtils"
+        },
+        {
+          "lineCount": 526,
+          "id": "cls:com.pig4cloud.pig.admin.service.impl.SysMessageServiceImpl"
+        },
+        {
+          "lineCount": 477,
+          "id": "cls:com.pig4cloud.pig.monitor.service.impl.MonitorStatService"
+        },
+        {
+          "lineCount": 468,
+          "id": "cls:com.pig4cloud.pig.codegen.service.impl.GeneratorServiceImpl"
+        }
+      ],
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --where 'lineCount>500' --snapshot a96d5ed4-8c0d-432a-83d5-2bad8793b320",
+        "serverCount": 3,
+        "match": true
+      }
+    },
+    "C2": {
+      "id": "C2",
+      "name": "cyclomatic-complexity-p90",
+      "label": "圈复杂度 P90",
+      "domain": "C",
+      "direction": "lower-better",
+      "value": 3,
+      "denominator": 1335,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot a96d5ed4-8c0d-432a-83d5-2bad8793b320",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,lineCount,complexity --snapshot a96d5ed4-8c0d-432a-83d5-2bad8793b320"
+      ],
+      "percentiles": {
+        "p25": 1,
+        "p50": 1,
+        "p75": 2,
+        "p90": 3
+      },
+      "mean": 1.767,
+      "max": 19,
+      "top": [
+        {
+          "cyclomaticComplexity": 19,
+          "id": "mtd:com.pig4cloud.pig.monitor.service.impl.MonitorStatService.service(:String)"
+        },
+        {
+          "cyclomaticComplexity": 17,
+          "id": "mtd:com.pig4cloud.pig.common.security.component.PigCustomOpaqueTokenIntrospector.handleApiKeyToken(:String)"
+        },
+        {
+          "cyclomaticComplexity": 15,
+          "id": "mtd:com.pig4cloud.pig.common.sentinel.feign.PigSentinelInvocationHandler.invoke(:Object:Method:Object[])"
+        },
+        {
+          "cyclomaticComplexity": 13,
+          "id": "mtd:com.pig4cloud.pig.common.core.util.WebUtils.getIP(:HttpServletRequest)"
+        },
+        {
+          "cyclomaticComplexity": 12,
+          "id": "mtd:com.pig4cloud.pig.daemon.quartz.util.RestTaskUrlValidator.parseHttpUri(:String:boolean)"
+        }
+      ],
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot a96d5ed4-8c0d-432a-83d5-2bad8793b320",
+        "serverCount": 1335,
+        "match": true
+      }
+    },
+    "C3": {
+      "id": "C3",
+      "name": "test-method-ratio",
+      "label": "测试方法占比",
+      "domain": "C",
+      "direction": "higher-better",
+      "value": 0.031908,
+      "numerator": 50,
+      "denominator": 1567,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'isTest=true' --snapshot a96d5ed4-8c0d-432a-83d5-2bad8793b320",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot a96d5ed4-8c0d-432a-83d5-2bad8793b320",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,isTest,testType --snapshot a96d5ed4-8c0d-432a-83d5-2bad8793b320"
+      ],
+      "testTypes": {
+        "UnitTest": 50
+      },
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'isTest=true' --snapshot a96d5ed4-8c0d-432a-83d5-2bad8793b320",
+        "serverCount": 50,
+        "match": true
+      }
+    },
+    "C4": {
+      "id": "C4",
+      "name": "giant-method-ratio",
+      "label": "巨型方法占比",
+      "domain": "C",
+      "direction": "lower-better",
+      "value": 0.002232,
+      "numerator": 3,
+      "denominator": 1344,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount>80' --snapshot a96d5ed4-8c0d-432a-83d5-2bad8793b320",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount=0' --snapshot a96d5ed4-8c0d-432a-83d5-2bad8793b320",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot a96d5ed4-8c0d-432a-83d5-2bad8793b320",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,lineCount --snapshot a96d5ed4-8c0d-432a-83d5-2bad8793b320"
+      ],
+      "threshold": "lineCount > 80",
+      "excludedFromDenominator": {
+        "lineCountIsZero": 223,
+        "lineCountIsNull": 0
+      },
+      "top": [
+        {
+          "lineCount": 97,
+          "id": "mtd:com.pig4cloud.pig.admin.service.impl.SysDeptServiceImpl.listOrgTree(:Long:String)"
+        },
+        {
+          "lineCount": 84,
+          "id": "mtd:org.springframework.cloud.openfeign.PigFeignClientsRegistrar.registerFeignClients(:BeanDefinitionRegistry)"
+        },
+        {
+          "lineCount": 81,
+          "id": "mtd:com.pig4cloud.pig.common.sentinel.feign.PigSentinelInvocationHandler.invoke(:Object:Method:Object[])"
+        },
+        {
+          "lineCount": 77,
+          "id": "mtd:com.pig4cloud.pig.auth.support.base.OAuth2ResourceOwnerBaseAuthenticationProvider.generatAuthenticationToken(:T:OAuth2ClientAuthenticationToken:RegisteredClient:Set<String>:Authentication)"
+        },
+        {
+          "lineCount": 77,
+          "id": "mtd:com.pig4cloud.pig.monitor.service.impl.MonitorStatService.service(:String)"
+        }
+      ],
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount>80' --snapshot a96d5ed4-8c0d-432a-83d5-2bad8793b320",
+        "serverCount": 3,
+        "match": true
+      }
+    },
+    "D3": {
+      "id": "D3",
+      "name": "scale-profile",
+      "label": "规模画像",
+      "domain": "D",
+      "direction": "none",
+      "value": 2531,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" snapshot list --repo pig",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Repository --snapshot a96d5ed4-8c0d-432a-83d5-2bad8793b320",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot a96d5ed4-8c0d-432a-83d5-2bad8793b320",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --snapshot a96d5ed4-8c0d-432a-83d5-2bad8793b320",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Interface --snapshot a96d5ed4-8c0d-432a-83d5-2bad8793b320",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot a96d5ed4-8c0d-432a-83d5-2bad8793b320",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Dependency --snapshot a96d5ed4-8c0d-432a-83d5-2bad8793b320",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot a96d5ed4-8c0d-432a-83d5-2bad8793b320",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Mapper --snapshot a96d5ed4-8c0d-432a-83d5-2bad8793b320",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Module --snapshot a96d5ed4-8c0d-432a-83d5-2bad8793b320",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Component --snapshot a96d5ed4-8c0d-432a-83d5-2bad8793b320",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Function --snapshot a96d5ed4-8c0d-432a-83d5-2bad8793b320",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Store --snapshot a96d5ed4-8c0d-432a-83d5-2bad8793b320",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Route --snapshot a96d5ed4-8c0d-432a-83d5-2bad8793b320",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot a96d5ed4-8c0d-432a-83d5-2bad8793b320"
+      ],
+      "typeCounts": {
+        "Repository": 1,
+        "Package": 126,
+        "Class": 463,
+        "Interface": 123,
+        "Method": 1567,
+        "Dependency": 137,
+        "Table": 60,
+        "Mapper": 37,
+        "Module": 5,
+        "Component": 0,
+        "Function": 12,
+        "Store": 0,
+        "Route": 0,
+        "ApiEndpoint": 0
+      },
+      "linkCount": 7769
+    }
+  },
+  "nullMetrics": {
+    "A1": {
+      "id": "A1",
+      "name": "full-chain-coverage",
+      "label": "全链路贯通率",
+      "domain": "A",
+      "direction": "higher-better",
+      "value": null,
+      "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot a96d5ed4-8c0d-432a-83d5-2bad8793b320"
+      ],
+      "evidence": {
+        "apiEndpointCount": 0
+      }
+    },
+    "A2": {
+      "id": "A2",
+      "name": "api-backend-breakrate",
+      "label": "前后端断链率",
+      "domain": "A",
+      "direction": "lower-better",
+      "value": null,
+      "reason": "无 ApiEndpoint 对象（纯后端仓库——按口径置空）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot a96d5ed4-8c0d-432a-83d5-2bad8793b320"
+      ],
+      "evidence": {
+        "apiEndpointCount": 0
+      }
+    },
+    "B4": {
+      "id": "B4",
+      "name": "component-coupling-degree",
+      "label": "组件耦合度",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": null,
+      "reason": "无 Component 对象（纯后端仓库——按口径置空）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Component --snapshot a96d5ed4-8c0d-432a-83d5-2bad8793b320"
+      ],
+      "evidence": {
+        "componentCount": 0
+      }
+    },
+    "C1": {
+      "id": "C1",
+      "name": "endpoint-table-hops",
+      "label": "端到端跳数",
+      "domain": "C",
+      "direction": "interval",
+      "value": null,
+      "reason": "无 ApiEndpoint 对象（贯通链分母为 0）",
+      "evidence": {
+        "apiEndpointCount": 0
+      }
+    },
+    "D1": {
+      "id": "D1",
+      "name": "framework-version-coverage",
+      "label": "技术栈版本覆盖率",
+      "domain": "D",
+      "direction": "higher-better",
+      "value": null,
+      "reason": "无可判定版本（空串 49 / 属性占位 88 / 合计 137——分母为 0，按口径置空）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Dependency --all --field id,name,version,scope --snapshot a96d5ed4-8c0d-432a-83d5-2bad8793b320"
+      ],
+      "evidence": {
+        "total": 137,
+        "emptyVersion": 49,
+        "placeholder": 88,
+        "determinable": 0
+      }
+    },
+    "D2": {
+      "id": "D2",
+      "name": "dependency-homogeneity",
+      "label": "依赖同质度",
+      "domain": "D",
+      "direction": "none",
+      "value": null,
+      "reason": "cohort 级指标（依赖 cohort 众数集合——单体层不产出）",
+      "evidence": {
+        "dependencyCount": 137
+      }
+    },
+    "D4": {
+      "id": "D4",
+      "name": "evolution-trend",
+      "label": "年度演进趋势",
+      "domain": "D",
+      "direction": "none",
+      "value": null,
+      "reason": "单快照（首次导入——无时序）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" snapshot list --repo pig"
+      ],
+      "evidence": {
+        "completeSnapshotCount": 1
+      }
+    }
+  },
+  "dataQuality": {
+    "dq.null-complexity-ratio": {
+      "id": "dq.null-complexity-ratio",
+      "name": "null-complexity-ratio",
+      "label": "complexity 为 null 的方法占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": 0.148054,
+      "numerator": 232,
+      "denominator": 1567,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot a96d5ed4-8c0d-432a-83d5-2bad8793b320",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot a96d5ed4-8c0d-432a-83d5-2bad8793b320"
+      ]
+    },
+    "dq.missing-version-ratio": {
+      "id": "dq.missing-version-ratio",
+      "name": "missing-version-ratio",
+      "label": "version 为空串的依赖占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": 0.357664,
+      "numerator": 49,
+      "denominator": 137,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Dependency --all --field id,name,version,scope --snapshot a96d5ed4-8c0d-432a-83d5-2bad8793b320"
+      ],
+      "placeholderVersionCount": 88
+    },
+    "dq.mapper-join-miss-ratio": {
+      "id": "dq.mapper-join-miss-ratio",
+      "name": "mapper-join-miss-ratio",
+      "label": "Mapper namespace 与接口 FQN join 未命中占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": 0.0,
+      "numerator": 0,
+      "denominator": 37,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Mapper --all --field id,namespace --snapshot a96d5ed4-8c0d-432a-83d5-2bad8793b320",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Interface --all --field id --snapshot a96d5ed4-8c0d-432a-83d5-2bad8793b320"
+      ]
+    },
+    "dq.ext-call-ratio": {
+      "id": "dq.ext-call-ratio",
+      "name": "ext-call-ratio",
+      "label": "ext: 虚拟调用过滤占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": null,
+      "reason": "不可观测（ext: 虚拟边在导入物化时已过滤——查询面天然免疫）"
+    }
+  }
+}
