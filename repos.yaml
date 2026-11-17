@@ -6,21 +6,25 @@
 #   repo           仓库名（必填；亦为导入 sourceId——clone 目录名）
 #   branch         分支（可选——缺省 clone 默认分支）
 #   skip           是否跳过本轮扫描（缺省 false）
-#   notes          入选理由/备注（可选）
+#   notes          入选理由/备注（可选；首字符为分层标记 A/B/C/D）
 #   frontend-pair  前后端配对扩展位（多仓聚合轮启用——暂为注释占位，不参与解析）
 #
 # 约定：
 #   - owner 归属由本清单与 report 元数据承载（sourceId 仅取 repo 名，不含斜杠）
 #   - 修改本文件并 push 会触发批量扫描 workflow（paths 过滤仅限本文件）
+#   - 单仓入列硬约束：公开仓、非镜像仓、可被扫描管线解析（Java 主导或前端配对形态）
 #
-# 种子批分层选样（10 仓——2026-10-20 定稿）：
-#   A. Java admin/业务系统 6——主流脚手架与业务系统形态（Maven 系为主）
-#   B. 大型仓 2——超大型多模块（Gradle 轨 + 规模极端样本）
-#   C. JPA 数据访问层 2——与 MyBatis 系对照的 JPA 形态
+# S0 铺底分层选样（41 仓——2026-11-17 定稿，P5H-D6 配额）：
+#   A. Java admin/业务系统 18——脚手架与业务系统形态（MyBatis/MP/JPA 混合）
+#   B. 大型仓 8——超大型多模块（Gradle 轨 + 规模极端样本）
+#   C. JPA 数据访问层 8——与 MyBatis 系对照的 JPA 形态（含 JPA 实现本体）
+#   D. 前后端配对 7——A 层仓的官方前端仓（配对聚合轮未启用，先单列为前端形态样本）
+#
+#   当前批次：1/4（20 仓落库）——分批 push ≤10 新仓/批，批序即提交序
 # =============================================================================
 
 repos:
-  # ---- 分层 A：Java admin/业务系统（6）----
+  # ---- 分层 A：Java admin/业务系统（16 of 18）----
   - owner: macrozheng
     repo: mall
     branch: master
@@ -47,7 +51,47 @@ repos:
     repo: vhr
     skip: false
     notes: "A·微人事管理系统（前后端同仓——Vue2 前端轨小样本，与 JeecgBoot Vue3 对照）"
-  # ---- 分层 B：大型仓（2）----
+  - owner: YunaiV
+    repo: ruoyi-vue-pro
+    skip: false
+    notes: "A·芋道全栈脚手架（MyBatis-Plus 大而全——SB2/SB3 双轨多模块，RuoYi 系第三形态）"
+  - owner: yangzongzhuan
+    repo: RuoYi-Cloud
+    skip: false
+    notes: "A·RuoYi 官方微服务云版（SpringCloud Alibaba + MyBatis——脚手架的微服务形态变体）"
+  - owner: pig-mesh
+    repo: pig
+    skip: false
+    notes: "A·Spring Cloud 微服务脚手架（MyBatis-Plus——RuoYi 之外的微服务 admin 对照）"
+  - owner: newbee-ltd
+    repo: newbee-mall
+    skip: false
+    notes: "A·新蜂小型电商（SpringBoot + MyBatis——与 mall 同栈小体量对照）"
+  - owner: stylefeng
+    repo: Guns
+    skip: false
+    notes: "A·老牌 admin 脚手架（SpringBoot + MyBatis-Plus——2010s 脚手架形态代表）"
+  - owner: renrenio
+    repo: renren-fast
+    skip: false
+    notes: "A·人人开源轻量脚手架（SpringBoot + MyBatis-Plus + Shiro——极简 admin 形态）"
+  - owner: thinkgem
+    repo: jeesite
+    skip: false
+    notes: "A·JeeSite 企业开发平台（Spring MVC + MyBatis——经典 SSM 时代延续形态）"
+  - owner: o2oa
+    repo: o2oa
+    skip: false
+    notes: "A·企业协同办公平台（超大体量 Java 业务系统——非电商/admin 类的业务形态拓展）"
+  - owner: chillzhuang
+    repo: SpringBlade
+    skip: false
+    notes: "A·SpringBlade 微服务脚手架（MyBatis-Plus + SpringCloud——多脚手架对照面扩充）"
+  - owner: dromara
+    repo: dante-cloud
+    skip: false
+    notes: "A·微服务全家桶（Spring Cloud Tencent + MyBatis-Plus——dromara 系业务形态）"
+  # ---- 分层 B：大型仓（2 of 8）----
   - owner: apache
     repo: dubbo
     skip: false
@@ -56,7 +100,7 @@ repos:
     repo: fineract
     skip: false
     notes: "B·Apache 金融核心系统（Gradle 多模块超大型业务系统——大表量 DDL 轨）"
-  # ---- 分层 C：JPA 数据访问层（2）----
+  # ---- 分层 C：JPA 数据访问层（2 of 8）----
   - owner: spring-projects
     repo: spring-petclinic
     skip: false
