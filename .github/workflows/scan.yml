@@ -49,10 +49,11 @@ jobs:
       # 形态，服务端后台继续处理，重跑 dispatch dedup skipped 即自愈；级联取消会
       # 浪费同批已跑一半的 job——2026-11-17 批 2 教训：1 失败取消 13）
       fail-fast: false
-      # max-parallel 4→2（2026-11-17 批 2 教训：4 并发大仓导入压垮生产单实例 MySQL——
-      # Lock wait timeout / Pool closed / connection closed / 504 级联；2 并发对齐
-      # 2C/15G 实例容量。代价：批次总时长拉长，S0 铺底优先稳定性）
-      max-parallel: 2
+      # max-parallel 2→1（2026-11-17/18 用户裁决：单仓串行——批 2 重跑 #2（4 并发）时段
+      # 出现 Lock wait timeout / Pool closed / JSON 解析失败等资源竞争失败；2 并发因
+      # 服务器 Azure 平台关机（16:04:18 有序 shutdown——非扫描压力所致）未经充分验证，
+      # 收口期采用最保守的完全串行。代价：批次总时长最长，S0 铺底优先稳定性）
+      max-parallel: 1
       matrix: ${{ fromJson(needs.prepare.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v4
