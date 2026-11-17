@@ -45,6 +45,10 @@ jobs:
     needs: prepare
     runs-on: ubuntu-latest
     strategy:
+      # fail-fast: false——单仓失败不级联取消其它仓（大仓 commit 504/超时属可预期
+      # 形态，服务端后台继续处理，重跑 dispatch dedup skipped 即自愈；级联取消会
+      # 浪费同批已跑一半的 job——2026-11-17 批 2 教训：1 失败取消 13）
+      fail-fast: false
       max-parallel: 4
       matrix: ${{ fromJson(needs.prepare.outputs.matrix) }}
     steps:
