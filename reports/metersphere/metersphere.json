@@ -1,0 +1,597 @@
+{
+  "schemaVersion": "draft-v1",
+  "implementation": "ke-index compute-metrics.py (transitional; to be superseded by ke checkup)",
+  "owner": "metersphere",
+  "repo": "metersphere",
+  "sourceId": "metersphere",
+  "snapshot": {
+    "snapshotId": "e3eadec9-222f-49f2-ab5e-3183b979f358",
+    "status": "complete",
+    "sourceVersion": "head",
+    "objectCount": 43718,
+    "linkCount": 157807,
+    "completedAt": "2026-11-17T15:27:21.080Z"
+  },
+  "cliVersion": "0.3.5",
+  "metrics": {
+    "A2": {
+      "id": "A2",
+      "name": "api-backend-breakrate",
+      "label": "前后端断链率",
+      "domain": "A",
+      "direction": "lower-better",
+      "value": 1.0,
+      "numerator": 4,
+      "denominator": 4,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query ApiEndpoint --all --field id,backendMethodId,matchedVia --snapshot e3eadec9-222f-49f2-ab5e-3183b979f358",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot e3eadec9-222f-49f2-ab5e-3183b979f358"
+      ]
+    },
+    "A3": {
+      "id": "A3",
+      "name": "orphan-table-rate",
+      "label": "孤儿表率",
+      "domain": "A",
+      "direction": "lower-better",
+      "value": 0.075472,
+      "numerator": 12,
+      "denominator": 159,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Table --all --field id,name,matchedEntityClass --snapshot e3eadec9-222f-49f2-ab5e-3183b979f358",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Mapper --all --field id,namespace,mappedTableIds --snapshot e3eadec9-222f-49f2-ab5e-3183b979f358",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot e3eadec9-222f-49f2-ab5e-3183b979f358"
+      ]
+    },
+    "A4": {
+      "id": "A4",
+      "name": "table-entity-mapping-rate",
+      "label": "表↔实体映射率",
+      "domain": "A",
+      "direction": "higher-better",
+      "value": 0.924528,
+      "numerator": 147,
+      "denominator": 159,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Table --all --field id,name,matchedEntityClass --snapshot e3eadec9-222f-49f2-ab5e-3183b979f358",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Mapper --all --field id,namespace,mappedTableIds --snapshot e3eadec9-222f-49f2-ab5e-3183b979f358",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot e3eadec9-222f-49f2-ab5e-3183b979f358"
+      ],
+      "evidence": {
+        "mapperEdgeOnly": 0,
+        "entityClassOnly": 2,
+        "both": 145
+      }
+    },
+    "B1.backend": {
+      "id": "B1.backend",
+      "name": "circular-dependency-density",
+      "label": "循环依赖密度（后端）",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": 0.338926,
+      "numerator": 101,
+      "denominator": 298,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Package --all --field id,dependsOnPackageIds --snapshot e3eadec9-222f-49f2-ab5e-3183b979f358",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot e3eadec9-222f-49f2-ab5e-3183b979f358"
+      ],
+      "sccCount": 8,
+      "sccs": [
+        {
+          "size": 85,
+          "members": [
+            "pkg:io.metersphere",
+            "pkg:io.metersphere.api",
+            "pkg:io.metersphere.api.dto",
+            "pkg:io.metersphere.api.dto.converter",
+            "pkg:io.metersphere.api.dto.definition",
+            "pkg:io.metersphere.api.dto.definition.request",
+            "pkg:io.metersphere.api.dto.export",
+            "pkg:io.metersphere.api.dto.mockserver",
+            "pkg:io.metersphere.api.dto.request",
+            "pkg:io.metersphere.api.dto.request.http",
+            "pkg:io.metersphere.api.dto.request.http.body",
+            "pkg:io.metersphere.api.dto.scenario",
+            "pkg:io.metersphere.api.invoker",
+            "pkg:io.metersphere.api.job",
+            "pkg:io.metersphere.api.mapper",
+            "pkg:io.metersphere.api.parser",
+            "pkg:io.metersphere.api.parser.api",
+            "pkg:io.metersphere.api.parser.jmeter",
+            "pkg:io.metersphere.api.parser.jmeter.body",
+            "pkg:io.metersphere.api.parser.jmeter.child",
+            "pkg:io.metersphere.api.parser.jmeter.controller",
+            "pkg:io.metersphere.api.parser.jmeter.interceptor",
+            "pkg:io.metersphere.api.parser.jmeter.processor",
+            "pkg:io.metersphere.api.parser.jmeter.processor.assertion",
+            "pkg:io.metersphere.api.parser.jmeter.processor.assertion.body",
+            "pkg:io.metersphere.api.parser.jmeter.xstream",
+            "pkg:io.metersphere.api.parser.ms",
+            "pkg:io.metersphere.api.parser.ms.http",
+            "pkg:io.metersphere.api.parser.ms.http.pre",
+            "pkg:io.metersphere.api.parser.step",
+            "pkg:io.metersphere.api.provider",
+            "pkg:io.metersphere.api.service",
+            "pkg:io.metersphere.api.service.debug",
+            "pkg:io.metersphere.api.service.definition",
+            "pkg:io.metersphere.api.service.scenario",
+            "pkg:io.metersphere.api.service.schedule",
+            "pkg:io.metersphere.api.utils",
+            "pkg:io.metersphere.bug",
+            "pkg:io.metersphere.bug.job",
+            "pkg:io.metersphere.bug.mapper",
+            "pkg:io.metersphere.bug.service",
+            "pkg:io.metersphere.functional",
+            "pkg:io.metersphere.functional.excel.converter",
+            "pkg:io.metersphere.functional.excel.listener",
+            "pkg:io.metersphere.functional.excel.validate",
+            "pkg:io.metersphere.functional.job",
+            "pkg:io.metersphere.functional.mapper",
+            "pkg:io.metersphere.functional.provider",
+            "pkg:io.metersphere.functional.service",
+            "pkg:io.metersphere.functional.utils",
+            "pkg:io.metersphere.functional.xmind.parser",
+            "pkg:io.metersphere.functional.xmind.utils",
+            "pkg:io.metersphere.plan",
+            "pkg:io.metersphere.plan.dto.request",
+            "pkg:io.metersphere.plan.dto.response",
+            "pkg:io.metersphere.plan.job",
+            "pkg:io.metersphere.plan.mapper",
+            "pkg:io.metersphere.plan.service",
+            "pkg:io.metersphere.plan.utils",
+            "pkg:io.metersphere.project",
+            "pkg:io.metersphere.project.service",
+            "pkg:io.metersphere.project.utils",
+            "pkg:io.metersphere.system",
+            "pkg:io.metersphere.system.base",
+            "pkg:io.metersphere.system.config",
+            "pkg:io.metersphere.system.controller.handler",
+            "pkg:io.metersphere.system.dto.taskhub.response",
+            "pkg:io.metersphere.system.interceptor",
+            "pkg:io.metersphere.system.invoker",
+            "pkg:io.metersphere.system.log.aspect",
+            "pkg:io.metersphere.system.log.service",
+            "pkg:io.metersphere.system.manager",
+            "pkg:io.metersphere.system.mapper",
+            "pkg:io.metersphere.system.notice.sender",
+            "pkg:io.metersphere.system.notice.sender.impl",
+            "pkg:io.metersphere.system.notice.utils",
+            "pkg:io.metersphere.system.resolver.field",
+            "pkg:io.metersphere.system.schedule",
+            "pkg:io.metersphere.system.security",
+            "pkg:io.metersphere.system.security.realm",
+            "pkg:io.metersphere.system.service",
+            "pkg:io.metersphere.system.uid",
+            "pkg:io.metersphere.system.uid.impl",
+            "pkg:io.metersphere.system.uid.worker",
+            "pkg:io.metersphere.system.utils"
+          ]
+        },
+        {
+          "size": 4,
+          "members": [
+            "pkg:io.metersphere.sdk.dto",
+            "pkg:io.metersphere.sdk.exception",
+            "pkg:io.metersphere.sdk.util",
+            "pkg:io.metersphere.sdk.valid"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:io.metersphere.api.dto.request.controller",
+            "pkg:io.metersphere.api.dto.request.controller.loop"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:io.metersphere.functional.excel.constants",
+            "pkg:io.metersphere.functional.excel.domain"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:io.metersphere.plugin.api.dto",
+            "pkg:io.metersphere.plugin.api.spi"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:io.metersphere.project.api.processor",
+            "pkg:io.metersphere.project.dto.environment.processors"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:io.metersphere.sdk.dto.api.result",
+            "pkg:io.metersphere.sdk.dto.api.task"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:io.metersphere.system.dto.sdk",
+            "pkg:io.metersphere.system.dto.user"
+          ]
+        }
+      ]
+    },
+    "B2": {
+      "id": "B2",
+      "name": "package-dependency-density",
+      "label": "包依赖密度",
+      "domain": "B",
+      "direction": "interval",
+      "value": 7.8322,
+      "numerator": 2334,
+      "denominator": 298,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Package --all --field id,dependsOnPackageIds --snapshot e3eadec9-222f-49f2-ab5e-3183b979f358",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot e3eadec9-222f-49f2-ab5e-3183b979f358"
+      ]
+    },
+    "B1.frontend": {
+      "id": "B1.frontend",
+      "name": "circular-dependency-density",
+      "label": "循环依赖密度（前端）",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": 0.0,
+      "numerator": 0,
+      "denominator": 1225,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Module --all --field id,importedModuleIds --snapshot e3eadec9-222f-49f2-ab5e-3183b979f358",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Module --snapshot e3eadec9-222f-49f2-ab5e-3183b979f358"
+      ],
+      "sccCount": 0
+    },
+    "B3": {
+      "id": "B3",
+      "name": "giant-class-ratio",
+      "label": "巨型类占比",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": 0.082058,
+      "numerator": 252,
+      "denominator": 3071,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Class --all --field id,lineCount --snapshot e3eadec9-222f-49f2-ab5e-3183b979f358",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --where 'lineCount>500' --snapshot e3eadec9-222f-49f2-ab5e-3183b979f358",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --snapshot e3eadec9-222f-49f2-ab5e-3183b979f358"
+      ],
+      "threshold": "lineCount > 500",
+      "top": [
+        {
+          "lineCount": 2931,
+          "id": "cls:io.metersphere.api.controller.ApiScenarioControllerTests"
+        },
+        {
+          "lineCount": 2739,
+          "id": "cls:io.metersphere.plan.controller.TestPlanControllerTests"
+        },
+        {
+          "lineCount": 2512,
+          "id": "cls:io.metersphere.project.controller.filemanagement.FileManagementControllerTests"
+        },
+        {
+          "lineCount": 2425,
+          "id": "cls:io.metersphere.api.domain.ApiScenarioReportExample"
+        },
+        {
+          "lineCount": 2383,
+          "id": "cls:io.metersphere.api.service.scenario.ApiScenarioService"
+        }
+      ],
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --where 'lineCount>500' --snapshot e3eadec9-222f-49f2-ab5e-3183b979f358",
+        "serverCount": 252,
+        "match": true
+      }
+    },
+    "B4": {
+      "id": "B4",
+      "name": "component-coupling-degree",
+      "label": "组件耦合度",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": 0.0503,
+      "numerator": 22,
+      "denominator": 437,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Component --all --field id,referencedComponentIds,isGlobal --snapshot e3eadec9-222f-49f2-ab5e-3183b979f358",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Component --snapshot e3eadec9-222f-49f2-ab5e-3183b979f358"
+      ],
+      "globalRegistrationRatio": 0.0
+    },
+    "C2": {
+      "id": "C2",
+      "name": "cyclomatic-complexity-p90",
+      "label": "圈复杂度 P90",
+      "domain": "C",
+      "direction": "lower-better",
+      "value": 2,
+      "denominator": 29968,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot e3eadec9-222f-49f2-ab5e-3183b979f358",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,lineCount,complexity --snapshot e3eadec9-222f-49f2-ab5e-3183b979f358"
+      ],
+      "percentiles": {
+        "p25": 1,
+        "p50": 1,
+        "p75": 1,
+        "p90": 2
+      },
+      "mean": 1.3424,
+      "max": 47,
+      "top": [
+        {
+          "cyclomaticComplexity": 47,
+          "id": "mtd:io.metersphere.api.controller.ApiDefinitionMockControllerTests.mockServerTest"
+        },
+        {
+          "cyclomaticComplexity": 34,
+          "id": "mtd:io.metersphere.plan.service.TestPlanManagementService.calculationTestPlanByConditions(:Map<String, List<String>>:Map<String, TestPlanResourceService>:boolean:String)"
+        },
+        {
+          "cyclomaticComplexity": 32,
+          "id": "mtd:io.metersphere.api.controller.ApiDefinitionModuleControllerTests.addModuleTestSuccess"
+        },
+        {
+          "cyclomaticComplexity": 31,
+          "id": "mtd:io.metersphere.functional.service.FunctionalCaseMinderService.editFunctionalCaseBatch(:FunctionalCaseMinderEditRequest:String)"
+        },
+        {
+          "cyclomaticComplexity": 31,
+          "id": "mtd:io.metersphere.api.service.ApiScenarioDataTransferService.genMetersphereExportResponseByMetersphere(:ApiScenarioBatchExportRequest:Map<String, String>)"
+        }
+      ],
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot e3eadec9-222f-49f2-ab5e-3183b979f358",
+        "serverCount": 29968,
+        "match": true
+      }
+    },
+    "C3": {
+      "id": "C3",
+      "name": "test-method-ratio",
+      "label": "测试方法占比",
+      "domain": "C",
+      "direction": "higher-better",
+      "value": 0.039664,
+      "numerator": 1305,
+      "denominator": 32901,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'isTest=true' --snapshot e3eadec9-222f-49f2-ab5e-3183b979f358",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot e3eadec9-222f-49f2-ab5e-3183b979f358",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,isTest,testType --snapshot e3eadec9-222f-49f2-ab5e-3183b979f358"
+      ],
+      "testTypes": {
+        "UnitTest": 1305
+      },
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'isTest=true' --snapshot e3eadec9-222f-49f2-ab5e-3183b979f358",
+        "serverCount": 1305,
+        "match": true
+      }
+    },
+    "C4": {
+      "id": "C4",
+      "name": "giant-method-ratio",
+      "label": "巨型方法占比",
+      "domain": "C",
+      "direction": "lower-better",
+      "value": 0.004631,
+      "numerator": 139,
+      "denominator": 30013,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount>80' --snapshot e3eadec9-222f-49f2-ab5e-3183b979f358",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount=0' --snapshot e3eadec9-222f-49f2-ab5e-3183b979f358",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot e3eadec9-222f-49f2-ab5e-3183b979f358",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,lineCount --snapshot e3eadec9-222f-49f2-ab5e-3183b979f358"
+      ],
+      "threshold": "lineCount > 80",
+      "excludedFromDenominator": {
+        "lineCountIsZero": 2888,
+        "lineCountIsNull": 0
+      },
+      "top": [
+        {
+          "lineCount": 442,
+          "id": "mtd:io.metersphere.plan.controller.TestPlanControllerTests.testPlanPageCountTest"
+        },
+        {
+          "lineCount": 335,
+          "id": "mtd:io.metersphere.api.controller.ApiDefinitionControllerTests.importTest"
+        },
+        {
+          "lineCount": 297,
+          "id": "mtd:io.metersphere.api.service.ApiScenarioDataTransferService.parseRelatedDataToAnalysisResult(:String:String:ApiScenarioImportParseResult:ApiScenarioPreImportAnalysisResult:Map<String, String>:Map<String, BaseTreeNode>)"
+        },
+        {
+          "lineCount": 290,
+          "id": "mtd:io.metersphere.api.controller.ApiDefinitionMockControllerTests.mockServerTest"
+        },
+        {
+          "lineCount": 261,
+          "id": "mtd:io.metersphere.project.controller.EnvironmentControllerTests.testAddSuccess"
+        }
+      ],
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount>80' --snapshot e3eadec9-222f-49f2-ab5e-3183b979f358",
+        "serverCount": 139,
+        "match": true
+      }
+    },
+    "D3": {
+      "id": "D3",
+      "name": "scale-profile",
+      "label": "规模画像",
+      "domain": "D",
+      "direction": "none",
+      "value": 43718,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" snapshot list --repo metersphere",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Repository --snapshot e3eadec9-222f-49f2-ab5e-3183b979f358",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot e3eadec9-222f-49f2-ab5e-3183b979f358",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --snapshot e3eadec9-222f-49f2-ab5e-3183b979f358",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Interface --snapshot e3eadec9-222f-49f2-ab5e-3183b979f358",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot e3eadec9-222f-49f2-ab5e-3183b979f358",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Dependency --snapshot e3eadec9-222f-49f2-ab5e-3183b979f358",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot e3eadec9-222f-49f2-ab5e-3183b979f358",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Mapper --snapshot e3eadec9-222f-49f2-ab5e-3183b979f358",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Module --snapshot e3eadec9-222f-49f2-ab5e-3183b979f358",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Component --snapshot e3eadec9-222f-49f2-ab5e-3183b979f358",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Function --snapshot e3eadec9-222f-49f2-ab5e-3183b979f358",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Store --snapshot e3eadec9-222f-49f2-ab5e-3183b979f358",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Route --snapshot e3eadec9-222f-49f2-ab5e-3183b979f358",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot e3eadec9-222f-49f2-ab5e-3183b979f358"
+      ],
+      "typeCounts": {
+        "Repository": 1,
+        "Package": 298,
+        "Class": 3071,
+        "Interface": 312,
+        "Method": 32901,
+        "Dependency": 101,
+        "Table": 159,
+        "Mapper": 160,
+        "Module": 1225,
+        "Component": 437,
+        "Function": 5047,
+        "Store": 0,
+        "Route": 2,
+        "ApiEndpoint": 4
+      },
+      "linkCount": 157807
+    }
+  },
+  "nullMetrics": {
+    "A1": {
+      "id": "A1",
+      "name": "full-chain-coverage",
+      "label": "全链路贯通率",
+      "domain": "A",
+      "direction": "higher-better",
+      "value": null,
+      "reason": "calls 传递闭包与 Method→Mapper 名字 join 未实现（过渡实现——待 ke checkup）",
+      "evidence": {
+        "apiEndpointCount": 4
+      }
+    },
+    "C1": {
+      "id": "C1",
+      "name": "endpoint-table-hops",
+      "label": "端到端跳数",
+      "domain": "C",
+      "direction": "interval",
+      "value": null,
+      "reason": "依赖 A1 贯通链算法（过渡实现未含——待 ke checkup）",
+      "evidence": {
+        "apiEndpointCount": 4
+      }
+    },
+    "D1": {
+      "id": "D1",
+      "name": "framework-version-coverage",
+      "label": "技术栈版本覆盖率",
+      "domain": "D",
+      "direction": "higher-better",
+      "value": null,
+      "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Dependency --all --field id,name,version,scope --snapshot e3eadec9-222f-49f2-ab5e-3183b979f358"
+      ],
+      "evidence": {
+        "total": 101,
+        "emptyVersion": 32,
+        "placeholder": 65,
+        "determinable": 4
+      }
+    },
+    "D2": {
+      "id": "D2",
+      "name": "dependency-homogeneity",
+      "label": "依赖同质度",
+      "domain": "D",
+      "direction": "none",
+      "value": null,
+      "reason": "cohort 级指标（依赖 cohort 众数集合——单体层不产出）",
+      "evidence": {
+        "dependencyCount": 101
+      }
+    },
+    "D4": {
+      "id": "D4",
+      "name": "evolution-trend",
+      "label": "年度演进趋势",
+      "domain": "D",
+      "direction": "none",
+      "value": null,
+      "reason": "单快照（首次导入——无时序）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" snapshot list --repo metersphere"
+      ],
+      "evidence": {
+        "completeSnapshotCount": 1
+      }
+    }
+  },
+  "dataQuality": {
+    "dq.null-complexity-ratio": {
+      "id": "dq.null-complexity-ratio",
+      "name": "null-complexity-ratio",
+      "label": "complexity 为 null 的方法占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": 0.089146,
+      "numerator": 2933,
+      "denominator": 32901,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot e3eadec9-222f-49f2-ab5e-3183b979f358",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot e3eadec9-222f-49f2-ab5e-3183b979f358"
+      ]
+    },
+    "dq.missing-version-ratio": {
+      "id": "dq.missing-version-ratio",
+      "name": "missing-version-ratio",
+      "label": "version 为空串的依赖占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": 0.316832,
+      "numerator": 32,
+      "denominator": 101,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Dependency --all --field id,name,version,scope --snapshot e3eadec9-222f-49f2-ab5e-3183b979f358"
+      ],
+      "placeholderVersionCount": 65
+    },
+    "dq.mapper-join-miss-ratio": {
+      "id": "dq.mapper-join-miss-ratio",
+      "name": "mapper-join-miss-ratio",
+      "label": "Mapper namespace 与接口 FQN join 未命中占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": 0.0,
+      "numerator": 0,
+      "denominator": 160,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Mapper --all --field id,namespace --snapshot e3eadec9-222f-49f2-ab5e-3183b979f358",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Interface --all --field id --snapshot e3eadec9-222f-49f2-ab5e-3183b979f358"
+      ]
+    },
+    "dq.ext-call-ratio": {
+      "id": "dq.ext-call-ratio",
+      "name": "ext-call-ratio",
+      "label": "ext: 虚拟调用过滤占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": null,
+      "reason": "不可观测（ext: 虚拟边在导入物化时已过滤——查询面天然免疫）"
+    }
+  }
+}
