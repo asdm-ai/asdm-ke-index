@@ -1,0 +1,1136 @@
+{
+  "schemaVersion": "draft-v1",
+  "implementation": "ke-index compute-metrics.py (transitional; to be superseded by ke checkup)",
+  "owner": "keycloak",
+  "repo": "keycloak",
+  "sourceId": "keycloak",
+  "snapshot": {
+    "snapshotId": "fffee011-9543-4984-b282-9d20845be817",
+    "status": "complete",
+    "sourceVersion": "head",
+    "objectCount": 91724,
+    "linkCount": 497305,
+    "completedAt": "2026-11-18T01:49:22.381Z"
+  },
+  "cliVersion": "0.3.5",
+  "metrics": {
+    "A2": {
+      "id": "A2",
+      "name": "api-backend-breakrate",
+      "label": "前后端断链率",
+      "domain": "A",
+      "direction": "lower-better",
+      "value": 1.0,
+      "numerator": 2,
+      "denominator": 2,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query ApiEndpoint --all --field id,backendMethodId,matchedVia --snapshot fffee011-9543-4984-b282-9d20845be817",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot fffee011-9543-4984-b282-9d20845be817"
+      ]
+    },
+    "B1.backend": {
+      "id": "B1.backend",
+      "name": "circular-dependency-density",
+      "label": "循环依赖密度（后端）",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": 0.536489,
+      "numerator": 544,
+      "denominator": 1014,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Package --all --field id,dependsOnPackageIds --snapshot fffee011-9543-4984-b282-9d20845be817",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot fffee011-9543-4984-b282-9d20845be817"
+      ],
+      "sccCount": 32,
+      "sccs": [
+        {
+          "size": 345,
+          "members": [
+            "pkg:org.keycloak",
+            "pkg:org.keycloak.authentication",
+            "pkg:org.keycloak.authentication.actiontoken",
+            "pkg:org.keycloak.authentication.actiontoken.execactions",
+            "pkg:org.keycloak.authentication.actiontoken.idpverifyemail",
+            "pkg:org.keycloak.authentication.actiontoken.inviteorg",
+            "pkg:org.keycloak.authentication.actiontoken.resetcred",
+            "pkg:org.keycloak.authentication.actiontoken.updateemail",
+            "pkg:org.keycloak.authentication.actiontoken.verifyemail",
+            "pkg:org.keycloak.authentication.authenticators.broker",
+            "pkg:org.keycloak.authentication.authenticators.broker.util",
+            "pkg:org.keycloak.authentication.authenticators.browser",
+            "pkg:org.keycloak.authentication.authenticators.client",
+            "pkg:org.keycloak.authentication.authenticators.conditional",
+            "pkg:org.keycloak.authentication.authenticators.util",
+            "pkg:org.keycloak.authentication.authenticators.x509",
+            "pkg:org.keycloak.authentication.forms",
+            "pkg:org.keycloak.authentication.jpa",
+            "pkg:org.keycloak.authentication.otp",
+            "pkg:org.keycloak.authentication.requiredactions",
+            "pkg:org.keycloak.authentication.requiredactions.util",
+            "pkg:org.keycloak.authorization",
+            "pkg:org.keycloak.authorization.admin",
+            "pkg:org.keycloak.authorization.admin.representation",
+            "pkg:org.keycloak.authorization.authorization",
+            "pkg:org.keycloak.authorization.common",
+            "pkg:org.keycloak.authorization.fgap",
+            "pkg:org.keycloak.authorization.fgap.evaluation",
+            "pkg:org.keycloak.authorization.fgap.evaluation.partial",
+            "pkg:org.keycloak.authorization.identity",
+            "pkg:org.keycloak.authorization.jpa.entities",
+            "pkg:org.keycloak.authorization.jpa.store",
+            "pkg:org.keycloak.authorization.model",
+            "pkg:org.keycloak.authorization.permission",
+            "pkg:org.keycloak.authorization.permission.evaluator",
+            "pkg:org.keycloak.authorization.policy.evaluation",
+            "pkg:org.keycloak.authorization.policy.provider",
+            "pkg:org.keycloak.authorization.protection",
+            "pkg:org.keycloak.authorization.protection.permission",
+            "pkg:org.keycloak.authorization.protection.policy",
+            "pkg:org.keycloak.authorization.protection.resource",
+            "pkg:org.keycloak.authorization.store",
+            "pkg:org.keycloak.authorization.store.syncronization",
+            "pkg:org.keycloak.authorization.util",
+            "pkg:org.keycloak.broker.jwtauthorizationgrant",
+            "pkg:org.keycloak.broker.oidc",
+            "pkg:org.keycloak.broker.oidc.mappers",
+            "pkg:org.keycloak.broker.provider",
+            "pkg:org.keycloak.broker.provider.mappersync",
+            "pkg:org.keycloak.broker.provider.util",
+            "pkg:org.keycloak.broker.saml",
+            "pkg:org.keycloak.broker.social",
+            "pkg:org.keycloak.broker.trust",
+            "pkg:org.keycloak.cache",
+            "pkg:org.keycloak.client.clienttype",
+            "pkg:org.keycloak.cluster",
+            "pkg:org.keycloak.cluster.infinispan",
+            "pkg:org.keycloak.cluster.jpa",
+            "pkg:org.keycloak.compatibility",
+            "pkg:org.keycloak.component",
+            "pkg:org.keycloak.config",
+            "pkg:org.keycloak.config.database",
+            "pkg:org.keycloak.connections.httpclient",
+            "pkg:org.keycloak.connections.infinispan",
+            "pkg:org.keycloak.connections.infinispan.remote",
+            "pkg:org.keycloak.connections.jpa",
+            "pkg:org.keycloak.connections.jpa.entityprovider",
+            "pkg:org.keycloak.connections.jpa.support",
+            "pkg:org.keycloak.connections.jpa.updater",
+            "pkg:org.keycloak.connections.jpa.updater.liquibase",
+            "pkg:org.keycloak.connections.jpa.updater.liquibase.conn",
+            "pkg:org.keycloak.connections.jpa.updater.liquibase.custom",
+            "pkg:org.keycloak.connections.jpa.util",
+            "pkg:org.keycloak.constants",
+            "pkg:org.keycloak.cookie",
+            "pkg:org.keycloak.credential",
+            "pkg:org.keycloak.credential.hash",
+            "pkg:org.keycloak.crl",
+            "pkg:org.keycloak.crypto",
+            "pkg:org.keycloak.crypto.def",
+            "pkg:org.keycloak.deployment",
+            "pkg:org.keycloak.device",
+            "pkg:org.keycloak.email",
+            "pkg:org.keycloak.encoding",
+            "pkg:org.keycloak.events",
+            "pkg:org.keycloak.events.admin",
+            "pkg:org.keycloak.exceptions",
+            "pkg:org.keycloak.executors",
+            "pkg:org.keycloak.expiration.jpa",
+            "pkg:org.keycloak.expiration.jpa.impl",
+            "pkg:org.keycloak.exportimport",
+            "pkg:org.keycloak.exportimport.util",
+            "pkg:org.keycloak.federation.kerberos",
+            "pkg:org.keycloak.federation.kerberos.impl",
+            "pkg:org.keycloak.forms.login",
+            "pkg:org.keycloak.forms.login.freemarker",
+            "pkg:org.keycloak.forms.login.freemarker.model",
+            "pkg:org.keycloak.headers",
+            "pkg:org.keycloak.health",
+            "pkg:org.keycloak.http",
+            "pkg:org.keycloak.http.simple",
+            "pkg:org.keycloak.infinispan.health.impl",
+            "pkg:org.keycloak.infinispan.module.configuration.global",
+            "pkg:org.keycloak.infinispan.util",
+            "pkg:org.keycloak.jgroups.certificates",
+            "pkg:org.keycloak.jgroups.protocol",
+            "pkg:org.keycloak.jose",
+            "pkg:org.keycloak.jose.jwe",
+            "pkg:org.keycloak.jose.jwe.alg",
+            "pkg:org.keycloak.jose.jwe.enc",
+            "pkg:org.keycloak.jose.jwk",
+            "pkg:org.keycloak.jose.jws",
+            "pkg:org.keycloak.jose.jws.crypto",
+            "pkg:org.keycloak.json",
+            "pkg:org.keycloak.keys",
+            "pkg:org.keycloak.keys.infinispan",
+            "pkg:org.keycloak.keys.loader",
+            "pkg:org.keycloak.locale",
+            "pkg:org.keycloak.logging",
+            "pkg:org.keycloak.marshalling",
+            "pkg:org.keycloak.mdoc",
+            "pkg:org.keycloak.migration",
+            "pkg:org.keycloak.migration.migrators",
+            "pkg:org.keycloak.models",
+            "pkg:org.keycloak.models.cache",
+            "pkg:org.keycloak.models.cache.authorization",
+            "pkg:org.keycloak.models.cache.infinispan",
+            "pkg:org.keycloak.models.cache.infinispan.authorization",
+            "pkg:org.keycloak.models.cache.infinispan.authorization.entities",
+            "pkg:org.keycloak.models.cache.infinispan.authorization.events",
+            "pkg:org.keycloak.models.cache.infinispan.authorization.stream",
+            "pkg:org.keycloak.models.cache.infinispan.entities",
+            "pkg:org.keycloak.models.cache.infinispan.events",
+            "pkg:org.keycloak.models.cache.infinispan.stream",
+            "pkg:org.keycloak.models.credential",
+            "pkg:org.keycloak.models.dblock",
+            "pkg:org.keycloak.models.delegate",
+            "pkg:org.keycloak.models.jpa",
+            "pkg:org.keycloak.models.jpa.converter",
+            "pkg:org.keycloak.models.jpa.entities",
+            "pkg:org.keycloak.models.light",
+            "pkg:org.keycloak.models.oid4vci",
+            "pkg:org.keycloak.models.session",
+            "pkg:org.keycloak.models.sessions.infinispan",
+            "pkg:org.keycloak.models.sessions.infinispan.changes",
+            "pkg:org.keycloak.models.sessions.infinispan.changes.remote.remover",
+            "pkg:org.keycloak.models.sessions.infinispan.changes.remote.remover.query",
+            "pkg:org.keycloak.models.sessions.infinispan.changes.remote.updater",
+            "pkg:org.keycloak.models.sessions.infinispan.changes.remote.updater.authsession",
+            "pkg:org.keycloak.models.sessions.infinispan.changes.remote.updater.client",
+            "pkg:org.keycloak.models.sessions.infinispan.changes.remote.updater.loginfailures",
+            "pkg:org.keycloak.models.sessions.infinispan.changes.remote.updater.user",
+            "pkg:org.keycloak.models.sessions.infinispan.changes.sessions",
+            "pkg:org.keycloak.models.sessions.infinispan.entities",
+            "pkg:org.keycloak.models.sessions.infinispan.events",
+            "pkg:org.keycloak.models.sessions.infinispan.expiration",
+            "pkg:org.keycloak.models.sessions.infinispan.listeners",
+            "pkg:org.keycloak.models.sessions.infinispan.query",
+            "pkg:org.keycloak.models.sessions.infinispan.remote",
+            "pkg:org.keycloak.models.sessions.infinispan.remote.transaction",
+            "pkg:org.keycloak.models.sessions.infinispan.stream",
+            "pkg:org.keycloak.models.sessions.infinispan.transaction",
+            "pkg:org.keycloak.models.sessions.infinispan.util",
+            "pkg:org.keycloak.models.utils",
+            "pkg:org.keycloak.models.workflow",
+            "pkg:org.keycloak.models.workflow.expression",
+            "pkg:org.keycloak.organization",
+            "pkg:org.keycloak.organization.admin.resource",
+            "pkg:org.keycloak.organization.forms.login.freemarker.model",
+            "pkg:org.keycloak.organization.protocol.mappers.oidc",
+            "pkg:org.keycloak.organization.protocol.mappers.saml",
+            "pkg:org.keycloak.organization.utils",
+            "pkg:org.keycloak.organization.validation",
+            "pkg:org.keycloak.organization.validator",
+            "pkg:org.keycloak.partialimport",
+            "pkg:org.keycloak.policy",
+            "pkg:org.keycloak.protocol",
+            "pkg:org.keycloak.protocol.oid4vc",
+            "pkg:org.keycloak.protocol.oid4vc.clientpolicy",
+            "pkg:org.keycloak.protocol.oid4vc.issuance",
+            "pkg:org.keycloak.protocol.oid4vc.issuance.credentialbuilder",
+            "pkg:org.keycloak.protocol.oid4vc.issuance.credentialoffer",
+            "pkg:org.keycloak.protocol.oid4vc.issuance.credentialoffer.preauth",
+            "pkg:org.keycloak.protocol.oid4vc.issuance.keybinding",
+            "pkg:org.keycloak.protocol.oid4vc.issuance.mappers",
+            "pkg:org.keycloak.protocol.oid4vc.issuance.requiredactions",
+            "pkg:org.keycloak.protocol.oid4vc.issuance.signing",
+            "pkg:org.keycloak.protocol.oid4vc.issuance.signing.vcdm",
+            "pkg:org.keycloak.protocol.oid4vc.model",
+            "pkg:org.keycloak.protocol.oid4vc.resources.admin",
+            "pkg:org.keycloak.protocol.oid4vc.utils",
+            "pkg:org.keycloak.protocol.oidc",
+            "pkg:org.keycloak.protocol.oidc.encode",
+            "pkg:org.keycloak.protocol.oidc.endpoints",
+            "pkg:org.keycloak.protocol.oidc.endpoints.request",
+            "pkg:org.keycloak.protocol.oidc.ext",
+            "pkg:org.keycloak.protocol.oidc.grants",
+            "pkg:org.keycloak.protocol.oidc.grants.ciba",
+            "pkg:org.keycloak.protocol.oidc.grants.ciba.channel",
+            "pkg:org.keycloak.protocol.oidc.grants.ciba.clientpolicy.context",
+            "pkg:org.keycloak.protocol.oidc.grants.ciba.endpoints",
+            "pkg:org.keycloak.protocol.oidc.grants.ciba.endpoints.request",
+            "pkg:org.keycloak.protocol.oidc.grants.ciba.resolvers",
+            "pkg:org.keycloak.protocol.oidc.grants.device",
+            "pkg:org.keycloak.protocol.oidc.grants.device.clientpolicy.context",
+            "pkg:org.keycloak.protocol.oidc.grants.device.endpoints",
+            "pkg:org.keycloak.protocol.oidc.mappers",
+            "pkg:org.keycloak.protocol.oidc.par.clientpolicy.context",
+            "pkg:org.keycloak.protocol.oidc.par.endpoints",
+            "pkg:org.keycloak.protocol.oidc.par.endpoints.request",
+            "pkg:org.keycloak.protocol.oidc.rar",
+            "pkg:org.keycloak.protocol.oidc.rar.model",
+            "pkg:org.keycloak.protocol.oidc.rar.parsers",
+            "pkg:org.keycloak.protocol.oidc.refresh",
+            "pkg:org.keycloak.protocol.oidc.resourceindicators",
+            "pkg:org.keycloak.protocol.oidc.scope",
+            "pkg:org.keycloak.protocol.oidc.token",
+            "pkg:org.keycloak.protocol.oidc.utils",
+            "pkg:org.keycloak.protocol.oidc.verifier",
+            "pkg:org.keycloak.protocol.saml",
+            "pkg:org.keycloak.protocol.saml.mappers",
+            "pkg:org.keycloak.protocol.saml.preprocessor",
+            "pkg:org.keycloak.protocol.saml.profile.ecp",
+            "pkg:org.keycloak.protocol.saml.profile.util",
+            "pkg:org.keycloak.provider",
+            "pkg:org.keycloak.quarkus.runtime",
+            "pkg:org.keycloak.quarkus.runtime.cli",
+            "pkg:org.keycloak.quarkus.runtime.cli.command",
+            "pkg:org.keycloak.quarkus.runtime.configuration",
+            "pkg:org.keycloak.quarkus.runtime.configuration.compatibility",
+            "pkg:org.keycloak.quarkus.runtime.configuration.mappers",
+            "pkg:org.keycloak.quarkus.runtime.integration",
+            "pkg:org.keycloak.quarkus.runtime.integration.jaxrs",
+            "pkg:org.keycloak.quarkus.runtime.integration.resteasy",
+            "pkg:org.keycloak.quarkus.runtime.logging",
+            "pkg:org.keycloak.quarkus.runtime.services",
+            "pkg:org.keycloak.quarkus.runtime.storage.database.jpa",
+            "pkg:org.keycloak.quarkus.runtime.storage.database.liquibase",
+            "pkg:org.keycloak.quarkus.runtime.themes",
+            "pkg:org.keycloak.quarkus.runtime.vault",
+            "pkg:org.keycloak.rar",
+            "pkg:org.keycloak.representations",
+            "pkg:org.keycloak.representations.account",
+            "pkg:org.keycloak.representations.adapters.action",
+            "pkg:org.keycloak.representations.adapters.config",
+            "pkg:org.keycloak.representations.dpop",
+            "pkg:org.keycloak.representations.idm",
+            "pkg:org.keycloak.representations.idm.authorization",
+            "pkg:org.keycloak.representations.idm.oid4vc",
+            "pkg:org.keycloak.representations.info",
+            "pkg:org.keycloak.representations.oidc",
+            "pkg:org.keycloak.representations.workflows",
+            "pkg:org.keycloak.scripting",
+            "pkg:org.keycloak.sdjwt",
+            "pkg:org.keycloak.sdjwt.consumer",
+            "pkg:org.keycloak.sdjwt.vp",
+            "pkg:org.keycloak.securityprofile",
+            "pkg:org.keycloak.services",
+            "pkg:org.keycloak.services.clientpolicy",
+            "pkg:org.keycloak.services.clientpolicy.condition",
+            "pkg:org.keycloak.services.clientpolicy.context",
+            "pkg:org.keycloak.services.clientpolicy.context.admin",
+            "pkg:org.keycloak.services.clientpolicy.executor",
+            "pkg:org.keycloak.services.clientregistration",
+            "pkg:org.keycloak.services.clientregistration.oidc",
+            "pkg:org.keycloak.services.clientregistration.policy",
+            "pkg:org.keycloak.services.clientregistration.policy.impl",
+            "pkg:org.keycloak.services.cors",
+            "pkg:org.keycloak.services.error",
+            "pkg:org.keycloak.services.filters",
+            "pkg:org.keycloak.services.managers",
+            "pkg:org.keycloak.services.resource",
+            "pkg:org.keycloak.services.resources",
+            "pkg:org.keycloak.services.resources.account",
+            "pkg:org.keycloak.services.resources.account.resources",
+            "pkg:org.keycloak.services.resources.admin",
+            "pkg:org.keycloak.services.resources.admin.ext",
+            "pkg:org.keycloak.services.resources.admin.fgap",
+            "pkg:org.keycloak.services.resources.admin.info",
+            "pkg:org.keycloak.services.resteasy",
+            "pkg:org.keycloak.services.scheduled",
+            "pkg:org.keycloak.services.util",
+            "pkg:org.keycloak.services.validation",
+            "pkg:org.keycloak.services.x509",
+            "pkg:org.keycloak.sessions",
+            "pkg:org.keycloak.social.bitbucket",
+            "pkg:org.keycloak.social.facebook",
+            "pkg:org.keycloak.social.github",
+            "pkg:org.keycloak.social.gitlab",
+            "pkg:org.keycloak.social.google",
+            "pkg:org.keycloak.social.instagram",
+            "pkg:org.keycloak.social.linkedin",
+            "pkg:org.keycloak.social.microsoft",
+            "pkg:org.keycloak.social.openshift",
+            "pkg:org.keycloak.social.paypal",
+            "pkg:org.keycloak.social.stackoverflow",
+            "pkg:org.keycloak.social.twitter",
+            "pkg:org.keycloak.spi.infinispan",
+            "pkg:org.keycloak.spi.infinispan.impl",
+            "pkg:org.keycloak.spi.infinispan.impl.embedded",
+            "pkg:org.keycloak.spi.infinispan.impl.remote",
+            "pkg:org.keycloak.storage",
+            "pkg:org.keycloak.storage.adapter",
+            "pkg:org.keycloak.storage.client",
+            "pkg:org.keycloak.storage.clientscope",
+            "pkg:org.keycloak.storage.configuration",
+            "pkg:org.keycloak.storage.datastore",
+            "pkg:org.keycloak.storage.federated",
+            "pkg:org.keycloak.storage.group",
+            "pkg:org.keycloak.storage.jpa",
+            "pkg:org.keycloak.storage.jpa.entity",
+            "pkg:org.keycloak.storage.ldap",
+            "pkg:org.keycloak.storage.ldap.idm.model",
+            "pkg:org.keycloak.storage.ldap.idm.query.internal",
+            "pkg:org.keycloak.storage.ldap.idm.store",
+            "pkg:org.keycloak.storage.ldap.idm.store.ldap",
+            "pkg:org.keycloak.storage.ldap.idm.store.ldap.control",
+            "pkg:org.keycloak.storage.ldap.kerberos",
+            "pkg:org.keycloak.storage.ldap.mappers",
+            "pkg:org.keycloak.storage.ldap.mappers.membership",
+            "pkg:org.keycloak.storage.ldap.mappers.membership.group",
+            "pkg:org.keycloak.storage.ldap.mappers.membership.role",
+            "pkg:org.keycloak.storage.ldap.mappers.msad",
+            "pkg:org.keycloak.storage.role",
+            "pkg:org.keycloak.storage.user",
+            "pkg:org.keycloak.theme",
+            "pkg:org.keycloak.theme.beans",
+            "pkg:org.keycloak.theme.freemarker",
+            "pkg:org.keycloak.timer",
+            "pkg:org.keycloak.tracing",
+            "pkg:org.keycloak.transaction",
+            "pkg:org.keycloak.truststore",
+            "pkg:org.keycloak.url",
+            "pkg:org.keycloak.urls",
+            "pkg:org.keycloak.userprofile",
+            "pkg:org.keycloak.userprofile.config",
+            "pkg:org.keycloak.userprofile.validator",
+            "pkg:org.keycloak.util",
+            "pkg:org.keycloak.utils",
+            "pkg:org.keycloak.validate",
+            "pkg:org.keycloak.validate.validators",
+            "pkg:org.keycloak.validation",
+            "pkg:org.keycloak.vault",
+            "pkg:org.keycloak.wellknown",
+            "pkg:org.keycloak.workflow.admin.resource"
+          ]
+        },
+        {
+          "size": 47,
+          "members": [
+            "pkg:org.keycloak.testframework",
+            "pkg:org.keycloak.testframework.admin",
+            "pkg:org.keycloak.testframework.annotations",
+            "pkg:org.keycloak.testframework.clustering",
+            "pkg:org.keycloak.testframework.config",
+            "pkg:org.keycloak.testframework.crypto",
+            "pkg:org.keycloak.testframework.database",
+            "pkg:org.keycloak.testframework.events",
+            "pkg:org.keycloak.testframework.github",
+            "pkg:org.keycloak.testframework.http",
+            "pkg:org.keycloak.testframework.https",
+            "pkg:org.keycloak.testframework.infinispan",
+            "pkg:org.keycloak.testframework.injection",
+            "pkg:org.keycloak.testframework.injection.mocks",
+            "pkg:org.keycloak.testframework.injection.predicates",
+            "pkg:org.keycloak.testframework.realm",
+            "pkg:org.keycloak.testframework.remote",
+            "pkg:org.keycloak.testframework.remote.runonserver",
+            "pkg:org.keycloak.testframework.remote.timeoffset",
+            "pkg:org.keycloak.testframework.server",
+            "pkg:org.keycloak.testframework.util",
+            "pkg:org.keycloak.testsuite",
+            "pkg:org.keycloak.testsuite.arquillian",
+            "pkg:org.keycloak.testsuite.arquillian.containers",
+            "pkg:org.keycloak.testsuite.arquillian.decider",
+            "pkg:org.keycloak.testsuite.arquillian.migration",
+            "pkg:org.keycloak.testsuite.arquillian.provider",
+            "pkg:org.keycloak.testsuite.arquillian.undertow.lb",
+            "pkg:org.keycloak.testsuite.auth.page",
+            "pkg:org.keycloak.testsuite.auth.page.login",
+            "pkg:org.keycloak.testsuite.client",
+            "pkg:org.keycloak.testsuite.client.policies",
+            "pkg:org.keycloak.testsuite.client.resources",
+            "pkg:org.keycloak.testsuite.domainextension",
+            "pkg:org.keycloak.testsuite.drone",
+            "pkg:org.keycloak.testsuite.page",
+            "pkg:org.keycloak.testsuite.pages",
+            "pkg:org.keycloak.testsuite.rest",
+            "pkg:org.keycloak.testsuite.rest.resource",
+            "pkg:org.keycloak.testsuite.util",
+            "pkg:org.keycloak.testsuite.util.cli",
+            "pkg:org.keycloak.testsuite.util.oauth",
+            "pkg:org.keycloak.testsuite.util.oauth.ciba",
+            "pkg:org.keycloak.testsuite.util.oauth.device",
+            "pkg:org.keycloak.testsuite.util.oauth.oid4vc",
+            "pkg:org.keycloak.testsuite.util.runonserver",
+            "pkg:org.keycloak.testsuite.util.saml"
+          ]
+        },
+        {
+          "size": 23,
+          "members": [
+            "pkg:org.keycloak.tests.account",
+            "pkg:org.keycloak.tests.actions",
+            "pkg:org.keycloak.tests.admin",
+            "pkg:org.keycloak.tests.admin.authz.fgap",
+            "pkg:org.keycloak.tests.admin.client",
+            "pkg:org.keycloak.tests.admin.concurrency",
+            "pkg:org.keycloak.tests.broker",
+            "pkg:org.keycloak.tests.broker.oidc",
+            "pkg:org.keycloak.tests.broker.saml",
+            "pkg:org.keycloak.tests.client",
+            "pkg:org.keycloak.tests.db",
+            "pkg:org.keycloak.tests.forms",
+            "pkg:org.keycloak.tests.keys",
+            "pkg:org.keycloak.tests.loginfailures",
+            "pkg:org.keycloak.tests.model",
+            "pkg:org.keycloak.tests.oauth",
+            "pkg:org.keycloak.tests.organization.admin",
+            "pkg:org.keycloak.tests.organization.member",
+            "pkg:org.keycloak.tests.policy",
+            "pkg:org.keycloak.tests.saml",
+            "pkg:org.keycloak.tests.suites",
+            "pkg:org.keycloak.tests.transactions",
+            "pkg:org.keycloak.tests.x509"
+          ]
+        },
+        {
+          "size": 20,
+          "members": [
+            "pkg:org.keycloak.rotation",
+            "pkg:org.keycloak.saml",
+            "pkg:org.keycloak.saml.common.parsers",
+            "pkg:org.keycloak.saml.common.util",
+            "pkg:org.keycloak.saml.processing.api.saml.v2.request",
+            "pkg:org.keycloak.saml.processing.api.saml.v2.response",
+            "pkg:org.keycloak.saml.processing.api.saml.v2.sig",
+            "pkg:org.keycloak.saml.processing.core.parsers.saml",
+            "pkg:org.keycloak.saml.processing.core.parsers.saml.assertion",
+            "pkg:org.keycloak.saml.processing.core.parsers.saml.mdattr",
+            "pkg:org.keycloak.saml.processing.core.parsers.saml.mdui",
+            "pkg:org.keycloak.saml.processing.core.parsers.saml.metadata",
+            "pkg:org.keycloak.saml.processing.core.parsers.saml.protocol",
+            "pkg:org.keycloak.saml.processing.core.parsers.saml.xmldsig",
+            "pkg:org.keycloak.saml.processing.core.parsers.util",
+            "pkg:org.keycloak.saml.processing.core.saml.v2.factories",
+            "pkg:org.keycloak.saml.processing.core.saml.v2.util",
+            "pkg:org.keycloak.saml.processing.core.saml.v2.writers",
+            "pkg:org.keycloak.saml.processing.core.util",
+            "pkg:org.keycloak.saml.processing.web.util"
+          ]
+        },
+        {
+          "size": 15,
+          "members": [
+            "pkg:org.keycloak.ssf.transmitter",
+            "pkg:org.keycloak.ssf.transmitter.admin",
+            "pkg:org.keycloak.ssf.transmitter.delivery",
+            "pkg:org.keycloak.ssf.transmitter.delivery.poll",
+            "pkg:org.keycloak.ssf.transmitter.delivery.push",
+            "pkg:org.keycloak.ssf.transmitter.emit",
+            "pkg:org.keycloak.ssf.transmitter.event",
+            "pkg:org.keycloak.ssf.transmitter.metadata",
+            "pkg:org.keycloak.ssf.transmitter.outbox",
+            "pkg:org.keycloak.ssf.transmitter.resources",
+            "pkg:org.keycloak.ssf.transmitter.stream",
+            "pkg:org.keycloak.ssf.transmitter.stream.storage",
+            "pkg:org.keycloak.ssf.transmitter.stream.storage.client",
+            "pkg:org.keycloak.ssf.transmitter.subject",
+            "pkg:org.keycloak.ssf.transmitter.support"
+          ]
+        },
+        {
+          "size": 9,
+          "members": [
+            "pkg:org.keycloak.operator",
+            "pkg:org.keycloak.operator.controllers",
+            "pkg:org.keycloak.operator.crds.v2alpha1.client",
+            "pkg:org.keycloak.operator.crds.v2beta1",
+            "pkg:org.keycloak.operator.crds.v2beta1.deployment",
+            "pkg:org.keycloak.operator.crds.v2beta1.deployment.spec",
+            "pkg:org.keycloak.operator.crds.v2beta1.realmimport",
+            "pkg:org.keycloak.operator.update",
+            "pkg:org.keycloak.operator.update.impl"
+          ]
+        },
+        {
+          "size": 8,
+          "members": [
+            "pkg:org.keycloak.adapters.cloned",
+            "pkg:org.keycloak.adapters.saml",
+            "pkg:org.keycloak.adapters.saml.config",
+            "pkg:org.keycloak.adapters.saml.config.parsers",
+            "pkg:org.keycloak.adapters.saml.profile",
+            "pkg:org.keycloak.adapters.saml.profile.ecp",
+            "pkg:org.keycloak.adapters.saml.profile.webbrowsersso",
+            "pkg:org.keycloak.adapters.saml.rotation"
+          ]
+        },
+        {
+          "size": 8,
+          "members": [
+            "pkg:org.keycloak.ssf",
+            "pkg:org.keycloak.ssf.event",
+            "pkg:org.keycloak.ssf.event.caep",
+            "pkg:org.keycloak.ssf.event.risc",
+            "pkg:org.keycloak.ssf.event.stream",
+            "pkg:org.keycloak.ssf.event.token",
+            "pkg:org.keycloak.ssf.stream",
+            "pkg:org.keycloak.ssf.subject"
+          ]
+        },
+        {
+          "size": 7,
+          "members": [
+            "pkg:org.keycloak.client.admin.cli",
+            "pkg:org.keycloak.client.admin.cli.commands",
+            "pkg:org.keycloak.client.admin.cli.operations",
+            "pkg:org.keycloak.client.admin.cli.v2",
+            "pkg:org.keycloak.client.cli.common",
+            "pkg:org.keycloak.client.cli.config",
+            "pkg:org.keycloak.client.cli.util"
+          ]
+        },
+        {
+          "size": 5,
+          "members": [
+            "pkg:org.keycloak.common",
+            "pkg:org.keycloak.common.crypto",
+            "pkg:org.keycloak.common.enums",
+            "pkg:org.keycloak.common.profile",
+            "pkg:org.keycloak.common.util"
+          ]
+        },
+        {
+          "size": 5,
+          "members": [
+            "pkg:org.keycloak.testsuite.broker",
+            "pkg:org.keycloak.testsuite.federation.kerberos",
+            "pkg:org.keycloak.testsuite.federation.ldap",
+            "pkg:org.keycloak.testsuite.forms",
+            "pkg:org.keycloak.testsuite.saml"
+          ]
+        },
+        {
+          "size": 4,
+          "members": [
+            "pkg:org.keycloak.admin.client",
+            "pkg:org.keycloak.admin.client.resource",
+            "pkg:org.keycloak.admin.client.spi",
+            "pkg:org.keycloak.admin.client.token"
+          ]
+        },
+        {
+          "size": 4,
+          "members": [
+            "pkg:org.keycloak.misc.vulns",
+            "pkg:org.keycloak.misc.vulns.cveorg",
+            "pkg:org.keycloak.misc.vulns.github",
+            "pkg:org.keycloak.misc.vulns.utils"
+          ]
+        },
+        {
+          "size": 4,
+          "members": [
+            "pkg:org.keycloak.scim.resource.schema",
+            "pkg:org.keycloak.scim.resource.schema.attribute",
+            "pkg:org.keycloak.scim.resource.schema.path",
+            "pkg:org.keycloak.scim.resource.spi"
+          ]
+        },
+        {
+          "size": 4,
+          "members": [
+            "pkg:org.keycloak.tests.conformance.vci",
+            "pkg:org.keycloak.tests.conformance.vci.haip.configs",
+            "pkg:org.keycloak.tests.conformance.vci.nonhaip",
+            "pkg:org.keycloak.tests.conformance.vci.nonhaip.configs"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:org.keycloak.authorization.client",
+            "pkg:org.keycloak.authorization.client.resource",
+            "pkg:org.keycloak.authorization.client.util"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:org.keycloak.operator.testsuite.apiserver",
+            "pkg:org.keycloak.operator.testsuite.integration",
+            "pkg:org.keycloak.operator.testsuite.unit"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.keycloak.admin.api",
+            "pkg:org.keycloak.admin.api.client"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.keycloak.broker.oid4vp",
+            "pkg:org.keycloak.broker.oid4vp.mappers"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.keycloak.client.registration.cli",
+            "pkg:org.keycloak.client.registration.cli.commands"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.keycloak.documentation.test",
+            "pkg:org.keycloak.documentation.test.utils"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.keycloak.dom.saml.v2.mdui",
+            "pkg:org.keycloak.dom.saml.v2.metadata"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.keycloak.it.junit5.extension",
+            "pkg:org.keycloak.it.utils"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.keycloak.protocol.docker",
+            "pkg:org.keycloak.protocol.docker.mapper"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.keycloak.protocol.oauth2.cimd.clientpolicy.executor",
+            "pkg:org.keycloak.protocol.oauth2.cimd.provider"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.keycloak.representations.admin.v2",
+            "pkg:org.keycloak.representations.admin.v2.validation"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.keycloak.services.client.query",
+            "pkg:org.keycloak.services.client.scim"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.keycloak.testframework.oauth",
+            "pkg:org.keycloak.testframework.oauth.annotations"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.keycloak.testframework.ui.page",
+            "pkg:org.keycloak.testframework.ui.webdriver"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.keycloak.tests.oid4vc",
+            "pkg:org.keycloak.tests.oid4vc.abca"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.keycloak.testsuite.organization.admin",
+            "pkg:org.keycloak.testsuite.organization.broker"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.keycloak.testsuite.webauthn.pages",
+            "pkg:org.keycloak.testsuite.webauthn.utils"
+          ]
+        }
+      ]
+    },
+    "B2": {
+      "id": "B2",
+      "name": "package-dependency-density",
+      "label": "包依赖密度",
+      "domain": "B",
+      "direction": "interval",
+      "value": 11.354,
+      "numerator": 11513,
+      "denominator": 1014,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Package --all --field id,dependsOnPackageIds --snapshot fffee011-9543-4984-b282-9d20845be817",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot fffee011-9543-4984-b282-9d20845be817"
+      ]
+    },
+    "B1.frontend": {
+      "id": "B1.frontend",
+      "name": "circular-dependency-density",
+      "label": "循环依赖密度（前端）",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": 0.193315,
+      "numerator": 214,
+      "denominator": 1107,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Module --all --field id,importedModuleIds --snapshot fffee011-9543-4984-b282-9d20845be817",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Module --snapshot fffee011-9543-4984-b282-9d20845be817"
+      ],
+      "sccCount": 19
+    },
+    "B3": {
+      "id": "B3",
+      "name": "giant-class-ratio",
+      "label": "巨型类占比",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": 0.035642,
+      "numerator": 336,
+      "denominator": 9427,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Class --all --field id,lineCount --snapshot fffee011-9543-4984-b282-9d20845be817",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --where 'lineCount>500' --snapshot fffee011-9543-4984-b282-9d20845be817",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --snapshot fffee011-9543-4984-b282-9d20845be817"
+      ],
+      "threshold": "lineCount > 500",
+      "top": [
+        {
+          "lineCount": 3401,
+          "id": "cls:org.keycloak.tests.scim.tck.UserTest"
+        },
+        {
+          "lineCount": 3298,
+          "id": "cls:org.keycloak.testsuite.client.CIBATest"
+        },
+        {
+          "lineCount": 2919,
+          "id": "cls:org.keycloak.testsuite.authz.EntitlementAPITest"
+        },
+        {
+          "lineCount": 2693,
+          "id": "cls:org.keycloak.tests.user.profile.UserProfileTest"
+        },
+        {
+          "lineCount": 2340,
+          "id": "cls:org.keycloak.saml.common.DefaultPicketLinkLogger"
+        }
+      ],
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --where 'lineCount>500' --snapshot fffee011-9543-4984-b282-9d20845be817",
+        "serverCount": 336,
+        "match": true
+      }
+    },
+    "B4": {
+      "id": "B4",
+      "name": "component-coupling-degree",
+      "label": "组件耦合度",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": 0.3462,
+      "numerator": 45,
+      "denominator": 130,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Component --all --field id,referencedComponentIds,isGlobal --snapshot fffee011-9543-4984-b282-9d20845be817",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Component --snapshot fffee011-9543-4984-b282-9d20845be817"
+      ],
+      "globalRegistrationRatio": 0.0
+    },
+    "C2": {
+      "id": "C2",
+      "name": "cyclomatic-complexity-p90",
+      "label": "圈复杂度 P90",
+      "domain": "C",
+      "direction": "lower-better",
+      "value": 3,
+      "denominator": 70785,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot fffee011-9543-4984-b282-9d20845be817",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,lineCount,complexity --snapshot fffee011-9543-4984-b282-9d20845be817"
+      ],
+      "percentiles": {
+        "p25": 1,
+        "p50": 1,
+        "p75": 1,
+        "p90": 3
+      },
+      "mean": 1.6269,
+      "max": 99,
+      "top": [
+        {
+          "cyclomaticComplexity": 99,
+          "id": "mtd:org.keycloak.storage.datastore.DefaultExportImportManager.updateRealm(:RealmRepresentation:RealmModel)"
+        },
+        {
+          "cyclomaticComplexity": 95,
+          "id": "mtd:org.keycloak.storage.datastore.DefaultExportImportManager.importRealm(:RealmRepresentation:RealmModel:Runnable)"
+        },
+        {
+          "cyclomaticComplexity": 51,
+          "id": "mtd:org.keycloak.broker.saml.SAMLEndpoint$Binding.handleLoginResponse(:String:SAMLDocumentHolder:ResponseType:String:String)"
+        },
+        {
+          "cyclomaticComplexity": 48,
+          "id": "mtd:org.keycloak.client.admin.cli.commands.AbstractRequestCmd.process"
+        },
+        {
+          "cyclomaticComplexity": 47,
+          "id": "mtd:org.keycloak.services.clientregistration.oidc.DescriptionConverter.toInternal(:KeycloakSession:OIDCClientRepresentation)"
+        }
+      ],
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot fffee011-9543-4984-b282-9d20845be817",
+        "serverCount": 70785,
+        "match": true
+      }
+    },
+    "C3": {
+      "id": "C3",
+      "name": "test-method-ratio",
+      "label": "测试方法占比",
+      "domain": "C",
+      "direction": "higher-better",
+      "value": 0.157893,
+      "numerator": 12075,
+      "denominator": 76476,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'isTest=true' --snapshot fffee011-9543-4984-b282-9d20845be817",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot fffee011-9543-4984-b282-9d20845be817",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,isTest,testType --snapshot fffee011-9543-4984-b282-9d20845be817"
+      ],
+      "testTypes": {
+        "UnitTest": 11978,
+        "IntegrationTest": 97
+      },
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'isTest=true' --snapshot fffee011-9543-4984-b282-9d20845be817",
+        "serverCount": 12075,
+        "match": true
+      }
+    },
+    "C4": {
+      "id": "C4",
+      "name": "giant-method-ratio",
+      "label": "巨型方法占比",
+      "domain": "C",
+      "direction": "lower-better",
+      "value": 0.007283,
+      "numerator": 518,
+      "denominator": 71127,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount>80' --snapshot fffee011-9543-4984-b282-9d20845be817",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount=0' --snapshot fffee011-9543-4984-b282-9d20845be817",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot fffee011-9543-4984-b282-9d20845be817",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,lineCount --snapshot fffee011-9543-4984-b282-9d20845be817"
+      ],
+      "threshold": "lineCount > 80",
+      "excludedFromDenominator": {
+        "lineCountIsZero": 5349,
+        "lineCountIsNull": 0
+      },
+      "top": [
+        {
+          "lineCount": 677,
+          "id": "mtd:org.keycloak.tests.admin.IllegalAdminUpgradeTest.testRestEvaluation"
+        },
+        {
+          "lineCount": 360,
+          "id": "mtd:org.keycloak.testsuite.client.policies.ClientPoliciesExecutorTest.testSecureRequestObjectExecutor"
+        },
+        {
+          "lineCount": 359,
+          "id": "mtd:org.keycloak.tests.exportimport.ExportImportUtil.assertDataImportedInRealm(:Keycloak:RunOnServerClient:RealmRepresentation)"
+        },
+        {
+          "lineCount": 355,
+          "id": "mtd:org.keycloak.testsuite.exportimport.ExportImportUtil.assertDataImportedInRealm(:Keycloak:KeycloakTestingClient.Server:RealmRepresentation)"
+        },
+        {
+          "lineCount": 340,
+          "id": "mtd:org.keycloak.storage.datastore.DefaultExportImportManager.importRealm(:RealmRepresentation:RealmModel:Runnable)"
+        }
+      ],
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount>80' --snapshot fffee011-9543-4984-b282-9d20845be817",
+        "serverCount": 518,
+        "match": true
+      }
+    },
+    "D3": {
+      "id": "D3",
+      "name": "scale-profile",
+      "label": "规模画像",
+      "domain": "D",
+      "direction": "none",
+      "value": 91724,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" snapshot list --repo keycloak",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Repository --snapshot fffee011-9543-4984-b282-9d20845be817",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot fffee011-9543-4984-b282-9d20845be817",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --snapshot fffee011-9543-4984-b282-9d20845be817",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Interface --snapshot fffee011-9543-4984-b282-9d20845be817",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot fffee011-9543-4984-b282-9d20845be817",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Dependency --snapshot fffee011-9543-4984-b282-9d20845be817",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot fffee011-9543-4984-b282-9d20845be817",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Mapper --snapshot fffee011-9543-4984-b282-9d20845be817",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Module --snapshot fffee011-9543-4984-b282-9d20845be817",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Component --snapshot fffee011-9543-4984-b282-9d20845be817",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Function --snapshot fffee011-9543-4984-b282-9d20845be817",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Store --snapshot fffee011-9543-4984-b282-9d20845be817",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Route --snapshot fffee011-9543-4984-b282-9d20845be817",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot fffee011-9543-4984-b282-9d20845be817"
+      ],
+      "typeCounts": {
+        "Repository": 1,
+        "Package": 1014,
+        "Class": 9427,
+        "Interface": 1126,
+        "Method": 76476,
+        "Dependency": 435,
+        "Table": 0,
+        "Mapper": 0,
+        "Module": 1107,
+        "Component": 130,
+        "Function": 2006,
+        "Store": 0,
+        "Route": 0,
+        "ApiEndpoint": 2
+      },
+      "linkCount": 497305
+    }
+  },
+  "nullMetrics": {
+    "A1": {
+      "id": "A1",
+      "name": "full-chain-coverage",
+      "label": "全链路贯通率",
+      "domain": "A",
+      "direction": "higher-better",
+      "value": null,
+      "reason": "calls 传递闭包与 Method→Mapper 名字 join 未实现（过渡实现——待 ke checkup）",
+      "evidence": {
+        "apiEndpointCount": 2
+      }
+    },
+    "A3": {
+      "id": "A3",
+      "name": "orphan-table-rate",
+      "label": "孤儿表率",
+      "domain": "A",
+      "direction": "lower-better",
+      "value": null,
+      "reason": "无 Table 对象（分母为 0）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot fffee011-9543-4984-b282-9d20845be817"
+      ]
+    },
+    "A4": {
+      "id": "A4",
+      "name": "table-entity-mapping-rate",
+      "label": "表↔实体映射率",
+      "domain": "A",
+      "direction": "higher-better",
+      "value": null,
+      "reason": "无 Table 对象（分母为 0）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot fffee011-9543-4984-b282-9d20845be817"
+      ]
+    },
+    "C1": {
+      "id": "C1",
+      "name": "endpoint-table-hops",
+      "label": "端到端跳数",
+      "domain": "C",
+      "direction": "interval",
+      "value": null,
+      "reason": "依赖 A1 贯通链算法（过渡实现未含——待 ke checkup）",
+      "evidence": {
+        "apiEndpointCount": 2
+      }
+    },
+    "D1": {
+      "id": "D1",
+      "name": "framework-version-coverage",
+      "label": "技术栈版本覆盖率",
+      "domain": "D",
+      "direction": "higher-better",
+      "value": null,
+      "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Dependency --all --field id,name,version,scope --snapshot fffee011-9543-4984-b282-9d20845be817"
+      ],
+      "evidence": {
+        "total": 435,
+        "emptyVersion": 140,
+        "placeholder": 272,
+        "determinable": 23
+      }
+    },
+    "D2": {
+      "id": "D2",
+      "name": "dependency-homogeneity",
+      "label": "依赖同质度",
+      "domain": "D",
+      "direction": "none",
+      "value": null,
+      "reason": "cohort 级指标（依赖 cohort 众数集合——单体层不产出）",
+      "evidence": {
+        "dependencyCount": 435
+      }
+    },
+    "D4": {
+      "id": "D4",
+      "name": "evolution-trend",
+      "label": "年度演进趋势",
+      "domain": "D",
+      "direction": "none",
+      "value": null,
+      "reason": "单快照（首次导入——无时序）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" snapshot list --repo keycloak"
+      ],
+      "evidence": {
+        "completeSnapshotCount": 1
+      }
+    }
+  },
+  "dataQuality": {
+    "dq.null-complexity-ratio": {
+      "id": "dq.null-complexity-ratio",
+      "name": "null-complexity-ratio",
+      "label": "complexity 为 null 的方法占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": 0.074416,
+      "numerator": 5691,
+      "denominator": 76476,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot fffee011-9543-4984-b282-9d20845be817",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot fffee011-9543-4984-b282-9d20845be817"
+      ]
+    },
+    "dq.missing-version-ratio": {
+      "id": "dq.missing-version-ratio",
+      "name": "missing-version-ratio",
+      "label": "version 为空串的依赖占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": 0.321839,
+      "numerator": 140,
+      "denominator": 435,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Dependency --all --field id,name,version,scope --snapshot fffee011-9543-4984-b282-9d20845be817"
+      ],
+      "placeholderVersionCount": 272
+    },
+    "dq.ext-call-ratio": {
+      "id": "dq.ext-call-ratio",
+      "name": "ext-call-ratio",
+      "label": "ext: 虚拟调用过滤占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": null,
+      "reason": "不可观测（ext: 虚拟边在导入物化时已过滤——查询面天然免疫）"
+    }
+  }
+}
