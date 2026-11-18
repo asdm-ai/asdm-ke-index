@@ -1,0 +1,640 @@
+{
+  "schemaVersion": "draft-v1",
+  "implementation": "ke-index compute-metrics.py (transitional; to be superseded by ke checkup)",
+  "owner": "alibaba",
+  "repo": "druid",
+  "sourceId": "druid",
+  "snapshot": {
+    "snapshotId": "3124736e-602f-4dde-8694-dac2bf2cc4c3",
+    "status": "complete",
+    "sourceVersion": "head",
+    "objectCount": 41208,
+    "linkCount": 234102,
+    "completedAt": "2026-11-18T00:21:28.211Z"
+  },
+  "cliVersion": "0.3.5",
+  "metrics": {
+    "A3": {
+      "id": "A3",
+      "name": "orphan-table-rate",
+      "label": "孤儿表率",
+      "domain": "A",
+      "direction": "lower-better",
+      "value": 0.9375,
+      "numerator": 105,
+      "denominator": 112,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Table --all --field id,name,matchedEntityClass --snapshot 3124736e-602f-4dde-8694-dac2bf2cc4c3",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Mapper --all --field id,namespace,mappedTableIds --snapshot 3124736e-602f-4dde-8694-dac2bf2cc4c3",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot 3124736e-602f-4dde-8694-dac2bf2cc4c3"
+      ]
+    },
+    "A4": {
+      "id": "A4",
+      "name": "table-entity-mapping-rate",
+      "label": "表↔实体映射率",
+      "domain": "A",
+      "direction": "higher-better",
+      "value": 0.0625,
+      "numerator": 7,
+      "denominator": 112,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Table --all --field id,name,matchedEntityClass --snapshot 3124736e-602f-4dde-8694-dac2bf2cc4c3",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Mapper --all --field id,namespace,mappedTableIds --snapshot 3124736e-602f-4dde-8694-dac2bf2cc4c3",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot 3124736e-602f-4dde-8694-dac2bf2cc4c3"
+      ],
+      "evidence": {
+        "mapperEdgeOnly": 0,
+        "entityClassOnly": 7,
+        "both": 0
+      }
+    },
+    "B1.backend": {
+      "id": "B1.backend",
+      "name": "circular-dependency-density",
+      "label": "循环依赖密度（后端）",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": 0.42233,
+      "numerator": 174,
+      "denominator": 412,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Package --all --field id,dependsOnPackageIds --snapshot 3124736e-602f-4dde-8694-dac2bf2cc4c3",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot 3124736e-602f-4dde-8694-dac2bf2cc4c3"
+      ],
+      "sccCount": 4,
+      "sccs": [
+        {
+          "size": 166,
+          "members": [
+            "pkg:com.alibaba.druid",
+            "pkg:com.alibaba.druid.filter",
+            "pkg:com.alibaba.druid.filter.stat",
+            "pkg:com.alibaba.druid.mock",
+            "pkg:com.alibaba.druid.mock.handler",
+            "pkg:com.alibaba.druid.pool",
+            "pkg:com.alibaba.druid.pool.vendor",
+            "pkg:com.alibaba.druid.proxy",
+            "pkg:com.alibaba.druid.proxy.jdbc",
+            "pkg:com.alibaba.druid.sql",
+            "pkg:com.alibaba.druid.sql.ast",
+            "pkg:com.alibaba.druid.sql.ast.expr",
+            "pkg:com.alibaba.druid.sql.ast.statement",
+            "pkg:com.alibaba.druid.sql.builder",
+            "pkg:com.alibaba.druid.sql.builder.impl",
+            "pkg:com.alibaba.druid.sql.dialect.athena",
+            "pkg:com.alibaba.druid.sql.dialect.athena.ast",
+            "pkg:com.alibaba.druid.sql.dialect.athena.ast.stmt",
+            "pkg:com.alibaba.druid.sql.dialect.athena.parser",
+            "pkg:com.alibaba.druid.sql.dialect.athena.visitor",
+            "pkg:com.alibaba.druid.sql.dialect.bigquery",
+            "pkg:com.alibaba.druid.sql.dialect.bigquery.ast",
+            "pkg:com.alibaba.druid.sql.dialect.bigquery.parser",
+            "pkg:com.alibaba.druid.sql.dialect.bigquery.visitor",
+            "pkg:com.alibaba.druid.sql.dialect.blink",
+            "pkg:com.alibaba.druid.sql.dialect.blink.ast",
+            "pkg:com.alibaba.druid.sql.dialect.blink.parser",
+            "pkg:com.alibaba.druid.sql.dialect.blink.vsitor",
+            "pkg:com.alibaba.druid.sql.dialect.clickhouse",
+            "pkg:com.alibaba.druid.sql.dialect.clickhouse.ast",
+            "pkg:com.alibaba.druid.sql.dialect.clickhouse.parser",
+            "pkg:com.alibaba.druid.sql.dialect.clickhouse.visitor",
+            "pkg:com.alibaba.druid.sql.dialect.databricks",
+            "pkg:com.alibaba.druid.sql.dialect.databricks.parser",
+            "pkg:com.alibaba.druid.sql.dialect.databricks.visitor",
+            "pkg:com.alibaba.druid.sql.dialect.db2",
+            "pkg:com.alibaba.druid.sql.dialect.db2.ast",
+            "pkg:com.alibaba.druid.sql.dialect.db2.ast.stmt",
+            "pkg:com.alibaba.druid.sql.dialect.db2.parser",
+            "pkg:com.alibaba.druid.sql.dialect.db2.visitor",
+            "pkg:com.alibaba.druid.sql.dialect.dm",
+            "pkg:com.alibaba.druid.sql.dialect.dm.ast",
+            "pkg:com.alibaba.druid.sql.dialect.dm.ast.stmt",
+            "pkg:com.alibaba.druid.sql.dialect.dm.parser",
+            "pkg:com.alibaba.druid.sql.dialect.dm.visitor",
+            "pkg:com.alibaba.druid.sql.dialect.doris",
+            "pkg:com.alibaba.druid.sql.dialect.doris.ast",
+            "pkg:com.alibaba.druid.sql.dialect.doris.parser",
+            "pkg:com.alibaba.druid.sql.dialect.doris.visitor",
+            "pkg:com.alibaba.druid.sql.dialect.gaussdb",
+            "pkg:com.alibaba.druid.sql.dialect.gaussdb.ast",
+            "pkg:com.alibaba.druid.sql.dialect.gaussdb.ast.stmt",
+            "pkg:com.alibaba.druid.sql.dialect.gaussdb.parser",
+            "pkg:com.alibaba.druid.sql.dialect.gaussdb.visitor",
+            "pkg:com.alibaba.druid.sql.dialect.h2",
+            "pkg:com.alibaba.druid.sql.dialect.h2.parser",
+            "pkg:com.alibaba.druid.sql.dialect.h2.visitor",
+            "pkg:com.alibaba.druid.sql.dialect.hive",
+            "pkg:com.alibaba.druid.sql.dialect.hive.ast",
+            "pkg:com.alibaba.druid.sql.dialect.hive.parser",
+            "pkg:com.alibaba.druid.sql.dialect.hive.stmt",
+            "pkg:com.alibaba.druid.sql.dialect.hive.visitor",
+            "pkg:com.alibaba.druid.sql.dialect.hologres",
+            "pkg:com.alibaba.druid.sql.dialect.hologres.parser",
+            "pkg:com.alibaba.druid.sql.dialect.hologres.visitor",
+            "pkg:com.alibaba.druid.sql.dialect.impala",
+            "pkg:com.alibaba.druid.sql.dialect.impala.ast",
+            "pkg:com.alibaba.druid.sql.dialect.impala.parser",
+            "pkg:com.alibaba.druid.sql.dialect.impala.stmt",
+            "pkg:com.alibaba.druid.sql.dialect.impala.visitor",
+            "pkg:com.alibaba.druid.sql.dialect.informix",
+            "pkg:com.alibaba.druid.sql.dialect.informix.parser",
+            "pkg:com.alibaba.druid.sql.dialect.informix.visitor",
+            "pkg:com.alibaba.druid.sql.dialect.mysql",
+            "pkg:com.alibaba.druid.sql.dialect.mysql.ast",
+            "pkg:com.alibaba.druid.sql.dialect.mysql.ast.clause",
+            "pkg:com.alibaba.druid.sql.dialect.mysql.ast.expr",
+            "pkg:com.alibaba.druid.sql.dialect.mysql.ast.statement",
+            "pkg:com.alibaba.druid.sql.dialect.mysql.parser",
+            "pkg:com.alibaba.druid.sql.dialect.mysql.visitor",
+            "pkg:com.alibaba.druid.sql.dialect.odps",
+            "pkg:com.alibaba.druid.sql.dialect.odps.ast",
+            "pkg:com.alibaba.druid.sql.dialect.odps.parser",
+            "pkg:com.alibaba.druid.sql.dialect.odps.visitor",
+            "pkg:com.alibaba.druid.sql.dialect.oracle",
+            "pkg:com.alibaba.druid.sql.dialect.oracle.ast",
+            "pkg:com.alibaba.druid.sql.dialect.oracle.ast.clause",
+            "pkg:com.alibaba.druid.sql.dialect.oracle.ast.expr",
+            "pkg:com.alibaba.druid.sql.dialect.oracle.ast.stmt",
+            "pkg:com.alibaba.druid.sql.dialect.oracle.parser",
+            "pkg:com.alibaba.druid.sql.dialect.oracle.visitor",
+            "pkg:com.alibaba.druid.sql.dialect.oscar",
+            "pkg:com.alibaba.druid.sql.dialect.oscar.ast",
+            "pkg:com.alibaba.druid.sql.dialect.oscar.ast.stmt",
+            "pkg:com.alibaba.druid.sql.dialect.oscar.parser",
+            "pkg:com.alibaba.druid.sql.dialect.oscar.visitor",
+            "pkg:com.alibaba.druid.sql.dialect.phoenix",
+            "pkg:com.alibaba.druid.sql.dialect.phoenix.parser",
+            "pkg:com.alibaba.druid.sql.dialect.phoenix.visitor",
+            "pkg:com.alibaba.druid.sql.dialect.postgresql",
+            "pkg:com.alibaba.druid.sql.dialect.postgresql.ast",
+            "pkg:com.alibaba.druid.sql.dialect.postgresql.ast.expr",
+            "pkg:com.alibaba.druid.sql.dialect.postgresql.ast.stmt",
+            "pkg:com.alibaba.druid.sql.dialect.postgresql.parser",
+            "pkg:com.alibaba.druid.sql.dialect.postgresql.visitor",
+            "pkg:com.alibaba.druid.sql.dialect.presto",
+            "pkg:com.alibaba.druid.sql.dialect.presto.ast",
+            "pkg:com.alibaba.druid.sql.dialect.presto.ast.stmt",
+            "pkg:com.alibaba.druid.sql.dialect.presto.parser",
+            "pkg:com.alibaba.druid.sql.dialect.presto.visitor",
+            "pkg:com.alibaba.druid.sql.dialect.redshift",
+            "pkg:com.alibaba.druid.sql.dialect.redshift.parser",
+            "pkg:com.alibaba.druid.sql.dialect.redshift.stmt",
+            "pkg:com.alibaba.druid.sql.dialect.redshift.visitor",
+            "pkg:com.alibaba.druid.sql.dialect.snowflake",
+            "pkg:com.alibaba.druid.sql.dialect.spark",
+            "pkg:com.alibaba.druid.sql.dialect.spark.ast",
+            "pkg:com.alibaba.druid.sql.dialect.spark.ast.stmt",
+            "pkg:com.alibaba.druid.sql.dialect.spark.parser",
+            "pkg:com.alibaba.druid.sql.dialect.spark.visitor",
+            "pkg:com.alibaba.druid.sql.dialect.sqlite",
+            "pkg:com.alibaba.druid.sql.dialect.sqlite.parser",
+            "pkg:com.alibaba.druid.sql.dialect.sqlite.visitor",
+            "pkg:com.alibaba.druid.sql.dialect.sqlserver",
+            "pkg:com.alibaba.druid.sql.dialect.sqlserver.ast",
+            "pkg:com.alibaba.druid.sql.dialect.sqlserver.ast.expr",
+            "pkg:com.alibaba.druid.sql.dialect.sqlserver.ast.stmt",
+            "pkg:com.alibaba.druid.sql.dialect.sqlserver.parser",
+            "pkg:com.alibaba.druid.sql.dialect.sqlserver.visitor",
+            "pkg:com.alibaba.druid.sql.dialect.starrocks",
+            "pkg:com.alibaba.druid.sql.dialect.starrocks.ast",
+            "pkg:com.alibaba.druid.sql.dialect.starrocks.ast.statement",
+            "pkg:com.alibaba.druid.sql.dialect.starrocks.parser",
+            "pkg:com.alibaba.druid.sql.dialect.starrocks.visitor",
+            "pkg:com.alibaba.druid.sql.dialect.supersql",
+            "pkg:com.alibaba.druid.sql.dialect.supersql.parser",
+            "pkg:com.alibaba.druid.sql.dialect.supersql.visitor",
+            "pkg:com.alibaba.druid.sql.dialect.synapse",
+            "pkg:com.alibaba.druid.sql.dialect.synapse.ast.stmt",
+            "pkg:com.alibaba.druid.sql.dialect.synapse.parser",
+            "pkg:com.alibaba.druid.sql.dialect.synapse.visitor",
+            "pkg:com.alibaba.druid.sql.dialect.teradata",
+            "pkg:com.alibaba.druid.sql.dialect.teradata.ast",
+            "pkg:com.alibaba.druid.sql.dialect.teradata.parser",
+            "pkg:com.alibaba.druid.sql.dialect.teradata.visitor",
+            "pkg:com.alibaba.druid.sql.dialect.transact.ast",
+            "pkg:com.alibaba.druid.sql.parser",
+            "pkg:com.alibaba.druid.sql.repository",
+            "pkg:com.alibaba.druid.sql.template",
+            "pkg:com.alibaba.druid.sql.test",
+            "pkg:com.alibaba.druid.sql.testutil",
+            "pkg:com.alibaba.druid.sql.visitor",
+            "pkg:com.alibaba.druid.sql.visitor.functions",
+            "pkg:com.alibaba.druid.stat",
+            "pkg:com.alibaba.druid.stat.spring",
+            "pkg:com.alibaba.druid.support.http.stat",
+            "pkg:com.alibaba.druid.support.json",
+            "pkg:com.alibaba.druid.support.spring.stat",
+            "pkg:com.alibaba.druid.support.spring.stat.annotation",
+            "pkg:com.alibaba.druid.util",
+            "pkg:com.alibaba.druid.util.jdbc",
+            "pkg:com.alibaba.druid.wall",
+            "pkg:com.alibaba.druid.wall.spi",
+            "pkg:com.alibaba.druid.wall.violation",
+            "pkg:com.mchange.v2.c3p0",
+            "pkg:org.apache.commons.dbcp"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:com.alibaba.druid.pool.ha",
+            "pkg:com.alibaba.druid.pool.ha.node",
+            "pkg:com.alibaba.druid.pool.ha.selector"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:com.alibaba.druid.support.http",
+            "pkg:com.alibaba.druid.support.monitor",
+            "pkg:com.alibaba.druid.support.monitor.dao"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:com.alibaba.druid.benckmark.proxy",
+            "pkg:com.alibaba.druid.benckmark.proxy.sqlcase"
+          ]
+        }
+      ]
+    },
+    "B2": {
+      "id": "B2",
+      "name": "package-dependency-density",
+      "label": "包依赖密度",
+      "domain": "B",
+      "direction": "interval",
+      "value": 5.733,
+      "numerator": 2362,
+      "denominator": 412,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Package --all --field id,dependsOnPackageIds --snapshot 3124736e-602f-4dde-8694-dac2bf2cc4c3",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot 3124736e-602f-4dde-8694-dac2bf2cc4c3"
+      ]
+    },
+    "B1.frontend": {
+      "id": "B1.frontend",
+      "name": "circular-dependency-density",
+      "label": "循环依赖密度（前端）",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": 0.0,
+      "numerator": 0,
+      "denominator": 10,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Module --all --field id,importedModuleIds --snapshot 3124736e-602f-4dde-8694-dac2bf2cc4c3",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Module --snapshot 3124736e-602f-4dde-8694-dac2bf2cc4c3"
+      ],
+      "sccCount": 0
+    },
+    "B3": {
+      "id": "B3",
+      "name": "giant-class-ratio",
+      "label": "巨型类占比",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": 0.021739,
+      "numerator": 119,
+      "denominator": 5474,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Class --all --field id,lineCount --snapshot 3124736e-602f-4dde-8694-dac2bf2cc4c3",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --where 'lineCount>500' --snapshot 3124736e-602f-4dde-8694-dac2bf2cc4c3",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --snapshot 3124736e-602f-4dde-8694-dac2bf2cc4c3"
+      ],
+      "threshold": "lineCount > 500",
+      "top": [
+        {
+          "lineCount": 12470,
+          "id": "cls:com.alibaba.druid.sql.visitor.SQLASTOutputVisitor"
+        },
+        {
+          "lineCount": 9374,
+          "id": "cls:com.alibaba.druid.sql.dialect.mysql.parser.MySqlStatementParser"
+        },
+        {
+          "lineCount": 7935,
+          "id": "cls:com.alibaba.druid.sql.parser.SQLStatementParser"
+        },
+        {
+          "lineCount": 6545,
+          "id": "cls:com.alibaba.druid.sql.parser.SQLExprParser"
+        },
+        {
+          "lineCount": 5682,
+          "id": "cls:com.alibaba.druid.sql.dialect.mysql.visitor.MySqlOutputVisitor"
+        }
+      ],
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --where 'lineCount>500' --snapshot 3124736e-602f-4dde-8694-dac2bf2cc4c3",
+        "serverCount": 119,
+        "match": true
+      }
+    },
+    "C2": {
+      "id": "C2",
+      "name": "cyclomatic-complexity-p90",
+      "label": "圈复杂度 P90",
+      "domain": "C",
+      "direction": "lower-better",
+      "value": 3,
+      "denominator": 31229,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot 3124736e-602f-4dde-8694-dac2bf2cc4c3",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,lineCount,complexity --snapshot 3124736e-602f-4dde-8694-dac2bf2cc4c3"
+      ],
+      "percentiles": {
+        "p25": 1,
+        "p50": 1,
+        "p75": 2,
+        "p90": 3
+      },
+      "mean": 2.1827,
+      "max": 278,
+      "top": [
+        {
+          "cyclomaticComplexity": 278,
+          "id": "mtd:com.alibaba.druid.sql.dialect.mysql.parser.MySqlStatementParser.parseShow"
+        },
+        {
+          "cyclomaticComplexity": 207,
+          "id": "mtd:com.alibaba.druid.sql.parser.SQLExprParser.primary"
+        },
+        {
+          "cyclomaticComplexity": 177,
+          "id": "mtd:com.alibaba.druid.sql.parser.SQLSelectParser.parseTableSourceRest(:SQLTableSource)"
+        },
+        {
+          "cyclomaticComplexity": 157,
+          "id": "mtd:com.alibaba.druid.sql.dialect.mysql.parser.MySqlStatementParser.parseStatementListDialect(:List<SQLStatement>)"
+        },
+        {
+          "cyclomaticComplexity": 155,
+          "id": "mtd:com.alibaba.druid.sql.dialect.odps.parser.OdpsCreateTableParser.parseCreateTable"
+        }
+      ],
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot 3124736e-602f-4dde-8694-dac2bf2cc4c3",
+        "serverCount": 31229,
+        "match": true
+      }
+    },
+    "C3": {
+      "id": "C3",
+      "name": "test-method-ratio",
+      "label": "测试方法占比",
+      "domain": "C",
+      "direction": "higher-better",
+      "value": 0.136989,
+      "numerator": 4776,
+      "denominator": 34864,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'isTest=true' --snapshot 3124736e-602f-4dde-8694-dac2bf2cc4c3",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot 3124736e-602f-4dde-8694-dac2bf2cc4c3",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,isTest,testType --snapshot 3124736e-602f-4dde-8694-dac2bf2cc4c3"
+      ],
+      "testTypes": {
+        "UnitTest": 4776
+      },
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'isTest=true' --snapshot 3124736e-602f-4dde-8694-dac2bf2cc4c3",
+        "serverCount": 4776,
+        "match": true
+      }
+    },
+    "C4": {
+      "id": "C4",
+      "name": "giant-method-ratio",
+      "label": "巨型方法占比",
+      "domain": "C",
+      "direction": "lower-better",
+      "value": 0.016557,
+      "numerator": 518,
+      "denominator": 31286,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount>80' --snapshot 3124736e-602f-4dde-8694-dac2bf2cc4c3",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount=0' --snapshot 3124736e-602f-4dde-8694-dac2bf2cc4c3",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot 3124736e-602f-4dde-8694-dac2bf2cc4c3",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,lineCount --snapshot 3124736e-602f-4dde-8694-dac2bf2cc4c3"
+      ],
+      "threshold": "lineCount > 80",
+      "excludedFromDenominator": {
+        "lineCountIsZero": 3578,
+        "lineCountIsNull": 0
+      },
+      "top": [
+        {
+          "lineCount": 1650,
+          "id": "mtd:com.alibaba.druid.bvt.sql.oracle.select.OracleSelectTest131.test_0"
+        },
+        {
+          "lineCount": 1509,
+          "id": "mtd:com.alibaba.druid.sql.dialect.mysql.parser.MySqlStatementParser.parseShow"
+        },
+        {
+          "lineCount": 931,
+          "id": "mtd:com.alibaba.druid.bvt.sql.mysql.create.MySqlCreateTable_showColumns_repository_test.test_0"
+        },
+        {
+          "lineCount": 809,
+          "id": "mtd:com.alibaba.druid.bvt.proxy.JdbcFilterEventAdapterTest.test_filterEventAdapter"
+        },
+        {
+          "lineCount": 701,
+          "id": "mtd:com.alibaba.druid.sql.dialect.mysql.parser.MySqlStatementParser.parseAlterSpecification(:SQLAlterTableStatement)"
+        }
+      ],
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount>80' --snapshot 3124736e-602f-4dde-8694-dac2bf2cc4c3",
+        "serverCount": 518,
+        "match": true
+      }
+    },
+    "D3": {
+      "id": "D3",
+      "name": "scale-profile",
+      "label": "规模画像",
+      "domain": "D",
+      "direction": "none",
+      "value": 41208,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" snapshot list --repo druid",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Repository --snapshot 3124736e-602f-4dde-8694-dac2bf2cc4c3",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot 3124736e-602f-4dde-8694-dac2bf2cc4c3",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --snapshot 3124736e-602f-4dde-8694-dac2bf2cc4c3",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Interface --snapshot 3124736e-602f-4dde-8694-dac2bf2cc4c3",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot 3124736e-602f-4dde-8694-dac2bf2cc4c3",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Dependency --snapshot 3124736e-602f-4dde-8694-dac2bf2cc4c3",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot 3124736e-602f-4dde-8694-dac2bf2cc4c3",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Mapper --snapshot 3124736e-602f-4dde-8694-dac2bf2cc4c3",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Module --snapshot 3124736e-602f-4dde-8694-dac2bf2cc4c3",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Component --snapshot 3124736e-602f-4dde-8694-dac2bf2cc4c3",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Function --snapshot 3124736e-602f-4dde-8694-dac2bf2cc4c3",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Store --snapshot 3124736e-602f-4dde-8694-dac2bf2cc4c3",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Route --snapshot 3124736e-602f-4dde-8694-dac2bf2cc4c3",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot 3124736e-602f-4dde-8694-dac2bf2cc4c3"
+      ],
+      "typeCounts": {
+        "Repository": 1,
+        "Package": 412,
+        "Class": 5474,
+        "Interface": 215,
+        "Method": 34864,
+        "Dependency": 96,
+        "Table": 112,
+        "Mapper": 0,
+        "Module": 10,
+        "Component": 0,
+        "Function": 24,
+        "Store": 0,
+        "Route": 0,
+        "ApiEndpoint": 0
+      },
+      "linkCount": 234102
+    }
+  },
+  "nullMetrics": {
+    "A1": {
+      "id": "A1",
+      "name": "full-chain-coverage",
+      "label": "全链路贯通率",
+      "domain": "A",
+      "direction": "higher-better",
+      "value": null,
+      "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot 3124736e-602f-4dde-8694-dac2bf2cc4c3"
+      ],
+      "evidence": {
+        "apiEndpointCount": 0
+      }
+    },
+    "A2": {
+      "id": "A2",
+      "name": "api-backend-breakrate",
+      "label": "前后端断链率",
+      "domain": "A",
+      "direction": "lower-better",
+      "value": null,
+      "reason": "无 ApiEndpoint 对象（纯后端仓库——按口径置空）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot 3124736e-602f-4dde-8694-dac2bf2cc4c3"
+      ],
+      "evidence": {
+        "apiEndpointCount": 0
+      }
+    },
+    "B4": {
+      "id": "B4",
+      "name": "component-coupling-degree",
+      "label": "组件耦合度",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": null,
+      "reason": "无 Component 对象（纯后端仓库——按口径置空）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Component --snapshot 3124736e-602f-4dde-8694-dac2bf2cc4c3"
+      ],
+      "evidence": {
+        "componentCount": 0
+      }
+    },
+    "C1": {
+      "id": "C1",
+      "name": "endpoint-table-hops",
+      "label": "端到端跳数",
+      "domain": "C",
+      "direction": "interval",
+      "value": null,
+      "reason": "无 ApiEndpoint 对象（贯通链分母为 0）",
+      "evidence": {
+        "apiEndpointCount": 0
+      }
+    },
+    "D1": {
+      "id": "D1",
+      "name": "framework-version-coverage",
+      "label": "技术栈版本覆盖率",
+      "domain": "D",
+      "direction": "higher-better",
+      "value": null,
+      "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Dependency --all --field id,name,version,scope --snapshot 3124736e-602f-4dde-8694-dac2bf2cc4c3"
+      ],
+      "evidence": {
+        "total": 96,
+        "emptyVersion": 16,
+        "placeholder": 20,
+        "determinable": 60
+      }
+    },
+    "D2": {
+      "id": "D2",
+      "name": "dependency-homogeneity",
+      "label": "依赖同质度",
+      "domain": "D",
+      "direction": "none",
+      "value": null,
+      "reason": "cohort 级指标（依赖 cohort 众数集合——单体层不产出）",
+      "evidence": {
+        "dependencyCount": 96
+      }
+    },
+    "D4": {
+      "id": "D4",
+      "name": "evolution-trend",
+      "label": "年度演进趋势",
+      "domain": "D",
+      "direction": "none",
+      "value": null,
+      "reason": "单快照（首次导入——无时序）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" snapshot list --repo druid"
+      ],
+      "evidence": {
+        "completeSnapshotCount": 1
+      }
+    }
+  },
+  "dataQuality": {
+    "dq.null-complexity-ratio": {
+      "id": "dq.null-complexity-ratio",
+      "name": "null-complexity-ratio",
+      "label": "complexity 为 null 的方法占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": 0.104262,
+      "numerator": 3635,
+      "denominator": 34864,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot 3124736e-602f-4dde-8694-dac2bf2cc4c3",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot 3124736e-602f-4dde-8694-dac2bf2cc4c3"
+      ]
+    },
+    "dq.missing-version-ratio": {
+      "id": "dq.missing-version-ratio",
+      "name": "missing-version-ratio",
+      "label": "version 为空串的依赖占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": 0.166667,
+      "numerator": 16,
+      "denominator": 96,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Dependency --all --field id,name,version,scope --snapshot 3124736e-602f-4dde-8694-dac2bf2cc4c3"
+      ],
+      "placeholderVersionCount": 20
+    },
+    "dq.ext-call-ratio": {
+      "id": "dq.ext-call-ratio",
+      "name": "ext-call-ratio",
+      "label": "ext: 虚拟调用过滤占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": null,
+      "reason": "不可观测（ext: 虚拟边在导入物化时已过滤——查询面天然免疫）"
+    }
+  }
+}
