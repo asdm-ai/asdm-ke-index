@@ -1,0 +1,2026 @@
+{
+  "schemaVersion": "draft-v1",
+  "implementation": "ke-index compute-metrics.py (transitional; to be superseded by ke checkup)",
+  "owner": "apache",
+  "repo": "shardingsphere",
+  "sourceId": "shardingsphere",
+  "snapshot": {
+    "snapshotId": "75152fdc-1043-40e8-9044-c963fef9ec2d",
+    "status": "complete",
+    "sourceVersion": "head",
+    "objectCount": 56015,
+    "linkCount": 444866,
+    "completedAt": "2026-11-18T00:06:41.289Z"
+  },
+  "cliVersion": "0.3.5",
+  "metrics": {
+    "A3": {
+      "id": "A3",
+      "name": "orphan-table-rate",
+      "label": "孤儿表率",
+      "domain": "A",
+      "direction": "lower-better",
+      "value": 0.980645,
+      "numerator": 152,
+      "denominator": 155,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Table --all --field id,name,matchedEntityClass --snapshot 75152fdc-1043-40e8-9044-c963fef9ec2d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Mapper --all --field id,namespace,mappedTableIds --snapshot 75152fdc-1043-40e8-9044-c963fef9ec2d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot 75152fdc-1043-40e8-9044-c963fef9ec2d"
+      ]
+    },
+    "A4": {
+      "id": "A4",
+      "name": "table-entity-mapping-rate",
+      "label": "表↔实体映射率",
+      "domain": "A",
+      "direction": "higher-better",
+      "value": 0.019355,
+      "numerator": 3,
+      "denominator": 155,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Table --all --field id,name,matchedEntityClass --snapshot 75152fdc-1043-40e8-9044-c963fef9ec2d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Mapper --all --field id,namespace,mappedTableIds --snapshot 75152fdc-1043-40e8-9044-c963fef9ec2d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot 75152fdc-1043-40e8-9044-c963fef9ec2d"
+      ],
+      "evidence": {
+        "mapperEdgeOnly": 0,
+        "entityClassOnly": 3,
+        "both": 0
+      }
+    },
+    "B1.backend": {
+      "id": "B1.backend",
+      "name": "circular-dependency-density",
+      "label": "循环依赖密度（后端）",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": 0.299303,
+      "numerator": 859,
+      "denominator": 2870,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Package --all --field id,dependsOnPackageIds --snapshot 75152fdc-1043-40e8-9044-c963fef9ec2d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot 75152fdc-1043-40e8-9044-c963fef9ec2d"
+      ],
+      "sccCount": 144,
+      "sccs": [
+        {
+          "size": 179,
+          "members": [
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.segment.impl.assignment",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.segment.impl.backup",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.segment.impl.call",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.segment.impl.colocategroup",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.segment.impl.column",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.segment.impl.definition",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.segment.impl.dostatement",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.segment.impl.encryptkey",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.segment.impl.error",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.segment.impl.exec",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.segment.impl.expr",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.segment.impl.expr.complex",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.segment.impl.expr.simple",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.segment.impl.from",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.segment.impl.function",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.segment.impl.generic",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.segment.impl.having",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.segment.impl.hierarchical",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.segment.impl.index",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.segment.impl.insert",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.segment.impl.job",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.segment.impl.json",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.segment.impl.lock",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.segment.impl.model",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.segment.impl.orderby",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.segment.impl.orderby.item.impl",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.segment.impl.output",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.segment.impl.packages",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.segment.impl.partition",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.segment.impl.plsql",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.segment.impl.plugin",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.segment.impl.projection",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.segment.impl.projection.impl.aggregation",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.segment.impl.projection.impl.column",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.segment.impl.projection.impl.expression",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.segment.impl.projection.impl.shorthand",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.segment.impl.projection.impl.subquery",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.segment.impl.projection.impl.top",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.segment.impl.query",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.segment.impl.set",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.segment.impl.show",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.segment.impl.table",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.segment.impl.trigger",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.segment.impl.type",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.segment.impl.union",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.segment.impl.where",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.segment.impl.window",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.segment.impl.with",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.segment.impl.xml",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.segment.impl.xmlquery",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.dal",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.dal.dialect.doris",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.dal.dialect.doris.show",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.dal.dialect.mysql",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.dal.dialect.mysql.component",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.dal.dialect.mysql.index",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.dal.dialect.mysql.plugin",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.dal.dialect.mysql.replication.binlog",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.dal.dialect.mysql.replication.show",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.dal.dialect.mysql.resource",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.dal.dialect.mysql.show.character",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.dal.dialect.mysql.show.column",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.dal.dialect.mysql.show.database",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.dal.dialect.mysql.show.event",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.dal.dialect.mysql.show.function",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.dal.dialect.mysql.show.index",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.dal.dialect.mysql.show.privilege",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.dal.dialect.mysql.show.procedure",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.dal.dialect.mysql.show.table",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.dal.dialect.mysql.show.trigger",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.dal.dialect.mysql.show.variable",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.dal.dialect.mysql.table",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.dal.dialect.oracle",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.dal.dialect.postgresql",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.dal.standard",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.dcl.dialect.mysql",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.dcl.dialect.postgresql",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.dcl.dialect.sqlserver",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.dcl.standard",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ddl",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ddl.dialect.doris",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ddl.dialect.opengauss",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ddl.dialect.oracle",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ddl.dialect.oracle.cluster",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ddl.dialect.oracle.context",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ddl.dialect.oracle.database",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ddl.dialect.oracle.dimension",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ddl.dialect.oracle.diskgroup",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ddl.dialect.oracle.edition",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ddl.dialect.oracle.file",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ddl.dialect.oracle.flashback",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ddl.dialect.oracle.index",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ddl.dialect.oracle.java",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ddl.dialect.oracle.join",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ddl.dialect.oracle.library",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ddl.dialect.oracle.lockdown",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ddl.dialect.oracle.outline",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ddl.dialect.oracle.profile",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ddl.dialect.oracle.restore",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ddl.dialect.oracle.rollback",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ddl.dialect.oracle.statistics",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ddl.dialect.oracle.view",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ddl.dialect.oracle.zone",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ddl.dialect.postgresql",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ddl.dialect.postgresql.accessmethod",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ddl.dialect.postgresql.aggregate",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ddl.dialect.postgresql.cast",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ddl.dialect.postgresql.collation",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ddl.dialect.postgresql.conversion",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ddl.dialect.postgresql.event",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ddl.dialect.postgresql.extension",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ddl.dialect.postgresql.foreigndata",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ddl.dialect.postgresql.foreigntable",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ddl.dialect.postgresql.group",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ddl.dialect.postgresql.language",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ddl.dialect.postgresql.policy",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ddl.dialect.postgresql.publication",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ddl.dialect.postgresql.routine",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ddl.dialect.postgresql.rule",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ddl.dialect.postgresql.statistics",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ddl.dialect.postgresql.subscription",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ddl.dialect.postgresql.textsearch",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ddl.dialect.sqlserver.service",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ddl.dialect.sqlserver.statistics",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ddl.dialect.sqlserver.variable",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ddl.standard",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ddl.standard.alter",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ddl.standard.catalog",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ddl.standard.database",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ddl.standard.directory",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ddl.standard.domain",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ddl.standard.function",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ddl.standard.index",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ddl.standard.macro",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ddl.standard.operator",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ddl.standard.procedure",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ddl.standard.schema",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ddl.standard.sequence",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ddl.standard.server",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ddl.standard.synonym",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ddl.standard.table",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ddl.standard.tablespace",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ddl.standard.trigger",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ddl.standard.type",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ddl.standard.view",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.dml.dialect.doris",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.dml.dialect.mysql",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.dml.dialect.postgresql",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.dml.standard",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.plsql",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ral",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ral.cdc",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.ral.migration",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.rdl.resource",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.rdl.rule.encrypt",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.rdl.rule.mask",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.rdl.rule.readwritesplitting",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.rdl.rule.shadow",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.rdl.rule.sharding",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.rdl.rule.single",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.rl",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.rql.rule.authority",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.rql.rule.broadcast",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.rql.rule.encrypt",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.rql.rule.globalclock",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.rql.rule.mask",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.rql.rule.parser",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.rql.rule.readwritesplitting",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.rql.rule.shadow",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.rql.rule.sharding",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.rql.rule.single",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.rql.rule.transaction",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.rql.rule.translator",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.rql.storage.unit",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.rql.table",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.rul",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.statement.tcl"
+          ]
+        },
+        {
+          "size": 60,
+          "members": [
+            "pkg:org.apache.shardingsphere.data.pipeline.core.channel",
+            "pkg:org.apache.shardingsphere.data.pipeline.core.channel.memory",
+            "pkg:org.apache.shardingsphere.data.pipeline.core.checker",
+            "pkg:org.apache.shardingsphere.data.pipeline.core.consistencycheck",
+            "pkg:org.apache.shardingsphere.data.pipeline.core.consistencycheck.result",
+            "pkg:org.apache.shardingsphere.data.pipeline.core.consistencycheck.result.yaml",
+            "pkg:org.apache.shardingsphere.data.pipeline.core.consistencycheck.table",
+            "pkg:org.apache.shardingsphere.data.pipeline.core.consistencycheck.table.calculator",
+            "pkg:org.apache.shardingsphere.data.pipeline.core.context",
+            "pkg:org.apache.shardingsphere.data.pipeline.core.datasource",
+            "pkg:org.apache.shardingsphere.data.pipeline.core.exception.job",
+            "pkg:org.apache.shardingsphere.data.pipeline.core.execute",
+            "pkg:org.apache.shardingsphere.data.pipeline.core.importer",
+            "pkg:org.apache.shardingsphere.data.pipeline.core.importer.sink.type",
+            "pkg:org.apache.shardingsphere.data.pipeline.core.ingest.dumper",
+            "pkg:org.apache.shardingsphere.data.pipeline.core.ingest.dumper.incremental",
+            "pkg:org.apache.shardingsphere.data.pipeline.core.ingest.dumper.inventory",
+            "pkg:org.apache.shardingsphere.data.pipeline.core.ingest.dumper.inventory.position",
+            "pkg:org.apache.shardingsphere.data.pipeline.core.ingest.dumper.inventory.position.type",
+            "pkg:org.apache.shardingsphere.data.pipeline.core.ingest.dumper.inventory.query.calculator",
+            "pkg:org.apache.shardingsphere.data.pipeline.core.job",
+            "pkg:org.apache.shardingsphere.data.pipeline.core.job.api",
+            "pkg:org.apache.shardingsphere.data.pipeline.core.job.engine",
+            "pkg:org.apache.shardingsphere.data.pipeline.core.job.executor",
+            "pkg:org.apache.shardingsphere.data.pipeline.core.job.id",
+            "pkg:org.apache.shardingsphere.data.pipeline.core.job.preparer",
+            "pkg:org.apache.shardingsphere.data.pipeline.core.job.progress",
+            "pkg:org.apache.shardingsphere.data.pipeline.core.job.progress.persist",
+            "pkg:org.apache.shardingsphere.data.pipeline.core.job.progress.yaml.swapper",
+            "pkg:org.apache.shardingsphere.data.pipeline.core.job.service",
+            "pkg:org.apache.shardingsphere.data.pipeline.core.job.type",
+            "pkg:org.apache.shardingsphere.data.pipeline.core.listener",
+            "pkg:org.apache.shardingsphere.data.pipeline.core.metadata",
+            "pkg:org.apache.shardingsphere.data.pipeline.core.metadata.loader",
+            "pkg:org.apache.shardingsphere.data.pipeline.core.metadata.node",
+            "pkg:org.apache.shardingsphere.data.pipeline.core.pojo",
+            "pkg:org.apache.shardingsphere.data.pipeline.core.preparer.datasource",
+            "pkg:org.apache.shardingsphere.data.pipeline.core.preparer.datasource.param",
+            "pkg:org.apache.shardingsphere.data.pipeline.core.preparer.incremental",
+            "pkg:org.apache.shardingsphere.data.pipeline.core.preparer.inventory.calculator",
+            "pkg:org.apache.shardingsphere.data.pipeline.core.preparer.inventory.calculator.position",
+            "pkg:org.apache.shardingsphere.data.pipeline.core.preparer.inventory.calculator.position.estimated",
+            "pkg:org.apache.shardingsphere.data.pipeline.core.preparer.inventory.calculator.position.exact",
+            "pkg:org.apache.shardingsphere.data.pipeline.core.preparer.inventory.splitter",
+            "pkg:org.apache.shardingsphere.data.pipeline.core.registrycenter.repository",
+            "pkg:org.apache.shardingsphere.data.pipeline.core.registrycenter.repository.item",
+            "pkg:org.apache.shardingsphere.data.pipeline.core.registrycenter.repository.job",
+            "pkg:org.apache.shardingsphere.data.pipeline.core.registrycenter.repository.metadata",
+            "pkg:org.apache.shardingsphere.data.pipeline.core.task",
+            "pkg:org.apache.shardingsphere.data.pipeline.core.task.runner",
+            "pkg:org.apache.shardingsphere.data.pipeline.core.util",
+            "pkg:org.apache.shardingsphere.data.pipeline.scenario.migration",
+            "pkg:org.apache.shardingsphere.data.pipeline.scenario.migration.check.consistency",
+            "pkg:org.apache.shardingsphere.data.pipeline.scenario.migration.config",
+            "pkg:org.apache.shardingsphere.data.pipeline.scenario.migration.config.yaml.swapper",
+            "pkg:org.apache.shardingsphere.data.pipeline.scenario.migration.context",
+            "pkg:org.apache.shardingsphere.data.pipeline.scenario.migration.ingest.dumper",
+            "pkg:org.apache.shardingsphere.data.pipeline.scenario.migration.preparer",
+            "pkg:org.apache.shardingsphere.test.it.data.pipeline.core.fixture.algorithm",
+            "pkg:org.apache.shardingsphere.test.it.data.pipeline.core.util"
+          ]
+        },
+        {
+          "size": 54,
+          "members": [
+            "pkg:org.apache.shardingsphere.sql.parser.statement.core.extractor",
+            "pkg:org.apache.shardingsphere.sql.parser.statement.core.segment.dal",
+            "pkg:org.apache.shardingsphere.sql.parser.statement.core.segment.ddl.column",
+            "pkg:org.apache.shardingsphere.sql.parser.statement.core.segment.ddl.column.alter",
+            "pkg:org.apache.shardingsphere.sql.parser.statement.core.segment.ddl.column.position",
+            "pkg:org.apache.shardingsphere.sql.parser.statement.core.segment.ddl.constraint",
+            "pkg:org.apache.shardingsphere.sql.parser.statement.core.segment.ddl.constraint.alter",
+            "pkg:org.apache.shardingsphere.sql.parser.statement.core.segment.ddl.cursor",
+            "pkg:org.apache.shardingsphere.sql.parser.statement.core.segment.ddl.distribution",
+            "pkg:org.apache.shardingsphere.sql.parser.statement.core.segment.ddl.index",
+            "pkg:org.apache.shardingsphere.sql.parser.statement.core.segment.ddl.packages",
+            "pkg:org.apache.shardingsphere.sql.parser.statement.core.segment.ddl.partition",
+            "pkg:org.apache.shardingsphere.sql.parser.statement.core.segment.ddl.rollup",
+            "pkg:org.apache.shardingsphere.sql.parser.statement.core.segment.ddl.routine",
+            "pkg:org.apache.shardingsphere.sql.parser.statement.core.segment.ddl.table",
+            "pkg:org.apache.shardingsphere.sql.parser.statement.core.segment.ddl.view",
+            "pkg:org.apache.shardingsphere.sql.parser.statement.core.segment.dml",
+            "pkg:org.apache.shardingsphere.sql.parser.statement.core.segment.dml.assignment",
+            "pkg:org.apache.shardingsphere.sql.parser.statement.core.segment.dml.column",
+            "pkg:org.apache.shardingsphere.sql.parser.statement.core.segment.dml.combine",
+            "pkg:org.apache.shardingsphere.sql.parser.statement.core.segment.dml.datetime",
+            "pkg:org.apache.shardingsphere.sql.parser.statement.core.segment.dml.exec",
+            "pkg:org.apache.shardingsphere.sql.parser.statement.core.segment.dml.expr",
+            "pkg:org.apache.shardingsphere.sql.parser.statement.core.segment.dml.expr.complex",
+            "pkg:org.apache.shardingsphere.sql.parser.statement.core.segment.dml.expr.simple",
+            "pkg:org.apache.shardingsphere.sql.parser.statement.core.segment.dml.expr.subquery",
+            "pkg:org.apache.shardingsphere.sql.parser.statement.core.segment.dml.interval",
+            "pkg:org.apache.shardingsphere.sql.parser.statement.core.segment.dml.item",
+            "pkg:org.apache.shardingsphere.sql.parser.statement.core.segment.dml.join",
+            "pkg:org.apache.shardingsphere.sql.parser.statement.core.segment.dml.load",
+            "pkg:org.apache.shardingsphere.sql.parser.statement.core.segment.dml.merge",
+            "pkg:org.apache.shardingsphere.sql.parser.statement.core.segment.dml.multiset",
+            "pkg:org.apache.shardingsphere.sql.parser.statement.core.segment.dml.order",
+            "pkg:org.apache.shardingsphere.sql.parser.statement.core.segment.dml.order.item",
+            "pkg:org.apache.shardingsphere.sql.parser.statement.core.segment.dml.pagination",
+            "pkg:org.apache.shardingsphere.sql.parser.statement.core.segment.dml.pagination.limit",
+            "pkg:org.apache.shardingsphere.sql.parser.statement.core.segment.dml.predicate",
+            "pkg:org.apache.shardingsphere.sql.parser.statement.core.segment.dml.table",
+            "pkg:org.apache.shardingsphere.sql.parser.statement.core.segment.dml.xml",
+            "pkg:org.apache.shardingsphere.sql.parser.statement.core.segment.generic",
+            "pkg:org.apache.shardingsphere.sql.parser.statement.core.segment.generic.bound",
+            "pkg:org.apache.shardingsphere.sql.parser.statement.core.segment.generic.match",
+            "pkg:org.apache.shardingsphere.sql.parser.statement.core.segment.generic.table",
+            "pkg:org.apache.shardingsphere.sql.parser.statement.core.segment.procedure",
+            "pkg:org.apache.shardingsphere.sql.parser.statement.core.statement",
+            "pkg:org.apache.shardingsphere.sql.parser.statement.core.statement.attribute.type",
+            "pkg:org.apache.shardingsphere.sql.parser.statement.core.statement.type.ddl",
+            "pkg:org.apache.shardingsphere.sql.parser.statement.core.statement.type.ddl.index",
+            "pkg:org.apache.shardingsphere.sql.parser.statement.core.statement.type.ddl.table",
+            "pkg:org.apache.shardingsphere.sql.parser.statement.core.statement.type.ddl.view",
+            "pkg:org.apache.shardingsphere.sql.parser.statement.core.statement.type.dml",
+            "pkg:org.apache.shardingsphere.sql.parser.statement.core.util",
+            "pkg:org.apache.shardingsphere.sql.parser.statement.core.value.identifier",
+            "pkg:org.apache.shardingsphere.sql.parser.statement.core.value.literal.impl"
+          ]
+        },
+        {
+          "size": 27,
+          "members": [
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.asserts.segment.assignment",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.asserts.segment.error",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.asserts.segment.expression",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.asserts.segment.groupby",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.asserts.segment.having",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.asserts.segment.hierarchical",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.asserts.segment.insert",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.asserts.segment.lock",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.asserts.segment.model",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.asserts.segment.orderby",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.asserts.segment.output",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.asserts.segment.prepare",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.asserts.segment.projection",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.asserts.segment.returning",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.asserts.segment.set",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.asserts.segment.table",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.asserts.segment.where",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.asserts.segment.window",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.asserts.segment.with",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.asserts.statement.dml",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.asserts.statement.dml.dialect.doris",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.asserts.statement.dml.dialect.mysql",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.asserts.statement.dml.dialect.mysql.type",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.asserts.statement.dml.dialect.postgresql",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.asserts.statement.dml.dialect.postgresql.type",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.asserts.statement.dml.standard",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.asserts.statement.dml.standard.type"
+          ]
+        },
+        {
+          "size": 25,
+          "members": [
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.asserts.statement",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.asserts.statement.dal",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.asserts.statement.dal.standard",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.asserts.statement.dal.standard.type",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.asserts.statement.ddl",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.asserts.statement.ddl.standard",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.asserts.statement.ddl.standard.type",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.asserts.statement.ral",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.asserts.statement.ral.type",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.asserts.statement.ral.type.pipeline",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.asserts.statement.ral.type.pipeline.cdc",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.asserts.statement.ral.type.pipeline.migration.query",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.asserts.statement.ral.type.pipeline.migration.update",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.asserts.statement.ral.type.queryable",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.asserts.statement.ral.type.updatable",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.asserts.statement.rdl",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.asserts.statement.rdl.alter",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.asserts.statement.rdl.alter.type",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.asserts.statement.rdl.create",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.asserts.statement.rdl.create.type",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.asserts.statement.rdl.drop",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.asserts.statement.rdl.drop.type",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.asserts.statement.rql",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.asserts.statement.rul",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.asserts.statement.rul.type"
+          ]
+        },
+        {
+          "size": 21,
+          "members": [
+            "pkg:org.apache.shardingsphere.proxy.backend.connector",
+            "pkg:org.apache.shardingsphere.proxy.backend.connector.jdbc.executor",
+            "pkg:org.apache.shardingsphere.proxy.backend.connector.jdbc.executor.callback",
+            "pkg:org.apache.shardingsphere.proxy.backend.connector.jdbc.executor.callback.impl",
+            "pkg:org.apache.shardingsphere.proxy.backend.connector.jdbc.statement",
+            "pkg:org.apache.shardingsphere.proxy.backend.connector.jdbc.transaction",
+            "pkg:org.apache.shardingsphere.proxy.backend.handler",
+            "pkg:org.apache.shardingsphere.proxy.backend.handler.admin",
+            "pkg:org.apache.shardingsphere.proxy.backend.handler.admin.executor",
+            "pkg:org.apache.shardingsphere.proxy.backend.handler.data",
+            "pkg:org.apache.shardingsphere.proxy.backend.handler.data.type",
+            "pkg:org.apache.shardingsphere.proxy.backend.handler.database",
+            "pkg:org.apache.shardingsphere.proxy.backend.handler.database.type",
+            "pkg:org.apache.shardingsphere.proxy.backend.handler.distsql",
+            "pkg:org.apache.shardingsphere.proxy.backend.handler.skip",
+            "pkg:org.apache.shardingsphere.proxy.backend.handler.tcl",
+            "pkg:org.apache.shardingsphere.proxy.backend.handler.tcl.local",
+            "pkg:org.apache.shardingsphere.proxy.backend.handler.tcl.local.type",
+            "pkg:org.apache.shardingsphere.proxy.backend.handler.tcl.xa",
+            "pkg:org.apache.shardingsphere.proxy.backend.handler.tcl.xa.type",
+            "pkg:org.apache.shardingsphere.proxy.backend.session"
+          ]
+        },
+        {
+          "size": 20,
+          "members": [
+            "pkg:org.apache.shardingsphere.driver.executor.engine",
+            "pkg:org.apache.shardingsphere.driver.executor.engine.batch.preparedstatement",
+            "pkg:org.apache.shardingsphere.driver.executor.engine.facade",
+            "pkg:org.apache.shardingsphere.driver.executor.engine.pushdown.jdbc",
+            "pkg:org.apache.shardingsphere.driver.executor.engine.pushdown.raw",
+            "pkg:org.apache.shardingsphere.driver.executor.engine.transaction",
+            "pkg:org.apache.shardingsphere.driver.jdbc.adapter",
+            "pkg:org.apache.shardingsphere.driver.jdbc.core.connection",
+            "pkg:org.apache.shardingsphere.driver.jdbc.core.datasource",
+            "pkg:org.apache.shardingsphere.driver.jdbc.core.datasource.metadata",
+            "pkg:org.apache.shardingsphere.driver.jdbc.core.resultset",
+            "pkg:org.apache.shardingsphere.driver.jdbc.core.statement",
+            "pkg:org.apache.shardingsphere.driver.jdbc.core.statement.metadata",
+            "pkg:org.apache.shardingsphere.driver.jdbc.unsupported",
+            "pkg:org.apache.shardingsphere.driver.state",
+            "pkg:org.apache.shardingsphere.driver.state.circuit",
+            "pkg:org.apache.shardingsphere.driver.state.circuit.connection",
+            "pkg:org.apache.shardingsphere.driver.state.circuit.resultset",
+            "pkg:org.apache.shardingsphere.driver.state.circuit.statement",
+            "pkg:org.apache.shardingsphere.driver.state.ok"
+          ]
+        },
+        {
+          "size": 20,
+          "members": [
+            "pkg:org.apache.shardingsphere.infra.binder.engine.segment.ddl.column",
+            "pkg:org.apache.shardingsphere.infra.binder.engine.segment.dml",
+            "pkg:org.apache.shardingsphere.infra.binder.engine.segment.dml.assign",
+            "pkg:org.apache.shardingsphere.infra.binder.engine.segment.dml.column",
+            "pkg:org.apache.shardingsphere.infra.binder.engine.segment.dml.combine",
+            "pkg:org.apache.shardingsphere.infra.binder.engine.segment.dml.expression",
+            "pkg:org.apache.shardingsphere.infra.binder.engine.segment.dml.expression.type",
+            "pkg:org.apache.shardingsphere.infra.binder.engine.segment.dml.from",
+            "pkg:org.apache.shardingsphere.infra.binder.engine.segment.dml.from.type",
+            "pkg:org.apache.shardingsphere.infra.binder.engine.segment.dml.lock",
+            "pkg:org.apache.shardingsphere.infra.binder.engine.segment.dml.order",
+            "pkg:org.apache.shardingsphere.infra.binder.engine.segment.dml.order.item",
+            "pkg:org.apache.shardingsphere.infra.binder.engine.segment.dml.predicate",
+            "pkg:org.apache.shardingsphere.infra.binder.engine.segment.dml.projection",
+            "pkg:org.apache.shardingsphere.infra.binder.engine.segment.dml.projection.type",
+            "pkg:org.apache.shardingsphere.infra.binder.engine.segment.dml.with",
+            "pkg:org.apache.shardingsphere.infra.binder.engine.statement.dal",
+            "pkg:org.apache.shardingsphere.infra.binder.engine.statement.ddl",
+            "pkg:org.apache.shardingsphere.infra.binder.engine.statement.dml",
+            "pkg:org.apache.shardingsphere.infra.binder.engine.type"
+          ]
+        },
+        {
+          "size": 20,
+          "members": [
+            "pkg:org.apache.shardingsphere.infra.config.database.impl",
+            "pkg:org.apache.shardingsphere.infra.config.rule.checker",
+            "pkg:org.apache.shardingsphere.infra.datanode",
+            "pkg:org.apache.shardingsphere.infra.fixture",
+            "pkg:org.apache.shardingsphere.infra.metadata.database",
+            "pkg:org.apache.shardingsphere.infra.metadata.database.rule",
+            "pkg:org.apache.shardingsphere.infra.metadata.database.schema.builder",
+            "pkg:org.apache.shardingsphere.infra.metadata.database.schema.manager",
+            "pkg:org.apache.shardingsphere.infra.metadata.database.schema.reviser",
+            "pkg:org.apache.shardingsphere.infra.metadata.database.schema.reviser.column",
+            "pkg:org.apache.shardingsphere.infra.metadata.database.schema.reviser.constraint",
+            "pkg:org.apache.shardingsphere.infra.metadata.database.schema.reviser.index",
+            "pkg:org.apache.shardingsphere.infra.metadata.database.schema.reviser.schema",
+            "pkg:org.apache.shardingsphere.infra.metadata.database.schema.reviser.table",
+            "pkg:org.apache.shardingsphere.infra.metadata.database.schema.util",
+            "pkg:org.apache.shardingsphere.infra.rule.attribute.datanode",
+            "pkg:org.apache.shardingsphere.infra.rule.builder.database",
+            "pkg:org.apache.shardingsphere.infra.rule.builder.fixture",
+            "pkg:org.apache.shardingsphere.infra.rule.builder.global",
+            "pkg:org.apache.shardingsphere.infra.rule.scope"
+          ]
+        },
+        {
+          "size": 14,
+          "members": [
+            "pkg:org.apache.shardingsphere.database.protocol.postgresql.packet.command",
+            "pkg:org.apache.shardingsphere.database.protocol.postgresql.packet.command.admin",
+            "pkg:org.apache.shardingsphere.database.protocol.postgresql.packet.command.query.extended",
+            "pkg:org.apache.shardingsphere.database.protocol.postgresql.packet.command.query.extended.bind",
+            "pkg:org.apache.shardingsphere.database.protocol.postgresql.packet.command.query.extended.bind.protocol",
+            "pkg:org.apache.shardingsphere.database.protocol.postgresql.packet.command.query.extended.bind.protocol.text.impl",
+            "pkg:org.apache.shardingsphere.database.protocol.postgresql.packet.command.query.extended.close",
+            "pkg:org.apache.shardingsphere.database.protocol.postgresql.packet.command.query.extended.describe",
+            "pkg:org.apache.shardingsphere.database.protocol.postgresql.packet.command.query.extended.execute",
+            "pkg:org.apache.shardingsphere.database.protocol.postgresql.packet.command.query.extended.flush",
+            "pkg:org.apache.shardingsphere.database.protocol.postgresql.packet.command.query.extended.parse",
+            "pkg:org.apache.shardingsphere.database.protocol.postgresql.packet.command.query.extended.sync",
+            "pkg:org.apache.shardingsphere.database.protocol.postgresql.packet.command.query.simple",
+            "pkg:org.apache.shardingsphere.database.protocol.postgresql.packet.generic"
+          ]
+        },
+        {
+          "size": 14,
+          "members": [
+            "pkg:org.apache.shardingsphere.sqlfederation.compiler.sql.ast.converter.segment.expression",
+            "pkg:org.apache.shardingsphere.sqlfederation.compiler.sql.ast.converter.segment.expression.impl",
+            "pkg:org.apache.shardingsphere.sqlfederation.compiler.sql.ast.converter.segment.from",
+            "pkg:org.apache.shardingsphere.sqlfederation.compiler.sql.ast.converter.segment.from.impl",
+            "pkg:org.apache.shardingsphere.sqlfederation.compiler.sql.ast.converter.segment.groupby",
+            "pkg:org.apache.shardingsphere.sqlfederation.compiler.sql.ast.converter.segment.limit",
+            "pkg:org.apache.shardingsphere.sqlfederation.compiler.sql.ast.converter.segment.orderby",
+            "pkg:org.apache.shardingsphere.sqlfederation.compiler.sql.ast.converter.segment.orderby.item",
+            "pkg:org.apache.shardingsphere.sqlfederation.compiler.sql.ast.converter.segment.projection",
+            "pkg:org.apache.shardingsphere.sqlfederation.compiler.sql.ast.converter.segment.projection.impl",
+            "pkg:org.apache.shardingsphere.sqlfederation.compiler.sql.ast.converter.segment.where",
+            "pkg:org.apache.shardingsphere.sqlfederation.compiler.sql.ast.converter.segment.window",
+            "pkg:org.apache.shardingsphere.sqlfederation.compiler.sql.ast.converter.segment.with",
+            "pkg:org.apache.shardingsphere.sqlfederation.compiler.sql.ast.converter.statement.type"
+          ]
+        },
+        {
+          "size": 13,
+          "members": [
+            "pkg:org.apache.shardingsphere.database.protocol.firebird.packet.command",
+            "pkg:org.apache.shardingsphere.database.protocol.firebird.packet.command.admin",
+            "pkg:org.apache.shardingsphere.database.protocol.firebird.packet.command.query.batch",
+            "pkg:org.apache.shardingsphere.database.protocol.firebird.packet.command.query.blob",
+            "pkg:org.apache.shardingsphere.database.protocol.firebird.packet.command.query.info",
+            "pkg:org.apache.shardingsphere.database.protocol.firebird.packet.command.query.info.type.blob",
+            "pkg:org.apache.shardingsphere.database.protocol.firebird.packet.command.query.info.type.common",
+            "pkg:org.apache.shardingsphere.database.protocol.firebird.packet.command.query.info.type.database",
+            "pkg:org.apache.shardingsphere.database.protocol.firebird.packet.command.query.info.type.sql",
+            "pkg:org.apache.shardingsphere.database.protocol.firebird.packet.command.query.statement",
+            "pkg:org.apache.shardingsphere.database.protocol.firebird.packet.command.query.statement.execute",
+            "pkg:org.apache.shardingsphere.database.protocol.firebird.packet.command.query.statement.prepare",
+            "pkg:org.apache.shardingsphere.database.protocol.firebird.packet.command.query.transaction"
+          ]
+        },
+        {
+          "size": 11,
+          "members": [
+            "pkg:org.apache.shardingsphere.database.connector.core.exception",
+            "pkg:org.apache.shardingsphere.database.connector.core.jdbcurl",
+            "pkg:org.apache.shardingsphere.database.connector.core.metadata.data.loader",
+            "pkg:org.apache.shardingsphere.database.connector.core.metadata.data.loader.type",
+            "pkg:org.apache.shardingsphere.database.connector.core.metadata.database.datatype",
+            "pkg:org.apache.shardingsphere.database.connector.core.metadata.database.metadata",
+            "pkg:org.apache.shardingsphere.database.connector.core.metadata.database.system",
+            "pkg:org.apache.shardingsphere.database.connector.core.metadata.identifier",
+            "pkg:org.apache.shardingsphere.database.connector.core.spi",
+            "pkg:org.apache.shardingsphere.database.connector.core.spi.fixture",
+            "pkg:org.apache.shardingsphere.database.connector.core.type"
+          ]
+        },
+        {
+          "size": 11,
+          "members": [
+            "pkg:org.apache.shardingsphere.mode.manager",
+            "pkg:org.apache.shardingsphere.mode.manager.builder",
+            "pkg:org.apache.shardingsphere.mode.manager.listener",
+            "pkg:org.apache.shardingsphere.mode.metadata.factory",
+            "pkg:org.apache.shardingsphere.mode.metadata.factory.init",
+            "pkg:org.apache.shardingsphere.mode.metadata.factory.init.type",
+            "pkg:org.apache.shardingsphere.mode.metadata.manager",
+            "pkg:org.apache.shardingsphere.mode.metadata.manager.resource",
+            "pkg:org.apache.shardingsphere.mode.metadata.manager.rule",
+            "pkg:org.apache.shardingsphere.mode.persist",
+            "pkg:org.apache.shardingsphere.mode.persist.mode"
+          ]
+        },
+        {
+          "size": 10,
+          "members": [
+            "pkg:org.apache.shardingsphere.test.e2e.operation.transaction.cases.base",
+            "pkg:org.apache.shardingsphere.test.e2e.operation.transaction.engine.base",
+            "pkg:org.apache.shardingsphere.test.e2e.operation.transaction.engine.database.mysql",
+            "pkg:org.apache.shardingsphere.test.e2e.operation.transaction.engine.database.opengauss",
+            "pkg:org.apache.shardingsphere.test.e2e.operation.transaction.engine.database.postgresql",
+            "pkg:org.apache.shardingsphere.test.e2e.operation.transaction.env",
+            "pkg:org.apache.shardingsphere.test.e2e.operation.transaction.env.enums",
+            "pkg:org.apache.shardingsphere.test.e2e.operation.transaction.framework.container.compose",
+            "pkg:org.apache.shardingsphere.test.e2e.operation.transaction.framework.param",
+            "pkg:org.apache.shardingsphere.test.e2e.operation.transaction.util"
+          ]
+        },
+        {
+          "size": 9,
+          "members": [
+            "pkg:org.apache.shardingsphere.mcp.bootstrap.transport",
+            "pkg:org.apache.shardingsphere.mcp.bootstrap.transport.capability.completion",
+            "pkg:org.apache.shardingsphere.mcp.bootstrap.transport.capability.prompt",
+            "pkg:org.apache.shardingsphere.mcp.bootstrap.transport.capability.resource",
+            "pkg:org.apache.shardingsphere.mcp.bootstrap.transport.capability.tool",
+            "pkg:org.apache.shardingsphere.mcp.bootstrap.transport.server",
+            "pkg:org.apache.shardingsphere.mcp.bootstrap.transport.server.http",
+            "pkg:org.apache.shardingsphere.mcp.bootstrap.transport.server.http.validator",
+            "pkg:org.apache.shardingsphere.mcp.bootstrap.transport.server.http.validator.constraint"
+          ]
+        },
+        {
+          "size": 9,
+          "members": [
+            "pkg:org.apache.shardingsphere.proxy.frontend.mysql.command",
+            "pkg:org.apache.shardingsphere.proxy.frontend.mysql.command.admin",
+            "pkg:org.apache.shardingsphere.proxy.frontend.mysql.command.admin.initdb",
+            "pkg:org.apache.shardingsphere.proxy.frontend.mysql.command.admin.ping",
+            "pkg:org.apache.shardingsphere.proxy.frontend.mysql.command.query.binary.execute",
+            "pkg:org.apache.shardingsphere.proxy.frontend.mysql.command.query.binary.prepare",
+            "pkg:org.apache.shardingsphere.proxy.frontend.mysql.command.query.binary.reset",
+            "pkg:org.apache.shardingsphere.proxy.frontend.mysql.command.query.text.fieldlist",
+            "pkg:org.apache.shardingsphere.proxy.frontend.mysql.command.query.text.query"
+          ]
+        },
+        {
+          "size": 8,
+          "members": [
+            "pkg:org.apache.shardingsphere.sharding.algorithm.audit",
+            "pkg:org.apache.shardingsphere.sharding.route.engine.condition",
+            "pkg:org.apache.shardingsphere.sharding.route.engine.condition.engine",
+            "pkg:org.apache.shardingsphere.sharding.route.engine.condition.generator",
+            "pkg:org.apache.shardingsphere.sharding.route.engine.condition.generator.impl",
+            "pkg:org.apache.shardingsphere.sharding.rule",
+            "pkg:org.apache.shardingsphere.sharding.rule.attribute",
+            "pkg:org.apache.shardingsphere.sharding.rule.checker"
+          ]
+        },
+        {
+          "size": 6,
+          "members": [
+            "pkg:org.apache.shardingsphere.database.protocol.mysql.packet.binlog.row.column.value",
+            "pkg:org.apache.shardingsphere.database.protocol.mysql.packet.binlog.row.column.value.blob",
+            "pkg:org.apache.shardingsphere.database.protocol.mysql.packet.binlog.row.column.value.decimal",
+            "pkg:org.apache.shardingsphere.database.protocol.mysql.packet.binlog.row.column.value.integer",
+            "pkg:org.apache.shardingsphere.database.protocol.mysql.packet.binlog.row.column.value.string",
+            "pkg:org.apache.shardingsphere.database.protocol.mysql.packet.binlog.row.column.value.time"
+          ]
+        },
+        {
+          "size": 6,
+          "members": [
+            "pkg:org.apache.shardingsphere.infra.spi",
+            "pkg:org.apache.shardingsphere.infra.spi.fixture.empty",
+            "pkg:org.apache.shardingsphere.infra.spi.fixture.multiton",
+            "pkg:org.apache.shardingsphere.infra.spi.fixture.multiton.impl",
+            "pkg:org.apache.shardingsphere.infra.spi.fixture.singleton",
+            "pkg:org.apache.shardingsphere.infra.spi.fixture.singleton.impl"
+          ]
+        },
+        {
+          "size": 6,
+          "members": [
+            "pkg:org.apache.shardingsphere.infra.util.yaml",
+            "pkg:org.apache.shardingsphere.infra.util.yaml.constructor",
+            "pkg:org.apache.shardingsphere.infra.util.yaml.fixture",
+            "pkg:org.apache.shardingsphere.infra.util.yaml.fixture.pojo",
+            "pkg:org.apache.shardingsphere.infra.util.yaml.fixture.shortcuts",
+            "pkg:org.apache.shardingsphere.infra.util.yaml.representer"
+          ]
+        },
+        {
+          "size": 6,
+          "members": [
+            "pkg:org.apache.shardingsphere.mcp.feature.encrypt",
+            "pkg:org.apache.shardingsphere.mcp.feature.encrypt.completion",
+            "pkg:org.apache.shardingsphere.mcp.feature.encrypt.resource.handler",
+            "pkg:org.apache.shardingsphere.mcp.feature.encrypt.tool.handler",
+            "pkg:org.apache.shardingsphere.mcp.feature.encrypt.tool.model",
+            "pkg:org.apache.shardingsphere.mcp.feature.encrypt.tool.service"
+          ]
+        },
+        {
+          "size": 6,
+          "members": [
+            "pkg:org.apache.shardingsphere.proxy.frontend.postgresql.command",
+            "pkg:org.apache.shardingsphere.proxy.frontend.postgresql.command.query.extended.bind",
+            "pkg:org.apache.shardingsphere.proxy.frontend.postgresql.command.query.extended.close",
+            "pkg:org.apache.shardingsphere.proxy.frontend.postgresql.command.query.extended.describe",
+            "pkg:org.apache.shardingsphere.proxy.frontend.postgresql.command.query.extended.execute",
+            "pkg:org.apache.shardingsphere.proxy.frontend.postgresql.command.query.simple"
+          ]
+        },
+        {
+          "size": 6,
+          "members": [
+            "pkg:org.apache.shardingsphere.sharding.route.engine.type",
+            "pkg:org.apache.shardingsphere.sharding.route.engine.type.broadcast",
+            "pkg:org.apache.shardingsphere.sharding.route.engine.type.complex",
+            "pkg:org.apache.shardingsphere.sharding.route.engine.type.ignore",
+            "pkg:org.apache.shardingsphere.sharding.route.engine.type.standard",
+            "pkg:org.apache.shardingsphere.sharding.route.engine.type.unicast"
+          ]
+        },
+        {
+          "size": 5,
+          "members": [
+            "pkg:org.apache.shardingsphere.infra.binder.context.segment.insert.keygen.engine",
+            "pkg:org.apache.shardingsphere.infra.binder.context.segment.insert.values",
+            "pkg:org.apache.shardingsphere.infra.binder.context.segment.select.pagination",
+            "pkg:org.apache.shardingsphere.infra.binder.context.segment.select.pagination.engine",
+            "pkg:org.apache.shardingsphere.infra.binder.context.statement.type.dml"
+          ]
+        },
+        {
+          "size": 5,
+          "members": [
+            "pkg:org.apache.shardingsphere.mcp.feature.mask",
+            "pkg:org.apache.shardingsphere.mcp.feature.mask.completion",
+            "pkg:org.apache.shardingsphere.mcp.feature.mask.resource.handler",
+            "pkg:org.apache.shardingsphere.mcp.feature.mask.tool.handler",
+            "pkg:org.apache.shardingsphere.mcp.feature.mask.tool.service"
+          ]
+        },
+        {
+          "size": 5,
+          "members": [
+            "pkg:org.apache.shardingsphere.mcp.feature.readwritesplitting",
+            "pkg:org.apache.shardingsphere.mcp.feature.readwritesplitting.completion",
+            "pkg:org.apache.shardingsphere.mcp.feature.readwritesplitting.resource.handler",
+            "pkg:org.apache.shardingsphere.mcp.feature.readwritesplitting.tool.handler",
+            "pkg:org.apache.shardingsphere.mcp.feature.readwritesplitting.tool.service"
+          ]
+        },
+        {
+          "size": 5,
+          "members": [
+            "pkg:org.apache.shardingsphere.mcp.feature.shadow",
+            "pkg:org.apache.shardingsphere.mcp.feature.shadow.completion",
+            "pkg:org.apache.shardingsphere.mcp.feature.shadow.resource.handler",
+            "pkg:org.apache.shardingsphere.mcp.feature.shadow.tool.handler",
+            "pkg:org.apache.shardingsphere.mcp.feature.shadow.tool.service"
+          ]
+        },
+        {
+          "size": 5,
+          "members": [
+            "pkg:org.apache.shardingsphere.mcp.feature.sharding",
+            "pkg:org.apache.shardingsphere.mcp.feature.sharding.completion",
+            "pkg:org.apache.shardingsphere.mcp.feature.sharding.resource.handler",
+            "pkg:org.apache.shardingsphere.mcp.feature.sharding.tool.handler",
+            "pkg:org.apache.shardingsphere.mcp.feature.sharding.tool.service"
+          ]
+        },
+        {
+          "size": 5,
+          "members": [
+            "pkg:org.apache.shardingsphere.mcp.support.database.capability",
+            "pkg:org.apache.shardingsphere.mcp.support.database.exception",
+            "pkg:org.apache.shardingsphere.mcp.support.database.metadata.jdbc",
+            "pkg:org.apache.shardingsphere.mcp.support.database.spi",
+            "pkg:org.apache.shardingsphere.mcp.support.database.tool.result"
+          ]
+        },
+        {
+          "size": 5,
+          "members": [
+            "pkg:org.apache.shardingsphere.sharding.route.strategy",
+            "pkg:org.apache.shardingsphere.sharding.route.strategy.type.complex",
+            "pkg:org.apache.shardingsphere.sharding.route.strategy.type.hint",
+            "pkg:org.apache.shardingsphere.sharding.route.strategy.type.none",
+            "pkg:org.apache.shardingsphere.sharding.route.strategy.type.standard"
+          ]
+        },
+        {
+          "size": 4,
+          "members": [
+            "pkg:org.apache.shardingsphere.example.generator.scenario",
+            "pkg:org.apache.shardingsphere.example.generator.scenario.feature",
+            "pkg:org.apache.shardingsphere.example.generator.scenario.framework",
+            "pkg:org.apache.shardingsphere.example.generator.scenario.transaction"
+          ]
+        },
+        {
+          "size": 4,
+          "members": [
+            "pkg:org.apache.shardingsphere.infra.binder.context",
+            "pkg:org.apache.shardingsphere.infra.binder.context.statement.type.dal",
+            "pkg:org.apache.shardingsphere.infra.binder.context.statement.type.ddl",
+            "pkg:org.apache.shardingsphere.infra.binder.engine"
+          ]
+        },
+        {
+          "size": 4,
+          "members": [
+            "pkg:org.apache.shardingsphere.infra.instance",
+            "pkg:org.apache.shardingsphere.infra.instance.metadata",
+            "pkg:org.apache.shardingsphere.infra.instance.metadata.jdbc",
+            "pkg:org.apache.shardingsphere.infra.instance.metadata.proxy"
+          ]
+        },
+        {
+          "size": 4,
+          "members": [
+            "pkg:org.apache.shardingsphere.infra.metadata.database.resource",
+            "pkg:org.apache.shardingsphere.infra.metadata.database.schema",
+            "pkg:org.apache.shardingsphere.infra.metadata.identifier",
+            "pkg:org.apache.shardingsphere.infra.rule.attribute.datasource"
+          ]
+        },
+        {
+          "size": 4,
+          "members": [
+            "pkg:org.apache.shardingsphere.mcp.api",
+            "pkg:org.apache.shardingsphere.mcp.api.capability.completion",
+            "pkg:org.apache.shardingsphere.mcp.api.capability.resource",
+            "pkg:org.apache.shardingsphere.mcp.api.capability.tool"
+          ]
+        },
+        {
+          "size": 4,
+          "members": [
+            "pkg:org.apache.shardingsphere.mcp.core.protocol.error",
+            "pkg:org.apache.shardingsphere.mcp.core.session",
+            "pkg:org.apache.shardingsphere.mcp.core.tool.handler.execute",
+            "pkg:org.apache.shardingsphere.mcp.core.tool.payload"
+          ]
+        },
+        {
+          "size": 4,
+          "members": [
+            "pkg:org.apache.shardingsphere.mcp.feature.broadcast",
+            "pkg:org.apache.shardingsphere.mcp.feature.broadcast.resource.handler",
+            "pkg:org.apache.shardingsphere.mcp.feature.broadcast.tool.handler",
+            "pkg:org.apache.shardingsphere.mcp.feature.broadcast.tool.service"
+          ]
+        },
+        {
+          "size": 4,
+          "members": [
+            "pkg:org.apache.shardingsphere.proxy.backend.config",
+            "pkg:org.apache.shardingsphere.proxy.backend.config.validator",
+            "pkg:org.apache.shardingsphere.proxy.backend.config.validator.constraint",
+            "pkg:org.apache.shardingsphere.proxy.backend.config.yaml.swapper"
+          ]
+        },
+        {
+          "size": 4,
+          "members": [
+            "pkg:org.apache.shardingsphere.sharding.merge.dql",
+            "pkg:org.apache.shardingsphere.sharding.merge.dql.groupby",
+            "pkg:org.apache.shardingsphere.sharding.merge.dql.orderby",
+            "pkg:org.apache.shardingsphere.sharding.merge.dql.pagination"
+          ]
+        },
+        {
+          "size": 4,
+          "members": [
+            "pkg:org.apache.shardingsphere.test.e2e.env.container",
+            "pkg:org.apache.shardingsphere.test.e2e.env.container.governance",
+            "pkg:org.apache.shardingsphere.test.e2e.env.container.storage",
+            "pkg:org.apache.shardingsphere.test.e2e.env.container.storage.type"
+          ]
+        },
+        {
+          "size": 4,
+          "members": [
+            "pkg:org.apache.shardingsphere.test.e2e.operation.pipeline.cases",
+            "pkg:org.apache.shardingsphere.test.e2e.operation.pipeline.framework.container.compose.docker",
+            "pkg:org.apache.shardingsphere.test.e2e.operation.pipeline.framework.container.compose.natived",
+            "pkg:org.apache.shardingsphere.test.e2e.operation.pipeline.util"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:org.apache.shardingsphere.infra.props",
+            "pkg:org.apache.shardingsphere.infra.props.exception",
+            "pkg:org.apache.shardingsphere.infra.props.fixture"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:org.apache.shardingsphere.infra.route.engine.tableless",
+            "pkg:org.apache.shardingsphere.infra.route.engine.tableless.type.broadcast",
+            "pkg:org.apache.shardingsphere.infra.route.engine.tableless.type.unicast"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:org.apache.shardingsphere.infra.spi.type.ordered",
+            "pkg:org.apache.shardingsphere.infra.spi.type.ordered.fixture",
+            "pkg:org.apache.shardingsphere.infra.spi.type.ordered.fixture.impl"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:org.apache.shardingsphere.infra.spi.type.typed",
+            "pkg:org.apache.shardingsphere.infra.spi.type.typed.fixture",
+            "pkg:org.apache.shardingsphere.infra.spi.type.typed.fixture.impl"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:org.apache.shardingsphere.mcp.core.resource",
+            "pkg:org.apache.shardingsphere.mcp.core.resource.handler",
+            "pkg:org.apache.shardingsphere.mcp.core.resource.handler.capability"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:org.apache.shardingsphere.mcp.support.descriptor",
+            "pkg:org.apache.shardingsphere.mcp.support.descriptor.yaml",
+            "pkg:org.apache.shardingsphere.mcp.support.descriptor.yaml.validator"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:org.apache.shardingsphere.mode.metadata",
+            "pkg:org.apache.shardingsphere.mode.metadata.persist",
+            "pkg:org.apache.shardingsphere.mode.metadata.persist.metadata"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:org.apache.shardingsphere.shadow.route.retriever",
+            "pkg:org.apache.shardingsphere.shadow.route.retriever.dml",
+            "pkg:org.apache.shardingsphere.shadow.route.retriever.hint"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:org.apache.shardingsphere.sharding.api.config",
+            "pkg:org.apache.shardingsphere.sharding.api.config.rule",
+            "pkg:org.apache.shardingsphere.sharding.api.config.validator"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:org.apache.shardingsphere.sharding.route.engine.checker",
+            "pkg:org.apache.shardingsphere.sharding.route.engine.checker.ddl",
+            "pkg:org.apache.shardingsphere.sharding.route.engine.checker.dml"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:org.apache.shardingsphere.sql.parser.engine.api",
+            "pkg:org.apache.shardingsphere.sql.parser.engine.core.database.cache",
+            "pkg:org.apache.shardingsphere.sql.parser.engine.core.database.parser"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:org.apache.shardingsphere.sqlfederation.compiler",
+            "pkg:org.apache.shardingsphere.sqlfederation.compiler.compiler",
+            "pkg:org.apache.shardingsphere.sqlfederation.compiler.planner.cache"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:org.apache.shardingsphere.test.e2e.mcp.support.distribution",
+            "pkg:org.apache.shardingsphere.test.e2e.mcp.support.runtime",
+            "pkg:org.apache.shardingsphere.test.e2e.mcp.support.transport.client"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.external",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.external.loader",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.external.loader.template"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.sql",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.sql.registry"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.agent.core.advisor.config",
+            "pkg:org.apache.shardingsphere.agent.core.advisor.config.yaml.swapper"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.agent.core.advisor.executor",
+            "pkg:org.apache.shardingsphere.agent.core.advisor.executor.type"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.agent.core.plugin.config.yaml.swapper",
+            "pkg:org.apache.shardingsphere.agent.core.yaml"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.agent.plugin.core.context",
+            "pkg:org.apache.shardingsphere.agent.plugin.core.holder"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.agent.plugin.metrics.core.collector",
+            "pkg:org.apache.shardingsphere.agent.plugin.metrics.core.collector.type"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.data.pipeline.cdc",
+            "pkg:org.apache.shardingsphere.data.pipeline.cdc.api"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.data.pipeline.cdc.client",
+            "pkg:org.apache.shardingsphere.data.pipeline.cdc.client.handler"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.data.pipeline.cdc.client.context",
+            "pkg:org.apache.shardingsphere.data.pipeline.cdc.client.util"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.data.pipeline.core.ingest.position",
+            "pkg:org.apache.shardingsphere.data.pipeline.core.ingest.position.type.placeholder"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.data.pipeline.mysql.ingest.incremental.binlog.data.unsigned",
+            "pkg:org.apache.shardingsphere.data.pipeline.mysql.ingest.incremental.binlog.data.unsigned.impl"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.data.pipeline.mysql.ingest.incremental.client",
+            "pkg:org.apache.shardingsphere.data.pipeline.mysql.ingest.incremental.client.netty"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.data.pipeline.postgresql.ingest.incremental.wal.decode",
+            "pkg:org.apache.shardingsphere.data.pipeline.postgresql.ingest.incremental.wal.event"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.data.pipeline.scenario.consistencycheck",
+            "pkg:org.apache.shardingsphere.data.pipeline.scenario.consistencycheck.task"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.database.protocol.firebird.constant",
+            "pkg:org.apache.shardingsphere.database.protocol.firebird.constant.protocol"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.database.protocol.firebird.constant.buffer",
+            "pkg:org.apache.shardingsphere.database.protocol.firebird.constant.buffer.type"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.database.protocol.firebird.err",
+            "pkg:org.apache.shardingsphere.database.protocol.firebird.packet.generic"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.database.protocol.opengauss.packet.command",
+            "pkg:org.apache.shardingsphere.database.protocol.opengauss.packet.command.bind"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.database.protocol.postgresql.packet",
+            "pkg:org.apache.shardingsphere.database.protocol.postgresql.payload"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.distsql.handler.engine.update.rule.database",
+            "pkg:org.apache.shardingsphere.distsql.handler.engine.update.rule.database.operator"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.distsql.handler.executor.spi.query",
+            "pkg:org.apache.shardingsphere.distsql.handler.executor.spi.query.fixture"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.distsql.handler.executor.spi.update",
+            "pkg:org.apache.shardingsphere.distsql.handler.executor.spi.update.fixture"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.distsql.handler.executor.spi.update.rule.database",
+            "pkg:org.apache.shardingsphere.distsql.handler.executor.spi.update.rule.database.fixture"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.driver.executor.callback.execute",
+            "pkg:org.apache.shardingsphere.driver.executor.callback.execute.impl"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.encrypt.config.rule",
+            "pkg:org.apache.shardingsphere.encrypt.config.validator"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.encrypt.rewrite.condition",
+            "pkg:org.apache.shardingsphere.encrypt.rewrite.condition.impl"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.infra.algorithm.core.processor",
+            "pkg:org.apache.shardingsphere.infra.algorithm.core.processor.fixture"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.infra.algorithm.keygen.snowflake",
+            "pkg:org.apache.shardingsphere.infra.algorithm.keygen.snowflake.fixture"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.infra.binder.context.segment.select.projection",
+            "pkg:org.apache.shardingsphere.infra.binder.context.segment.select.projection.impl"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.infra.config.rule.validator",
+            "pkg:org.apache.shardingsphere.infra.config.rule.validator.constraint.spi"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.infra.exception.external",
+            "pkg:org.apache.shardingsphere.infra.exception.external.fixture"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.infra.exception.external.server",
+            "pkg:org.apache.shardingsphere.infra.exception.external.server.fixture"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.infra.exception.internal",
+            "pkg:org.apache.shardingsphere.infra.exception.internal.fixture"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.infra.executor.sql.execute.engine.driver.jdbc",
+            "pkg:org.apache.shardingsphere.infra.executor.sql.process"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.infra.executor.sql.execute.engine.raw",
+            "pkg:org.apache.shardingsphere.infra.executor.sql.execute.engine.raw.callback"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.infra.executor.sql.hook",
+            "pkg:org.apache.shardingsphere.infra.executor.sql.hook.fixture"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.infra.executor.sql.prepare.driver",
+            "pkg:org.apache.shardingsphere.infra.executor.sql.prepare.driver.jdbc"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.infra.merge.result.impl.decorator",
+            "pkg:org.apache.shardingsphere.infra.merge.result.impl.decorator.fixture"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.infra.merge.result.impl.memory",
+            "pkg:org.apache.shardingsphere.infra.merge.result.impl.memory.fixture"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.infra.merge.result.impl.stream",
+            "pkg:org.apache.shardingsphere.infra.merge.result.impl.stream.fixture"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.infra.parser.cache",
+            "pkg:org.apache.shardingsphere.infra.parser.sql"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.infra.rewrite.sql",
+            "pkg:org.apache.shardingsphere.infra.rewrite.sql.impl"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.infra.rewrite.sql.fixture",
+            "pkg:org.apache.shardingsphere.infra.rewrite.sql.token.common.pojo"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.infra.util.eventbus",
+            "pkg:org.apache.shardingsphere.infra.util.eventbus.fixture"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.infra.yaml.config.swapper.fixture",
+            "pkg:org.apache.shardingsphere.infra.yaml.config.swapper.rule"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.mcp.bootstrap.config.yaml.config",
+            "pkg:org.apache.shardingsphere.mcp.bootstrap.config.yaml.validator"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.mode.metadata.refresher.pushdown",
+            "pkg:org.apache.shardingsphere.mode.metadata.refresher.pushdown.type.table"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.mode.node.path.type.database.metadata.schema",
+            "pkg:org.apache.shardingsphere.mode.node.path.version"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.mode.node.rule.node",
+            "pkg:org.apache.shardingsphere.mode.node.rule.tuple"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.proxy.backend.connector.jdbc.datasource",
+            "pkg:org.apache.shardingsphere.proxy.backend.context"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.proxy.backend.mysql.handler.admin.executor.sysvar",
+            "pkg:org.apache.shardingsphere.proxy.backend.mysql.handler.admin.executor.sysvar.provider"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.proxy.backend.mysql.handler.admin.factory.schema",
+            "pkg:org.apache.shardingsphere.proxy.backend.mysql.handler.admin.factory.schema.type"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.proxy.frontend.command",
+            "pkg:org.apache.shardingsphere.proxy.frontend.spi"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.proxy.frontend.firebird.authentication.authenticator",
+            "pkg:org.apache.shardingsphere.proxy.frontend.firebird.authentication.authenticator.impl"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.proxy.frontend.firebird.command.query.statement",
+            "pkg:org.apache.shardingsphere.proxy.frontend.firebird.command.query.statement.fetch"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.proxy.frontend.mysql.authentication.authenticator",
+            "pkg:org.apache.shardingsphere.proxy.frontend.mysql.authentication.authenticator.impl"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.proxy.frontend.opengauss.authentication.authenticator",
+            "pkg:org.apache.shardingsphere.proxy.frontend.opengauss.authentication.authenticator.impl"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.proxy.frontend.postgresql.authentication.authenticator",
+            "pkg:org.apache.shardingsphere.proxy.frontend.postgresql.authentication.authenticator.impl"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.proxy.frontend.state",
+            "pkg:org.apache.shardingsphere.proxy.frontend.state.impl"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.readwritesplitting.rule",
+            "pkg:org.apache.shardingsphere.readwritesplitting.rule.attribute"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.shadow.config",
+            "pkg:org.apache.shardingsphere.shadow.config.validator"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.shadow.route.retriever.dml.table.column",
+            "pkg:org.apache.shardingsphere.shadow.route.retriever.dml.table.column.fixture"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.shadow.rule",
+            "pkg:org.apache.shardingsphere.shadow.rule.attribute"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.sharding.algorithm.sharding.datetime.temporal",
+            "pkg:org.apache.shardingsphere.sharding.algorithm.sharding.datetime.temporal.type"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.sharding.merge.ddl",
+            "pkg:org.apache.shardingsphere.sharding.merge.ddl.fetch"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.sharding.yaml.config",
+            "pkg:org.apache.shardingsphere.sharding.yaml.swapper"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.single.rule",
+            "pkg:org.apache.shardingsphere.single.rule.attribute"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.sql.parser.engine.clickhouse.visitor.statement",
+            "pkg:org.apache.shardingsphere.sql.parser.engine.clickhouse.visitor.statement.type"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.sql.parser.engine.doris.visitor.statement",
+            "pkg:org.apache.shardingsphere.sql.parser.engine.doris.visitor.statement.type"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.sql.parser.engine.firebird.visitor.statement",
+            "pkg:org.apache.shardingsphere.sql.parser.engine.firebird.visitor.statement.type"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.sql.parser.engine.hive.visitor.statement",
+            "pkg:org.apache.shardingsphere.sql.parser.engine.hive.visitor.statement.type"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.sql.parser.engine.mysql.visitor.statement",
+            "pkg:org.apache.shardingsphere.sql.parser.engine.mysql.visitor.statement.type"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.sql.parser.engine.opengauss.visitor.statement",
+            "pkg:org.apache.shardingsphere.sql.parser.engine.opengauss.visitor.statement.type"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.sql.parser.engine.oracle.visitor.statement",
+            "pkg:org.apache.shardingsphere.sql.parser.engine.oracle.visitor.statement.type"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.sql.parser.engine.postgresql.visitor.statement",
+            "pkg:org.apache.shardingsphere.sql.parser.engine.postgresql.visitor.statement.type"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.sql.parser.engine.presto.visitor.statement",
+            "pkg:org.apache.shardingsphere.sql.parser.engine.presto.visitor.statement.type"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.sql.parser.engine.sql92.visitor.statement",
+            "pkg:org.apache.shardingsphere.sql.parser.engine.sql92.visitor.statement.type"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.sql.parser.engine.sqlserver.visitor.statement",
+            "pkg:org.apache.shardingsphere.sql.parser.engine.sqlserver.visitor.statement.type"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.sqlfederation.config",
+            "pkg:org.apache.shardingsphere.sqlfederation.spi"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.test.e2e.env.container.adapter",
+            "pkg:org.apache.shardingsphere.test.e2e.env.container.adapter.impl"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.test.e2e.env.runtime",
+            "pkg:org.apache.shardingsphere.test.e2e.env.runtime.type"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.test.e2e.sql.env.container.compose",
+            "pkg:org.apache.shardingsphere.test.e2e.sql.env.container.compose.mode"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.test.e2e.sql.framework.metadata",
+            "pkg:org.apache.shardingsphere.test.e2e.sql.framework.metadata.dialect"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.asserts.segment.distsql",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.asserts.segment.distsql.rdl"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.segment.impl.distsql",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.parser.jaxb.segment.impl.distsql.rdl"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.sql.type",
+            "pkg:org.apache.shardingsphere.test.it.sql.parser.internal.cases.sql.type.impl"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.transaction",
+            "pkg:org.apache.shardingsphere.transaction.rule"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.shardingsphere.transaction.config",
+            "pkg:org.apache.shardingsphere.transaction.config.validator"
+          ]
+        }
+      ]
+    },
+    "B2": {
+      "id": "B2",
+      "name": "package-dependency-density",
+      "label": "包依赖密度",
+      "domain": "B",
+      "direction": "interval",
+      "value": 7.5035,
+      "numerator": 21535,
+      "denominator": 2870,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Package --all --field id,dependsOnPackageIds --snapshot 75152fdc-1043-40e8-9044-c963fef9ec2d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot 75152fdc-1043-40e8-9044-c963fef9ec2d"
+      ]
+    },
+    "B3": {
+      "id": "B3",
+      "name": "giant-class-ratio",
+      "label": "巨型类占比",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": 0.006198,
+      "numerator": 60,
+      "denominator": 9680,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Class --all --field id,lineCount --snapshot 75152fdc-1043-40e8-9044-c963fef9ec2d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --where 'lineCount>500' --snapshot 75152fdc-1043-40e8-9044-c963fef9ec2d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --snapshot 75152fdc-1043-40e8-9044-c963fef9ec2d"
+      ],
+      "threshold": "lineCount > 500",
+      "top": [
+        {
+          "lineCount": 2259,
+          "id": "cls:org.apache.shardingsphere.sql.parser.engine.oracle.visitor.statement.type.OracleDDLStatementVisitor"
+        },
+        {
+          "lineCount": 2131,
+          "id": "cls:org.apache.shardingsphere.sql.parser.engine.sqlserver.visitor.statement.SQLServerStatementVisitor"
+        },
+        {
+          "lineCount": 2130,
+          "id": "cls:org.apache.shardingsphere.sql.parser.engine.mysql.visitor.statement.MySQLStatementVisitor"
+        },
+        {
+          "lineCount": 2048,
+          "id": "cls:org.apache.shardingsphere.sql.parser.engine.postgresql.visitor.statement.PostgreSQLStatementVisitor"
+        },
+        {
+          "lineCount": 1966,
+          "id": "cls:org.apache.shardingsphere.sql.parser.engine.doris.visitor.statement.DorisStatementVisitor"
+        }
+      ],
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --where 'lineCount>500' --snapshot 75152fdc-1043-40e8-9044-c963fef9ec2d",
+        "serverCount": 60,
+        "match": true
+      }
+    },
+    "C2": {
+      "id": "C2",
+      "name": "cyclomatic-complexity-p90",
+      "label": "圈复杂度 P90",
+      "domain": "C",
+      "direction": "lower-better",
+      "value": 2,
+      "denominator": 41235,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot 75152fdc-1043-40e8-9044-c963fef9ec2d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,lineCount,complexity --snapshot 75152fdc-1043-40e8-9044-c963fef9ec2d"
+      ],
+      "percentiles": {
+        "p25": 1,
+        "p50": 1,
+        "p75": 1,
+        "p90": 2
+      },
+      "mean": 1.466,
+      "max": 53,
+      "top": [
+        {
+          "cyclomaticComplexity": 53,
+          "id": "mtd:org.apache.shardingsphere.test.e2e.sql.cases.value.SQLValue.getValue(:String:String)"
+        },
+        {
+          "cyclomaticComplexity": 50,
+          "id": "mtd:org.apache.shardingsphere.test.it.sql.parser.internal.asserts.statement.ddl.standard.StandardDDLStatementAssert.assertIs(:SQLCaseAssertContext:DDLStatement:SQLParserTestCase)"
+        },
+        {
+          "cyclomaticComplexity": 49,
+          "id": "mtd:org.apache.shardingsphere.test.it.sql.parser.internal.asserts.statement.dal.dialect.mysql.MySQLDALStatementAssert.assertIs(:SQLCaseAssertContext:DALStatement:SQLParserTestCase)"
+        },
+        {
+          "cyclomaticComplexity": 47,
+          "id": "mtd:org.apache.shardingsphere.test.it.sql.parser.internal.asserts.statement.dal.dialect.doris.DorisDALStatementAssert.assertIs(:SQLCaseAssertContext:DALStatement:SQLParserTestCase)"
+        },
+        {
+          "cyclomaticComplexity": 38,
+          "id": "mtd:org.apache.shardingsphere.infra.binder.engine.segment.dml.from.type.SimpleTableSegmentBinder.checkTableExists(:SQLStatementBinderContext:ShardingSphereSchema:Optional<IdentifierValue>:IdentifierValue:SimpleTableSegment:Multimap<CaseInsensitiveString, TableSegmentBinderContext>)"
+        }
+      ],
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot 75152fdc-1043-40e8-9044-c963fef9ec2d",
+        "serverCount": 41235,
+        "match": true
+      }
+    },
+    "C3": {
+      "id": "C3",
+      "name": "test-method-ratio",
+      "label": "测试方法占比",
+      "domain": "C",
+      "direction": "higher-better",
+      "value": 0.300835,
+      "numerator": 12719,
+      "denominator": 42279,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'isTest=true' --snapshot 75152fdc-1043-40e8-9044-c963fef9ec2d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot 75152fdc-1043-40e8-9044-c963fef9ec2d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,isTest,testType --snapshot 75152fdc-1043-40e8-9044-c963fef9ec2d"
+      ],
+      "testTypes": {
+        "UnitTest": 12573,
+        "E2eTest": 146
+      },
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'isTest=true' --snapshot 75152fdc-1043-40e8-9044-c963fef9ec2d",
+        "serverCount": 12719,
+        "match": true
+      }
+    },
+    "C4": {
+      "id": "C4",
+      "name": "giant-method-ratio",
+      "label": "巨型方法占比",
+      "domain": "C",
+      "direction": "lower-better",
+      "value": 0.000508,
+      "numerator": 21,
+      "denominator": 41301,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount>80' --snapshot 75152fdc-1043-40e8-9044-c963fef9ec2d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount=0' --snapshot 75152fdc-1043-40e8-9044-c963fef9ec2d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot 75152fdc-1043-40e8-9044-c963fef9ec2d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,lineCount --snapshot 75152fdc-1043-40e8-9044-c963fef9ec2d"
+      ],
+      "threshold": "lineCount > 80",
+      "excludedFromDenominator": {
+        "lineCountIsZero": 978,
+        "lineCountIsNull": 0
+      },
+      "top": [
+        {
+          "lineCount": 138,
+          "id": "mtd:org.apache.shardingsphere.sql.parser.statement.core.extractor.TableExtractorTest.getTableScopeArguments"
+        },
+        {
+          "lineCount": 130,
+          "id": "mtd:org.apache.shardingsphere.mcp.core.tool.handler.execute.MCPStatementAnalyzerTest.invalidStatementCases"
+        },
+        {
+          "lineCount": 129,
+          "id": "mtd:org.apache.shardingsphere.test.it.sql.parser.external.loader.template.dialect.PostgreSQLExternalTestParameterLoadTemplateTest.sqlCases"
+        },
+        {
+          "lineCount": 125,
+          "id": "mtd:org.apache.shardingsphere.mcp.core.resource.handler.CoreResourceHandlerSurfaceTest.handlerCases"
+        },
+        {
+          "lineCount": 106,
+          "id": "mtd:org.apache.shardingsphere.sqlfederation.compiler.sql.ast.converter.segment.expression.ExpressionConverterTest.assertConvertDelegatesToAllSupportedConverters"
+        }
+      ],
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount>80' --snapshot 75152fdc-1043-40e8-9044-c963fef9ec2d",
+        "serverCount": 21,
+        "match": true
+      }
+    },
+    "D3": {
+      "id": "D3",
+      "name": "scale-profile",
+      "label": "规模画像",
+      "domain": "D",
+      "direction": "none",
+      "value": 56015,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" snapshot list --repo shardingsphere",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Repository --snapshot 75152fdc-1043-40e8-9044-c963fef9ec2d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot 75152fdc-1043-40e8-9044-c963fef9ec2d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --snapshot 75152fdc-1043-40e8-9044-c963fef9ec2d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Interface --snapshot 75152fdc-1043-40e8-9044-c963fef9ec2d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot 75152fdc-1043-40e8-9044-c963fef9ec2d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Dependency --snapshot 75152fdc-1043-40e8-9044-c963fef9ec2d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot 75152fdc-1043-40e8-9044-c963fef9ec2d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Mapper --snapshot 75152fdc-1043-40e8-9044-c963fef9ec2d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Module --snapshot 75152fdc-1043-40e8-9044-c963fef9ec2d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Component --snapshot 75152fdc-1043-40e8-9044-c963fef9ec2d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Function --snapshot 75152fdc-1043-40e8-9044-c963fef9ec2d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Store --snapshot 75152fdc-1043-40e8-9044-c963fef9ec2d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Route --snapshot 75152fdc-1043-40e8-9044-c963fef9ec2d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot 75152fdc-1043-40e8-9044-c963fef9ec2d"
+      ],
+      "typeCounts": {
+        "Repository": 1,
+        "Package": 2870,
+        "Class": 9680,
+        "Interface": 593,
+        "Method": 42279,
+        "Dependency": 437,
+        "Table": 155,
+        "Mapper": 0,
+        "Module": 0,
+        "Component": 0,
+        "Function": 0,
+        "Store": 0,
+        "Route": 0,
+        "ApiEndpoint": 0
+      },
+      "linkCount": 444866
+    }
+  },
+  "nullMetrics": {
+    "A1": {
+      "id": "A1",
+      "name": "full-chain-coverage",
+      "label": "全链路贯通率",
+      "domain": "A",
+      "direction": "higher-better",
+      "value": null,
+      "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot 75152fdc-1043-40e8-9044-c963fef9ec2d"
+      ],
+      "evidence": {
+        "apiEndpointCount": 0
+      }
+    },
+    "A2": {
+      "id": "A2",
+      "name": "api-backend-breakrate",
+      "label": "前后端断链率",
+      "domain": "A",
+      "direction": "lower-better",
+      "value": null,
+      "reason": "无 ApiEndpoint 对象（纯后端仓库——按口径置空）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot 75152fdc-1043-40e8-9044-c963fef9ec2d"
+      ],
+      "evidence": {
+        "apiEndpointCount": 0
+      }
+    },
+    "B1.frontend": {
+      "id": "B1.frontend",
+      "name": "circular-dependency-density",
+      "label": "循环依赖密度（前端）",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": null,
+      "reason": "无 Module 对象（纯后端仓库——按口径置空）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Module --snapshot 75152fdc-1043-40e8-9044-c963fef9ec2d"
+      ],
+      "evidence": {
+        "moduleCount": 0
+      }
+    },
+    "B4": {
+      "id": "B4",
+      "name": "component-coupling-degree",
+      "label": "组件耦合度",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": null,
+      "reason": "无 Component 对象（纯后端仓库——按口径置空）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Component --snapshot 75152fdc-1043-40e8-9044-c963fef9ec2d"
+      ],
+      "evidence": {
+        "componentCount": 0
+      }
+    },
+    "C1": {
+      "id": "C1",
+      "name": "endpoint-table-hops",
+      "label": "端到端跳数",
+      "domain": "C",
+      "direction": "interval",
+      "value": null,
+      "reason": "无 ApiEndpoint 对象（贯通链分母为 0）",
+      "evidence": {
+        "apiEndpointCount": 0
+      }
+    },
+    "D1": {
+      "id": "D1",
+      "name": "framework-version-coverage",
+      "label": "技术栈版本覆盖率",
+      "domain": "D",
+      "direction": "higher-better",
+      "value": null,
+      "reason": "无可判定版本（空串 39 / 属性占位 398 / 合计 437——分母为 0，按口径置空）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Dependency --all --field id,name,version,scope --snapshot 75152fdc-1043-40e8-9044-c963fef9ec2d"
+      ],
+      "evidence": {
+        "total": 437,
+        "emptyVersion": 39,
+        "placeholder": 398,
+        "determinable": 0
+      }
+    },
+    "D2": {
+      "id": "D2",
+      "name": "dependency-homogeneity",
+      "label": "依赖同质度",
+      "domain": "D",
+      "direction": "none",
+      "value": null,
+      "reason": "cohort 级指标（依赖 cohort 众数集合——单体层不产出）",
+      "evidence": {
+        "dependencyCount": 437
+      }
+    },
+    "D4": {
+      "id": "D4",
+      "name": "evolution-trend",
+      "label": "年度演进趋势",
+      "domain": "D",
+      "direction": "none",
+      "value": null,
+      "reason": "单快照（首次导入——无时序）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" snapshot list --repo shardingsphere"
+      ],
+      "evidence": {
+        "completeSnapshotCount": 1
+      }
+    }
+  },
+  "dataQuality": {
+    "dq.null-complexity-ratio": {
+      "id": "dq.null-complexity-ratio",
+      "name": "null-complexity-ratio",
+      "label": "complexity 为 null 的方法占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": 0.024693,
+      "numerator": 1044,
+      "denominator": 42279,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot 75152fdc-1043-40e8-9044-c963fef9ec2d",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot 75152fdc-1043-40e8-9044-c963fef9ec2d"
+      ]
+    },
+    "dq.missing-version-ratio": {
+      "id": "dq.missing-version-ratio",
+      "name": "missing-version-ratio",
+      "label": "version 为空串的依赖占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": 0.089245,
+      "numerator": 39,
+      "denominator": 437,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Dependency --all --field id,name,version,scope --snapshot 75152fdc-1043-40e8-9044-c963fef9ec2d"
+      ],
+      "placeholderVersionCount": 398
+    },
+    "dq.ext-call-ratio": {
+      "id": "dq.ext-call-ratio",
+      "name": "ext-call-ratio",
+      "label": "ext: 虚拟调用过滤占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": null,
+      "reason": "不可观测（ext: 虚拟边在导入物化时已过滤——查询面天然免疫）"
+    }
+  }
+}
