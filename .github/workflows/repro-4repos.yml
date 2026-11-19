@@ -1,0 +1,81 @@
+# =============================================================================
+# 专用复现 workflow（2026-11-19——用户指令：单独跑 4 个失败仓定位问题）
+# -----------------------------------------------------------------------------
+# 背景：批 2 扩容中 rocketmq / spring-boot / spring-framework / flowable-engine
+# 四仓多次导入失败。平台侧修复（image 1.3.9-1118-001 + CLI 0.3.6——worker stdout
+# 协议污染根因）已发版；本 workflow 隔离复现：仅这 4 仓、串行、失败时自动导出
+# ke job logs 明细（parse:java WARN 等现场证据随 job 日志可见）。
+# 触发：workflow_dispatch 手动（不随 push 自动跑——不影响主扫描轨）。
+# =============================================================================
+name: repro-4repos
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: repro-4repos
+  cancel-in-progress: false
+
+jobs:
+  repro:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      max-parallel: 1 # 串行——隔离资源变量，复现确定性
+      matrix:
+        include:
+          - owner: apache
+            repo: rocketmq
+          - owner: spring-projects
+            repo: spring-boot
+          - owner: spring-projects
+            repo: spring-framework
+          - owner: flowable
+            repo: flowable-engine
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Install KE CLI
+        env:
+          KE_API_KEY: ${{ secrets.KE_API_KEY }}
+          KE_SERVER_URL: https://console.kengine.ai
+        run: |
+          bash scripts/install-cli.sh "$RUNNER_TEMP/ke-cli"
+          echo "$RUNNER_TEMP/ke-cli/bin" >> "$GITHUB_PATH"
+          KE_CLI_DIR="$RUNNER_TEMP/ke-cli"
+          echo "PATH prepended: $KE_CLI_DIR/bin"
+      - name: Clone repo (depth 1)
+        run: |
+          echo "::group::clone ${{ matrix.owner }}/${{ matrix.repo }}"
+          git clone --depth 1 https://github.com/${{ matrix.owner }}/${{ matrix.repo }}.git "$RUNNER_TEMP/src/${{ matrix.repo }}" 2>&1 | tail -3
+          echo "::endgroup::"
+      - name: Import (server mode) — full log capture
+        env:
+          KE_API_KEY: ${{ secrets.KE_API_KEY }}
+          KE_SERVER_URL: https://console.kengine.ai
+          AOS_LOG_LEVEL: info # worker WARN/ERROR 走 stderr——Action 日志全量可见
+        run: |
+          set -o pipefail
+          REPO_SRC="$RUNNER_TEMP/src/${{ matrix.repo }}"
+          echo "=== import start ${{ matrix.owner }}/${{ matrix.repo }} ==="
+          KE_LOG="$RUNNER_TEMP/import-${{ matrix.repo }}.log"
+          if ! ke --mode server import start --repo "$REPO_SRC" 2>&1 | tee "$KE_LOG"; then
+            echo "IMPORT FAILED — 提取 job 详情（ke job logs）"
+            JOB_ID=$(grep -oE '"jobId": *"[0-9a-f-]+' "$KE_LOG" | head -1 | grep -oE '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}' || true)
+            if [ -n "$JOB_ID" ]; then
+              echo "=== ke job logs $JOB_ID（parse/失败项明细）==="
+              ke --mode server job logs "$JOB_ID" --level warn --limit 20 2>&1 | head -80 || \
+              ke --mode server job logs "$JOB_ID" 2>&1 | head -80 || true
+            fi
+            exit 1
+          fi
+      - name: Summary
+        if: always()
+        run: |
+          echo "=== repro summary: ${{ matrix.owner }}/${{ matrix.repo }} ==="
+          tail -5 "$RUNNER_TEMP/import-${{ matrix.repo }}.log" 2>/dev/null || echo "(no log)"
