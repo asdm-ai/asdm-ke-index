@@ -44,6 +44,13 @@ else
   git clone --depth 1 "https://github.com/$OWNER/$REPO.git" "$REPO_DIR"
 fi
 
+# 源仓 HEAD 锚（preflight-skip.sh 跳过判据输入——compute-metrics.py 落 report.snapshot.sourceHead）
+SCAN_HEAD=$(git -C "$REPO_DIR" rev-parse HEAD)
+echo "scan-one: sourceHead=$SCAN_HEAD"
+if [ -n "${GITHUB_OUTPUT:-}" ]; then
+  echo "head=$SCAN_HEAD" >> "$GITHUB_OUTPUT"
+fi
+
 echo "== ke import start（--mode server → ${KE_SERVER_URL}$([ "${SCAN_FORCE:-}" = "true" ] && printf '，--force 重扫轨')）=="
 FORCE_ARG=""
 if [ "${SCAN_FORCE:-}" = "true" ]; then

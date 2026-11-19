@@ -270,6 +270,7 @@ def main():
     ap.add_argument("--repo", required=True, help="仓库名（如 mall；亦为导入 sourceId）")
     ap.add_argument("--source-id", default=None, help="导入 sourceId（缺省 = repo 名）")
     ap.add_argument("--snapshot", default=None, help="目标快照 ID（缺省取该 source 最新 complete 快照）")
+    ap.add_argument("--source-head", default=None, help="源仓 git HEAD sha（scan-one clone 后提取——跳过判据锚；缺省省略该字段）")
     ap.add_argument("--ke-cli", default="ke", help='ke CLI 命令（缺省 "ke"——PATH 指令形态，需 bin 已注入 PATH）')
     ap.add_argument("--url", default=os.environ.get("KE_SERVER_URL"), help="aos-server 基址（缺省读 KE_SERVER_URL）")
     ap.add_argument("--token", default=os.environ.get("KE_API_KEY"), help="API key（缺省读 KE_API_KEY）")
@@ -715,6 +716,7 @@ def main():
             "snapshotId": snap_id,
             "status": target.get("status"),
             "sourceVersion": target.get("sourceVersion"),
+            "sourceHead": args.source_head or None,  # 源仓 git HEAD（preflight 跳过判据锚；空值归一为 null）
             "objectCount": int(target.get("objectCount") or 0),
             "linkCount": int(target.get("linkCount") or 0),
             "completedAt": target.get("completedAt") or target.get("createdAt"),
