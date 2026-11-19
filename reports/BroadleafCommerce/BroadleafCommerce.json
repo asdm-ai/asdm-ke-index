@@ -1,0 +1,742 @@
+{
+  "schemaVersion": "draft-v1",
+  "implementation": "ke-index compute-metrics.py (transitional; to be superseded by ke checkup)",
+  "owner": "BroadleafCommerce",
+  "repo": "BroadleafCommerce",
+  "sourceId": "BroadleafCommerce",
+  "snapshot": {
+    "snapshotId": "5a3520aa-c5e2-49ec-b024-c13037172159",
+    "status": "complete",
+    "sourceVersion": "0ffc1de7695b55771a73477b7ce0c11124748e3e",
+    "sourceHead": "0ffc1de7695b55771a73477b7ce0c11124748e3e",
+    "objectCount": 25682,
+    "linkCount": 108282,
+    "completedAt": "2026-11-19T18:48:42.416Z"
+  },
+  "cliVersion": "0.3.6",
+  "metrics": {
+    "A2": {
+      "id": "A2",
+      "name": "api-backend-breakrate",
+      "label": "前后端断链率",
+      "domain": "A",
+      "direction": "lower-better",
+      "value": 1.0,
+      "numerator": 1,
+      "denominator": 1,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query ApiEndpoint --all --field id,backendMethodId,matchedVia --snapshot 5a3520aa-c5e2-49ec-b024-c13037172159",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot 5a3520aa-c5e2-49ec-b024-c13037172159"
+      ]
+    },
+    "B1.backend": {
+      "id": "B1.backend",
+      "name": "circular-dependency-density",
+      "label": "循环依赖密度（后端）",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": 0.518962,
+      "numerator": 260,
+      "denominator": 501,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Package --all --field id,dependsOnPackageIds --snapshot 5a3520aa-c5e2-49ec-b024-c13037172159",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot 5a3520aa-c5e2-49ec-b024-c13037172159"
+      ],
+      "sccCount": 10,
+      "sccs": [
+        {
+          "size": 236,
+          "members": [
+            "pkg:org.broadleafcommerce.common",
+            "pkg:org.broadleafcommerce.common.admin.condition",
+            "pkg:org.broadleafcommerce.common.admin.domain",
+            "pkg:org.broadleafcommerce.common.audit",
+            "pkg:org.broadleafcommerce.common.breadcrumbs.dto",
+            "pkg:org.broadleafcommerce.common.breadcrumbs.service",
+            "pkg:org.broadleafcommerce.common.cache",
+            "pkg:org.broadleafcommerce.common.cache.engine",
+            "pkg:org.broadleafcommerce.common.condition",
+            "pkg:org.broadleafcommerce.common.config",
+            "pkg:org.broadleafcommerce.common.config.dao",
+            "pkg:org.broadleafcommerce.common.config.domain",
+            "pkg:org.broadleafcommerce.common.config.service",
+            "pkg:org.broadleafcommerce.common.config.service.type",
+            "pkg:org.broadleafcommerce.common.copy",
+            "pkg:org.broadleafcommerce.common.currency",
+            "pkg:org.broadleafcommerce.common.currency.dao",
+            "pkg:org.broadleafcommerce.common.currency.domain",
+            "pkg:org.broadleafcommerce.common.currency.service",
+            "pkg:org.broadleafcommerce.common.currency.util",
+            "pkg:org.broadleafcommerce.common.dao",
+            "pkg:org.broadleafcommerce.common.demo",
+            "pkg:org.broadleafcommerce.common.email.dao",
+            "pkg:org.broadleafcommerce.common.email.domain",
+            "pkg:org.broadleafcommerce.common.email.service",
+            "pkg:org.broadleafcommerce.common.email.service.info",
+            "pkg:org.broadleafcommerce.common.email.service.message",
+            "pkg:org.broadleafcommerce.common.enumeration.dao",
+            "pkg:org.broadleafcommerce.common.enumeration.domain",
+            "pkg:org.broadleafcommerce.common.enumeration.service",
+            "pkg:org.broadleafcommerce.common.event",
+            "pkg:org.broadleafcommerce.common.exception",
+            "pkg:org.broadleafcommerce.common.extensibility.cache",
+            "pkg:org.broadleafcommerce.common.extensibility.cache.ehcache",
+            "pkg:org.broadleafcommerce.common.extensibility.cache.jcache",
+            "pkg:org.broadleafcommerce.common.extensibility.context.merge",
+            "pkg:org.broadleafcommerce.common.extensibility.context.merge.handlers",
+            "pkg:org.broadleafcommerce.common.extensibility.jpa",
+            "pkg:org.broadleafcommerce.common.extensibility.jpa.convert",
+            "pkg:org.broadleafcommerce.common.extensibility.jpa.copy",
+            "pkg:org.broadleafcommerce.common.extensibility.jpa.hibernate",
+            "pkg:org.broadleafcommerce.common.extension",
+            "pkg:org.broadleafcommerce.common.file",
+            "pkg:org.broadleafcommerce.common.file.service",
+            "pkg:org.broadleafcommerce.common.file.service.type",
+            "pkg:org.broadleafcommerce.common.i18n.dao",
+            "pkg:org.broadleafcommerce.common.i18n.domain",
+            "pkg:org.broadleafcommerce.common.i18n.service",
+            "pkg:org.broadleafcommerce.common.i18n.service.type",
+            "pkg:org.broadleafcommerce.common.id.dao",
+            "pkg:org.broadleafcommerce.common.id.service",
+            "pkg:org.broadleafcommerce.common.locale.dao",
+            "pkg:org.broadleafcommerce.common.locale.domain",
+            "pkg:org.broadleafcommerce.common.locale.service",
+            "pkg:org.broadleafcommerce.common.locale.util",
+            "pkg:org.broadleafcommerce.common.logging",
+            "pkg:org.broadleafcommerce.common.media.domain",
+            "pkg:org.broadleafcommerce.common.module",
+            "pkg:org.broadleafcommerce.common.money",
+            "pkg:org.broadleafcommerce.common.notification.service",
+            "pkg:org.broadleafcommerce.common.notification.service.type",
+            "pkg:org.broadleafcommerce.common.payment",
+            "pkg:org.broadleafcommerce.common.payment.dto",
+            "pkg:org.broadleafcommerce.common.payment.service",
+            "pkg:org.broadleafcommerce.common.persistence",
+            "pkg:org.broadleafcommerce.common.presentation",
+            "pkg:org.broadleafcommerce.common.presentation.client",
+            "pkg:org.broadleafcommerce.common.presentation.override",
+            "pkg:org.broadleafcommerce.common.rule",
+            "pkg:org.broadleafcommerce.common.sandbox",
+            "pkg:org.broadleafcommerce.common.sandbox.dao",
+            "pkg:org.broadleafcommerce.common.sandbox.domain",
+            "pkg:org.broadleafcommerce.common.sandbox.service",
+            "pkg:org.broadleafcommerce.common.security",
+            "pkg:org.broadleafcommerce.common.security.handler",
+            "pkg:org.broadleafcommerce.common.security.service",
+            "pkg:org.broadleafcommerce.common.security.util",
+            "pkg:org.broadleafcommerce.common.service",
+            "pkg:org.broadleafcommerce.common.site.dao",
+            "pkg:org.broadleafcommerce.common.site.domain",
+            "pkg:org.broadleafcommerce.common.site.service",
+            "pkg:org.broadleafcommerce.common.site.service.type",
+            "pkg:org.broadleafcommerce.common.sitemap.domain",
+            "pkg:org.broadleafcommerce.common.sitemap.service",
+            "pkg:org.broadleafcommerce.common.sitemap.service.type",
+            "pkg:org.broadleafcommerce.common.sitemap.wrapper",
+            "pkg:org.broadleafcommerce.common.template",
+            "pkg:org.broadleafcommerce.common.time",
+            "pkg:org.broadleafcommerce.common.time.domain",
+            "pkg:org.broadleafcommerce.common.util",
+            "pkg:org.broadleafcommerce.common.util.dao",
+            "pkg:org.broadleafcommerce.common.util.tenant",
+            "pkg:org.broadleafcommerce.common.vendor.service.exception",
+            "pkg:org.broadleafcommerce.common.vendor.service.monitor",
+            "pkg:org.broadleafcommerce.common.vendor.service.monitor.handler",
+            "pkg:org.broadleafcommerce.common.vendor.service.type",
+            "pkg:org.broadleafcommerce.common.weave",
+            "pkg:org.broadleafcommerce.common.web",
+            "pkg:org.broadleafcommerce.common.web.controller",
+            "pkg:org.broadleafcommerce.common.web.controller.annotation",
+            "pkg:org.broadleafcommerce.common.web.deeplink",
+            "pkg:org.broadleafcommerce.common.web.expression",
+            "pkg:org.broadleafcommerce.common.web.filter",
+            "pkg:org.broadleafcommerce.common.web.payment.controller",
+            "pkg:org.broadleafcommerce.common.web.payment.expression",
+            "pkg:org.broadleafcommerce.common.web.payment.processor",
+            "pkg:org.broadleafcommerce.common.web.resource",
+            "pkg:org.broadleafcommerce.common.web.util",
+            "pkg:org.broadleafcommerce.core.catalog",
+            "pkg:org.broadleafcommerce.core.catalog.dao",
+            "pkg:org.broadleafcommerce.core.catalog.domain",
+            "pkg:org.broadleafcommerce.core.catalog.domain.dto",
+            "pkg:org.broadleafcommerce.core.catalog.domain.pricing",
+            "pkg:org.broadleafcommerce.core.catalog.service",
+            "pkg:org.broadleafcommerce.core.catalog.service.dynamic",
+            "pkg:org.broadleafcommerce.core.catalog.service.extension",
+            "pkg:org.broadleafcommerce.core.catalog.service.type",
+            "pkg:org.broadleafcommerce.core.checkout.service",
+            "pkg:org.broadleafcommerce.core.checkout.service.exception",
+            "pkg:org.broadleafcommerce.core.checkout.service.strategy",
+            "pkg:org.broadleafcommerce.core.checkout.service.workflow",
+            "pkg:org.broadleafcommerce.core.checkout.service.workflow.extension",
+            "pkg:org.broadleafcommerce.core.inventory.service",
+            "pkg:org.broadleafcommerce.core.inventory.service.type",
+            "pkg:org.broadleafcommerce.core.offer.dao",
+            "pkg:org.broadleafcommerce.core.offer.domain",
+            "pkg:org.broadleafcommerce.core.offer.service",
+            "pkg:org.broadleafcommerce.core.offer.service.discount",
+            "pkg:org.broadleafcommerce.core.offer.service.discount.domain",
+            "pkg:org.broadleafcommerce.core.offer.service.exception",
+            "pkg:org.broadleafcommerce.core.offer.service.processor",
+            "pkg:org.broadleafcommerce.core.offer.service.type",
+            "pkg:org.broadleafcommerce.core.offer.service.workflow",
+            "pkg:org.broadleafcommerce.core.offer.weave",
+            "pkg:org.broadleafcommerce.core.order",
+            "pkg:org.broadleafcommerce.core.order.dao",
+            "pkg:org.broadleafcommerce.core.order.domain",
+            "pkg:org.broadleafcommerce.core.order.domain.dto",
+            "pkg:org.broadleafcommerce.core.order.fulfillment.domain",
+            "pkg:org.broadleafcommerce.core.order.service",
+            "pkg:org.broadleafcommerce.core.order.service.call",
+            "pkg:org.broadleafcommerce.core.order.service.extension",
+            "pkg:org.broadleafcommerce.core.order.service.type",
+            "pkg:org.broadleafcommerce.core.order.service.workflow",
+            "pkg:org.broadleafcommerce.core.order.strategy",
+            "pkg:org.broadleafcommerce.core.payment",
+            "pkg:org.broadleafcommerce.core.payment.dao",
+            "pkg:org.broadleafcommerce.core.payment.domain",
+            "pkg:org.broadleafcommerce.core.payment.domain.secure",
+            "pkg:org.broadleafcommerce.core.payment.service",
+            "pkg:org.broadleafcommerce.core.payment.service.type",
+            "pkg:org.broadleafcommerce.core.pricing.service",
+            "pkg:org.broadleafcommerce.core.pricing.service.fulfillment.provider",
+            "pkg:org.broadleafcommerce.core.pricing.service.tax.provider",
+            "pkg:org.broadleafcommerce.core.pricing.service.workflow",
+            "pkg:org.broadleafcommerce.core.promotionMessage.domain",
+            "pkg:org.broadleafcommerce.core.promotionMessage.domain.type",
+            "pkg:org.broadleafcommerce.core.promotionMessage.dto",
+            "pkg:org.broadleafcommerce.core.promotionMessage.service",
+            "pkg:org.broadleafcommerce.core.promotionMessage.util",
+            "pkg:org.broadleafcommerce.core.search.dao",
+            "pkg:org.broadleafcommerce.core.search.domain",
+            "pkg:org.broadleafcommerce.core.search.domain.solr",
+            "pkg:org.broadleafcommerce.core.search.redirect.dao",
+            "pkg:org.broadleafcommerce.core.search.redirect.domain",
+            "pkg:org.broadleafcommerce.core.search.service",
+            "pkg:org.broadleafcommerce.core.search.service.solr",
+            "pkg:org.broadleafcommerce.core.search.service.solr.index",
+            "pkg:org.broadleafcommerce.core.util.dao",
+            "pkg:org.broadleafcommerce.core.util.domain",
+            "pkg:org.broadleafcommerce.core.util.service",
+            "pkg:org.broadleafcommerce.core.workflow",
+            "pkg:org.broadleafcommerce.core.workflow.state",
+            "pkg:org.broadleafcommerce.openadmin.dto",
+            "pkg:org.broadleafcommerce.openadmin.dto.override",
+            "pkg:org.broadleafcommerce.openadmin.dto.visitor",
+            "pkg:org.broadleafcommerce.openadmin.security",
+            "pkg:org.broadleafcommerce.openadmin.server.dao",
+            "pkg:org.broadleafcommerce.openadmin.server.dao.provider.metadata",
+            "pkg:org.broadleafcommerce.openadmin.server.dao.provider.metadata.request",
+            "pkg:org.broadleafcommerce.openadmin.server.domain",
+            "pkg:org.broadleafcommerce.openadmin.server.factory",
+            "pkg:org.broadleafcommerce.openadmin.server.security.dao",
+            "pkg:org.broadleafcommerce.openadmin.server.security.domain",
+            "pkg:org.broadleafcommerce.openadmin.server.security.event",
+            "pkg:org.broadleafcommerce.openadmin.server.security.extension",
+            "pkg:org.broadleafcommerce.openadmin.server.security.external",
+            "pkg:org.broadleafcommerce.openadmin.server.security.remote",
+            "pkg:org.broadleafcommerce.openadmin.server.security.service",
+            "pkg:org.broadleafcommerce.openadmin.server.security.service.navigation",
+            "pkg:org.broadleafcommerce.openadmin.server.security.service.type",
+            "pkg:org.broadleafcommerce.openadmin.server.security.service.user",
+            "pkg:org.broadleafcommerce.openadmin.server.service",
+            "pkg:org.broadleafcommerce.openadmin.server.service.export",
+            "pkg:org.broadleafcommerce.openadmin.server.service.extension",
+            "pkg:org.broadleafcommerce.openadmin.server.service.handler",
+            "pkg:org.broadleafcommerce.openadmin.server.service.persistence",
+            "pkg:org.broadleafcommerce.openadmin.server.service.persistence.extension",
+            "pkg:org.broadleafcommerce.openadmin.server.service.persistence.module",
+            "pkg:org.broadleafcommerce.openadmin.server.service.persistence.module.criteria",
+            "pkg:org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.converter",
+            "pkg:org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.predicate",
+            "pkg:org.broadleafcommerce.openadmin.server.service.persistence.module.extension",
+            "pkg:org.broadleafcommerce.openadmin.server.service.persistence.module.provider",
+            "pkg:org.broadleafcommerce.openadmin.server.service.persistence.module.provider.extension",
+            "pkg:org.broadleafcommerce.openadmin.server.service.persistence.module.provider.request",
+            "pkg:org.broadleafcommerce.openadmin.server.service.persistence.validation",
+            "pkg:org.broadleafcommerce.openadmin.server.service.type",
+            "pkg:org.broadleafcommerce.openadmin.web.compatibility",
+            "pkg:org.broadleafcommerce.openadmin.web.controller",
+            "pkg:org.broadleafcommerce.openadmin.web.controller.config",
+            "pkg:org.broadleafcommerce.openadmin.web.controller.entity",
+            "pkg:org.broadleafcommerce.openadmin.web.controller.modal",
+            "pkg:org.broadleafcommerce.openadmin.web.dao",
+            "pkg:org.broadleafcommerce.openadmin.web.filter",
+            "pkg:org.broadleafcommerce.openadmin.web.form",
+            "pkg:org.broadleafcommerce.openadmin.web.form.component",
+            "pkg:org.broadleafcommerce.openadmin.web.form.entity",
+            "pkg:org.broadleafcommerce.openadmin.web.handler",
+            "pkg:org.broadleafcommerce.openadmin.web.rulebuilder",
+            "pkg:org.broadleafcommerce.openadmin.web.rulebuilder.dto",
+            "pkg:org.broadleafcommerce.openadmin.web.rulebuilder.enums",
+            "pkg:org.broadleafcommerce.openadmin.web.rulebuilder.grouping",
+            "pkg:org.broadleafcommerce.openadmin.web.rulebuilder.service",
+            "pkg:org.broadleafcommerce.openadmin.web.rulebuilder.statement",
+            "pkg:org.broadleafcommerce.openadmin.web.service",
+            "pkg:org.broadleafcommerce.profile.core.dao",
+            "pkg:org.broadleafcommerce.profile.core.domain",
+            "pkg:org.broadleafcommerce.profile.core.event",
+            "pkg:org.broadleafcommerce.profile.core.service",
+            "pkg:org.broadleafcommerce.profile.core.service.handler",
+            "pkg:org.broadleafcommerce.profile.core.service.listener",
+            "pkg:org.broadleafcommerce.test",
+            "pkg:org.broadleafcommerce.test.config",
+            "pkg:org.broadleafcommerce.test.helper",
+            "pkg:org.broadleafcommerce.test.junit"
+          ]
+        },
+        {
+          "size": 6,
+          "members": [
+            "pkg:org.broadleafcommerce.openadmin.server.service.artifact",
+            "pkg:org.broadleafcommerce.openadmin.server.service.artifact.image",
+            "pkg:org.broadleafcommerce.openadmin.server.service.artifact.image.effects.chain",
+            "pkg:org.broadleafcommerce.openadmin.server.service.artifact.image.effects.chain.conversion",
+            "pkg:org.broadleafcommerce.openadmin.server.service.artifact.image.effects.chain.conversion.impl",
+            "pkg:org.broadleafcommerce.openadmin.server.service.artifact.image.effects.chain.filter"
+          ]
+        },
+        {
+          "size": 4,
+          "members": [
+            "pkg:org.broadleafcommerce.cms.common",
+            "pkg:org.broadleafcommerce.cms.file.dao",
+            "pkg:org.broadleafcommerce.cms.file.domain",
+            "pkg:org.broadleafcommerce.cms.file.service"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.broadleafcommerce.cms.field.domain",
+            "pkg:org.broadleafcommerce.cms.structure.domain"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.broadleafcommerce.cms.web",
+            "pkg:org.broadleafcommerce.cms.web.controller"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.broadleafcommerce.common.entity.dto",
+            "pkg:org.broadleafcommerce.common.entity.service"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.broadleafcommerce.common.resource.service",
+            "pkg:org.broadleafcommerce.common.web.processor"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.broadleafcommerce.core.web.controller.account",
+            "pkg:org.broadleafcommerce.core.web.controller.account.validator"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.broadleafcommerce.core.web.order",
+            "pkg:org.broadleafcommerce.core.web.order.security"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.broadleafcommerce.profile.web.core",
+            "pkg:org.broadleafcommerce.profile.web.core.security"
+          ]
+        }
+      ]
+    },
+    "B2": {
+      "id": "B2",
+      "name": "package-dependency-density",
+      "label": "包依赖密度",
+      "domain": "B",
+      "direction": "interval",
+      "value": 5.6467,
+      "numerator": 2829,
+      "denominator": 501,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Package --all --field id,dependsOnPackageIds --snapshot 5a3520aa-c5e2-49ec-b024-c13037172159",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot 5a3520aa-c5e2-49ec-b024-c13037172159"
+      ]
+    },
+    "B1.frontend": {
+      "id": "B1.frontend",
+      "name": "circular-dependency-density",
+      "label": "循环依赖密度（前端）",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": 0.0,
+      "numerator": 0,
+      "denominator": 124,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Module --all --field id,importedModuleIds --snapshot 5a3520aa-c5e2-49ec-b024-c13037172159",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Module --snapshot 5a3520aa-c5e2-49ec-b024-c13037172159"
+      ],
+      "sccCount": 0
+    },
+    "B3": {
+      "id": "B3",
+      "name": "giant-class-ratio",
+      "label": "巨型类占比",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": 0.026027,
+      "numerator": 64,
+      "denominator": 2459,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Class --all --field id,lineCount --snapshot 5a3520aa-c5e2-49ec-b024-c13037172159",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --where 'lineCount>500' --snapshot 5a3520aa-c5e2-49ec-b024-c13037172159",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --snapshot 5a3520aa-c5e2-49ec-b024-c13037172159"
+      ],
+      "threshold": "lineCount > 500",
+      "top": [
+        {
+          "lineCount": 2501,
+          "id": "cls:org.broadleafcommerce.openadmin.web.controller.entity.AdminBasicEntityController"
+        },
+        {
+          "lineCount": 2054,
+          "id": "cls:org.broadleafcommerce.openadmin.web.service.FormBuilderServiceImpl"
+        },
+        {
+          "lineCount": 1702,
+          "id": "cls:org.broadleafcommerce.openadmin.server.dao.DynamicEntityDaoImpl"
+        },
+        {
+          "lineCount": 1515,
+          "id": "cls:org.broadleafcommerce.openadmin.server.service.persistence.module.BasicPersistenceModule"
+        },
+        {
+          "lineCount": 1363,
+          "id": "cls:org.broadleafcommerce.core.catalog.domain.CategoryImpl"
+        }
+      ],
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --where 'lineCount>500' --snapshot 5a3520aa-c5e2-49ec-b024-c13037172159",
+        "serverCount": 64,
+        "match": true
+      }
+    },
+    "C2": {
+      "id": "C2",
+      "name": "cyclomatic-complexity-p90",
+      "label": "圈复杂度 P90",
+      "domain": "C",
+      "direction": "lower-better",
+      "value": 4,
+      "denominator": 16083,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot 5a3520aa-c5e2-49ec-b024-c13037172159",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,lineCount,complexity --snapshot 5a3520aa-c5e2-49ec-b024-c13037172159"
+      ],
+      "percentiles": {
+        "p25": 1,
+        "p50": 1,
+        "p75": 2,
+        "p90": 4
+      },
+      "mean": 1.9498,
+      "max": 80,
+      "top": [
+        {
+          "cyclomaticComplexity": 80,
+          "id": "mtd:org.broadleafcommerce.openadmin.server.dao.provider.metadata.MapFieldMetadataProvider.buildMapMetadata(:Class<?>:Class<?>:Map<String, FieldMetadata>:FieldInfo:FieldMetadataOverride:DynamicEntityDao:String)"
+        },
+        {
+          "cyclomaticComplexity": 74,
+          "id": "mtd:org.broadleafcommerce.openadmin.web.service.FormBuilderServiceImpl.buildCollectionListGrid(:String:DynamicResultSet:Property:String:List<SectionCrumb>)"
+        },
+        {
+          "cyclomaticComplexity": 71,
+          "id": "mtd:org.broadleafcommerce.openadmin.server.dao.provider.metadata.BasicFieldMetadataProvider.buildBasicMetadata(:Class<?>:Class<?>:Map<String, FieldMetadata>:FieldInfo:FieldMetadataOverride:DynamicEntityDao)"
+        },
+        {
+          "cyclomaticComplexity": 66,
+          "id": "mtd:org.broadleafcommerce.openadmin.server.dao.provider.metadata.DefaultFieldMetadataProvider.addMetadataFromFieldType(:AddMetadataFromFieldTypeRequest:Map<String, FieldMetadata>)"
+        },
+        {
+          "cyclomaticComplexity": 63,
+          "id": "mtd:org.broadleafcommerce.openadmin.server.dao.provider.metadata.AdornedTargetCollectionFieldMetadataProvider.buildAdornedTargetCollectionMetadata(:Class<?>:Class<?>:Map<String, FieldMetadata>:FieldInfo:FieldMetadataOverride:DynamicEntityDao)"
+        }
+      ],
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot 5a3520aa-c5e2-49ec-b024-c13037172159",
+        "serverCount": 16083,
+        "match": true
+      }
+    },
+    "C3": {
+      "id": "C3",
+      "name": "test-method-ratio",
+      "label": "测试方法占比",
+      "domain": "C",
+      "direction": "higher-better",
+      "value": 0.012229,
+      "numerator": 262,
+      "denominator": 21424,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'isTest=true' --snapshot 5a3520aa-c5e2-49ec-b024-c13037172159",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot 5a3520aa-c5e2-49ec-b024-c13037172159",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,isTest,testType --snapshot 5a3520aa-c5e2-49ec-b024-c13037172159"
+      ],
+      "testTypes": {
+        "UnitTest": 262
+      },
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'isTest=true' --snapshot 5a3520aa-c5e2-49ec-b024-c13037172159",
+        "serverCount": 262,
+        "match": true
+      }
+    },
+    "C4": {
+      "id": "C4",
+      "name": "giant-method-ratio",
+      "label": "巨型方法占比",
+      "domain": "C",
+      "direction": "lower-better",
+      "value": 0.007979,
+      "numerator": 129,
+      "denominator": 16168,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount>80' --snapshot 5a3520aa-c5e2-49ec-b024-c13037172159",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount=0' --snapshot 5a3520aa-c5e2-49ec-b024-c13037172159",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot 5a3520aa-c5e2-49ec-b024-c13037172159",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,lineCount --snapshot 5a3520aa-c5e2-49ec-b024-c13037172159"
+      ],
+      "threshold": "lineCount > 80",
+      "excludedFromDenominator": {
+        "lineCountIsZero": 5256,
+        "lineCountIsNull": 0
+      },
+      "top": [
+        {
+          "lineCount": 360,
+          "id": "mtd:org.broadleafcommerce.openadmin.server.dao.provider.metadata.MapFieldMetadataProvider.buildMapMetadata(:Class<?>:Class<?>:Map<String, FieldMetadata>:FieldInfo:FieldMetadataOverride:DynamicEntityDao:String)"
+        },
+        {
+          "lineCount": 359,
+          "id": "mtd:org.broadleafcommerce.openadmin.server.dao.provider.metadata.DefaultFieldMetadataProvider.addMetadataFromFieldType(:AddMetadataFromFieldTypeRequest:Map<String, FieldMetadata>)"
+        },
+        {
+          "lineCount": 352,
+          "id": "mtd:org.broadleafcommerce.openadmin.web.service.FormBuilderServiceImpl.buildCollectionListGrid(:String:DynamicResultSet:Property:String:List<SectionCrumb>)"
+        },
+        {
+          "lineCount": 347,
+          "id": "mtd:org.broadleafcommerce.openadmin.server.service.persistence.module.provider.BasicFieldPersistenceProvider.populateValue(:PopulateValueRequest:Serializable)"
+        },
+        {
+          "lineCount": 303,
+          "id": "mtd:org.broadleafcommerce.openadmin.server.dao.provider.metadata.AdornedTargetCollectionFieldMetadataProvider.buildAdornedTargetCollectionMetadata(:Class<?>:Class<?>:Map<String, FieldMetadata>:FieldInfo:FieldMetadataOverride:DynamicEntityDao)"
+        }
+      ],
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount>80' --snapshot 5a3520aa-c5e2-49ec-b024-c13037172159",
+        "serverCount": 129,
+        "match": true
+      }
+    },
+    "D3": {
+      "id": "D3",
+      "name": "scale-profile",
+      "label": "规模画像",
+      "domain": "D",
+      "direction": "none",
+      "value": 25682,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" snapshot list --repo BroadleafCommerce",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Repository --snapshot 5a3520aa-c5e2-49ec-b024-c13037172159",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot 5a3520aa-c5e2-49ec-b024-c13037172159",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --snapshot 5a3520aa-c5e2-49ec-b024-c13037172159",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Interface --snapshot 5a3520aa-c5e2-49ec-b024-c13037172159",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot 5a3520aa-c5e2-49ec-b024-c13037172159",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Dependency --snapshot 5a3520aa-c5e2-49ec-b024-c13037172159",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot 5a3520aa-c5e2-49ec-b024-c13037172159",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Mapper --snapshot 5a3520aa-c5e2-49ec-b024-c13037172159",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Module --snapshot 5a3520aa-c5e2-49ec-b024-c13037172159",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Component --snapshot 5a3520aa-c5e2-49ec-b024-c13037172159",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Function --snapshot 5a3520aa-c5e2-49ec-b024-c13037172159",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Store --snapshot 5a3520aa-c5e2-49ec-b024-c13037172159",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Route --snapshot 5a3520aa-c5e2-49ec-b024-c13037172159",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot 5a3520aa-c5e2-49ec-b024-c13037172159"
+      ],
+      "typeCounts": {
+        "Repository": 1,
+        "Package": 501,
+        "Class": 2459,
+        "Interface": 827,
+        "Method": 21424,
+        "Dependency": 117,
+        "Table": 0,
+        "Mapper": 0,
+        "Module": 124,
+        "Component": 0,
+        "Function": 228,
+        "Store": 0,
+        "Route": 0,
+        "ApiEndpoint": 1
+      },
+      "linkCount": 108282
+    }
+  },
+  "nullMetrics": {
+    "A1": {
+      "id": "A1",
+      "name": "full-chain-coverage",
+      "label": "全链路贯通率",
+      "domain": "A",
+      "direction": "higher-better",
+      "value": null,
+      "reason": "calls 传递闭包与 Method→Mapper 名字 join 未实现（过渡实现——待 ke checkup）",
+      "evidence": {
+        "apiEndpointCount": 1
+      }
+    },
+    "A3": {
+      "id": "A3",
+      "name": "orphan-table-rate",
+      "label": "孤儿表率",
+      "domain": "A",
+      "direction": "lower-better",
+      "value": null,
+      "reason": "无 Table 对象（分母为 0）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot 5a3520aa-c5e2-49ec-b024-c13037172159"
+      ]
+    },
+    "A4": {
+      "id": "A4",
+      "name": "table-entity-mapping-rate",
+      "label": "表↔实体映射率",
+      "domain": "A",
+      "direction": "higher-better",
+      "value": null,
+      "reason": "无 Table 对象（分母为 0）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot 5a3520aa-c5e2-49ec-b024-c13037172159"
+      ]
+    },
+    "B4": {
+      "id": "B4",
+      "name": "component-coupling-degree",
+      "label": "组件耦合度",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": null,
+      "reason": "无 Component 对象（纯后端仓库——按口径置空）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Component --snapshot 5a3520aa-c5e2-49ec-b024-c13037172159"
+      ],
+      "evidence": {
+        "componentCount": 0
+      }
+    },
+    "C1": {
+      "id": "C1",
+      "name": "endpoint-table-hops",
+      "label": "端到端跳数",
+      "domain": "C",
+      "direction": "interval",
+      "value": null,
+      "reason": "依赖 A1 贯通链算法（过渡实现未含——待 ke checkup）",
+      "evidence": {
+        "apiEndpointCount": 1
+      }
+    },
+    "D1": {
+      "id": "D1",
+      "name": "framework-version-coverage",
+      "label": "技术栈版本覆盖率",
+      "domain": "D",
+      "direction": "higher-better",
+      "value": null,
+      "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Dependency --all --field id,name,version,scope --snapshot 5a3520aa-c5e2-49ec-b024-c13037172159"
+      ],
+      "evidence": {
+        "total": 117,
+        "emptyVersion": 2,
+        "placeholder": 61,
+        "determinable": 54
+      }
+    },
+    "D2": {
+      "id": "D2",
+      "name": "dependency-homogeneity",
+      "label": "依赖同质度",
+      "domain": "D",
+      "direction": "none",
+      "value": null,
+      "reason": "cohort 级指标（依赖 cohort 众数集合——单体层不产出）",
+      "evidence": {
+        "dependencyCount": 117
+      }
+    },
+    "D4": {
+      "id": "D4",
+      "name": "evolution-trend",
+      "label": "年度演进趋势",
+      "domain": "D",
+      "direction": "none",
+      "value": null,
+      "reason": "单快照（首次导入——无时序）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" snapshot list --repo BroadleafCommerce"
+      ],
+      "evidence": {
+        "completeSnapshotCount": 1
+      }
+    }
+  },
+  "dataQuality": {
+    "dq.null-complexity-ratio": {
+      "id": "dq.null-complexity-ratio",
+      "name": "null-complexity-ratio",
+      "label": "complexity 为 null 的方法占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": 0.2493,
+      "numerator": 5341,
+      "denominator": 21424,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot 5a3520aa-c5e2-49ec-b024-c13037172159",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot 5a3520aa-c5e2-49ec-b024-c13037172159"
+      ]
+    },
+    "dq.missing-version-ratio": {
+      "id": "dq.missing-version-ratio",
+      "name": "missing-version-ratio",
+      "label": "version 为空串的依赖占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": 0.017094,
+      "numerator": 2,
+      "denominator": 117,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Dependency --all --field id,name,version,scope --snapshot 5a3520aa-c5e2-49ec-b024-c13037172159"
+      ],
+      "placeholderVersionCount": 61
+    },
+    "dq.ext-call-ratio": {
+      "id": "dq.ext-call-ratio",
+      "name": "ext-call-ratio",
+      "label": "ext: 虚拟调用过滤占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": null,
+      "reason": "不可观测（ext: 虚拟边在导入物化时已过滤——查询面天然免疫）"
+    }
+  }
+}
