@@ -62,7 +62,11 @@ jobs:
         env:
           KE_API_KEY: ${{ secrets.KE_API_KEY }}
           KE_SERVER_URL: ${{ secrets.KE_SERVER_URL }}
-        run: bash scripts/install-cli.sh "$RUNNER_TEMP/ke-cli"
+        run: |
+          bash scripts/install-cli.sh "$RUNNER_TEMP/ke-cli"
+          # ke 指令统一调用形态：install-cli 已建 bin/ke symlink，注入 PATH 后
+          # 后续步骤（scan-one / compute-metrics）一律以 ke 指令调用
+          echo "$RUNNER_TEMP/ke-cli/bin" >> "$GITHUB_PATH"
 
       - name: Scan ${{ matrix.owner }}/${{ matrix.repo }}
         env:
@@ -71,7 +75,6 @@ jobs:
           OWNER: ${{ matrix.owner }}
           REPO: ${{ matrix.repo }}
           BRANCH: ${{ matrix.branch }}
-          CLI_DIR: ${{ runner.temp }}/ke-cli
           SCAN_FORCE: ${{ inputs.scan_force }}
         run: bash scripts/scan-one.sh
 
@@ -83,11 +86,10 @@ jobs:
           KE_SERVER_URL: ${{ secrets.KE_SERVER_URL }}
           OWNER: ${{ matrix.owner }}
           REPO: ${{ matrix.repo }}
-          CLI_DIR: ${{ runner.temp }}/ke-cli
         run: |
           python3 scripts/compute-metrics.py \
             --owner "$OWNER" --repo "$REPO" \
-            --ke-cli "node $CLI_DIR/bin/ke.cjs" \
+            --ke-cli "ke" \
             --out "reports/$OWNER/$REPO.json"
 
       # 产物入库（bot 身份；matrix 并发推送冲突 → fetch+rebase 重试）

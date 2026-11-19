@@ -46,6 +46,7 @@ jobs:
           KE_SERVER_URL: https://console.kengine.ai
         run: |
           bash scripts/install-cli.sh "$RUNNER_TEMP/ke-cli"
+          # ke 指令统一调用形态：install-cli 已建 bin/ke symlink，注入 PATH
           echo "$RUNNER_TEMP/ke-cli/bin" >> "$GITHUB_PATH"
           KE_CLI_DIR="$RUNNER_TEMP/ke-cli"
           echo "PATH prepended: $KE_CLI_DIR/bin"
@@ -63,16 +64,15 @@ jobs:
         run: |
           set -o pipefail
           REPO_SRC="$RUNNER_TEMP/src/${{ matrix.repo }}"
-          KE_BIN="$RUNNER_TEMP/ke-cli/bin/ke.cjs"
           echo "=== import start ${{ matrix.owner }}/${{ matrix.repo }} ==="
           KE_LOG="$RUNNER_TEMP/import-${{ matrix.repo }}.log"
-          if ! node "$KE_BIN" --mode server --url "$KE_SERVER_URL" --token "$KE_API_KEY" import start --repo "$REPO_SRC" 2>&1 | tee "$KE_LOG"; then
+          if ! ke --mode server --url "$KE_SERVER_URL" --token "$KE_API_KEY" import start --repo "$REPO_SRC" 2>&1 | tee "$KE_LOG"; then
             echo "IMPORT FAILED — 提取 job 详情（ke job logs）"
             JOB_ID=$(grep -oE '"jobId": *"[0-9a-f-]+' "$KE_LOG" | head -1 | grep -oE '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}' || true)
             if [ -n "$JOB_ID" ]; then
               echo "=== ke job logs $JOB_ID（parse/失败项明细）==="
-              node "$KE_BIN" --mode server --url "$KE_SERVER_URL" --token "$KE_API_KEY" job logs "$JOB_ID" --level warn --limit 20 2>&1 | head -80 || \
-              node "$KE_BIN" --mode server --url "$KE_SERVER_URL" --token "$KE_API_KEY" job logs "$JOB_ID" 2>&1 | head -80 || true
+              ke --mode server --url "$KE_SERVER_URL" --token "$KE_API_KEY" job logs "$JOB_ID" --level warn --limit 20 2>&1 | head -80 || \
+              ke --mode server --url "$KE_SERVER_URL" --token "$KE_API_KEY" job logs "$JOB_ID" 2>&1 | head -80 || true
             fi
             exit 1
           fi

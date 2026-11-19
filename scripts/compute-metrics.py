@@ -5,7 +5,7 @@
 # 用法（GitHub Actions 与本地复算同形）：
 #   KE_SERVER_URL=https://... KE_API_KEY=... python3 scripts/compute-metrics.py \
 #     --owner macrozheng --repo mall \
-#     [--ke-cli "node /path/bin/ke.cjs"] [--source-id mall] [--snapshot <id>] \
+#     [--ke-cli "ke"] [--source-id mall] [--snapshot <id>] \
 #     [--out reports/macrozheng/mall.json]
 #
 # 方法论：AOS Index Metrics Schema draft v1（四域 A-D + dq）。
@@ -270,7 +270,7 @@ def main():
     ap.add_argument("--repo", required=True, help="仓库名（如 mall；亦为导入 sourceId）")
     ap.add_argument("--source-id", default=None, help="导入 sourceId（缺省 = repo 名）")
     ap.add_argument("--snapshot", default=None, help="目标快照 ID（缺省取该 source 最新 complete 快照）")
-    ap.add_argument("--ke-cli", default="ke", help='ke CLI 命令（如 "node /path/bin/ke.cjs"）')
+    ap.add_argument("--ke-cli", default="ke", help='ke CLI 命令（缺省 "ke"——PATH 指令形态，需 bin 已注入 PATH）')
     ap.add_argument("--url", default=os.environ.get("KE_SERVER_URL"), help="aos-server 基址（缺省读 KE_SERVER_URL）")
     ap.add_argument("--token", default=os.environ.get("KE_API_KEY"), help="API key（缺省读 KE_API_KEY）")
     ap.add_argument("--out", default=None, help="输出文件（缺省 reports/{owner}/{repo}.json）")

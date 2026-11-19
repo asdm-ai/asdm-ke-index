@@ -4,6 +4,8 @@
 # -----------------------------------------------------------------------------
 # 用法：OWNER=<o> REPO=<r> KE_API_KEY=<key> [BRANCH=<b>] [CLI_DIR=<dir>] \
 #         [SCAN_FORCE=true] bash scripts/scan-one.sh
+# 调用形态：ke 指令（CI 由 Install 步骤经 GITHUB_PATH 注入；本地冒烟设 CLI_DIR
+#         时由本脚本注入其 bin 到 PATH）——统一 ke 指令调用，不再 node 直调 ke.cjs
 # 流程：clone --depth 1 → ke --mode server import start --repo <clone目录>
 #       → stdout 末行 summary JSON 解析（import-cmd.ts 契约：
 #         {ok, status, jobId, snapshotId, objectCount, linkCount, ...}）
@@ -26,6 +28,13 @@ WORK="${WORKDIR:-$(mktemp -d)}"
 BRANCH="${BRANCH:-}"
 mkdir -p "$WORK"
 
+# ke 指令解析：CLI_DIR 提供时注入其 bin（本地冒烟）；CI 走 GITHUB_PATH 预注入
+export PATH="$CLI_DIR/bin:$PATH"
+if ! command -v ke >/dev/null 2>&1; then
+  echo "FAIL: ke 指令不可用（PATH 无 ke，且 $CLI_DIR/bin/ke 不存在——先运行 install-cli.sh）" >&2
+  exit 1
+fi
+
 echo "== clone ${OWNER}/${REPO}（--depth 1${BRANCH:+，branch=$BRANCH}）=="
 REPO_DIR="$WORK/$REPO"
 rm -rf "$REPO_DIR"
@@ -41,7 +50,7 @@ if [ "${SCAN_FORCE:-}" = "true" ]; then
   FORCE_ARG="--force"
 fi
 set +e
-node "$CLI_DIR/bin/ke.cjs" --mode server --url "$KE_SERVER_URL" --token "$KE_API_KEY" \
+ke --mode server --url "$KE_SERVER_URL" --token "$KE_API_KEY" \
   import start --repo "$REPO_DIR" $FORCE_ARG > "$WORK/import.log" 2>&1
 RC=$?
 set -e

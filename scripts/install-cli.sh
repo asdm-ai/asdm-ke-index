@@ -5,7 +5,10 @@
 # 用法：KE_API_KEY=<key> bash scripts/install-cli.sh [安装目录]
 #       （缺省安装目录 $PWD/ke-cli）
 # 流程：manifest latest → 版本断言 → 下载 zip + .sha256 → 对账 → 解压 →
-#       npm ci --omit=dev → bin/ke.cjs --version 断言（R6——锁 latest 并断言版本）
+#       npm ci --omit=dev → bin/ke symlink → ke --version 断言（R6——锁 latest 并断言版本）
+# 调用形态：安装后以 ke 指令统一调用（bin/ 内制品文件名为 ke.cjs——npm bin 契约
+#       声明 ke 入口但私有 zip 分发不走 npm 全局装配，故手工建 symlink；
+#       调用方负责将 <安装目录>/bin 注入 PATH，如 GITHUB_PATH / export PATH）
 # 凭证：KE_API_KEY（最小权限 member key——仅下载通道 Bearer）
 # =============================================================================
 set -euo pipefail
@@ -48,11 +51,16 @@ mkdir -p "$DEST"
 unzip -q -o "$TMP/$ZIP_NAME" -d "$DEST"
 (cd "$DEST" && npm ci --omit=dev --no-fund --no-audit --silent)
 
-echo "== 版本断言 =="
-VERSION=$(node "$DEST/bin/ke.cjs" --version)
+# ke 指令入口：制品 bin/ 内文件名为 ke.cjs（package.json bin 契约声明 ke，
+# 但私有 zip 分发不产生 npm 全局装配的 symlink）——手工建相对 symlink，
+# 调用方将 $DEST/bin 注入 PATH 后即可 ke 指令调用
+ln -sf ke.cjs "$DEST/bin/ke"
+
+echo "== 版本断言（ke 指令形态）=="
+VERSION=$(PATH="$DEST/bin:$PATH" ke --version)
 echo "KE CLI version: $VERSION"
 if [ "$VERSION" != "$EXPECTED_VERSION" ]; then
   echo "FAIL: ke --version $VERSION != expected $EXPECTED_VERSION" >&2
   exit 1
 fi
-echo "install-cli: OK → $DEST"
+echo "install-cli: OK → $DEST（ke 指令入口：$DEST/bin/ke）"
