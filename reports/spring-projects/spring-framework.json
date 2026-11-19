@@ -1,0 +1,944 @@
+{
+  "schemaVersion": "draft-v1",
+  "implementation": "ke-index compute-metrics.py (transitional; to be superseded by ke checkup)",
+  "owner": "spring-projects",
+  "repo": "spring-framework",
+  "sourceId": "spring-framework",
+  "snapshot": {
+    "snapshotId": "290a057e-3a18-407d-9704-79989dbecc46",
+    "status": "complete",
+    "sourceVersion": "head",
+    "objectCount": 105848,
+    "linkCount": 286043,
+    "completedAt": "2026-11-19T06:44:16.950Z"
+  },
+  "cliVersion": "0.3.6",
+  "metrics": {
+    "A3": {
+      "id": "A3",
+      "name": "orphan-table-rate",
+      "label": "孤儿表率",
+      "domain": "A",
+      "direction": "lower-better",
+      "value": 0.933333,
+      "numerator": 14,
+      "denominator": 15,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Table --all --field id,name,matchedEntityClass --snapshot 290a057e-3a18-407d-9704-79989dbecc46",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Mapper --all --field id,namespace,mappedTableIds --snapshot 290a057e-3a18-407d-9704-79989dbecc46",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot 290a057e-3a18-407d-9704-79989dbecc46"
+      ]
+    },
+    "A4": {
+      "id": "A4",
+      "name": "table-entity-mapping-rate",
+      "label": "表↔实体映射率",
+      "domain": "A",
+      "direction": "higher-better",
+      "value": 0.066667,
+      "numerator": 1,
+      "denominator": 15,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Table --all --field id,name,matchedEntityClass --snapshot 290a057e-3a18-407d-9704-79989dbecc46",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Mapper --all --field id,namespace,mappedTableIds --snapshot 290a057e-3a18-407d-9704-79989dbecc46",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot 290a057e-3a18-407d-9704-79989dbecc46"
+      ],
+      "evidence": {
+        "mapperEdgeOnly": 0,
+        "entityClassOnly": 1,
+        "both": 0
+      }
+    },
+    "B1.backend": {
+      "id": "B1.backend",
+      "name": "circular-dependency-density",
+      "label": "循环依赖密度（后端）",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": 0.50306,
+      "numerator": 411,
+      "denominator": 817,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Package --all --field id,dependsOnPackageIds --snapshot 290a057e-3a18-407d-9704-79989dbecc46",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot 290a057e-3a18-407d-9704-79989dbecc46"
+      ],
+      "sccCount": 17,
+      "sccs": [
+        {
+          "size": 335,
+          "members": [
+            "pkg:example.gh24375",
+            "pkg:example.profilescan",
+            "pkg:example.scannable",
+            "pkg:example.scannable.sub",
+            "pkg:example.scannable_implicitbasepackage",
+            "pkg:example.scannable_scoped",
+            "pkg:example.type",
+            "pkg:org.springframework.aop",
+            "pkg:org.springframework.aop.aspectj",
+            "pkg:org.springframework.aop.aspectj.annotation",
+            "pkg:org.springframework.aop.aspectj.autoproxy",
+            "pkg:org.springframework.aop.config",
+            "pkg:org.springframework.aop.framework",
+            "pkg:org.springframework.aop.framework.adapter",
+            "pkg:org.springframework.aop.framework.autoproxy",
+            "pkg:org.springframework.aop.interceptor",
+            "pkg:org.springframework.aop.scope",
+            "pkg:org.springframework.aop.support",
+            "pkg:org.springframework.aop.support.annotation",
+            "pkg:org.springframework.aop.testfixture.advice",
+            "pkg:org.springframework.aop.testfixture.aspectj",
+            "pkg:org.springframework.aop.testfixture.interceptor",
+            "pkg:org.springframework.aop.testfixture.mixin",
+            "pkg:org.springframework.aot",
+            "pkg:org.springframework.aot.agent",
+            "pkg:org.springframework.aot.generate",
+            "pkg:org.springframework.aot.hint",
+            "pkg:org.springframework.aot.hint.annotation",
+            "pkg:org.springframework.aot.hint.predicate",
+            "pkg:org.springframework.aot.hint.support",
+            "pkg:org.springframework.aot.nativex",
+            "pkg:org.springframework.aot.test.agent",
+            "pkg:org.springframework.aot.test.generate",
+            "pkg:org.springframework.beans",
+            "pkg:org.springframework.beans.factory",
+            "pkg:org.springframework.beans.factory.annotation",
+            "pkg:org.springframework.beans.factory.aot",
+            "pkg:org.springframework.beans.factory.config",
+            "pkg:org.springframework.beans.factory.groovy",
+            "pkg:org.springframework.beans.factory.parsing",
+            "pkg:org.springframework.beans.factory.support",
+            "pkg:org.springframework.beans.factory.wiring",
+            "pkg:org.springframework.beans.factory.xml",
+            "pkg:org.springframework.beans.propertyeditors",
+            "pkg:org.springframework.beans.support",
+            "pkg:org.springframework.beans.testfixture.beans",
+            "pkg:org.springframework.beans.testfixture.beans.factory",
+            "pkg:org.springframework.beans.testfixture.beans.factory.annotation",
+            "pkg:org.springframework.beans.testfixture.beans.factory.annotation.subpkg",
+            "pkg:org.springframework.beans.testfixture.beans.factory.aot",
+            "pkg:org.springframework.beans.testfixture.beans.factory.generator",
+            "pkg:org.springframework.beans.testfixture.beans.factory.generator.deprecation",
+            "pkg:org.springframework.beans.testfixture.beans.factory.generator.factory",
+            "pkg:org.springframework.beans.testfixture.beans.factory.generator.injection",
+            "pkg:org.springframework.beans.testfixture.factory.xml",
+            "pkg:org.springframework.cache",
+            "pkg:org.springframework.cache.annotation",
+            "pkg:org.springframework.cache.concurrent",
+            "pkg:org.springframework.cache.config",
+            "pkg:org.springframework.cache.interceptor",
+            "pkg:org.springframework.cache.support",
+            "pkg:org.springframework.context",
+            "pkg:org.springframework.context.annotation",
+            "pkg:org.springframework.context.annotation.componentscan.cycle.left",
+            "pkg:org.springframework.context.annotation.componentscan.importing",
+            "pkg:org.springframework.context.annotation.componentscan.level1",
+            "pkg:org.springframework.context.annotation.componentscan.level2",
+            "pkg:org.springframework.context.annotation.componentscan.level3",
+            "pkg:org.springframework.context.annotation.componentscan.simple",
+            "pkg:org.springframework.context.annotation.role",
+            "pkg:org.springframework.context.annotation2",
+            "pkg:org.springframework.context.annotation4",
+            "pkg:org.springframework.context.annotation6",
+            "pkg:org.springframework.context.aot",
+            "pkg:org.springframework.context.event",
+            "pkg:org.springframework.context.event.test",
+            "pkg:org.springframework.context.event.test.self_inject",
+            "pkg:org.springframework.context.expression",
+            "pkg:org.springframework.context.i18n",
+            "pkg:org.springframework.context.index",
+            "pkg:org.springframework.context.support",
+            "pkg:org.springframework.context.testfixture",
+            "pkg:org.springframework.context.testfixture.beans",
+            "pkg:org.springframework.context.testfixture.beans.factory",
+            "pkg:org.springframework.context.testfixture.cache",
+            "pkg:org.springframework.context.testfixture.cache.beans",
+            "pkg:org.springframework.context.testfixture.context.annotation",
+            "pkg:org.springframework.context.testfixture.context.annotation.subpkg",
+            "pkg:org.springframework.context.testfixture.context.aot.scan.reflective",
+            "pkg:org.springframework.context.testfixture.context.aot.scan.reflective2",
+            "pkg:org.springframework.context.testfixture.context.aot.scan.reflective2.reflective21",
+            "pkg:org.springframework.context.testfixture.context.aot.scan.reflective2.reflective22",
+            "pkg:org.springframework.context.testfixture.index",
+            "pkg:org.springframework.context.testfixture.jndi",
+            "pkg:org.springframework.context.weaving",
+            "pkg:org.springframework.contextsupport.testfixture.cache",
+            "pkg:org.springframework.contextsupport.testfixture.jcache",
+            "pkg:org.springframework.core",
+            "pkg:org.springframework.core.annotation",
+            "pkg:org.springframework.core.annotation.subpackage",
+            "pkg:org.springframework.core.codec",
+            "pkg:org.springframework.core.convert",
+            "pkg:org.springframework.core.convert.converter",
+            "pkg:org.springframework.core.convert.support",
+            "pkg:org.springframework.core.env",
+            "pkg:org.springframework.core.io",
+            "pkg:org.springframework.core.io.buffer",
+            "pkg:org.springframework.core.io.support",
+            "pkg:org.springframework.core.log",
+            "pkg:org.springframework.core.retry",
+            "pkg:org.springframework.core.serializer",
+            "pkg:org.springframework.core.serializer.support",
+            "pkg:org.springframework.core.style",
+            "pkg:org.springframework.core.task",
+            "pkg:org.springframework.core.task.support",
+            "pkg:org.springframework.core.test.io.support",
+            "pkg:org.springframework.core.test.tools",
+            "pkg:org.springframework.core.testfixture",
+            "pkg:org.springframework.core.testfixture.aot.generator.visibility",
+            "pkg:org.springframework.core.testfixture.codec",
+            "pkg:org.springframework.core.testfixture.env",
+            "pkg:org.springframework.core.testfixture.io",
+            "pkg:org.springframework.core.testfixture.io.buffer",
+            "pkg:org.springframework.core.type",
+            "pkg:org.springframework.core.type.classreading",
+            "pkg:org.springframework.core.type.filter",
+            "pkg:org.springframework.dao",
+            "pkg:org.springframework.dao.annotation",
+            "pkg:org.springframework.dao.support",
+            "pkg:org.springframework.expression",
+            "pkg:org.springframework.expression.common",
+            "pkg:org.springframework.expression.spel",
+            "pkg:org.springframework.expression.spel.ast",
+            "pkg:org.springframework.expression.spel.standard",
+            "pkg:org.springframework.expression.spel.support",
+            "pkg:org.springframework.expression.spel.testresources",
+            "pkg:org.springframework.format",
+            "pkg:org.springframework.format.datetime",
+            "pkg:org.springframework.format.datetime.standard",
+            "pkg:org.springframework.format.number",
+            "pkg:org.springframework.format.number.money",
+            "pkg:org.springframework.format.support",
+            "pkg:org.springframework.http",
+            "pkg:org.springframework.http.client",
+            "pkg:org.springframework.http.client.observation",
+            "pkg:org.springframework.http.client.reactive",
+            "pkg:org.springframework.http.client.support",
+            "pkg:org.springframework.http.codec",
+            "pkg:org.springframework.http.codec.cbor",
+            "pkg:org.springframework.http.codec.json",
+            "pkg:org.springframework.http.codec.multipart",
+            "pkg:org.springframework.http.codec.protobuf",
+            "pkg:org.springframework.http.codec.smile",
+            "pkg:org.springframework.http.codec.support",
+            "pkg:org.springframework.http.codec.xml",
+            "pkg:org.springframework.http.converter",
+            "pkg:org.springframework.http.converter.cbor",
+            "pkg:org.springframework.http.converter.feed",
+            "pkg:org.springframework.http.converter.json",
+            "pkg:org.springframework.http.converter.multipart",
+            "pkg:org.springframework.http.converter.protobuf",
+            "pkg:org.springframework.http.converter.smile",
+            "pkg:org.springframework.http.converter.support",
+            "pkg:org.springframework.http.converter.xml",
+            "pkg:org.springframework.http.converter.yaml",
+            "pkg:org.springframework.http.server",
+            "pkg:org.springframework.http.server.observation",
+            "pkg:org.springframework.http.server.reactive",
+            "pkg:org.springframework.http.server.reactive.observation",
+            "pkg:org.springframework.http.support",
+            "pkg:org.springframework.instrument.classloading",
+            "pkg:org.springframework.instrument.classloading.glassfish",
+            "pkg:org.springframework.instrument.classloading.jboss",
+            "pkg:org.springframework.instrument.classloading.tomcat",
+            "pkg:org.springframework.jdbc",
+            "pkg:org.springframework.jdbc.core",
+            "pkg:org.springframework.jdbc.core.metadata",
+            "pkg:org.springframework.jdbc.core.namedparam",
+            "pkg:org.springframework.jdbc.core.simple",
+            "pkg:org.springframework.jdbc.core.support",
+            "pkg:org.springframework.jdbc.datasource",
+            "pkg:org.springframework.jdbc.datasource.embedded",
+            "pkg:org.springframework.jdbc.datasource.init",
+            "pkg:org.springframework.jdbc.datasource.lookup",
+            "pkg:org.springframework.jdbc.support",
+            "pkg:org.springframework.jdbc.support.lob",
+            "pkg:org.springframework.jdbc.support.rowset",
+            "pkg:org.springframework.jmx",
+            "pkg:org.springframework.jmx.access",
+            "pkg:org.springframework.jmx.export",
+            "pkg:org.springframework.jmx.export.annotation",
+            "pkg:org.springframework.jmx.export.assembler",
+            "pkg:org.springframework.jmx.export.metadata",
+            "pkg:org.springframework.jmx.export.naming",
+            "pkg:org.springframework.jmx.export.notification",
+            "pkg:org.springframework.jmx.support",
+            "pkg:org.springframework.jndi",
+            "pkg:org.springframework.jndi.support",
+            "pkg:org.springframework.messaging",
+            "pkg:org.springframework.mock.env",
+            "pkg:org.springframework.mock.http",
+            "pkg:org.springframework.mock.web",
+            "pkg:org.springframework.objenesis",
+            "pkg:org.springframework.oxm",
+            "pkg:org.springframework.oxm.jaxb",
+            "pkg:org.springframework.oxm.mime",
+            "pkg:org.springframework.oxm.support",
+            "pkg:org.springframework.resilience",
+            "pkg:org.springframework.resilience.annotation",
+            "pkg:org.springframework.resilience.retry",
+            "pkg:org.springframework.scheduling",
+            "pkg:org.springframework.scheduling.annotation",
+            "pkg:org.springframework.scheduling.concurrent",
+            "pkg:org.springframework.scheduling.config",
+            "pkg:org.springframework.scheduling.support",
+            "pkg:org.springframework.scripting",
+            "pkg:org.springframework.scripting.groovy",
+            "pkg:org.springframework.scripting.support",
+            "pkg:org.springframework.stereotype",
+            "pkg:org.springframework.test.annotation",
+            "pkg:org.springframework.test.context",
+            "pkg:org.springframework.test.context.aot",
+            "pkg:org.springframework.test.context.aot.samples.basic",
+            "pkg:org.springframework.test.context.aot.samples.bean.override",
+            "pkg:org.springframework.test.context.aot.samples.hints",
+            "pkg:org.springframework.test.context.aot.samples.jdbc",
+            "pkg:org.springframework.test.context.aot.samples.management",
+            "pkg:org.springframework.test.context.aot.samples.web",
+            "pkg:org.springframework.test.context.aot.samples.xml",
+            "pkg:org.springframework.test.context.bean.override",
+            "pkg:org.springframework.test.context.bean.override.convention",
+            "pkg:org.springframework.test.context.bean.override.easymock",
+            "pkg:org.springframework.test.context.bean.override.example",
+            "pkg:org.springframework.test.context.bean.override.mockito",
+            "pkg:org.springframework.test.context.cache",
+            "pkg:org.springframework.test.context.env",
+            "pkg:org.springframework.test.context.event",
+            "pkg:org.springframework.test.context.event.annotation",
+            "pkg:org.springframework.test.context.jdbc",
+            "pkg:org.springframework.test.context.junit.jupiter",
+            "pkg:org.springframework.test.context.junit.jupiter.web",
+            "pkg:org.springframework.test.context.junit4",
+            "pkg:org.springframework.test.context.junit4.rules",
+            "pkg:org.springframework.test.context.junit4.statements",
+            "pkg:org.springframework.test.context.support",
+            "pkg:org.springframework.test.context.support.samples",
+            "pkg:org.springframework.test.context.testng",
+            "pkg:org.springframework.test.context.transaction",
+            "pkg:org.springframework.test.context.util",
+            "pkg:org.springframework.test.context.web",
+            "pkg:org.springframework.test.jdbc",
+            "pkg:org.springframework.test.json",
+            "pkg:org.springframework.test.util",
+            "pkg:org.springframework.test.util.subpackage",
+            "pkg:org.springframework.test.web.servlet",
+            "pkg:org.springframework.tests.sample.beans",
+            "pkg:org.springframework.tests.sample.objects",
+            "pkg:org.springframework.transaction",
+            "pkg:org.springframework.transaction.annotation",
+            "pkg:org.springframework.transaction.config",
+            "pkg:org.springframework.transaction.event",
+            "pkg:org.springframework.transaction.interceptor",
+            "pkg:org.springframework.transaction.jta",
+            "pkg:org.springframework.transaction.reactive",
+            "pkg:org.springframework.transaction.support",
+            "pkg:org.springframework.transaction.testfixture",
+            "pkg:org.springframework.ui",
+            "pkg:org.springframework.ui.freemarker",
+            "pkg:org.springframework.util",
+            "pkg:org.springframework.util.backoff",
+            "pkg:org.springframework.util.comparator",
+            "pkg:org.springframework.util.concurrent",
+            "pkg:org.springframework.util.function",
+            "pkg:org.springframework.util.unit",
+            "pkg:org.springframework.util.xml",
+            "pkg:org.springframework.validation",
+            "pkg:org.springframework.validation.annotation",
+            "pkg:org.springframework.validation.beanvalidation",
+            "pkg:org.springframework.validation.method",
+            "pkg:org.springframework.validation.support",
+            "pkg:org.springframework.web",
+            "pkg:org.springframework.web.accept",
+            "pkg:org.springframework.web.bind",
+            "pkg:org.springframework.web.bind.annotation",
+            "pkg:org.springframework.web.bind.support",
+            "pkg:org.springframework.web.client",
+            "pkg:org.springframework.web.context",
+            "pkg:org.springframework.web.context.annotation",
+            "pkg:org.springframework.web.context.request",
+            "pkg:org.springframework.web.context.request.async",
+            "pkg:org.springframework.web.context.support",
+            "pkg:org.springframework.web.cors",
+            "pkg:org.springframework.web.filter",
+            "pkg:org.springframework.web.method",
+            "pkg:org.springframework.web.method.annotation",
+            "pkg:org.springframework.web.method.support",
+            "pkg:org.springframework.web.multipart",
+            "pkg:org.springframework.web.multipart.support",
+            "pkg:org.springframework.web.server",
+            "pkg:org.springframework.web.server.adapter",
+            "pkg:org.springframework.web.server.handler",
+            "pkg:org.springframework.web.server.i18n",
+            "pkg:org.springframework.web.server.session",
+            "pkg:org.springframework.web.service.annotation",
+            "pkg:org.springframework.web.servlet",
+            "pkg:org.springframework.web.servlet.config.annotation",
+            "pkg:org.springframework.web.servlet.function",
+            "pkg:org.springframework.web.servlet.function.support",
+            "pkg:org.springframework.web.servlet.handler",
+            "pkg:org.springframework.web.servlet.i18n",
+            "pkg:org.springframework.web.servlet.mvc",
+            "pkg:org.springframework.web.servlet.mvc.annotation",
+            "pkg:org.springframework.web.servlet.mvc.condition",
+            "pkg:org.springframework.web.servlet.mvc.method",
+            "pkg:org.springframework.web.servlet.mvc.method.annotation",
+            "pkg:org.springframework.web.servlet.mvc.support",
+            "pkg:org.springframework.web.servlet.resource",
+            "pkg:org.springframework.web.servlet.support",
+            "pkg:org.springframework.web.servlet.view",
+            "pkg:org.springframework.web.servlet.view.freemarker",
+            "pkg:org.springframework.web.servlet.view.groovy",
+            "pkg:org.springframework.web.servlet.view.json",
+            "pkg:org.springframework.web.servlet.view.script",
+            "pkg:org.springframework.web.servlet.view.xml",
+            "pkg:org.springframework.web.testfixture.http",
+            "pkg:org.springframework.web.testfixture.http.client",
+            "pkg:org.springframework.web.testfixture.http.client.reactive",
+            "pkg:org.springframework.web.testfixture.http.server.reactive",
+            "pkg:org.springframework.web.testfixture.http.server.reactive.bootstrap",
+            "pkg:org.springframework.web.testfixture.method",
+            "pkg:org.springframework.web.testfixture.server",
+            "pkg:org.springframework.web.testfixture.server.handler",
+            "pkg:org.springframework.web.testfixture.servlet",
+            "pkg:org.springframework.web.util",
+            "pkg:org.springframework.web.util.pattern"
+          ]
+        },
+        {
+          "size": 21,
+          "members": [
+            "pkg:org.springframework.web.reactive",
+            "pkg:org.springframework.web.reactive.config",
+            "pkg:org.springframework.web.reactive.function",
+            "pkg:org.springframework.web.reactive.function.client",
+            "pkg:org.springframework.web.reactive.function.server",
+            "pkg:org.springframework.web.reactive.function.server.support",
+            "pkg:org.springframework.web.reactive.handler",
+            "pkg:org.springframework.web.reactive.resource",
+            "pkg:org.springframework.web.reactive.result",
+            "pkg:org.springframework.web.reactive.result.condition",
+            "pkg:org.springframework.web.reactive.result.method",
+            "pkg:org.springframework.web.reactive.result.method.annotation",
+            "pkg:org.springframework.web.reactive.result.view",
+            "pkg:org.springframework.web.reactive.result.view.freemarker",
+            "pkg:org.springframework.web.reactive.result.view.script",
+            "pkg:org.springframework.web.reactive.socket",
+            "pkg:org.springframework.web.reactive.socket.adapter",
+            "pkg:org.springframework.web.reactive.socket.client",
+            "pkg:org.springframework.web.reactive.socket.server",
+            "pkg:org.springframework.web.reactive.socket.server.support",
+            "pkg:org.springframework.web.reactive.socket.server.upgrade"
+          ]
+        },
+        {
+          "size": 19,
+          "members": [
+            "pkg:org.springframework.web.socket",
+            "pkg:org.springframework.web.socket.adapter",
+            "pkg:org.springframework.web.socket.adapter.jetty",
+            "pkg:org.springframework.web.socket.adapter.standard",
+            "pkg:org.springframework.web.socket.client",
+            "pkg:org.springframework.web.socket.client.standard",
+            "pkg:org.springframework.web.socket.config",
+            "pkg:org.springframework.web.socket.config.annotation",
+            "pkg:org.springframework.web.socket.handler",
+            "pkg:org.springframework.web.socket.messaging",
+            "pkg:org.springframework.web.socket.server",
+            "pkg:org.springframework.web.socket.server.jetty",
+            "pkg:org.springframework.web.socket.server.standard",
+            "pkg:org.springframework.web.socket.server.support",
+            "pkg:org.springframework.web.socket.sockjs",
+            "pkg:org.springframework.web.socket.sockjs.support",
+            "pkg:org.springframework.web.socket.sockjs.transport",
+            "pkg:org.springframework.web.socket.sockjs.transport.handler",
+            "pkg:org.springframework.web.socket.sockjs.transport.session"
+          ]
+        },
+        {
+          "size": 5,
+          "members": [
+            "pkg:org.springframework.messaging.converter",
+            "pkg:org.springframework.messaging.core",
+            "pkg:org.springframework.messaging.simp",
+            "pkg:org.springframework.messaging.simp.broker",
+            "pkg:org.springframework.messaging.simp.stomp"
+          ]
+        },
+        {
+          "size": 4,
+          "members": [
+            "pkg:org.springframework.orm.jpa",
+            "pkg:org.springframework.orm.jpa.hibernate",
+            "pkg:org.springframework.orm.jpa.persistenceunit",
+            "pkg:org.springframework.orm.jpa.vendor"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:org.springframework.cache.jcache",
+            "pkg:org.springframework.cache.jcache.config",
+            "pkg:org.springframework.cache.jcache.interceptor"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:org.springframework.cglib.core",
+            "pkg:org.springframework.cglib.core.internal",
+            "pkg:org.springframework.cglib.reflect"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:org.springframework.messaging.rsocket",
+            "pkg:org.springframework.messaging.rsocket.annotation.support",
+            "pkg:org.springframework.messaging.rsocket.service"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.springframework.context.annotation.configuration.spr9031",
+            "pkg:org.springframework.context.annotation.configuration.spr9031.scanpackage"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.springframework.context.annotation.spr10546",
+            "pkg:org.springframework.context.annotation.spr10546.scanpackage"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.springframework.docs.integration.mailusage",
+            "pkg:org.springframework.docs.integration.mailusagesimple"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.springframework.jms.connection",
+            "pkg:org.springframework.jms.core"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.springframework.messaging.handler.annotation",
+            "pkg:org.springframework.messaging.simp.annotation"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.springframework.messaging.handler.annotation.support",
+            "pkg:org.springframework.messaging.handler.invocation"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.springframework.test.web.client",
+            "pkg:org.springframework.test.web.client.response"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.springframework.web.client.support",
+            "pkg:org.springframework.web.service.registry"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.springframework.web.servlet.tags",
+            "pkg:org.springframework.web.servlet.tags.form"
+          ]
+        }
+      ]
+    },
+    "B2": {
+      "id": "B2",
+      "name": "package-dependency-density",
+      "label": "包依赖密度",
+      "domain": "B",
+      "direction": "interval",
+      "value": 8.5373,
+      "numerator": 6975,
+      "denominator": 817,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Package --all --field id,dependsOnPackageIds --snapshot 290a057e-3a18-407d-9704-79989dbecc46",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot 290a057e-3a18-407d-9704-79989dbecc46"
+      ]
+    },
+    "B1.frontend": {
+      "id": "B1.frontend",
+      "name": "circular-dependency-density",
+      "label": "循环依赖密度（前端）",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": 0.0,
+      "numerator": 0,
+      "denominator": 10,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Module --all --field id,importedModuleIds --snapshot 290a057e-3a18-407d-9704-79989dbecc46",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Module --snapshot 290a057e-3a18-407d-9704-79989dbecc46"
+      ],
+      "sccCount": 0
+    },
+    "B3": {
+      "id": "B3",
+      "name": "giant-class-ratio",
+      "label": "巨型类占比",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": 0.02653,
+      "numerator": 420,
+      "denominator": 15831,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Class --all --field id,lineCount --snapshot 290a057e-3a18-407d-9704-79989dbecc46",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --where 'lineCount>500' --snapshot 290a057e-3a18-407d-9704-79989dbecc46",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --snapshot 290a057e-3a18-407d-9704-79989dbecc46"
+      ],
+      "threshold": "lineCount > 500",
+      "top": [
+        {
+          "lineCount": 8428,
+          "id": "cls:org.springframework.expression.spel.SpelCompilationCoverageTests"
+        },
+        {
+          "lineCount": 4518,
+          "id": "cls:org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessorTests"
+        },
+        {
+          "lineCount": 4116,
+          "id": "cls:org.springframework.web.servlet.mvc.method.annotation.ServletAnnotationControllerHandlerMethodTests"
+        },
+        {
+          "lineCount": 4018,
+          "id": "cls:org.springframework.core.annotation.MergedAnnotationsTests"
+        },
+        {
+          "lineCount": 3869,
+          "id": "cls:org.springframework.beans.factory.DefaultListableBeanFactoryTests"
+        }
+      ],
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --where 'lineCount>500' --snapshot 290a057e-3a18-407d-9704-79989dbecc46",
+        "serverCount": 420,
+        "match": true
+      }
+    },
+    "C2": {
+      "id": "C2",
+      "name": "cyclomatic-complexity-p90",
+      "label": "圈复杂度 P90",
+      "domain": "C",
+      "direction": "lower-better",
+      "value": 2,
+      "denominator": 79447,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot 290a057e-3a18-407d-9704-79989dbecc46",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,lineCount,complexity --snapshot 290a057e-3a18-407d-9704-79989dbecc46"
+      ],
+      "percentiles": {
+        "p25": 1,
+        "p50": 1,
+        "p75": 1,
+        "p90": 2
+      },
+      "mean": 1.4991,
+      "max": 543,
+      "top": [
+        {
+          "cyclomaticComplexity": 543,
+          "id": "mtd:org.springframework.asm.ClassReader.readCode(:MethodVisitor:Context:int)"
+        },
+        {
+          "cyclomaticComplexity": 212,
+          "id": "mtd:org.springframework.asm.Frame.execute(:int:int:Symbol:SymbolTable)"
+        },
+        {
+          "cyclomaticComplexity": 62,
+          "id": "mtd:org.springframework.expression.spel.standard.Tokenizer.process"
+        },
+        {
+          "cyclomaticComplexity": 59,
+          "id": "mtd:org.springframework.beans.TypeConverterDelegate.convertIfNecessary(:String:Object:Object:Class<T>:TypeDescriptor)"
+        },
+        {
+          "cyclomaticComplexity": 56,
+          "id": "mtd:org.springframework.beans.factory.support.AbstractBeanFactory.isTypeMatch(:String:ResolvableType:boolean)"
+        }
+      ],
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot 290a057e-3a18-407d-9704-79989dbecc46",
+        "serverCount": 79447,
+        "match": true
+      }
+    },
+    "C3": {
+      "id": "C3",
+      "name": "test-method-ratio",
+      "label": "测试方法占比",
+      "domain": "C",
+      "direction": "higher-better",
+      "value": 0.285084,
+      "numerator": 24694,
+      "denominator": 86620,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'isTest=true' --snapshot 290a057e-3a18-407d-9704-79989dbecc46",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot 290a057e-3a18-407d-9704-79989dbecc46",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,isTest,testType --snapshot 290a057e-3a18-407d-9704-79989dbecc46"
+      ],
+      "testTypes": {
+        "UnitTest": 24641,
+        "IntegrationTest": 22,
+        "E2eTest": 31
+      },
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'isTest=true' --snapshot 290a057e-3a18-407d-9704-79989dbecc46",
+        "serverCount": 24694,
+        "match": true
+      }
+    },
+    "C4": {
+      "id": "C4",
+      "name": "giant-method-ratio",
+      "label": "巨型方法占比",
+      "domain": "C",
+      "direction": "lower-better",
+      "value": 0.002535,
+      "numerator": 203,
+      "denominator": 80067,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount>80' --snapshot 290a057e-3a18-407d-9704-79989dbecc46",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount=0' --snapshot 290a057e-3a18-407d-9704-79989dbecc46",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot 290a057e-3a18-407d-9704-79989dbecc46",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,lineCount --snapshot 290a057e-3a18-407d-9704-79989dbecc46"
+      ],
+      "threshold": "lineCount > 80",
+      "excludedFromDenominator": {
+        "lineCountIsZero": 6553,
+        "lineCountIsNull": 0
+      },
+      "top": [
+        {
+          "lineCount": 1134,
+          "id": "mtd:org.springframework.asm.ClassReader.readCode(:MethodVisitor:Context:int)"
+        },
+        {
+          "lineCount": 429,
+          "id": "mtd:org.springframework.asm.Frame.execute(:int:int:Symbol:SymbolTable)"
+        },
+        {
+          "lineCount": 310,
+          "id": "mtd:org.springframework.expression.spel.EvaluationTests$IncrementAndDecrementTests.incrementAllNodeTypes"
+        },
+        {
+          "lineCount": 309,
+          "id": "mtd:org.springframework.asm.ClassReader.accept(:ClassVisitor:Attribute[]:int)"
+        },
+        {
+          "lineCount": 304,
+          "id": "mtd:org.springframework.expression.spel.SpelCompilationCoverageTests$MethodAndConstructorTests.methodReferenceVarargs"
+        }
+      ],
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount>80' --snapshot 290a057e-3a18-407d-9704-79989dbecc46",
+        "serverCount": 203,
+        "match": true
+      }
+    },
+    "D3": {
+      "id": "D3",
+      "name": "scale-profile",
+      "label": "规模画像",
+      "domain": "D",
+      "direction": "none",
+      "value": 105848,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" snapshot list --repo spring-framework",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Repository --snapshot 290a057e-3a18-407d-9704-79989dbecc46",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot 290a057e-3a18-407d-9704-79989dbecc46",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --snapshot 290a057e-3a18-407d-9704-79989dbecc46",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Interface --snapshot 290a057e-3a18-407d-9704-79989dbecc46",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot 290a057e-3a18-407d-9704-79989dbecc46",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Dependency --snapshot 290a057e-3a18-407d-9704-79989dbecc46",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot 290a057e-3a18-407d-9704-79989dbecc46",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Mapper --snapshot 290a057e-3a18-407d-9704-79989dbecc46",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Module --snapshot 290a057e-3a18-407d-9704-79989dbecc46",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Component --snapshot 290a057e-3a18-407d-9704-79989dbecc46",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Function --snapshot 290a057e-3a18-407d-9704-79989dbecc46",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Store --snapshot 290a057e-3a18-407d-9704-79989dbecc46",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Route --snapshot 290a057e-3a18-407d-9704-79989dbecc46",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot 290a057e-3a18-407d-9704-79989dbecc46"
+      ],
+      "typeCounts": {
+        "Repository": 1,
+        "Package": 817,
+        "Class": 15831,
+        "Interface": 2534,
+        "Method": 86620,
+        "Dependency": 14,
+        "Table": 15,
+        "Mapper": 0,
+        "Module": 10,
+        "Component": 0,
+        "Function": 6,
+        "Store": 0,
+        "Route": 0,
+        "ApiEndpoint": 0
+      },
+      "linkCount": 286043
+    }
+  },
+  "nullMetrics": {
+    "A1": {
+      "id": "A1",
+      "name": "full-chain-coverage",
+      "label": "全链路贯通率",
+      "domain": "A",
+      "direction": "higher-better",
+      "value": null,
+      "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot 290a057e-3a18-407d-9704-79989dbecc46"
+      ],
+      "evidence": {
+        "apiEndpointCount": 0
+      }
+    },
+    "A2": {
+      "id": "A2",
+      "name": "api-backend-breakrate",
+      "label": "前后端断链率",
+      "domain": "A",
+      "direction": "lower-better",
+      "value": null,
+      "reason": "无 ApiEndpoint 对象（纯后端仓库——按口径置空）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot 290a057e-3a18-407d-9704-79989dbecc46"
+      ],
+      "evidence": {
+        "apiEndpointCount": 0
+      }
+    },
+    "B4": {
+      "id": "B4",
+      "name": "component-coupling-degree",
+      "label": "组件耦合度",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": null,
+      "reason": "无 Component 对象（纯后端仓库——按口径置空）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Component --snapshot 290a057e-3a18-407d-9704-79989dbecc46"
+      ],
+      "evidence": {
+        "componentCount": 0
+      }
+    },
+    "C1": {
+      "id": "C1",
+      "name": "endpoint-table-hops",
+      "label": "端到端跳数",
+      "domain": "C",
+      "direction": "interval",
+      "value": null,
+      "reason": "无 ApiEndpoint 对象（贯通链分母为 0）",
+      "evidence": {
+        "apiEndpointCount": 0
+      }
+    },
+    "D1": {
+      "id": "D1",
+      "name": "framework-version-coverage",
+      "label": "技术栈版本覆盖率",
+      "domain": "D",
+      "direction": "higher-better",
+      "value": null,
+      "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Dependency --all --field id,name,version,scope --snapshot 290a057e-3a18-407d-9704-79989dbecc46"
+      ],
+      "evidence": {
+        "total": 14,
+        "emptyVersion": 7,
+        "placeholder": 3,
+        "determinable": 4
+      }
+    },
+    "D2": {
+      "id": "D2",
+      "name": "dependency-homogeneity",
+      "label": "依赖同质度",
+      "domain": "D",
+      "direction": "none",
+      "value": null,
+      "reason": "cohort 级指标（依赖 cohort 众数集合——单体层不产出）",
+      "evidence": {
+        "dependencyCount": 14
+      }
+    },
+    "D4": {
+      "id": "D4",
+      "name": "evolution-trend",
+      "label": "年度演进趋势",
+      "domain": "D",
+      "direction": "none",
+      "value": null,
+      "reason": "单快照（首次导入——无时序）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" snapshot list --repo spring-framework"
+      ],
+      "evidence": {
+        "completeSnapshotCount": 1
+      }
+    }
+  },
+  "dataQuality": {
+    "dq.null-complexity-ratio": {
+      "id": "dq.null-complexity-ratio",
+      "name": "null-complexity-ratio",
+      "label": "complexity 为 null 的方法占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": 0.08281,
+      "numerator": 7173,
+      "denominator": 86620,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot 290a057e-3a18-407d-9704-79989dbecc46",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot 290a057e-3a18-407d-9704-79989dbecc46"
+      ]
+    },
+    "dq.missing-version-ratio": {
+      "id": "dq.missing-version-ratio",
+      "name": "missing-version-ratio",
+      "label": "version 为空串的依赖占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": 0.5,
+      "numerator": 7,
+      "denominator": 14,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Dependency --all --field id,name,version,scope --snapshot 290a057e-3a18-407d-9704-79989dbecc46"
+      ],
+      "placeholderVersionCount": 3
+    },
+    "dq.ext-call-ratio": {
+      "id": "dq.ext-call-ratio",
+      "name": "ext-call-ratio",
+      "label": "ext: 虚拟调用过滤占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": null,
+      "reason": "不可观测（ext: 虚拟边在导入物化时已过滤——查询面天然免疫）"
+    }
+  }
+}
