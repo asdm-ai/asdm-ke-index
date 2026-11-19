@@ -5,12 +5,13 @@
   "repo": "ruoyi-vue-pro",
   "sourceId": "ruoyi-vue-pro",
   "snapshot": {
-    "snapshotId": "8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
+    "snapshotId": "4f6c5563-1079-4e19-a3e0-92499d621085",
     "status": "complete",
-    "sourceVersion": "head",
-    "objectCount": 41911,
-    "linkCount": 206379,
-    "completedAt": "2026-11-17T07:39:44.544Z"
+    "sourceVersion": "348b17cd26e6e38120f7b1d2295975e83fd0f465",
+    "sourceHead": "348b17cd26e6e38120f7b1d2295975e83fd0f465",
+    "objectCount": 45303,
+    "linkCount": 225150,
+    "completedAt": "2026-11-19T11:40:03.088Z"
   },
   "cliVersion": "0.3.6",
   "metrics": {
@@ -20,13 +21,13 @@
       "label": "孤儿表率",
       "domain": "A",
       "direction": "lower-better",
-      "value": 0.488372,
-      "numerator": 21,
+      "value": 1.0,
+      "numerator": 43,
       "denominator": 43,
       "commands": [
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Table --all --field id,name,matchedEntityClass --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Mapper --all --field id,namespace,mappedTableIds --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e"
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Table --all --field id,name,matchedEntityClass --snapshot 4f6c5563-1079-4e19-a3e0-92499d621085",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Mapper --all --field id,namespace,mappedTableIds --snapshot 4f6c5563-1079-4e19-a3e0-92499d621085",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot 4f6c5563-1079-4e19-a3e0-92499d621085"
       ]
     },
     "A4": {
@@ -35,17 +36,17 @@
       "label": "表↔实体映射率",
       "domain": "A",
       "direction": "higher-better",
-      "value": 0.511628,
-      "numerator": 22,
+      "value": 0.0,
+      "numerator": 0,
       "denominator": 43,
       "commands": [
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Table --all --field id,name,matchedEntityClass --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Mapper --all --field id,namespace,mappedTableIds --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e"
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Table --all --field id,name,matchedEntityClass --snapshot 4f6c5563-1079-4e19-a3e0-92499d621085",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Mapper --all --field id,namespace,mappedTableIds --snapshot 4f6c5563-1079-4e19-a3e0-92499d621085",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot 4f6c5563-1079-4e19-a3e0-92499d621085"
       ],
       "evidence": {
         "mapperEdgeOnly": 0,
-        "entityClassOnly": 22,
+        "entityClassOnly": 0,
         "both": 0
       }
     },
@@ -55,14 +56,14 @@
       "label": "循环依赖密度（后端）",
       "domain": "B",
       "direction": "lower-better",
-      "value": 0.146157,
-      "numerator": 405,
-      "denominator": 2771,
+      "value": 0.149301,
+      "numerator": 427,
+      "denominator": 2860,
       "commands": [
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Package --all --field id,dependsOnPackageIds --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e"
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Package --all --field id,dependsOnPackageIds --snapshot 4f6c5563-1079-4e19-a3e0-92499d621085",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot 4f6c5563-1079-4e19-a3e0-92499d621085"
       ],
-      "sccCount": 72,
+      "sccCount": 75,
       "sccs": [
         {
           "size": 39,
@@ -151,7 +152,7 @@
           ]
         },
         {
-          "size": 32,
+          "size": 33,
           "members": [
             "pkg:cn.iocoder.yudao.module.pay.api.refund",
             "pkg:cn.iocoder.yudao.module.pay.controller.admin.order",
@@ -173,6 +174,7 @@
             "pkg:cn.iocoder.yudao.module.pay.dal.mysql.transfer",
             "pkg:cn.iocoder.yudao.module.pay.dal.mysql.wallet",
             "pkg:cn.iocoder.yudao.module.pay.framework.pay.config",
+            "pkg:cn.iocoder.yudao.module.pay.framework.pay.core.client",
             "pkg:cn.iocoder.yudao.module.pay.framework.pay.core.client.impl",
             "pkg:cn.iocoder.yudao.module.pay.framework.pay.core.client.impl.alipay",
             "pkg:cn.iocoder.yudao.module.pay.framework.pay.core.client.impl.mock",
@@ -371,6 +373,51 @@
           ]
         },
         {
+          "size": 7,
+          "members": [
+            "pkg:cn.iocoder.yudao.module.ai.framework.ai.core.video",
+            "pkg:cn.iocoder.yudao.module.ai.framework.ai.core.video.doubao",
+            "pkg:cn.iocoder.yudao.module.ai.framework.ai.core.video.jimeng",
+            "pkg:cn.iocoder.yudao.module.ai.framework.ai.core.video.kling",
+            "pkg:cn.iocoder.yudao.module.ai.framework.ai.core.video.minimax",
+            "pkg:cn.iocoder.yudao.module.ai.framework.ai.core.video.tongyi",
+            "pkg:cn.iocoder.yudao.module.ai.framework.ai.core.video.veo"
+          ]
+        },
+        {
+          "size": 6,
+          "members": [
+            "pkg:cn.iocoder.yudao.framework.apilog.core.filter",
+            "pkg:cn.iocoder.yudao.framework.apilog.core.interceptor",
+            "pkg:cn.iocoder.yudao.framework.web.config",
+            "pkg:cn.iocoder.yudao.framework.web.core.filter",
+            "pkg:cn.iocoder.yudao.framework.web.core.handler",
+            "pkg:cn.iocoder.yudao.framework.web.core.util"
+          ]
+        },
+        {
+          "size": 6,
+          "members": [
+            "pkg:cn.iocoder.yudao.module.ai.dal.dataobject.image",
+            "pkg:cn.iocoder.yudao.module.ai.dal.dataobject.knowledge",
+            "pkg:cn.iocoder.yudao.module.ai.dal.dataobject.model",
+            "pkg:cn.iocoder.yudao.module.ai.dal.dataobject.video",
+            "pkg:cn.iocoder.yudao.module.ai.tool.function",
+            "pkg:cn.iocoder.yudao.module.ai.util"
+          ]
+        },
+        {
+          "size": 6,
+          "members": [
+            "pkg:cn.iocoder.yudao.module.ai.framework.ai.core.model.baidu",
+            "pkg:cn.iocoder.yudao.module.ai.framework.ai.core.model.doubao",
+            "pkg:cn.iocoder.yudao.module.ai.framework.ai.core.model.minimax",
+            "pkg:cn.iocoder.yudao.module.ai.framework.ai.core.model.speech",
+            "pkg:cn.iocoder.yudao.module.ai.framework.ai.core.model.tencent.api",
+            "pkg:cn.iocoder.yudao.module.ai.framework.ai.core.model.tongyi"
+          ]
+        },
+        {
           "size": 6,
           "members": [
             "pkg:cn.iocoder.yudao.module.member.controller.app.auth",
@@ -414,15 +461,6 @@
         {
           "size": 4,
           "members": [
-            "pkg:cn.iocoder.yudao.framework.web.config",
-            "pkg:cn.iocoder.yudao.framework.web.core.filter",
-            "pkg:cn.iocoder.yudao.framework.web.core.handler",
-            "pkg:cn.iocoder.yudao.framework.web.core.util"
-          ]
-        },
-        {
-          "size": 4,
-          "members": [
             "pkg:cn.iocoder.yudao.module.ai.dal.dataobject.chat",
             "pkg:cn.iocoder.yudao.module.ai.dal.dataobject.mindmap",
             "pkg:cn.iocoder.yudao.module.ai.dal.dataobject.requestlog",
@@ -432,10 +470,10 @@
         {
           "size": 4,
           "members": [
-            "pkg:cn.iocoder.yudao.module.ai.dal.dataobject.knowledge",
-            "pkg:cn.iocoder.yudao.module.ai.dal.dataobject.model",
-            "pkg:cn.iocoder.yudao.module.ai.tool.function",
-            "pkg:cn.iocoder.yudao.module.ai.util"
+            "pkg:cn.iocoder.yudao.module.ai.service.knowledge",
+            "pkg:cn.iocoder.yudao.module.ai.service.model",
+            "pkg:cn.iocoder.yudao.module.ai.service.skill",
+            "pkg:cn.iocoder.yudao.module.ai.tool.skill"
           ]
         },
         {
@@ -692,15 +730,15 @@
         {
           "size": 2,
           "members": [
-            "pkg:cn.iocoder.yudao.module.ai.framework.ai.config",
-            "pkg:cn.iocoder.yudao.module.ai.framework.ai.core.model"
+            "pkg:cn.iocoder.yudao.module.ai.controller.admin.video",
+            "pkg:cn.iocoder.yudao.module.ai.service.video"
           ]
         },
         {
           "size": 2,
           "members": [
-            "pkg:cn.iocoder.yudao.module.ai.service.knowledge",
-            "pkg:cn.iocoder.yudao.module.ai.service.model"
+            "pkg:cn.iocoder.yudao.module.ai.framework.ai.config",
+            "pkg:cn.iocoder.yudao.module.ai.framework.ai.core.model"
           ]
         },
         {
@@ -837,12 +875,12 @@
       "label": "包依赖密度",
       "domain": "B",
       "direction": "interval",
-      "value": 5.066,
-      "numerator": 14038,
-      "denominator": 2771,
+      "value": 5.0948,
+      "numerator": 14571,
+      "denominator": 2860,
       "commands": [
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Package --all --field id,dependsOnPackageIds --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e"
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Package --all --field id,dependsOnPackageIds --snapshot 4f6c5563-1079-4e19-a3e0-92499d621085",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot 4f6c5563-1079-4e19-a3e0-92499d621085"
       ]
     },
     "B1.frontend": {
@@ -855,8 +893,8 @@
       "numerator": 0,
       "denominator": 5,
       "commands": [
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Module --all --field id,importedModuleIds --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Module --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e"
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Module --all --field id,importedModuleIds --snapshot 4f6c5563-1079-4e19-a3e0-92499d621085",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Module --snapshot 4f6c5563-1079-4e19-a3e0-92499d621085"
       ],
       "sccCount": 0
     },
@@ -866,13 +904,13 @@
       "label": "巨型类占比",
       "domain": "B",
       "direction": "lower-better",
-      "value": 0.015323,
-      "numerator": 99,
-      "denominator": 6461,
+      "value": 0.017413,
+      "numerator": 119,
+      "denominator": 6834,
       "commands": [
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Class --all --field id,lineCount --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --where 'lineCount>500' --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e"
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Class --all --field id,lineCount --snapshot 4f6c5563-1079-4e19-a3e0-92499d621085",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --where 'lineCount>500' --snapshot 4f6c5563-1079-4e19-a3e0-92499d621085",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --snapshot 4f6c5563-1079-4e19-a3e0-92499d621085"
       ],
       "threshold": "lineCount > 500",
       "top": [
@@ -898,8 +936,8 @@
         }
       ],
       "crossCheck": {
-        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --where 'lineCount>500' --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
-        "serverCount": 99,
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --where 'lineCount>500' --snapshot 4f6c5563-1079-4e19-a3e0-92499d621085",
+        "serverCount": 119,
         "match": true
       }
     },
@@ -913,8 +951,8 @@
       "numerator": 0,
       "denominator": 1,
       "commands": [
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Component --all --field id,referencedComponentIds,isGlobal --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Component --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e"
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Component --all --field id,referencedComponentIds,isGlobal --snapshot 4f6c5563-1079-4e19-a3e0-92499d621085",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Component --snapshot 4f6c5563-1079-4e19-a3e0-92499d621085"
       ],
       "globalRegistrationRatio": 0.0
     },
@@ -925,10 +963,10 @@
       "domain": "C",
       "direction": "lower-better",
       "value": 3,
-      "denominator": 22748,
+      "denominator": 25247,
       "commands": [
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,lineCount,complexity --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e"
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot 4f6c5563-1079-4e19-a3e0-92499d621085",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,lineCount,complexity --snapshot 4f6c5563-1079-4e19-a3e0-92499d621085"
       ],
       "percentiles": {
         "p25": 1,
@@ -936,33 +974,33 @@
         "p75": 2,
         "p90": 3
       },
-      "mean": 1.6744,
-      "max": 56,
+      "mean": 1.6994,
+      "max": 61,
       "top": [
+        {
+          "cyclomaticComplexity": 61,
+          "id": "mtd:cn.iocoder.yudao.module.ai.framework.ai.core.video.doubao.DouBaoSeedanceVideoApi.buildRequestBody(:DouBaoSeedanceVideoRequest)"
+        },
         {
           "cyclomaticComplexity": 56,
           "id": "mtd:cn.iocoder.yudao.module.system.framework.justauth.core.AuthRequestFactory.getDefaultRequest(:String)"
+        },
+        {
+          "cyclomaticComplexity": 46,
+          "id": "mtd:cn.iocoder.yudao.module.ai.service.drama.AiDramaCanvasServiceImpl.validateDirectorDocument(:JsonNode)"
         },
         {
           "cyclomaticComplexity": 41,
           "id": "mtd:cn.iocoder.yudao.module.oa.service.file.OaFileNodeServiceImpl.getFileNodePage(:OaFileNodePageReqVO:Long)"
         },
         {
-          "cyclomaticComplexity": 33,
+          "cyclomaticComplexity": 34,
           "id": "mtd:cn.iocoder.yudao.framework.mybatis.core.interceptor.ForUpdateInnerInterceptor.rewriteForSqlServer(:String:boolean)"
-        },
-        {
-          "cyclomaticComplexity": 31,
-          "id": "mtd:cn.iocoder.yudao.module.mes.service.wm.batch.MesWmBatchServiceImpl.getOrGenerateBatchCode(:MesWmBatchGenerateReqVO)"
-        },
-        {
-          "cyclomaticComplexity": 27,
-          "id": "mtd:cn.iocoder.yudao.module.ai.util.AiChatUtils.buildChatOptions(:AiPlatformEnum:String:Double:Integer:List<ToolCallback>:Map<String, Object>:boolean:Map<String, Object>)"
         }
       ],
       "crossCheck": {
-        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
-        "serverCount": 22748,
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot 4f6c5563-1079-4e19-a3e0-92499d621085",
+        "serverCount": 25247,
         "match": true
       }
     },
@@ -972,20 +1010,20 @@
       "label": "测试方法占比",
       "domain": "C",
       "direction": "higher-better",
-      "value": 0.187019,
-      "numerator": 5789,
-      "denominator": 30954,
+      "value": 0.200207,
+      "numerator": 6775,
+      "denominator": 33840,
       "commands": [
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'isTest=true' --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,isTest,testType --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e"
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'isTest=true' --snapshot 4f6c5563-1079-4e19-a3e0-92499d621085",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot 4f6c5563-1079-4e19-a3e0-92499d621085",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,isTest,testType --snapshot 4f6c5563-1079-4e19-a3e0-92499d621085"
       ],
       "testTypes": {
-        "UnitTest": 5789
+        "UnitTest": 6775
       },
       "crossCheck": {
-        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'isTest=true' --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
-        "serverCount": 5789,
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'isTest=true' --snapshot 4f6c5563-1079-4e19-a3e0-92499d621085",
+        "serverCount": 6775,
         "match": true
       }
     },
@@ -995,21 +1033,29 @@
       "label": "巨型方法占比",
       "domain": "C",
       "direction": "lower-better",
-      "value": 0.001493,
-      "numerator": 34,
-      "denominator": 22779,
+      "value": 0.001661,
+      "numerator": 42,
+      "denominator": 25284,
       "commands": [
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount>80' --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount=0' --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,lineCount --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e"
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount>80' --snapshot 4f6c5563-1079-4e19-a3e0-92499d621085",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount=0' --snapshot 4f6c5563-1079-4e19-a3e0-92499d621085",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot 4f6c5563-1079-4e19-a3e0-92499d621085",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,lineCount --snapshot 4f6c5563-1079-4e19-a3e0-92499d621085"
       ],
       "threshold": "lineCount > 80",
       "excludedFromDenominator": {
-        "lineCountIsZero": 8175,
+        "lineCountIsZero": 8556,
         "lineCountIsNull": 0
       },
       "top": [
+        {
+          "lineCount": 147,
+          "id": "mtd:cn.iocoder.yudao.module.ai.framework.ai.core.video.doubao.DouBaoSeedanceVideoApi.buildRequestBody(:DouBaoSeedanceVideoRequest)"
+        },
+        {
+          "lineCount": 144,
+          "id": "mtd:cn.iocoder.yudao.module.ai.service.video.AiVideoServiceImpl.doBuildSubmitter(:AiVideoDO:AiApiKeyDO)"
+        },
         {
           "lineCount": 138,
           "id": "mtd:cn.iocoder.yudao.module.bpm.service.task.BpmTaskServiceImpl.processTaskAssigned(:Task)"
@@ -1021,19 +1067,11 @@
         {
           "lineCount": 128,
           "id": "mtd:cn.iocoder.yudao.module.mes.service.wm.batch.MesWmBatchServiceImpl.getOrGenerateBatchCode(:MesWmBatchGenerateReqVO)"
-        },
-        {
-          "lineCount": 120,
-          "id": "mtd:cn.iocoder.yudao.module.ai1.harness.session.Ai1SessionStreamTool.executeTask(:StreamMessageId:Map<String, String>:Long:RLock:long:boolean)"
-        },
-        {
-          "lineCount": 120,
-          "id": "mtd:cn.iocoder.yudao.module.ai.service.chat.AiChatMessageServiceImpl.sendChatMessageStream(:AiChatMessageSendReqVO:Long)"
         }
       ],
       "crossCheck": {
-        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount>80' --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
-        "serverCount": 34,
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount>80' --snapshot 4f6c5563-1079-4e19-a3e0-92499d621085",
+        "serverCount": 42,
         "match": true
       }
     },
@@ -1043,33 +1081,33 @@
       "label": "规模画像",
       "domain": "D",
       "direction": "none",
-      "value": 41911,
+      "value": 45303,
       "commands": [
         "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" snapshot list --repo ruoyi-vue-pro",
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Repository --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Interface --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Dependency --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Mapper --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Module --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Component --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Function --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Store --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Route --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e"
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Repository --snapshot 4f6c5563-1079-4e19-a3e0-92499d621085",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot 4f6c5563-1079-4e19-a3e0-92499d621085",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --snapshot 4f6c5563-1079-4e19-a3e0-92499d621085",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Interface --snapshot 4f6c5563-1079-4e19-a3e0-92499d621085",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot 4f6c5563-1079-4e19-a3e0-92499d621085",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Dependency --snapshot 4f6c5563-1079-4e19-a3e0-92499d621085",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot 4f6c5563-1079-4e19-a3e0-92499d621085",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Mapper --snapshot 4f6c5563-1079-4e19-a3e0-92499d621085",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Module --snapshot 4f6c5563-1079-4e19-a3e0-92499d621085",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Component --snapshot 4f6c5563-1079-4e19-a3e0-92499d621085",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Function --snapshot 4f6c5563-1079-4e19-a3e0-92499d621085",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Store --snapshot 4f6c5563-1079-4e19-a3e0-92499d621085",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Route --snapshot 4f6c5563-1079-4e19-a3e0-92499d621085",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot 4f6c5563-1079-4e19-a3e0-92499d621085"
       ],
       "typeCounts": {
         "Repository": 1,
-        "Package": 2771,
-        "Class": 6461,
-        "Interface": 1474,
-        "Method": 30954,
-        "Dependency": 186,
+        "Package": 2860,
+        "Class": 6834,
+        "Interface": 1509,
+        "Method": 33840,
+        "Dependency": 198,
         "Table": 43,
-        "Mapper": 7,
+        "Mapper": 4,
         "Module": 5,
         "Component": 1,
         "Function": 8,
@@ -1077,7 +1115,7 @@
         "Route": 0,
         "ApiEndpoint": 0
       },
-      "linkCount": 206379
+      "linkCount": 225150
     }
   },
   "nullMetrics": {
@@ -1090,7 +1128,7 @@
       "value": null,
       "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）",
       "commands": [
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e"
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot 4f6c5563-1079-4e19-a3e0-92499d621085"
       ],
       "evidence": {
         "apiEndpointCount": 0
@@ -1105,7 +1143,7 @@
       "value": null,
       "reason": "无 ApiEndpoint 对象（纯后端仓库——按口径置空）",
       "commands": [
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e"
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot 4f6c5563-1079-4e19-a3e0-92499d621085"
       ],
       "evidence": {
         "apiEndpointCount": 0
@@ -1132,12 +1170,12 @@
       "value": null,
       "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）",
       "commands": [
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Dependency --all --field id,name,version,scope --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e"
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Dependency --all --field id,name,version,scope --snapshot 4f6c5563-1079-4e19-a3e0-92499d621085"
       ],
       "evidence": {
-        "total": 186,
+        "total": 198,
         "emptyVersion": 38,
-        "placeholder": 146,
+        "placeholder": 158,
         "determinable": 2
       }
     },
@@ -1150,7 +1188,7 @@
       "value": null,
       "reason": "cohort 级指标（依赖 cohort 众数集合——单体层不产出）",
       "evidence": {
-        "dependencyCount": 186
+        "dependencyCount": 198
       }
     },
     "D4": {
@@ -1160,12 +1198,12 @@
       "domain": "D",
       "direction": "none",
       "value": null,
-      "reason": "单快照（首次导入——无时序）",
+      "reason": "时序聚合未实现（过渡实现——该 source 已有 2 个 complete 快照）",
       "commands": [
         "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" snapshot list --repo ruoyi-vue-pro"
       ],
       "evidence": {
-        "completeSnapshotCount": 1
+        "completeSnapshotCount": 2
       }
     }
   },
@@ -1176,12 +1214,12 @@
       "label": "complexity 为 null 的方法占比",
       "domain": "dq",
       "direction": "none",
-      "value": 0.265103,
-      "numerator": 8206,
-      "denominator": 30954,
+      "value": 0.25393,
+      "numerator": 8593,
+      "denominator": 33840,
       "commands": [
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e"
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot 4f6c5563-1079-4e19-a3e0-92499d621085",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot 4f6c5563-1079-4e19-a3e0-92499d621085"
       ]
     },
     "dq.missing-version-ratio": {
@@ -1190,13 +1228,13 @@
       "label": "version 为空串的依赖占比",
       "domain": "dq",
       "direction": "none",
-      "value": 0.204301,
+      "value": 0.191919,
       "numerator": 38,
-      "denominator": 186,
+      "denominator": 198,
       "commands": [
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Dependency --all --field id,name,version,scope --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e"
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Dependency --all --field id,name,version,scope --snapshot 4f6c5563-1079-4e19-a3e0-92499d621085"
       ],
-      "placeholderVersionCount": 146
+      "placeholderVersionCount": 158
     },
     "dq.mapper-join-miss-ratio": {
       "id": "dq.mapper-join-miss-ratio",
@@ -1206,10 +1244,10 @@
       "direction": "none",
       "value": 0.0,
       "numerator": 0,
-      "denominator": 7,
+      "denominator": 4,
       "commands": [
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Mapper --all --field id,namespace --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Interface --all --field id --snapshot 8cafd6d3-5982-4314-97fe-d3aa3ac7934e"
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Mapper --all --field id,namespace --snapshot 4f6c5563-1079-4e19-a3e0-92499d621085",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Interface --all --field id --snapshot 4f6c5563-1079-4e19-a3e0-92499d621085"
       ]
     },
     "dq.ext-call-ratio": {
