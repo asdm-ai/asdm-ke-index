@@ -20,7 +20,8 @@
 #   C. JPA 数据访问层 8——与 MyBatis 系对照的 JPA 形态（含 JPA 实现本体）
 #   D. 前后端配对 7——A 层仓的官方前端仓（配对聚合轮未启用，先单列为前端形态样本）
 #
-#   当前批次：2/4（30 仓落库）——分批 push ≤10 新仓/批，批序即提交序
+#   当前批次：3/4（40 仓落库）——分批 push ≤10 新仓/批，批序即提交序
+#   （批 3 = C 层 4 + D 层 6；批 4 = D 层剩余 1 仓）
 # =============================================================================
 
 repos:
@@ -132,7 +133,7 @@ repos:
     repo: druid
     skip: false
     notes: "B·数据库连接池（Maven 大型单仓——连接池/SQL 解析器形态，无业务表极端）"
-  # ---- 分层 C：JPA 数据访问层（4 of 8）----
+  # ---- 分层 C：JPA 数据访问层（8 of 8）----
   - owner: spring-projects
     repo: spring-petclinic
     skip: false
@@ -149,3 +150,50 @@ repos:
     repo: flowable-engine
     skip: false
     notes: "C·BPM 流程引擎（Hibernate/JPA——引擎型 JPA 形态对照）"
+  - owner: Activiti
+    repo: Activiti
+    skip: false
+    notes: "C·Activiti BPM 平台（JPA/Hibernate——Flowable 同祖仓（Flowable 5 fork 自此），引擎型 JPA 血缘对照）"
+  - owner: hibernate
+    repo: hibernate-orm
+    skip: false
+    notes: "C·Hibernate ORM 本体（JPA 实现祖师仓——与 keycloak 业务侧 JPA 构成实现/使用两端对照）"
+  - owner: dhis2
+    repo: dhis2-core
+    skip: false
+    notes: "C·DHIS2 卫生信息平台（Hibernate 重度大型业务系统——国际组织级 JPA 业务形态）"
+  - owner: BroadleafCommerce
+    repo: BroadleafCommerce
+    skip: false
+    notes: "C·Broadleaf 电商框架（JPA 老牌商业开源——JPA 电商形态，与 mall MyBatis 电商对照）"
+  # ---- 分层 D：前后端配对前端仓（6 of 7，批 3 入列；余 1 仓批 4）----
+  - owner: macrozheng
+    repo: mall-admin-web
+    skip: false
+    notes: "D·mall 官方前端（Vue2 + Element——A 层电商全链路的前端轨样本）"
+    # frontend-pair: macrozheng/mall（前后端配对聚合用——扩展位占位）
+  - owner: yangzongzhuan
+    repo: RuoYi-Vue3
+    skip: false
+    notes: "D·RuoYi 官方 Vue3 前端（与 RuoYi-Vue 同源脚手架的 Vue3 重写轨）"
+    # frontend-pair: yangzongzhuan/RuoYi-Vue（前后端配对聚合用——扩展位占位）
+  - owner: jeecgboot
+    repo: jeecgboot-vue3
+    skip: false
+    notes: "D·JeecgBoot 官方 Vue3 前端（低代码平台前端轨——与 JeecgBoot 后端仓配对）"
+    # frontend-pair: jeecgboot/JeecgBoot（前后端配对聚合用——扩展位占位）
+  - owner: pig-mesh
+    repo: pig-ui
+    skip: false
+    notes: "D·pig 官方前端（Vue3 + Element Plus——微服务脚手架前端轨）"
+    # frontend-pair: pig-mesh/pig（前后端配对聚合用——扩展位占位）
+  - owner: yudaocode
+    repo: yudao-ui-admin-vue3
+    skip: false
+    notes: "D·芋道官方 Vue3 前端（与 ruoyi-vue-pro 配对——大而全脚手架前端轨）"
+    # frontend-pair: YunaiV/ruoyi-vue-pro（前后端配对聚合用——扩展位占位）
+  - owner: elunez
+    repo: eladmin-web
+    skip: false
+    notes: "D·eladmin 官方前端（Vue2 + Element——JPA 系前端轨）"
+    # frontend-pair: elunez/eladmin（前后端配对聚合用——扩展位占位）
