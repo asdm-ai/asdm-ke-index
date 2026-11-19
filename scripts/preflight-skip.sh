@@ -1,21 +1,25 @@
 #!/usr/bin/env bash
 # =============================================================================
-# 扫描前置检查（本地短路——月度重扫零漂移轨的跳过判定）
+# 扫描前置检查（本地短路——零漂移轨跳过判定，服务端锚版）
 # -----------------------------------------------------------------------------
 # 用法：OWNER=<o> REPO=<r> KE_API_KEY=<key> [BRANCH=<b>] [KE_SERVER_URL=<url>] \
 #         [SCAN_FORCE=true] bash scripts/preflight-skip.sh
-# 判据（全部满足才跳过——fail-open：任何取值失败一律不跳过，走全流程）：
-#   1. SCAN_FORCE != true（force 重扫轨永不跳过——R3 语义）
-#   2. reports/$OWNER/$REPO.json 存在
-#   3. report.cliVersion == manifest latest（CLI 版本漂移即过期——R6 同锚）
-#   4. report.snapshot.sourceHead == git ls-remote 远端 HEAD（无新提交零漂移）
+# 跳过判据（fail-open：任何取值失败一律不跳过，走全流程）：
+#   0. SCAN_FORCE != true（force 重扫轨永不跳过——R3 语义）
+#   A. 服务端锚（主判据——scan-one 传 import start --commit <sha> 落锚）：
+#      该 sourceId 最新 complete 快照 sourceVersion == ls-remote 远端 HEAD
+#      且 report 新鲜（report.cliVersion == manifest latest——R6 版本锚；
+#      report.snapshot.snapshotId == 服务端最新 complete 快照 id——防"上次
+#      metrics 失败 report 滞后"形态）。服务端为唯一真相源：快照被 ops 删除
+#      即不命中 → 自然触发重建，无本地状态失真风险。
+#   B. report 锚（兜底判据——存量 "head" 快照过渡期/服务端列表查询异常时）：
+#      report.snapshot.sourceHead == 远端 HEAD 且 report.cliVersion == manifest。
+# 迁移注记：存量快照 sourceVersion="head"（导入时未传 --commit）——首轮不满足
+#   规则 A（"head" != sha）；report 无 sourceHead 时规则 B 亦不命中 → 全量
+#   重导入一轮并以 --commit sha 落新锚，此后进入稳态（同 commit 秒级跳过、
+#   新 commit 自动建新快照——五元组幂等键含 sourceVersion）。
 # 出参（GITHUB_OUTPUT——CI 步骤间传递；本地冒烟 stdout 可见）：
 #   skip=true|false   cli_version=<manifest latest>   remote_head=<sha>
-# 注意：
-#   - sourceHead 由 scan-one.sh clone 后提取、compute-metrics.py 落 report——
-#     存量 report 无该字段时本判据不满足（首轮不跳过，跑一次即回填锚）
-#   - ops 删除服务端快照后本地 report 仍在——需配 dispatch scan_force=true
-#     或删除对应 report 文件，否则本短路会误跳过重建
 # =============================================================================
 set -euo pipefail
 
@@ -27,7 +31,7 @@ BRANCH="${BRANCH:-}"
 SCAN_FORCE="${SCAN_FORCE:-false}"
 REPORT="reports/$OWNER/$REPO.json"
 
-# manifest latest（fail-open：curl/jq 失败 → 空版本 → 判据 3 永不满足 → 不跳过）
+# manifest latest（fail-open：curl/jq 失败 → 空版本 → 版本锚永不满足 → 不跳过）
 CLI_VERSION=$(curl -fsSL -m 15 -H "Authorization: Bearer $KE_API_KEY" \
   "$KE_SERVER_URL/api/downloads/cli/manifest" 2>/dev/null | jq -r '.version // empty' || true)
 
@@ -39,13 +43,40 @@ else
   REMOTE_HEAD=$(git ls-remote "https://github.com/$OWNER/$REPO.git" HEAD 2>/dev/null | cut -f1 || true)
 fi
 
+# 服务端快照（sourceId = repo 名；GET /api/snapshots?source=<id>——Bearer 同租户
+# 过滤；取最新 complete 快照的 snapshotId/sourceVersion）
+SNAP_ID=""; SNAP_VERSION=""
+SNAP_JSON=$(curl -fsSL -m 20 -H "Authorization: Bearer $KE_API_KEY" \
+  "$KE_SERVER_URL/api/snapshots?source=$(printf '%s' "$REPO" | jq -sRr @uri)" 2>/dev/null || true)
+if [ -n "$SNAP_JSON" ]; then
+  LATEST=$(printf '%s' "$SNAP_JSON" | jq -r \
+    '[.snapshots[]? | select(.status == "complete")]
+     | sort_by(.completedAt // .createdAt // "") | last
+     | if . then "\(.snapshotId)\t\(.sourceVersion // "")" else empty end' 2>/dev/null || true)
+  if [ -n "$LATEST" ]; then
+    SNAP_ID=${LATEST%%$'\t'*}
+    SNAP_VERSION=${LATEST#*$'\t'}
+  fi
+fi
+
 SKIP="false"
-if [ "$SCAN_FORCE" != "true" ] && [ -f "$REPORT" ] \
-   && [ -n "$CLI_VERSION" ] && [ -n "$REMOTE_HEAD" ]; then
-  REPORT_CLI=$(jq -r '.cliVersion // empty' "$REPORT")
-  REPORT_HEAD=$(jq -r '.snapshot.sourceHead // empty' "$REPORT")
-  if [ "$REPORT_CLI" = "$CLI_VERSION" ] && [ "$REPORT_HEAD" = "$REMOTE_HEAD" ]; then
-    SKIP="true"
+SKIP_RULE=""
+if [ "$SCAN_FORCE" != "true" ] && [ -n "$CLI_VERSION" ] && [ -n "$REMOTE_HEAD" ]; then
+  # 规则 A：服务端锚 + report 新鲜度
+  if [ -n "$SNAP_ID" ] && [ "$SNAP_VERSION" = "$REMOTE_HEAD" ] && [ -f "$REPORT" ]; then
+    REPORT_CLI=$(jq -r '.cliVersion // empty' "$REPORT")
+    REPORT_SNAP=$(jq -r '.snapshot.snapshotId // empty' "$REPORT")
+    if [ "$REPORT_CLI" = "$CLI_VERSION" ] && [ "$REPORT_SNAP" = "$SNAP_ID" ]; then
+      SKIP="true"; SKIP_RULE="A(server-anchor)"
+    fi
+  fi
+  # 规则 B：report 锚兜底（sourceHead——过渡期/服务端列表不可用）
+  if [ "$SKIP" != "true" ] && [ -f "$REPORT" ]; then
+    REPORT_CLI=$(jq -r '.cliVersion // empty' "$REPORT")
+    REPORT_HEAD=$(jq -r '.snapshot.sourceHead // empty' "$REPORT")
+    if [ "$REPORT_CLI" = "$CLI_VERSION" ] && [ "$REPORT_HEAD" = "$REMOTE_HEAD" ]; then
+      SKIP="true"; SKIP_RULE="B(report-anchor)"
+    fi
   fi
 fi
 
@@ -58,6 +89,7 @@ if [ -n "${GITHUB_OUTPUT:-}" ]; then
 fi
 
 echo "preflight: $OWNER/$REPO skip=$SKIP cli_version=${CLI_VERSION:-<unavailable>} remote_head=${REMOTE_HEAD:-<unavailable>}"
+echo "  server snapshot: id=${SNAP_ID:-<none>} sourceVersion=${SNAP_VERSION:-<none>}"
 if [ "$SKIP" = "true" ]; then
-  echo "  （report 锚命中——cliVersion 与 sourceHead 均无漂移，跳过 CLI 装配/clone/import/metrics）"
+  echo "  （规则 ${SKIP_RULE} 命中——跳过 CLI 装配/clone/import/metrics）"
 fi

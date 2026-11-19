@@ -44,21 +44,22 @@ else
   git clone --depth 1 "https://github.com/$OWNER/$REPO.git" "$REPO_DIR"
 fi
 
-# 源仓 HEAD 锚（preflight-skip.sh 跳过判据输入——compute-metrics.py 落 report.snapshot.sourceHead）
+# 源仓 HEAD 锚（preflight-skip.sh 服务端锚判据输入——import start --commit 落
+# 服务端快照 sourceVersion + compute-metrics.py 落 report.snapshot.sourceHead）
 SCAN_HEAD=$(git -C "$REPO_DIR" rev-parse HEAD)
 echo "scan-one: sourceHead=$SCAN_HEAD"
 if [ -n "${GITHUB_OUTPUT:-}" ]; then
   echo "head=$SCAN_HEAD" >> "$GITHUB_OUTPUT"
 fi
 
-echo "== ke import start（--mode server → ${KE_SERVER_URL}$([ "${SCAN_FORCE:-}" = "true" ] && printf '，--force 重扫轨')）=="
+echo "== ke import start（--mode server → ${KE_SERVER_URL}，--commit ${SCAN_HEAD:0:12}${SCAN_FORCE:+，--force 重扫轨}）=="
 FORCE_ARG=""
 if [ "${SCAN_FORCE:-}" = "true" ]; then
   FORCE_ARG="--force"
 fi
 set +e
 ke --mode server --url "$KE_SERVER_URL" --token "$KE_API_KEY" \
-  import start --repo "$REPO_DIR" $FORCE_ARG > "$WORK/import.log" 2>&1
+  import start --repo "$REPO_DIR" --commit "$SCAN_HEAD" $FORCE_ARG > "$WORK/import.log" 2>&1
 RC=$?
 set -e
 tail -n 15 "$WORK/import.log"

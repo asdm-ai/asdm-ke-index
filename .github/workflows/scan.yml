@@ -5,11 +5,13 @@
 #   - push（paths 仅 repos.yaml——清单变更即重扫）
 #   - 手动触发面（单仓冒烟/全批首跑——Actions 页 dispatch）
 #   - schedule（月度重扫——聚合轮启用，启用前保持注释态）
-# job 流水（零漂移短路——2026-11-19 优化）：
-#   preflight（ls-remote 远端 HEAD vs report 锚 cliVersion+sourceHead，命中即整 job
-#   跳过）→ CLI 装配缓存（actions/cache 按版本键——matrix 独立 runner 间共享安装
-#   产物，等效只装一次）→ scan（clone+import，提取源仓 HEAD）→ metrics（--source-head
-#   落 report）→ commit；注意 ops 删服务端快照后需 scan_force 或删对应 report
+# job 流水（零漂移短路——服务端锚版，2026-11-19 优化）：
+#   preflight（ls-remote 远端 HEAD vs 服务端快照 sourceVersion——import start
+#   --commit <sha> 落锚；report 新鲜度双锚 cliVersion+snapshotId；命中即整 job
+#   跳过）→ CLI 装配缓存（actions/cache 按版本键——matrix 独立 runner 间共享
+#   安装产物，等效只装一次）→ scan（clone + import --commit HEAD）→ metrics
+#   （--source-head 落 report）→ commit；存量 "head" 快照首轮全量重导入一轮
+#   落新锚（迁移注记见 preflight-skip.sh 头注）；ops 删快照即不命中→自然重建
 # 并发护栏：matrix 并发上限（单实例吞吐——Plan R4）
 # =============================================================================
 name: scan
@@ -63,7 +65,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # 本地短路（零漂移轨）：ls-remote 远端 HEAD vs report 锚（cliVersion + sourceHead）
+      # 本地短路（零漂移轨·服务端锚）：ls-remote 远端 HEAD vs 服务端快照 sourceVersion
+      # （import start --commit 落锚）+ report 新鲜度（cliVersion+snapshotId）；
       # ——命中即整 job 跳过（不装 CLI/不 clone/不 import/不跑 metrics）；force 轨永不跳过
       - name: Preflight (skip check)
         id: preflight
