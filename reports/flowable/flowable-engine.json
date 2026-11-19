@@ -1,0 +1,1103 @@
+{
+  "schemaVersion": "draft-v1",
+  "implementation": "ke-index compute-metrics.py (transitional; to be superseded by ke checkup)",
+  "owner": "flowable",
+  "repo": "flowable-engine",
+  "sourceId": "flowable-engine",
+  "snapshot": {
+    "snapshotId": "49647250-425e-4a24-80bd-2c5fa5b14ce5",
+    "status": "complete",
+    "sourceVersion": "head",
+    "objectCount": 76080,
+    "linkCount": 214446,
+    "completedAt": "2026-11-19T05:15:24.066Z"
+  },
+  "cliVersion": "0.3.6",
+  "metrics": {
+    "A3": {
+      "id": "A3",
+      "name": "orphan-table-rate",
+      "label": "孤儿表率",
+      "domain": "A",
+      "direction": "lower-better",
+      "value": 1.0,
+      "numerator": 80,
+      "denominator": 80,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Table --all --field id,name,matchedEntityClass --snapshot 49647250-425e-4a24-80bd-2c5fa5b14ce5",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Mapper --all --field id,namespace,mappedTableIds --snapshot 49647250-425e-4a24-80bd-2c5fa5b14ce5",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot 49647250-425e-4a24-80bd-2c5fa5b14ce5"
+      ]
+    },
+    "A4": {
+      "id": "A4",
+      "name": "table-entity-mapping-rate",
+      "label": "表↔实体映射率",
+      "domain": "A",
+      "direction": "higher-better",
+      "value": 0.0,
+      "numerator": 0,
+      "denominator": 80,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Table --all --field id,name,matchedEntityClass --snapshot 49647250-425e-4a24-80bd-2c5fa5b14ce5",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Mapper --all --field id,namespace,mappedTableIds --snapshot 49647250-425e-4a24-80bd-2c5fa5b14ce5",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot 49647250-425e-4a24-80bd-2c5fa5b14ce5"
+      ],
+      "evidence": {
+        "mapperEdgeOnly": 0,
+        "entityClassOnly": 0,
+        "both": 0
+      }
+    },
+    "B1.backend": {
+      "id": "B1.backend",
+      "name": "circular-dependency-density",
+      "label": "循环依赖密度（后端）",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": 0.387008,
+      "numerator": 423,
+      "denominator": 1093,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Package --all --field id,dependsOnPackageIds --snapshot 49647250-425e-4a24-80bd-2c5fa5b14ce5",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot 49647250-425e-4a24-80bd-2c5fa5b14ce5"
+      ],
+      "sccCount": 44,
+      "sccs": [
+        {
+          "size": 72,
+          "members": [
+            "pkg:org.flowable.engine",
+            "pkg:org.flowable.engine.compatibility",
+            "pkg:org.flowable.engine.debug",
+            "pkg:org.flowable.engine.delegate",
+            "pkg:org.flowable.engine.delegate.event",
+            "pkg:org.flowable.engine.delegate.event.impl",
+            "pkg:org.flowable.engine.delegate.variable",
+            "pkg:org.flowable.engine.dynamic",
+            "pkg:org.flowable.engine.form",
+            "pkg:org.flowable.engine.history",
+            "pkg:org.flowable.engine.impl",
+            "pkg:org.flowable.engine.impl.agenda",
+            "pkg:org.flowable.engine.impl.app",
+            "pkg:org.flowable.engine.impl.bpmn.behavior",
+            "pkg:org.flowable.engine.impl.bpmn.data",
+            "pkg:org.flowable.engine.impl.bpmn.deployer",
+            "pkg:org.flowable.engine.impl.bpmn.diagram",
+            "pkg:org.flowable.engine.impl.bpmn.helper",
+            "pkg:org.flowable.engine.impl.bpmn.http",
+            "pkg:org.flowable.engine.impl.bpmn.http.delegate",
+            "pkg:org.flowable.engine.impl.bpmn.http.handler",
+            "pkg:org.flowable.engine.impl.bpmn.listener",
+            "pkg:org.flowable.engine.impl.bpmn.mail",
+            "pkg:org.flowable.engine.impl.bpmn.parser",
+            "pkg:org.flowable.engine.impl.bpmn.parser.factory",
+            "pkg:org.flowable.engine.impl.bpmn.parser.handler",
+            "pkg:org.flowable.engine.impl.bpmn.webservice",
+            "pkg:org.flowable.engine.impl.cfg",
+            "pkg:org.flowable.engine.impl.cmd",
+            "pkg:org.flowable.engine.impl.context",
+            "pkg:org.flowable.engine.impl.db",
+            "pkg:org.flowable.engine.impl.delegate",
+            "pkg:org.flowable.engine.impl.delegate.invocation",
+            "pkg:org.flowable.engine.impl.delete",
+            "pkg:org.flowable.engine.impl.dynamic",
+            "pkg:org.flowable.engine.impl.el",
+            "pkg:org.flowable.engine.impl.event",
+            "pkg:org.flowable.engine.impl.event.logger",
+            "pkg:org.flowable.engine.impl.event.logger.handler",
+            "pkg:org.flowable.engine.impl.eventregistry",
+            "pkg:org.flowable.engine.impl.externalworker",
+            "pkg:org.flowable.engine.impl.form",
+            "pkg:org.flowable.engine.impl.formhandler",
+            "pkg:org.flowable.engine.impl.function",
+            "pkg:org.flowable.engine.impl.history",
+            "pkg:org.flowable.engine.impl.interceptor",
+            "pkg:org.flowable.engine.impl.jobexecutor",
+            "pkg:org.flowable.engine.impl.migration",
+            "pkg:org.flowable.engine.impl.persistence",
+            "pkg:org.flowable.engine.impl.persistence.deploy",
+            "pkg:org.flowable.engine.impl.persistence.entity",
+            "pkg:org.flowable.engine.impl.persistence.entity.data",
+            "pkg:org.flowable.engine.impl.persistence.entity.data.impl",
+            "pkg:org.flowable.engine.impl.persistence.entity.data.impl.cachematcher",
+            "pkg:org.flowable.engine.impl.repository",
+            "pkg:org.flowable.engine.impl.rules",
+            "pkg:org.flowable.engine.impl.runtime",
+            "pkg:org.flowable.engine.impl.scripting",
+            "pkg:org.flowable.engine.impl.test",
+            "pkg:org.flowable.engine.impl.util",
+            "pkg:org.flowable.engine.impl.util.condition",
+            "pkg:org.flowable.engine.impl.variable",
+            "pkg:org.flowable.engine.impl.webservice",
+            "pkg:org.flowable.engine.interceptor",
+            "pkg:org.flowable.engine.logging",
+            "pkg:org.flowable.engine.migration",
+            "pkg:org.flowable.engine.parse",
+            "pkg:org.flowable.engine.repository",
+            "pkg:org.flowable.engine.runtime",
+            "pkg:org.flowable.engine.task",
+            "pkg:org.flowable.engine.test",
+            "pkg:org.flowable.engine.test.mock"
+          ]
+        },
+        {
+          "size": 54,
+          "members": [
+            "pkg:org.activiti.engine",
+            "pkg:org.activiti.engine.cfg",
+            "pkg:org.activiti.engine.delegate",
+            "pkg:org.activiti.engine.delegate.event.impl",
+            "pkg:org.activiti.engine.form",
+            "pkg:org.activiti.engine.history",
+            "pkg:org.activiti.engine.impl",
+            "pkg:org.activiti.engine.impl.bpmn.behavior",
+            "pkg:org.activiti.engine.impl.bpmn.deployer",
+            "pkg:org.activiti.engine.impl.bpmn.diagram",
+            "pkg:org.activiti.engine.impl.bpmn.helper",
+            "pkg:org.activiti.engine.impl.bpmn.listener",
+            "pkg:org.activiti.engine.impl.bpmn.mail",
+            "pkg:org.activiti.engine.impl.bpmn.parser",
+            "pkg:org.activiti.engine.impl.bpmn.parser.factory",
+            "pkg:org.activiti.engine.impl.bpmn.parser.handler",
+            "pkg:org.activiti.engine.impl.cfg",
+            "pkg:org.activiti.engine.impl.cfg.jta",
+            "pkg:org.activiti.engine.impl.cfg.standalone",
+            "pkg:org.activiti.engine.impl.cmd",
+            "pkg:org.activiti.engine.impl.context",
+            "pkg:org.activiti.engine.impl.db",
+            "pkg:org.activiti.engine.impl.delegate",
+            "pkg:org.activiti.engine.impl.el",
+            "pkg:org.activiti.engine.impl.event",
+            "pkg:org.activiti.engine.impl.event.logger",
+            "pkg:org.activiti.engine.impl.event.logger.handler",
+            "pkg:org.activiti.engine.impl.form",
+            "pkg:org.activiti.engine.impl.history",
+            "pkg:org.activiti.engine.impl.history.handler",
+            "pkg:org.activiti.engine.impl.history.parse",
+            "pkg:org.activiti.engine.impl.interceptor",
+            "pkg:org.activiti.engine.impl.jobexecutor",
+            "pkg:org.activiti.engine.impl.persistence",
+            "pkg:org.activiti.engine.impl.persistence.deploy",
+            "pkg:org.activiti.engine.impl.persistence.entity",
+            "pkg:org.activiti.engine.impl.pvm",
+            "pkg:org.activiti.engine.impl.pvm.delegate",
+            "pkg:org.activiti.engine.impl.pvm.process",
+            "pkg:org.activiti.engine.impl.pvm.runtime",
+            "pkg:org.activiti.engine.impl.repository",
+            "pkg:org.activiti.engine.impl.rules",
+            "pkg:org.activiti.engine.impl.runtime",
+            "pkg:org.activiti.engine.impl.scripting",
+            "pkg:org.activiti.engine.impl.task",
+            "pkg:org.activiti.engine.impl.util",
+            "pkg:org.activiti.engine.impl.util.io",
+            "pkg:org.activiti.engine.impl.variable",
+            "pkg:org.activiti.engine.logging",
+            "pkg:org.activiti.engine.parse",
+            "pkg:org.activiti.engine.query",
+            "pkg:org.activiti.engine.repository",
+            "pkg:org.activiti.engine.runtime",
+            "pkg:org.activiti.engine.task"
+          ]
+        },
+        {
+          "size": 41,
+          "members": [
+            "pkg:org.flowable.cmmn.engine",
+            "pkg:org.flowable.cmmn.engine.impl",
+            "pkg:org.flowable.cmmn.engine.impl.agenda",
+            "pkg:org.flowable.cmmn.engine.impl.agenda.operation",
+            "pkg:org.flowable.cmmn.engine.impl.behavior",
+            "pkg:org.flowable.cmmn.engine.impl.behavior.impl",
+            "pkg:org.flowable.cmmn.engine.impl.behavior.impl.http",
+            "pkg:org.flowable.cmmn.engine.impl.behavior.impl.http.handler",
+            "pkg:org.flowable.cmmn.engine.impl.behavior.impl.mail",
+            "pkg:org.flowable.cmmn.engine.impl.callback",
+            "pkg:org.flowable.cmmn.engine.impl.cfg",
+            "pkg:org.flowable.cmmn.engine.impl.cmd",
+            "pkg:org.flowable.cmmn.engine.impl.criteria",
+            "pkg:org.flowable.cmmn.engine.impl.db",
+            "pkg:org.flowable.cmmn.engine.impl.delegate",
+            "pkg:org.flowable.cmmn.engine.impl.delete",
+            "pkg:org.flowable.cmmn.engine.impl.deployer",
+            "pkg:org.flowable.cmmn.engine.impl.el",
+            "pkg:org.flowable.cmmn.engine.impl.eventregistry",
+            "pkg:org.flowable.cmmn.engine.impl.form",
+            "pkg:org.flowable.cmmn.engine.impl.function",
+            "pkg:org.flowable.cmmn.engine.impl.history",
+            "pkg:org.flowable.cmmn.engine.impl.idm",
+            "pkg:org.flowable.cmmn.engine.impl.interceptor",
+            "pkg:org.flowable.cmmn.engine.impl.job",
+            "pkg:org.flowable.cmmn.engine.impl.listener",
+            "pkg:org.flowable.cmmn.engine.impl.migration",
+            "pkg:org.flowable.cmmn.engine.impl.parser",
+            "pkg:org.flowable.cmmn.engine.impl.parser.handler",
+            "pkg:org.flowable.cmmn.engine.impl.persistence.entity",
+            "pkg:org.flowable.cmmn.engine.impl.persistence.entity.data",
+            "pkg:org.flowable.cmmn.engine.impl.persistence.entity.data.impl",
+            "pkg:org.flowable.cmmn.engine.impl.persistence.entity.data.impl.matcher",
+            "pkg:org.flowable.cmmn.engine.impl.reactivation",
+            "pkg:org.flowable.cmmn.engine.impl.repository",
+            "pkg:org.flowable.cmmn.engine.impl.runtime",
+            "pkg:org.flowable.cmmn.engine.impl.scripting",
+            "pkg:org.flowable.cmmn.engine.impl.task",
+            "pkg:org.flowable.cmmn.engine.impl.util",
+            "pkg:org.flowable.cmmn.engine.impl.variable",
+            "pkg:org.flowable.cmmn.engine.interceptor"
+          ]
+        },
+        {
+          "size": 32,
+          "members": [
+            "pkg:org.flowable.common.engine.impl",
+            "pkg:org.flowable.common.engine.impl.agenda",
+            "pkg:org.flowable.common.engine.impl.cfg",
+            "pkg:org.flowable.common.engine.impl.cfg.standalone",
+            "pkg:org.flowable.common.engine.impl.cmd",
+            "pkg:org.flowable.common.engine.impl.context",
+            "pkg:org.flowable.common.engine.impl.db",
+            "pkg:org.flowable.common.engine.impl.de.odysseus.el",
+            "pkg:org.flowable.common.engine.impl.de.odysseus.el.misc",
+            "pkg:org.flowable.common.engine.impl.de.odysseus.el.tree",
+            "pkg:org.flowable.common.engine.impl.de.odysseus.el.tree.impl",
+            "pkg:org.flowable.common.engine.impl.de.odysseus.el.tree.impl.ast",
+            "pkg:org.flowable.common.engine.impl.de.odysseus.el.util",
+            "pkg:org.flowable.common.engine.impl.el",
+            "pkg:org.flowable.common.engine.impl.event",
+            "pkg:org.flowable.common.engine.impl.interceptor",
+            "pkg:org.flowable.common.engine.impl.javax.el",
+            "pkg:org.flowable.common.engine.impl.json",
+            "pkg:org.flowable.common.engine.impl.json.jackson2",
+            "pkg:org.flowable.common.engine.impl.json.jackson3",
+            "pkg:org.flowable.common.engine.impl.lock",
+            "pkg:org.flowable.common.engine.impl.logging",
+            "pkg:org.flowable.common.engine.impl.persistence",
+            "pkg:org.flowable.common.engine.impl.persistence.cache",
+            "pkg:org.flowable.common.engine.impl.persistence.entity",
+            "pkg:org.flowable.common.engine.impl.persistence.entity.data",
+            "pkg:org.flowable.common.engine.impl.persistence.entity.data.impl",
+            "pkg:org.flowable.common.engine.impl.scripting",
+            "pkg:org.flowable.common.engine.impl.service",
+            "pkg:org.flowable.common.engine.impl.tenant",
+            "pkg:org.flowable.common.engine.impl.transaction",
+            "pkg:org.flowable.common.engine.impl.util"
+          ]
+        },
+        {
+          "size": 19,
+          "members": [
+            "pkg:org.flowable.dmn.engine",
+            "pkg:org.flowable.dmn.engine.impl",
+            "pkg:org.flowable.dmn.engine.impl.agenda",
+            "pkg:org.flowable.dmn.engine.impl.agenda.operation",
+            "pkg:org.flowable.dmn.engine.impl.audit",
+            "pkg:org.flowable.dmn.engine.impl.cfg",
+            "pkg:org.flowable.dmn.engine.impl.cmd",
+            "pkg:org.flowable.dmn.engine.impl.db",
+            "pkg:org.flowable.dmn.engine.impl.deployer",
+            "pkg:org.flowable.dmn.engine.impl.el",
+            "pkg:org.flowable.dmn.engine.impl.hitpolicy",
+            "pkg:org.flowable.dmn.engine.impl.interceptor",
+            "pkg:org.flowable.dmn.engine.impl.parser",
+            "pkg:org.flowable.dmn.engine.impl.persistence.deploy",
+            "pkg:org.flowable.dmn.engine.impl.persistence.entity",
+            "pkg:org.flowable.dmn.engine.impl.persistence.entity.data",
+            "pkg:org.flowable.dmn.engine.impl.persistence.entity.data.impl",
+            "pkg:org.flowable.dmn.engine.impl.repository",
+            "pkg:org.flowable.dmn.engine.impl.util"
+          ]
+        },
+        {
+          "size": 17,
+          "members": [
+            "pkg:org.flowable.eventregistry.impl",
+            "pkg:org.flowable.eventregistry.impl.cfg",
+            "pkg:org.flowable.eventregistry.impl.cmd",
+            "pkg:org.flowable.eventregistry.impl.db",
+            "pkg:org.flowable.eventregistry.impl.deployer",
+            "pkg:org.flowable.eventregistry.impl.management",
+            "pkg:org.flowable.eventregistry.impl.model",
+            "pkg:org.flowable.eventregistry.impl.parser",
+            "pkg:org.flowable.eventregistry.impl.payload",
+            "pkg:org.flowable.eventregistry.impl.persistence.deploy",
+            "pkg:org.flowable.eventregistry.impl.persistence.entity",
+            "pkg:org.flowable.eventregistry.impl.persistence.entity.data",
+            "pkg:org.flowable.eventregistry.impl.persistence.entity.data.impl",
+            "pkg:org.flowable.eventregistry.impl.pipeline",
+            "pkg:org.flowable.eventregistry.impl.repository",
+            "pkg:org.flowable.eventregistry.impl.runtime",
+            "pkg:org.flowable.eventregistry.impl.util"
+          ]
+        },
+        {
+          "size": 14,
+          "members": [
+            "pkg:org.flowable.cmmn.rest.conf",
+            "pkg:org.flowable.cmmn.rest.service",
+            "pkg:org.flowable.cmmn.rest.service.api",
+            "pkg:org.flowable.cmmn.rest.service.api.history.caze",
+            "pkg:org.flowable.cmmn.rest.service.api.history.milestone",
+            "pkg:org.flowable.cmmn.rest.service.api.history.planitem",
+            "pkg:org.flowable.cmmn.rest.service.api.history.task",
+            "pkg:org.flowable.cmmn.rest.service.api.history.variable",
+            "pkg:org.flowable.cmmn.rest.service.api.management",
+            "pkg:org.flowable.cmmn.rest.service.api.repository",
+            "pkg:org.flowable.cmmn.rest.service.api.runtime.caze",
+            "pkg:org.flowable.cmmn.rest.service.api.runtime.planitem",
+            "pkg:org.flowable.cmmn.rest.service.api.runtime.task",
+            "pkg:org.flowable.cmmn.rest.service.api.runtime.variable"
+          ]
+        },
+        {
+          "size": 12,
+          "members": [
+            "pkg:org.flowable.rest.conf",
+            "pkg:org.flowable.rest.conf.engine",
+            "pkg:org.flowable.rest.service",
+            "pkg:org.flowable.rest.service.api",
+            "pkg:org.flowable.rest.service.api.form",
+            "pkg:org.flowable.rest.service.api.history",
+            "pkg:org.flowable.rest.service.api.identity",
+            "pkg:org.flowable.rest.service.api.management",
+            "pkg:org.flowable.rest.service.api.repository",
+            "pkg:org.flowable.rest.service.api.runtime",
+            "pkg:org.flowable.rest.service.api.runtime.process",
+            "pkg:org.flowable.rest.service.api.runtime.task"
+          ]
+        },
+        {
+          "size": 11,
+          "members": [
+            "pkg:org.flowable.app.engine",
+            "pkg:org.flowable.app.engine.impl",
+            "pkg:org.flowable.app.engine.impl.cfg",
+            "pkg:org.flowable.app.engine.impl.cmd",
+            "pkg:org.flowable.app.engine.impl.db",
+            "pkg:org.flowable.app.engine.impl.deployer",
+            "pkg:org.flowable.app.engine.impl.persistence.entity",
+            "pkg:org.flowable.app.engine.impl.persistence.entity.data",
+            "pkg:org.flowable.app.engine.impl.persistence.entity.data.impl",
+            "pkg:org.flowable.app.engine.impl.repository",
+            "pkg:org.flowable.app.engine.impl.util"
+          ]
+        },
+        {
+          "size": 11,
+          "members": [
+            "pkg:org.flowable.job.service",
+            "pkg:org.flowable.job.service.impl",
+            "pkg:org.flowable.job.service.impl.asyncexecutor",
+            "pkg:org.flowable.job.service.impl.cmd",
+            "pkg:org.flowable.job.service.impl.history.async",
+            "pkg:org.flowable.job.service.impl.nontx",
+            "pkg:org.flowable.job.service.impl.persistence.entity",
+            "pkg:org.flowable.job.service.impl.persistence.entity.data",
+            "pkg:org.flowable.job.service.impl.persistence.entity.data.impl",
+            "pkg:org.flowable.job.service.impl.persistence.entity.data.impl.cachematcher",
+            "pkg:org.flowable.job.service.impl.util"
+          ]
+        },
+        {
+          "size": 9,
+          "members": [
+            "pkg:org.flowable.idm.engine",
+            "pkg:org.flowable.idm.engine.impl",
+            "pkg:org.flowable.idm.engine.impl.cfg",
+            "pkg:org.flowable.idm.engine.impl.cmd",
+            "pkg:org.flowable.idm.engine.impl.db",
+            "pkg:org.flowable.idm.engine.impl.persistence.entity",
+            "pkg:org.flowable.idm.engine.impl.persistence.entity.data",
+            "pkg:org.flowable.idm.engine.impl.persistence.entity.data.impl",
+            "pkg:org.flowable.idm.engine.impl.util"
+          ]
+        },
+        {
+          "size": 9,
+          "members": [
+            "pkg:org.flowable.spring.boot",
+            "pkg:org.flowable.spring.boot.app",
+            "pkg:org.flowable.spring.boot.cmmn",
+            "pkg:org.flowable.spring.boot.dmn",
+            "pkg:org.flowable.spring.boot.eventregistry",
+            "pkg:org.flowable.spring.boot.idm",
+            "pkg:org.flowable.spring.boot.job",
+            "pkg:org.flowable.spring.boot.process",
+            "pkg:org.flowable.spring.boot.rest"
+          ]
+        },
+        {
+          "size": 9,
+          "members": [
+            "pkg:org.flowable.task.service",
+            "pkg:org.flowable.task.service.history",
+            "pkg:org.flowable.task.service.impl",
+            "pkg:org.flowable.task.service.impl.persistence",
+            "pkg:org.flowable.task.service.impl.persistence.entity",
+            "pkg:org.flowable.task.service.impl.persistence.entity.data",
+            "pkg:org.flowable.task.service.impl.persistence.entity.data.impl",
+            "pkg:org.flowable.task.service.impl.persistence.entity.data.impl.cachematcher",
+            "pkg:org.flowable.task.service.impl.util"
+          ]
+        },
+        {
+          "size": 9,
+          "members": [
+            "pkg:org.flowable.variable.service",
+            "pkg:org.flowable.variable.service.history",
+            "pkg:org.flowable.variable.service.impl",
+            "pkg:org.flowable.variable.service.impl.persistence.entity",
+            "pkg:org.flowable.variable.service.impl.persistence.entity.data",
+            "pkg:org.flowable.variable.service.impl.persistence.entity.data.impl",
+            "pkg:org.flowable.variable.service.impl.persistence.entity.data.impl.cachematcher",
+            "pkg:org.flowable.variable.service.impl.types",
+            "pkg:org.flowable.variable.service.impl.util"
+          ]
+        },
+        {
+          "size": 6,
+          "members": [
+            "pkg:org.flowable.bpmn.converter",
+            "pkg:org.flowable.bpmn.converter.alfresco",
+            "pkg:org.flowable.bpmn.converter.child",
+            "pkg:org.flowable.bpmn.converter.export",
+            "pkg:org.flowable.bpmn.converter.parser",
+            "pkg:org.flowable.bpmn.converter.util"
+          ]
+        },
+        {
+          "size": 6,
+          "members": [
+            "pkg:org.flowable.entitylink.service",
+            "pkg:org.flowable.entitylink.service.impl",
+            "pkg:org.flowable.entitylink.service.impl.persistence.entity",
+            "pkg:org.flowable.entitylink.service.impl.persistence.entity.data",
+            "pkg:org.flowable.entitylink.service.impl.persistence.entity.data.impl",
+            "pkg:org.flowable.entitylink.service.impl.persistence.entity.data.impl.cachematcher"
+          ]
+        },
+        {
+          "size": 6,
+          "members": [
+            "pkg:org.flowable.eventsubscription.service",
+            "pkg:org.flowable.eventsubscription.service.impl",
+            "pkg:org.flowable.eventsubscription.service.impl.persistence.entity",
+            "pkg:org.flowable.eventsubscription.service.impl.persistence.entity.data",
+            "pkg:org.flowable.eventsubscription.service.impl.persistence.entity.data.impl",
+            "pkg:org.flowable.eventsubscription.service.impl.persistence.entity.data.impl.cachematcher"
+          ]
+        },
+        {
+          "size": 6,
+          "members": [
+            "pkg:org.flowable.identitylink.service",
+            "pkg:org.flowable.identitylink.service.impl",
+            "pkg:org.flowable.identitylink.service.impl.persistence.entity",
+            "pkg:org.flowable.identitylink.service.impl.persistence.entity.data",
+            "pkg:org.flowable.identitylink.service.impl.persistence.entity.data.impl",
+            "pkg:org.flowable.identitylink.service.impl.persistence.entity.data.impl.cachematcher"
+          ]
+        },
+        {
+          "size": 5,
+          "members": [
+            "pkg:org.flowable.batch.service",
+            "pkg:org.flowable.batch.service.impl",
+            "pkg:org.flowable.batch.service.impl.persistence.entity",
+            "pkg:org.flowable.batch.service.impl.persistence.entity.data",
+            "pkg:org.flowable.batch.service.impl.persistence.entity.data.impl"
+          ]
+        },
+        {
+          "size": 5,
+          "members": [
+            "pkg:org.flowable.cdi",
+            "pkg:org.flowable.cdi.annotation",
+            "pkg:org.flowable.cdi.impl",
+            "pkg:org.flowable.cdi.impl.context",
+            "pkg:org.flowable.cdi.spi"
+          ]
+        },
+        {
+          "size": 5,
+          "members": [
+            "pkg:org.flowable.cmmn.api",
+            "pkg:org.flowable.cmmn.api.migration",
+            "pkg:org.flowable.cmmn.api.reactivation",
+            "pkg:org.flowable.cmmn.api.repository",
+            "pkg:org.flowable.cmmn.api.runtime"
+          ]
+        },
+        {
+          "size": 5,
+          "members": [
+            "pkg:org.flowable.external.job.rest.conf",
+            "pkg:org.flowable.external.job.rest.service",
+            "pkg:org.flowable.external.job.rest.service.api",
+            "pkg:org.flowable.external.job.rest.service.api.acquire",
+            "pkg:org.flowable.external.job.rest.service.api.query"
+          ]
+        },
+        {
+          "size": 4,
+          "members": [
+            "pkg:org.flowable.app.rest",
+            "pkg:org.flowable.app.rest.service",
+            "pkg:org.flowable.app.rest.service.api.repository",
+            "pkg:org.flowable.app.rest.util"
+          ]
+        },
+        {
+          "size": 4,
+          "members": [
+            "pkg:org.flowable.dmn.rest.service.api",
+            "pkg:org.flowable.dmn.rest.service.api.decision",
+            "pkg:org.flowable.dmn.rest.service.api.history",
+            "pkg:org.flowable.dmn.rest.service.api.repository"
+          ]
+        },
+        {
+          "size": 4,
+          "members": [
+            "pkg:org.flowable.eventregistry.rest.service",
+            "pkg:org.flowable.eventregistry.rest.service.api",
+            "pkg:org.flowable.eventregistry.rest.service.api.repository",
+            "pkg:org.flowable.eventregistry.rest.service.api.runtime"
+          ]
+        },
+        {
+          "size": 4,
+          "members": [
+            "pkg:org.flowable.http.common.impl",
+            "pkg:org.flowable.http.common.impl.apache",
+            "pkg:org.flowable.http.common.impl.apache.client5",
+            "pkg:org.flowable.http.common.impl.spring.reactive"
+          ]
+        },
+        {
+          "size": 4,
+          "members": [
+            "pkg:org.flowable.idm.rest.service.api",
+            "pkg:org.flowable.idm.rest.service.api.group",
+            "pkg:org.flowable.idm.rest.service.api.privilege",
+            "pkg:org.flowable.idm.rest.service.api.user"
+          ]
+        },
+        {
+          "size": 4,
+          "members": [
+            "pkg:org.flowable.management.jmx",
+            "pkg:org.flowable.management.jmx.annotations",
+            "pkg:org.flowable.management.jmx.mbeans",
+            "pkg:org.flowable.management.jmx.testMbeans"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:org.activiti.engine.impl.test",
+            "pkg:org.activiti.engine.test",
+            "pkg:org.activiti.engine.test.mock"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:org.flowable.cmmn.converter",
+            "pkg:org.flowable.cmmn.converter.export",
+            "pkg:org.flowable.cmmn.converter.util"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:org.flowable.cmmn.validation",
+            "pkg:org.flowable.cmmn.validation.validator",
+            "pkg:org.flowable.cmmn.validation.validator.impl"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:org.flowable.validation",
+            "pkg:org.flowable.validation.validator",
+            "pkg:org.flowable.validation.validator.impl"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.flowable.app.api",
+            "pkg:org.flowable.app.api.repository"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.flowable.app.engine.test",
+            "pkg:org.flowable.app.engine.test.impl"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.flowable.camel",
+            "pkg:org.flowable.camel.util"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.flowable.cmmn.api.delegate",
+            "pkg:org.flowable.cmmn.api.listener"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.flowable.cmmn.engine.test",
+            "pkg:org.flowable.cmmn.engine.test.impl"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.flowable.dmn.converter.child",
+            "pkg:org.flowable.dmn.converter.util"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.flowable.dmn.engine.impl.test",
+            "pkg:org.flowable.dmn.engine.test"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.flowable.eventregistry.api",
+            "pkg:org.flowable.eventregistry.api.model"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.flowable.eventregistry.spring.kafka",
+            "pkg:org.flowable.eventregistry.spring.kafka.payload"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.flowable.ldap",
+            "pkg:org.flowable.ldap.impl"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.flowable.scripting.secure",
+            "pkg:org.flowable.scripting.secure.behavior"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.flowable.task.api",
+            "pkg:org.flowable.task.api.history"
+          ]
+        }
+      ]
+    },
+    "B2": {
+      "id": "B2",
+      "name": "package-dependency-density",
+      "label": "包依赖密度",
+      "domain": "B",
+      "direction": "interval",
+      "value": 9.0732,
+      "numerator": 9917,
+      "denominator": 1093,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Package --all --field id,dependsOnPackageIds --snapshot 49647250-425e-4a24-80bd-2c5fa5b14ce5",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot 49647250-425e-4a24-80bd-2c5fa5b14ce5"
+      ]
+    },
+    "B1.frontend": {
+      "id": "B1.frontend",
+      "name": "circular-dependency-density",
+      "label": "循环依赖密度（前端）",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": 0.0,
+      "numerator": 0,
+      "denominator": 50,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Module --all --field id,importedModuleIds --snapshot 49647250-425e-4a24-80bd-2c5fa5b14ce5",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Module --snapshot 49647250-425e-4a24-80bd-2c5fa5b14ce5"
+      ],
+      "sccCount": 0
+    },
+    "B3": {
+      "id": "B3",
+      "name": "giant-class-ratio",
+      "label": "巨型类占比",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": 0.037032,
+      "numerator": 282,
+      "denominator": 7615,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Class --all --field id,lineCount --snapshot 49647250-425e-4a24-80bd-2c5fa5b14ce5",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --where 'lineCount>500' --snapshot 49647250-425e-4a24-80bd-2c5fa5b14ce5",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --snapshot 49647250-425e-4a24-80bd-2c5fa5b14ce5"
+      ],
+      "threshold": "lineCount > 500",
+      "top": [
+        {
+          "lineCount": 6575,
+          "id": "cls:org.flowable.cmmn.test.migration.CaseInstanceMigrationTest"
+        },
+        {
+          "lineCount": 5147,
+          "id": "cls:org.flowable.engine.impl.cfg.ProcessEngineConfigurationImpl"
+        },
+        {
+          "lineCount": 4944,
+          "id": "cls:org.flowable.engine.test.api.task.TaskQueryTest"
+        },
+        {
+          "lineCount": 4637,
+          "id": "cls:org.flowable.engine.test.api.runtime.migration.ProcessInstanceMigrationTest"
+        },
+        {
+          "lineCount": 4461,
+          "id": "cls:org.flowable.engine.test.api.runtime.migration.ProcessInstanceMigrationEventSubProcessTest"
+        }
+      ],
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --where 'lineCount>500' --snapshot 49647250-425e-4a24-80bd-2c5fa5b14ce5",
+        "serverCount": 282,
+        "match": true
+      }
+    },
+    "C2": {
+      "id": "C2",
+      "name": "cyclomatic-complexity-p90",
+      "label": "圈复杂度 P90",
+      "domain": "C",
+      "direction": "lower-better",
+      "value": 3,
+      "denominator": 55231,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot 49647250-425e-4a24-80bd-2c5fa5b14ce5",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,lineCount,complexity --snapshot 49647250-425e-4a24-80bd-2c5fa5b14ce5"
+      ],
+      "percentiles": {
+        "p25": 1,
+        "p50": 1,
+        "p75": 1,
+        "p90": 3
+      },
+      "mean": 1.6598,
+      "max": 79,
+      "top": [
+        {
+          "cyclomaticComplexity": 79,
+          "id": "mtd:org.flowable.rest.service.api.history.HistoricTaskInstanceBaseResource.getQueryResponse(:HistoricTaskInstanceQueryRequest:Map<String, String>)"
+        },
+        {
+          "cyclomaticComplexity": 74,
+          "id": "mtd:org.flowable.rest.service.api.runtime.task.TaskBaseResource.getTasksFromQueryRequest(:TaskQueryRequest:Map<String, String>)"
+        },
+        {
+          "cyclomaticComplexity": 72,
+          "id": "mtd:org.flowable.cmmn.rest.service.api.history.task.HistoricTaskInstanceBaseResource.getQueryResponse(:HistoricTaskInstanceQueryRequest:Map<String, String>)"
+        },
+        {
+          "cyclomaticComplexity": 71,
+          "id": "mtd:org.flowable.cmmn.rest.service.api.history.caze.HistoricCaseInstanceBaseResource.getQueryResponse(:HistoricCaseInstanceQueryRequest:Map<String, String>)"
+        },
+        {
+          "cyclomaticComplexity": 70,
+          "id": "mtd:org.flowable.cmmn.rest.service.api.runtime.task.TaskBaseResource.getTasksFromQueryRequest(:TaskQueryRequest:Map<String, String>)"
+        }
+      ],
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot 49647250-425e-4a24-80bd-2c5fa5b14ce5",
+        "serverCount": 55231,
+        "match": true
+      }
+    },
+    "C3": {
+      "id": "C3",
+      "name": "test-method-ratio",
+      "label": "测试方法占比",
+      "domain": "C",
+      "direction": "higher-better",
+      "value": 0.132847,
+      "numerator": 8721,
+      "denominator": 65647,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'isTest=true' --snapshot 49647250-425e-4a24-80bd-2c5fa5b14ce5",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot 49647250-425e-4a24-80bd-2c5fa5b14ce5",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,isTest,testType --snapshot 49647250-425e-4a24-80bd-2c5fa5b14ce5"
+      ],
+      "testTypes": {
+        "UnitTest": 8721
+      },
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'isTest=true' --snapshot 49647250-425e-4a24-80bd-2c5fa5b14ce5",
+        "serverCount": 8721,
+        "match": true
+      }
+    },
+    "C4": {
+      "id": "C4",
+      "name": "giant-method-ratio",
+      "label": "巨型方法占比",
+      "domain": "C",
+      "direction": "lower-better",
+      "value": 0.014935,
+      "numerator": 829,
+      "denominator": 55508,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount>80' --snapshot 49647250-425e-4a24-80bd-2c5fa5b14ce5",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount=0' --snapshot 49647250-425e-4a24-80bd-2c5fa5b14ce5",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot 49647250-425e-4a24-80bd-2c5fa5b14ce5",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,lineCount --snapshot 49647250-425e-4a24-80bd-2c5fa5b14ce5"
+      ],
+      "threshold": "lineCount > 80",
+      "excludedFromDenominator": {
+        "lineCountIsZero": 10139,
+        "lineCountIsNull": 0
+      },
+      "top": [
+        {
+          "lineCount": 1568,
+          "id": "mtd:org.flowable.examples.variables.VariablesTest.testLocalizeDataObjects"
+        },
+        {
+          "lineCount": 493,
+          "id": "mtd:org.flowable.engine.test.logging.ServiceTaskLoggingTest.testAsyncServiceTask"
+        },
+        {
+          "lineCount": 425,
+          "id": "mtd:org.flowable.engine.test.logging.ServiceTaskLoggingTest.testVariableCreateLogging"
+        },
+        {
+          "lineCount": 416,
+          "id": "mtd:org.flowable.engine.test.api.event.DatabaseEventLoggerTest.testDatabaseEvents"
+        },
+        {
+          "lineCount": 405,
+          "id": "mtd:org.flowable.common.engine.impl.calendar.CronExpression.getTimeAfter(:Date)"
+        }
+      ],
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount>80' --snapshot 49647250-425e-4a24-80bd-2c5fa5b14ce5",
+        "serverCount": 829,
+        "match": true
+      }
+    },
+    "D3": {
+      "id": "D3",
+      "name": "scale-profile",
+      "label": "规模画像",
+      "domain": "D",
+      "direction": "none",
+      "value": 76080,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" snapshot list --repo flowable-engine",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Repository --snapshot 49647250-425e-4a24-80bd-2c5fa5b14ce5",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot 49647250-425e-4a24-80bd-2c5fa5b14ce5",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --snapshot 49647250-425e-4a24-80bd-2c5fa5b14ce5",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Interface --snapshot 49647250-425e-4a24-80bd-2c5fa5b14ce5",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot 49647250-425e-4a24-80bd-2c5fa5b14ce5",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Dependency --snapshot 49647250-425e-4a24-80bd-2c5fa5b14ce5",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot 49647250-425e-4a24-80bd-2c5fa5b14ce5",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Mapper --snapshot 49647250-425e-4a24-80bd-2c5fa5b14ce5",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Module --snapshot 49647250-425e-4a24-80bd-2c5fa5b14ce5",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Component --snapshot 49647250-425e-4a24-80bd-2c5fa5b14ce5",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Function --snapshot 49647250-425e-4a24-80bd-2c5fa5b14ce5",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Store --snapshot 49647250-425e-4a24-80bd-2c5fa5b14ce5",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Route --snapshot 49647250-425e-4a24-80bd-2c5fa5b14ce5",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot 49647250-425e-4a24-80bd-2c5fa5b14ce5"
+      ],
+      "typeCounts": {
+        "Repository": 1,
+        "Package": 1093,
+        "Class": 7615,
+        "Interface": 1215,
+        "Method": 65647,
+        "Dependency": 277,
+        "Table": 80,
+        "Mapper": 2,
+        "Module": 50,
+        "Component": 0,
+        "Function": 100,
+        "Store": 0,
+        "Route": 0,
+        "ApiEndpoint": 0
+      },
+      "linkCount": 214446
+    }
+  },
+  "nullMetrics": {
+    "A1": {
+      "id": "A1",
+      "name": "full-chain-coverage",
+      "label": "全链路贯通率",
+      "domain": "A",
+      "direction": "higher-better",
+      "value": null,
+      "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot 49647250-425e-4a24-80bd-2c5fa5b14ce5"
+      ],
+      "evidence": {
+        "apiEndpointCount": 0
+      }
+    },
+    "A2": {
+      "id": "A2",
+      "name": "api-backend-breakrate",
+      "label": "前后端断链率",
+      "domain": "A",
+      "direction": "lower-better",
+      "value": null,
+      "reason": "无 ApiEndpoint 对象（纯后端仓库——按口径置空）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot 49647250-425e-4a24-80bd-2c5fa5b14ce5"
+      ],
+      "evidence": {
+        "apiEndpointCount": 0
+      }
+    },
+    "B4": {
+      "id": "B4",
+      "name": "component-coupling-degree",
+      "label": "组件耦合度",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": null,
+      "reason": "无 Component 对象（纯后端仓库——按口径置空）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Component --snapshot 49647250-425e-4a24-80bd-2c5fa5b14ce5"
+      ],
+      "evidence": {
+        "componentCount": 0
+      }
+    },
+    "C1": {
+      "id": "C1",
+      "name": "endpoint-table-hops",
+      "label": "端到端跳数",
+      "domain": "C",
+      "direction": "interval",
+      "value": null,
+      "reason": "无 ApiEndpoint 对象（贯通链分母为 0）",
+      "evidence": {
+        "apiEndpointCount": 0
+      }
+    },
+    "D1": {
+      "id": "D1",
+      "name": "framework-version-coverage",
+      "label": "技术栈版本覆盖率",
+      "domain": "D",
+      "direction": "higher-better",
+      "value": null,
+      "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Dependency --all --field id,name,version,scope --snapshot 49647250-425e-4a24-80bd-2c5fa5b14ce5"
+      ],
+      "evidence": {
+        "total": 277,
+        "emptyVersion": 68,
+        "placeholder": 176,
+        "determinable": 33
+      }
+    },
+    "D2": {
+      "id": "D2",
+      "name": "dependency-homogeneity",
+      "label": "依赖同质度",
+      "domain": "D",
+      "direction": "none",
+      "value": null,
+      "reason": "cohort 级指标（依赖 cohort 众数集合——单体层不产出）",
+      "evidence": {
+        "dependencyCount": 277
+      }
+    },
+    "D4": {
+      "id": "D4",
+      "name": "evolution-trend",
+      "label": "年度演进趋势",
+      "domain": "D",
+      "direction": "none",
+      "value": null,
+      "reason": "单快照（首次导入——无时序）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" snapshot list --repo flowable-engine"
+      ],
+      "evidence": {
+        "completeSnapshotCount": 1
+      }
+    }
+  },
+  "dataQuality": {
+    "dq.null-complexity-ratio": {
+      "id": "dq.null-complexity-ratio",
+      "name": "null-complexity-ratio",
+      "label": "complexity 为 null 的方法占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": 0.158667,
+      "numerator": 10416,
+      "denominator": 65647,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot 49647250-425e-4a24-80bd-2c5fa5b14ce5",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot 49647250-425e-4a24-80bd-2c5fa5b14ce5"
+      ]
+    },
+    "dq.missing-version-ratio": {
+      "id": "dq.missing-version-ratio",
+      "name": "missing-version-ratio",
+      "label": "version 为空串的依赖占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": 0.245487,
+      "numerator": 68,
+      "denominator": 277,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Dependency --all --field id,name,version,scope --snapshot 49647250-425e-4a24-80bd-2c5fa5b14ce5"
+      ],
+      "placeholderVersionCount": 176
+    },
+    "dq.mapper-join-miss-ratio": {
+      "id": "dq.mapper-join-miss-ratio",
+      "name": "mapper-join-miss-ratio",
+      "label": "Mapper namespace 与接口 FQN join 未命中占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": 1.0,
+      "numerator": 2,
+      "denominator": 2,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Mapper --all --field id,namespace --snapshot 49647250-425e-4a24-80bd-2c5fa5b14ce5",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Interface --all --field id --snapshot 49647250-425e-4a24-80bd-2c5fa5b14ce5"
+      ]
+    },
+    "dq.ext-call-ratio": {
+      "id": "dq.ext-call-ratio",
+      "name": "ext-call-ratio",
+      "label": "ext: 虚拟调用过滤占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": null,
+      "reason": "不可观测（ext: 虚拟边在导入物化时已过滤——查询面天然免疫）"
+    }
+  }
+}
