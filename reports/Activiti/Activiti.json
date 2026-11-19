@@ -1,0 +1,636 @@
+{
+  "schemaVersion": "draft-v1",
+  "implementation": "ke-index compute-metrics.py (transitional; to be superseded by ke checkup)",
+  "owner": "Activiti",
+  "repo": "Activiti",
+  "sourceId": "Activiti",
+  "snapshot": {
+    "snapshotId": "eb668b65-29c4-4a6a-918d-84e508871615",
+    "status": "complete",
+    "sourceVersion": "a2b1b3231158e03a046e94ca3e35e5e4eb54be01",
+    "sourceHead": "a2b1b3231158e03a046e94ca3e35e5e4eb54be01",
+    "objectCount": 24192,
+    "linkCount": 85659,
+    "completedAt": "2026-11-19T16:54:24.962Z"
+  },
+  "cliVersion": "0.3.6",
+  "metrics": {
+    "A3": {
+      "id": "A3",
+      "name": "orphan-table-rate",
+      "label": "孤儿表率",
+      "domain": "A",
+      "direction": "lower-better",
+      "value": 1.0,
+      "numerator": 26,
+      "denominator": 26,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Table --all --field id,name,matchedEntityClass --snapshot eb668b65-29c4-4a6a-918d-84e508871615",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Mapper --all --field id,namespace,mappedTableIds --snapshot eb668b65-29c4-4a6a-918d-84e508871615",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot eb668b65-29c4-4a6a-918d-84e508871615"
+      ]
+    },
+    "A4": {
+      "id": "A4",
+      "name": "table-entity-mapping-rate",
+      "label": "表↔实体映射率",
+      "domain": "A",
+      "direction": "higher-better",
+      "value": 0.0,
+      "numerator": 0,
+      "denominator": 26,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Table --all --field id,name,matchedEntityClass --snapshot eb668b65-29c4-4a6a-918d-84e508871615",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Mapper --all --field id,namespace,mappedTableIds --snapshot eb668b65-29c4-4a6a-918d-84e508871615",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot eb668b65-29c4-4a6a-918d-84e508871615"
+      ],
+      "evidence": {
+        "mapperEdgeOnly": 0,
+        "entityClassOnly": 0,
+        "both": 0
+      }
+    },
+    "B1.backend": {
+      "id": "B1.backend",
+      "name": "circular-dependency-density",
+      "label": "循环依赖密度（后端）",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": 0.312312,
+      "numerator": 104,
+      "denominator": 333,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Package --all --field id,dependsOnPackageIds --snapshot eb668b65-29c4-4a6a-918d-84e508871615",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot eb668b65-29c4-4a6a-918d-84e508871615"
+      ],
+      "sccCount": 14,
+      "sccs": [
+        {
+          "size": 67,
+          "members": [
+            "pkg:org.activiti.engine",
+            "pkg:org.activiti.engine.cfg",
+            "pkg:org.activiti.engine.cfg.security",
+            "pkg:org.activiti.engine.debug",
+            "pkg:org.activiti.engine.delegate",
+            "pkg:org.activiti.engine.delegate.event",
+            "pkg:org.activiti.engine.delegate.event.impl",
+            "pkg:org.activiti.engine.history",
+            "pkg:org.activiti.engine.impl",
+            "pkg:org.activiti.engine.impl.agenda",
+            "pkg:org.activiti.engine.impl.asyncexecutor",
+            "pkg:org.activiti.engine.impl.bpmn.behavior",
+            "pkg:org.activiti.engine.impl.bpmn.data",
+            "pkg:org.activiti.engine.impl.bpmn.deployer",
+            "pkg:org.activiti.engine.impl.bpmn.helper",
+            "pkg:org.activiti.engine.impl.bpmn.helper.task",
+            "pkg:org.activiti.engine.impl.bpmn.listener",
+            "pkg:org.activiti.engine.impl.bpmn.parser",
+            "pkg:org.activiti.engine.impl.bpmn.parser.factory",
+            "pkg:org.activiti.engine.impl.bpmn.parser.handler",
+            "pkg:org.activiti.engine.impl.bpmn.webservice",
+            "pkg:org.activiti.engine.impl.calendar",
+            "pkg:org.activiti.engine.impl.cfg",
+            "pkg:org.activiti.engine.impl.cfg.jta",
+            "pkg:org.activiti.engine.impl.cfg.standalone",
+            "pkg:org.activiti.engine.impl.cmd",
+            "pkg:org.activiti.engine.impl.cmd.integration",
+            "pkg:org.activiti.engine.impl.context",
+            "pkg:org.activiti.engine.impl.db",
+            "pkg:org.activiti.engine.impl.db.upgrade",
+            "pkg:org.activiti.engine.impl.delegate",
+            "pkg:org.activiti.engine.impl.delegate.invocation",
+            "pkg:org.activiti.engine.impl.el",
+            "pkg:org.activiti.engine.impl.el.variable",
+            "pkg:org.activiti.engine.impl.event",
+            "pkg:org.activiti.engine.impl.event.logger",
+            "pkg:org.activiti.engine.impl.event.logger.handler",
+            "pkg:org.activiti.engine.impl.history",
+            "pkg:org.activiti.engine.impl.interceptor",
+            "pkg:org.activiti.engine.impl.jobexecutor",
+            "pkg:org.activiti.engine.impl.persistence",
+            "pkg:org.activiti.engine.impl.persistence.cache",
+            "pkg:org.activiti.engine.impl.persistence.deploy",
+            "pkg:org.activiti.engine.impl.persistence.entity",
+            "pkg:org.activiti.engine.impl.persistence.entity.data",
+            "pkg:org.activiti.engine.impl.persistence.entity.data.impl",
+            "pkg:org.activiti.engine.impl.persistence.entity.data.impl.cachematcher",
+            "pkg:org.activiti.engine.impl.persistence.entity.data.integration",
+            "pkg:org.activiti.engine.impl.persistence.entity.integration",
+            "pkg:org.activiti.engine.impl.repository",
+            "pkg:org.activiti.engine.impl.runtime",
+            "pkg:org.activiti.engine.impl.scripting",
+            "pkg:org.activiti.engine.impl.test",
+            "pkg:org.activiti.engine.impl.util",
+            "pkg:org.activiti.engine.impl.util.condition",
+            "pkg:org.activiti.engine.impl.util.io",
+            "pkg:org.activiti.engine.impl.variable",
+            "pkg:org.activiti.engine.impl.webservice",
+            "pkg:org.activiti.engine.integration",
+            "pkg:org.activiti.engine.logging",
+            "pkg:org.activiti.engine.parse",
+            "pkg:org.activiti.engine.query",
+            "pkg:org.activiti.engine.repository",
+            "pkg:org.activiti.engine.runtime",
+            "pkg:org.activiti.engine.task",
+            "pkg:org.activiti.engine.test",
+            "pkg:org.activiti.engine.test.mock"
+          ]
+        },
+        {
+          "size": 7,
+          "members": [
+            "pkg:org.activiti.bpmn.converter",
+            "pkg:org.activiti.bpmn.converter.alfresco",
+            "pkg:org.activiti.bpmn.converter.child",
+            "pkg:org.activiti.bpmn.converter.child.multi.instance",
+            "pkg:org.activiti.bpmn.converter.export",
+            "pkg:org.activiti.bpmn.converter.parser",
+            "pkg:org.activiti.bpmn.converter.util"
+          ]
+        },
+        {
+          "size": 6,
+          "members": [
+            "pkg:org.activiti.core.el.juel",
+            "pkg:org.activiti.core.el.juel.misc",
+            "pkg:org.activiti.core.el.juel.test",
+            "pkg:org.activiti.core.el.juel.tree",
+            "pkg:org.activiti.core.el.juel.tree.impl",
+            "pkg:org.activiti.core.el.juel.tree.impl.ast"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:org.activiti.runtime.api.impl",
+            "pkg:org.activiti.runtime.api.model.impl",
+            "pkg:org.activiti.spring.process"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:org.activiti.validation",
+            "pkg:org.activiti.validation.validator",
+            "pkg:org.activiti.validation.validator.impl"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.activiti.bpmn.model",
+            "pkg:org.activiti.bpmn.model.helper"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.activiti.core.common.spring.connector",
+            "pkg:org.activiti.core.common.spring.connector.autoconfigure"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.activiti.core.common.spring.project",
+            "pkg:org.activiti.core.common.spring.project.conf"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.activiti.core.common.spring.security.policies",
+            "pkg:org.activiti.core.common.spring.security.policies.conf"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.activiti.editor.language.json.converter",
+            "pkg:org.activiti.editor.language.json.converter.util"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.activiti.engine.impl.asyncexecutor.multitenant",
+            "pkg:org.activiti.engine.impl.cfg.multitenant"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.activiti.image.impl",
+            "pkg:org.activiti.image.impl.icon"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.activiti.spring.boot.process",
+            "pkg:org.activiti.spring.boot.tasks"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.activiti.spring.resources",
+            "pkg:org.activiti.spring.resources.conf"
+          ]
+        }
+      ]
+    },
+    "B2": {
+      "id": "B2",
+      "name": "package-dependency-density",
+      "label": "包依赖密度",
+      "domain": "B",
+      "direction": "interval",
+      "value": 6.8859,
+      "numerator": 2293,
+      "denominator": 333,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Package --all --field id,dependsOnPackageIds --snapshot eb668b65-29c4-4a6a-918d-84e508871615",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot eb668b65-29c4-4a6a-918d-84e508871615"
+      ]
+    },
+    "B3": {
+      "id": "B3",
+      "name": "giant-class-ratio",
+      "label": "巨型类占比",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": 0.028551,
+      "numerator": 80,
+      "denominator": 2802,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Class --all --field id,lineCount --snapshot eb668b65-29c4-4a6a-918d-84e508871615",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --where 'lineCount>500' --snapshot eb668b65-29c4-4a6a-918d-84e508871615",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --snapshot eb668b65-29c4-4a6a-918d-84e508871615"
+      ],
+      "threshold": "lineCount > 500",
+      "top": [
+        {
+          "lineCount": 4049,
+          "id": "cls:org.activiti.engine.test.api.task.TaskQueryTest"
+        },
+        {
+          "lineCount": 3628,
+          "id": "cls:org.activiti.engine.impl.cfg.ProcessEngineConfigurationImpl"
+        },
+        {
+          "lineCount": 2830,
+          "id": "cls:org.activiti.engine.test.api.runtime.ProcessInstanceQueryTest"
+        },
+        {
+          "lineCount": 2013,
+          "id": "cls:org.activiti.engine.test.api.runtime.ExecutionQueryTest"
+        },
+        {
+          "lineCount": 1982,
+          "id": "cls:org.activiti.engine.test.bpmn.multiinstance.MultiInstanceTest"
+        }
+      ],
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --where 'lineCount>500' --snapshot eb668b65-29c4-4a6a-918d-84e508871615",
+        "serverCount": 80,
+        "match": true
+      }
+    },
+    "C2": {
+      "id": "C2",
+      "name": "cyclomatic-complexity-p90",
+      "label": "圈复杂度 P90",
+      "domain": "C",
+      "direction": "lower-better",
+      "value": 3,
+      "denominator": 17385,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot eb668b65-29c4-4a6a-918d-84e508871615",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,lineCount,complexity --snapshot eb668b65-29c4-4a6a-918d-84e508871615"
+      ],
+      "percentiles": {
+        "p25": 1,
+        "p50": 1,
+        "p75": 1,
+        "p90": 3
+      },
+      "mean": 1.6335,
+      "max": 75,
+      "top": [
+        {
+          "cyclomaticComplexity": 75,
+          "id": "mtd:org.activiti.engine.impl.calendar.CronExpression.addToSet(:int:int:int:int)"
+        },
+        {
+          "cyclomaticComplexity": 69,
+          "id": "mtd:org.activiti.engine.impl.calendar.CronExpression.storeExpressionVals(:int:String:int)"
+        },
+        {
+          "cyclomaticComplexity": 65,
+          "id": "mtd:org.activiti.engine.impl.calendar.CronExpression.getTimeAfter(:Calendar)"
+        },
+        {
+          "cyclomaticComplexity": 48,
+          "id": "mtd:org.activiti.bpmn.converter.BpmnXMLConverter.convertToBpmnModel(:XMLStreamReader)"
+        },
+        {
+          "cyclomaticComplexity": 46,
+          "id": "mtd:org.activiti.engine.impl.util.json.JSONML.parse(:XMLTokener:boolean:JSONArray)"
+        }
+      ],
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot eb668b65-29c4-4a6a-918d-84e508871615",
+        "serverCount": 17385,
+        "match": true
+      }
+    },
+    "C3": {
+      "id": "C3",
+      "name": "test-method-ratio",
+      "label": "测试方法占比",
+      "domain": "C",
+      "direction": "higher-better",
+      "value": 0.083983,
+      "numerator": 1714,
+      "denominator": 20409,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'isTest=true' --snapshot eb668b65-29c4-4a6a-918d-84e508871615",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot eb668b65-29c4-4a6a-918d-84e508871615",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,isTest,testType --snapshot eb668b65-29c4-4a6a-918d-84e508871615"
+      ],
+      "testTypes": {
+        "UnitTest": 1705,
+        "IntegrationTest": 9
+      },
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'isTest=true' --snapshot eb668b65-29c4-4a6a-918d-84e508871615",
+        "serverCount": 1714,
+        "match": true
+      }
+    },
+    "C4": {
+      "id": "C4",
+      "name": "giant-method-ratio",
+      "label": "巨型方法占比",
+      "domain": "C",
+      "direction": "lower-better",
+      "value": 0.010991,
+      "numerator": 192,
+      "denominator": 17469,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount>80' --snapshot eb668b65-29c4-4a6a-918d-84e508871615",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount=0' --snapshot eb668b65-29c4-4a6a-918d-84e508871615",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot eb668b65-29c4-4a6a-918d-84e508871615",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,lineCount --snapshot eb668b65-29c4-4a6a-918d-84e508871615"
+      ],
+      "threshold": "lineCount > 80",
+      "excludedFromDenominator": {
+        "lineCountIsZero": 2940,
+        "lineCountIsNull": 0
+      },
+      "top": [
+        {
+          "lineCount": 780,
+          "id": "mtd:org.activiti.examples.variables.VariablesTest.testLocalizeDataObjects"
+        },
+        {
+          "lineCount": 573,
+          "id": "mtd:org.activiti.engine.test.history.HistoricTaskInstanceTest.testHistoricTaskInstanceOrQuery"
+        },
+        {
+          "lineCount": 405,
+          "id": "mtd:org.activiti.engine.impl.calendar.CronExpression.getTimeAfter(:Calendar)"
+        },
+        {
+          "lineCount": 387,
+          "id": "mtd:org.activiti.engine.test.api.event.DatabaseEventLoggerTest.testDatabaseEvents"
+        },
+        {
+          "lineCount": 364,
+          "id": "mtd:org.activiti.engine.test.history.HistoricProcessInstanceTest.testHistoricProcessInstanceOrQuery"
+        }
+      ],
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount>80' --snapshot eb668b65-29c4-4a6a-918d-84e508871615",
+        "serverCount": 192,
+        "match": true
+      }
+    },
+    "D3": {
+      "id": "D3",
+      "name": "scale-profile",
+      "label": "规模画像",
+      "domain": "D",
+      "direction": "none",
+      "value": 24192,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" snapshot list --repo Activiti",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Repository --snapshot eb668b65-29c4-4a6a-918d-84e508871615",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot eb668b65-29c4-4a6a-918d-84e508871615",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --snapshot eb668b65-29c4-4a6a-918d-84e508871615",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Interface --snapshot eb668b65-29c4-4a6a-918d-84e508871615",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot eb668b65-29c4-4a6a-918d-84e508871615",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Dependency --snapshot eb668b65-29c4-4a6a-918d-84e508871615",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot eb668b65-29c4-4a6a-918d-84e508871615",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Mapper --snapshot eb668b65-29c4-4a6a-918d-84e508871615",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Module --snapshot eb668b65-29c4-4a6a-918d-84e508871615",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Component --snapshot eb668b65-29c4-4a6a-918d-84e508871615",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Function --snapshot eb668b65-29c4-4a6a-918d-84e508871615",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Store --snapshot eb668b65-29c4-4a6a-918d-84e508871615",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Route --snapshot eb668b65-29c4-4a6a-918d-84e508871615",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot eb668b65-29c4-4a6a-918d-84e508871615"
+      ],
+      "typeCounts": {
+        "Repository": 1,
+        "Package": 333,
+        "Class": 2802,
+        "Interface": 479,
+        "Method": 20409,
+        "Dependency": 141,
+        "Table": 26,
+        "Mapper": 1,
+        "Module": 0,
+        "Component": 0,
+        "Function": 0,
+        "Store": 0,
+        "Route": 0,
+        "ApiEndpoint": 0
+      },
+      "linkCount": 85659
+    }
+  },
+  "nullMetrics": {
+    "A1": {
+      "id": "A1",
+      "name": "full-chain-coverage",
+      "label": "全链路贯通率",
+      "domain": "A",
+      "direction": "higher-better",
+      "value": null,
+      "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot eb668b65-29c4-4a6a-918d-84e508871615"
+      ],
+      "evidence": {
+        "apiEndpointCount": 0
+      }
+    },
+    "A2": {
+      "id": "A2",
+      "name": "api-backend-breakrate",
+      "label": "前后端断链率",
+      "domain": "A",
+      "direction": "lower-better",
+      "value": null,
+      "reason": "无 ApiEndpoint 对象（纯后端仓库——按口径置空）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot eb668b65-29c4-4a6a-918d-84e508871615"
+      ],
+      "evidence": {
+        "apiEndpointCount": 0
+      }
+    },
+    "B1.frontend": {
+      "id": "B1.frontend",
+      "name": "circular-dependency-density",
+      "label": "循环依赖密度（前端）",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": null,
+      "reason": "无 Module 对象（纯后端仓库——按口径置空）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Module --snapshot eb668b65-29c4-4a6a-918d-84e508871615"
+      ],
+      "evidence": {
+        "moduleCount": 0
+      }
+    },
+    "B4": {
+      "id": "B4",
+      "name": "component-coupling-degree",
+      "label": "组件耦合度",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": null,
+      "reason": "无 Component 对象（纯后端仓库——按口径置空）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Component --snapshot eb668b65-29c4-4a6a-918d-84e508871615"
+      ],
+      "evidence": {
+        "componentCount": 0
+      }
+    },
+    "C1": {
+      "id": "C1",
+      "name": "endpoint-table-hops",
+      "label": "端到端跳数",
+      "domain": "C",
+      "direction": "interval",
+      "value": null,
+      "reason": "无 ApiEndpoint 对象（贯通链分母为 0）",
+      "evidence": {
+        "apiEndpointCount": 0
+      }
+    },
+    "D1": {
+      "id": "D1",
+      "name": "framework-version-coverage",
+      "label": "技术栈版本覆盖率",
+      "domain": "D",
+      "direction": "higher-better",
+      "value": null,
+      "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Dependency --all --field id,name,version,scope --snapshot eb668b65-29c4-4a6a-918d-84e508871615"
+      ],
+      "evidence": {
+        "total": 141,
+        "emptyVersion": 55,
+        "placeholder": 84,
+        "determinable": 2
+      }
+    },
+    "D2": {
+      "id": "D2",
+      "name": "dependency-homogeneity",
+      "label": "依赖同质度",
+      "domain": "D",
+      "direction": "none",
+      "value": null,
+      "reason": "cohort 级指标（依赖 cohort 众数集合——单体层不产出）",
+      "evidence": {
+        "dependencyCount": 141
+      }
+    },
+    "D4": {
+      "id": "D4",
+      "name": "evolution-trend",
+      "label": "年度演进趋势",
+      "domain": "D",
+      "direction": "none",
+      "value": null,
+      "reason": "单快照（首次导入——无时序）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" snapshot list --repo Activiti"
+      ],
+      "evidence": {
+        "completeSnapshotCount": 1
+      }
+    }
+  },
+  "dataQuality": {
+    "dq.null-complexity-ratio": {
+      "id": "dq.null-complexity-ratio",
+      "name": "null-complexity-ratio",
+      "label": "complexity 为 null 的方法占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": 0.14817,
+      "numerator": 3024,
+      "denominator": 20409,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot eb668b65-29c4-4a6a-918d-84e508871615",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot eb668b65-29c4-4a6a-918d-84e508871615"
+      ]
+    },
+    "dq.missing-version-ratio": {
+      "id": "dq.missing-version-ratio",
+      "name": "missing-version-ratio",
+      "label": "version 为空串的依赖占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": 0.390071,
+      "numerator": 55,
+      "denominator": 141,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Dependency --all --field id,name,version,scope --snapshot eb668b65-29c4-4a6a-918d-84e508871615"
+      ],
+      "placeholderVersionCount": 84
+    },
+    "dq.mapper-join-miss-ratio": {
+      "id": "dq.mapper-join-miss-ratio",
+      "name": "mapper-join-miss-ratio",
+      "label": "Mapper namespace 与接口 FQN join 未命中占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": 1.0,
+      "numerator": 1,
+      "denominator": 1,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Mapper --all --field id,namespace --snapshot eb668b65-29c4-4a6a-918d-84e508871615",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Interface --all --field id --snapshot eb668b65-29c4-4a6a-918d-84e508871615"
+      ]
+    },
+    "dq.ext-call-ratio": {
+      "id": "dq.ext-call-ratio",
+      "name": "ext-call-ratio",
+      "label": "ext: 虚拟调用过滤占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": null,
+      "reason": "不可观测（ext: 虚拟边在导入物化时已过滤——查询面天然免疫）"
+    }
+  }
+}
