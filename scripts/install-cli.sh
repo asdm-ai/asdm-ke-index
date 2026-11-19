@@ -15,7 +15,7 @@ KE_SERVER_URL="${KE_SERVER_URL:-https://console.kengine.ai}"
 # 版本锚点随生产发版联动升级（R6）：0.3.5 = Phase3 MyBatis-Plus 注解 SQL 识别修复
 # （@TableName / BaseMapper 泛型 / @Select 注解三轨——A3/A4 口径修正；0.3.4 重扫
 #   run 43804026050 发现渐进轨伪投影缺 MP 三字段后递增重发，0.3.4 制品已放量不覆盖）
-EXPECTED_VERSION="${EXPECTED_CLI_VERSION:-0.3.5}"
+EXPECTED_VERSION="${EXPECTED_CLI_VERSION:-0.3.6}"
 DEST="${1:-$PWD/ke-cli}"
 
 if command -v shasum >/dev/null 2>&1; then
