@@ -1,0 +1,705 @@
+{
+  "schemaVersion": "draft-v1",
+  "implementation": "ke-index compute-metrics.py (transitional; to be superseded by ke checkup)",
+  "owner": "apache",
+  "repo": "rocketmq",
+  "sourceId": "rocketmq",
+  "snapshot": {
+    "snapshotId": "b9f6bb5e-5d2c-4460-9add-85890acb06d2",
+    "status": "complete",
+    "sourceVersion": "head",
+    "objectCount": 26142,
+    "linkCount": 107952,
+    "completedAt": "2026-11-19T05:51:53.878Z"
+  },
+  "cliVersion": "0.3.6",
+  "metrics": {
+    "A3": {
+      "id": "A3",
+      "name": "orphan-table-rate",
+      "label": "孤儿表率",
+      "domain": "A",
+      "direction": "lower-better",
+      "value": 1.0,
+      "numerator": 1,
+      "denominator": 1,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Table --all --field id,name,matchedEntityClass --snapshot b9f6bb5e-5d2c-4460-9add-85890acb06d2",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Mapper --all --field id,namespace,mappedTableIds --snapshot b9f6bb5e-5d2c-4460-9add-85890acb06d2",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot b9f6bb5e-5d2c-4460-9add-85890acb06d2"
+      ]
+    },
+    "A4": {
+      "id": "A4",
+      "name": "table-entity-mapping-rate",
+      "label": "表↔实体映射率",
+      "domain": "A",
+      "direction": "higher-better",
+      "value": 0.0,
+      "numerator": 0,
+      "denominator": 1,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Table --all --field id,name,matchedEntityClass --snapshot b9f6bb5e-5d2c-4460-9add-85890acb06d2",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Mapper --all --field id,namespace,mappedTableIds --snapshot b9f6bb5e-5d2c-4460-9add-85890acb06d2",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot b9f6bb5e-5d2c-4460-9add-85890acb06d2"
+      ],
+      "evidence": {
+        "mapperEdgeOnly": 0,
+        "entityClassOnly": 0,
+        "both": 0
+      }
+    },
+    "B1.backend": {
+      "id": "B1.backend",
+      "name": "circular-dependency-density",
+      "label": "循环依赖密度（后端）",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": 0.538012,
+      "numerator": 184,
+      "denominator": 342,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Package --all --field id,dependsOnPackageIds --snapshot b9f6bb5e-5d2c-4460-9add-85890acb06d2",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot b9f6bb5e-5d2c-4460-9add-85890acb06d2"
+      ],
+      "sccCount": 15,
+      "sccs": [
+        {
+          "size": 37,
+          "members": [
+            "pkg:org.apache.rocketmq.proxy",
+            "pkg:org.apache.rocketmq.proxy.common",
+            "pkg:org.apache.rocketmq.proxy.common.channel",
+            "pkg:org.apache.rocketmq.proxy.config",
+            "pkg:org.apache.rocketmq.proxy.grpc",
+            "pkg:org.apache.rocketmq.proxy.grpc.admin",
+            "pkg:org.apache.rocketmq.proxy.grpc.pipeline",
+            "pkg:org.apache.rocketmq.proxy.grpc.v2",
+            "pkg:org.apache.rocketmq.proxy.grpc.v2.channel",
+            "pkg:org.apache.rocketmq.proxy.grpc.v2.client",
+            "pkg:org.apache.rocketmq.proxy.grpc.v2.common",
+            "pkg:org.apache.rocketmq.proxy.grpc.v2.consumer",
+            "pkg:org.apache.rocketmq.proxy.grpc.v2.producer",
+            "pkg:org.apache.rocketmq.proxy.grpc.v2.route",
+            "pkg:org.apache.rocketmq.proxy.grpc.v2.transaction",
+            "pkg:org.apache.rocketmq.proxy.metrics",
+            "pkg:org.apache.rocketmq.proxy.processor",
+            "pkg:org.apache.rocketmq.proxy.processor.channel",
+            "pkg:org.apache.rocketmq.proxy.processor.validator",
+            "pkg:org.apache.rocketmq.proxy.remoting",
+            "pkg:org.apache.rocketmq.proxy.remoting.activity",
+            "pkg:org.apache.rocketmq.proxy.remoting.channel",
+            "pkg:org.apache.rocketmq.proxy.remoting.pipeline",
+            "pkg:org.apache.rocketmq.proxy.remoting.protocol.http2proxy",
+            "pkg:org.apache.rocketmq.proxy.service",
+            "pkg:org.apache.rocketmq.proxy.service.admin",
+            "pkg:org.apache.rocketmq.proxy.service.cert",
+            "pkg:org.apache.rocketmq.proxy.service.channel",
+            "pkg:org.apache.rocketmq.proxy.service.client",
+            "pkg:org.apache.rocketmq.proxy.service.lite",
+            "pkg:org.apache.rocketmq.proxy.service.message",
+            "pkg:org.apache.rocketmq.proxy.service.metadata",
+            "pkg:org.apache.rocketmq.proxy.service.receipt",
+            "pkg:org.apache.rocketmq.proxy.service.relay",
+            "pkg:org.apache.rocketmq.proxy.service.route",
+            "pkg:org.apache.rocketmq.proxy.service.sysmessage",
+            "pkg:org.apache.rocketmq.proxy.service.transaction"
+          ]
+        },
+        {
+          "size": 27,
+          "members": [
+            "pkg:org.apache.rocketmq.broker",
+            "pkg:org.apache.rocketmq.broker.client",
+            "pkg:org.apache.rocketmq.broker.client.net",
+            "pkg:org.apache.rocketmq.broker.coldctr",
+            "pkg:org.apache.rocketmq.broker.config.v1",
+            "pkg:org.apache.rocketmq.broker.config.v2",
+            "pkg:org.apache.rocketmq.broker.controller",
+            "pkg:org.apache.rocketmq.broker.dledger",
+            "pkg:org.apache.rocketmq.broker.failover",
+            "pkg:org.apache.rocketmq.broker.filter",
+            "pkg:org.apache.rocketmq.broker.latency",
+            "pkg:org.apache.rocketmq.broker.lite",
+            "pkg:org.apache.rocketmq.broker.loadbalance",
+            "pkg:org.apache.rocketmq.broker.longpolling",
+            "pkg:org.apache.rocketmq.broker.metrics",
+            "pkg:org.apache.rocketmq.broker.offset",
+            "pkg:org.apache.rocketmq.broker.pop",
+            "pkg:org.apache.rocketmq.broker.pop.orderly",
+            "pkg:org.apache.rocketmq.broker.processor",
+            "pkg:org.apache.rocketmq.broker.schedule",
+            "pkg:org.apache.rocketmq.broker.slave",
+            "pkg:org.apache.rocketmq.broker.subscription",
+            "pkg:org.apache.rocketmq.broker.topic",
+            "pkg:org.apache.rocketmq.broker.transaction",
+            "pkg:org.apache.rocketmq.broker.transaction.queue",
+            "pkg:org.apache.rocketmq.broker.transaction.rocksdb",
+            "pkg:org.apache.rocketmq.broker.util"
+          ]
+        },
+        {
+          "size": 21,
+          "members": [
+            "pkg:org.apache.rocketmq.tools.admin",
+            "pkg:org.apache.rocketmq.tools.command",
+            "pkg:org.apache.rocketmq.tools.command.auth",
+            "pkg:org.apache.rocketmq.tools.command.broker",
+            "pkg:org.apache.rocketmq.tools.command.cluster",
+            "pkg:org.apache.rocketmq.tools.command.connection",
+            "pkg:org.apache.rocketmq.tools.command.consumer",
+            "pkg:org.apache.rocketmq.tools.command.container",
+            "pkg:org.apache.rocketmq.tools.command.controller",
+            "pkg:org.apache.rocketmq.tools.command.export",
+            "pkg:org.apache.rocketmq.tools.command.ha",
+            "pkg:org.apache.rocketmq.tools.command.lite",
+            "pkg:org.apache.rocketmq.tools.command.message",
+            "pkg:org.apache.rocketmq.tools.command.metadata",
+            "pkg:org.apache.rocketmq.tools.command.namesrv",
+            "pkg:org.apache.rocketmq.tools.command.offset",
+            "pkg:org.apache.rocketmq.tools.command.producer",
+            "pkg:org.apache.rocketmq.tools.command.queue",
+            "pkg:org.apache.rocketmq.tools.command.stats",
+            "pkg:org.apache.rocketmq.tools.command.topic",
+            "pkg:org.apache.rocketmq.tools.monitor"
+          ]
+        },
+        {
+          "size": 18,
+          "members": [
+            "pkg:org.apache.rocketmq.store",
+            "pkg:org.apache.rocketmq.store.config",
+            "pkg:org.apache.rocketmq.store.dledger",
+            "pkg:org.apache.rocketmq.store.ha",
+            "pkg:org.apache.rocketmq.store.ha.autoswitch",
+            "pkg:org.apache.rocketmq.store.hook",
+            "pkg:org.apache.rocketmq.store.index",
+            "pkg:org.apache.rocketmq.store.index.rocksdb",
+            "pkg:org.apache.rocketmq.store.kv",
+            "pkg:org.apache.rocketmq.store.lock",
+            "pkg:org.apache.rocketmq.store.logfile",
+            "pkg:org.apache.rocketmq.store.metrics",
+            "pkg:org.apache.rocketmq.store.queue",
+            "pkg:org.apache.rocketmq.store.rocksdb",
+            "pkg:org.apache.rocketmq.store.stats",
+            "pkg:org.apache.rocketmq.store.timer",
+            "pkg:org.apache.rocketmq.store.timer.rocksdb",
+            "pkg:org.apache.rocketmq.store.transaction"
+          ]
+        },
+        {
+          "size": 15,
+          "members": [
+            "pkg:org.apache.rocketmq.remoting",
+            "pkg:org.apache.rocketmq.remoting.common",
+            "pkg:org.apache.rocketmq.remoting.netty",
+            "pkg:org.apache.rocketmq.remoting.pipeline",
+            "pkg:org.apache.rocketmq.remoting.protocol",
+            "pkg:org.apache.rocketmq.remoting.protocol.admin",
+            "pkg:org.apache.rocketmq.remoting.protocol.body",
+            "pkg:org.apache.rocketmq.remoting.protocol.header",
+            "pkg:org.apache.rocketmq.remoting.protocol.header.controller",
+            "pkg:org.apache.rocketmq.remoting.protocol.header.namesrv",
+            "pkg:org.apache.rocketmq.remoting.protocol.heartbeat",
+            "pkg:org.apache.rocketmq.remoting.protocol.route",
+            "pkg:org.apache.rocketmq.remoting.protocol.statictopic",
+            "pkg:org.apache.rocketmq.remoting.protocol.subscription",
+            "pkg:org.apache.rocketmq.remoting.rpc"
+          ]
+        },
+        {
+          "size": 14,
+          "members": [
+            "pkg:org.apache.rocketmq.client",
+            "pkg:org.apache.rocketmq.client.consumer",
+            "pkg:org.apache.rocketmq.client.consumer.rebalance",
+            "pkg:org.apache.rocketmq.client.consumer.store",
+            "pkg:org.apache.rocketmq.client.hook",
+            "pkg:org.apache.rocketmq.client.impl",
+            "pkg:org.apache.rocketmq.client.impl.consumer",
+            "pkg:org.apache.rocketmq.client.impl.factory",
+            "pkg:org.apache.rocketmq.client.impl.producer",
+            "pkg:org.apache.rocketmq.client.latency",
+            "pkg:org.apache.rocketmq.client.producer",
+            "pkg:org.apache.rocketmq.client.rpchook",
+            "pkg:org.apache.rocketmq.client.trace",
+            "pkg:org.apache.rocketmq.client.trace.hook"
+          ]
+        },
+        {
+          "size": 13,
+          "members": [
+            "pkg:org.apache.rocketmq.auth.authentication",
+            "pkg:org.apache.rocketmq.auth.authentication.chain",
+            "pkg:org.apache.rocketmq.auth.authentication.factory",
+            "pkg:org.apache.rocketmq.auth.authentication.manager",
+            "pkg:org.apache.rocketmq.auth.authentication.provider",
+            "pkg:org.apache.rocketmq.auth.authentication.strategy",
+            "pkg:org.apache.rocketmq.auth.authorization",
+            "pkg:org.apache.rocketmq.auth.authorization.chain",
+            "pkg:org.apache.rocketmq.auth.authorization.factory",
+            "pkg:org.apache.rocketmq.auth.authorization.manager",
+            "pkg:org.apache.rocketmq.auth.authorization.provider",
+            "pkg:org.apache.rocketmq.auth.authorization.strategy",
+            "pkg:org.apache.rocketmq.auth.helper"
+          ]
+        },
+        {
+          "size": 9,
+          "members": [
+            "pkg:org.apache.rocketmq.controller",
+            "pkg:org.apache.rocketmq.controller.elect.impl",
+            "pkg:org.apache.rocketmq.controller.helper",
+            "pkg:org.apache.rocketmq.controller.impl",
+            "pkg:org.apache.rocketmq.controller.impl.heartbeat",
+            "pkg:org.apache.rocketmq.controller.impl.manager",
+            "pkg:org.apache.rocketmq.controller.impl.task",
+            "pkg:org.apache.rocketmq.controller.metrics",
+            "pkg:org.apache.rocketmq.controller.processor"
+          ]
+        },
+        {
+          "size": 8,
+          "members": [
+            "pkg:org.apache.rocketmq.common",
+            "pkg:org.apache.rocketmq.common.attribute",
+            "pkg:org.apache.rocketmq.common.config",
+            "pkg:org.apache.rocketmq.common.lite",
+            "pkg:org.apache.rocketmq.common.message",
+            "pkg:org.apache.rocketmq.common.thread",
+            "pkg:org.apache.rocketmq.common.topic",
+            "pkg:org.apache.rocketmq.common.utils"
+          ]
+        },
+        {
+          "size": 7,
+          "members": [
+            "pkg:org.apache.rocketmq.tieredstore",
+            "pkg:org.apache.rocketmq.tieredstore.core",
+            "pkg:org.apache.rocketmq.tieredstore.file",
+            "pkg:org.apache.rocketmq.tieredstore.index",
+            "pkg:org.apache.rocketmq.tieredstore.metadata",
+            "pkg:org.apache.rocketmq.tieredstore.metrics",
+            "pkg:org.apache.rocketmq.tieredstore.provider"
+          ]
+        },
+        {
+          "size": 5,
+          "members": [
+            "pkg:org.apache.rocketmq.test.client.rmq",
+            "pkg:org.apache.rocketmq.test.clientinterface",
+            "pkg:org.apache.rocketmq.test.factory",
+            "pkg:org.apache.rocketmq.test.listener",
+            "pkg:org.apache.rocketmq.test.util"
+          ]
+        },
+        {
+          "size": 4,
+          "members": [
+            "pkg:org.apache.rocketmq.namesrv",
+            "pkg:org.apache.rocketmq.namesrv.kvconfig",
+            "pkg:org.apache.rocketmq.namesrv.processor",
+            "pkg:org.apache.rocketmq.namesrv.routeinfo"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.rocketmq.common.compression",
+            "pkg:org.apache.rocketmq.common.sysflag"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.rocketmq.test.util.data.collect",
+            "pkg:org.apache.rocketmq.test.util.data.collect.impl"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.apache.rocketmq.tieredstore.common",
+            "pkg:org.apache.rocketmq.tieredstore.util"
+          ]
+        }
+      ]
+    },
+    "B2": {
+      "id": "B2",
+      "name": "package-dependency-density",
+      "label": "包依赖密度",
+      "domain": "B",
+      "direction": "interval",
+      "value": 9.0819,
+      "numerator": 3106,
+      "denominator": 342,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Package --all --field id,dependsOnPackageIds --snapshot b9f6bb5e-5d2c-4460-9add-85890acb06d2",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot b9f6bb5e-5d2c-4460-9add-85890acb06d2"
+      ]
+    },
+    "B3": {
+      "id": "B3",
+      "name": "giant-class-ratio",
+      "label": "巨型类占比",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": 0.047444,
+      "numerator": 116,
+      "denominator": 2445,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Class --all --field id,lineCount --snapshot b9f6bb5e-5d2c-4460-9add-85890acb06d2",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --where 'lineCount>500' --snapshot b9f6bb5e-5d2c-4460-9add-85890acb06d2",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --snapshot b9f6bb5e-5d2c-4460-9add-85890acb06d2"
+      ],
+      "threshold": "lineCount > 500",
+      "top": [
+        {
+          "lineCount": 3624,
+          "id": "cls:org.apache.rocketmq.client.impl.MQClientAPIImpl"
+        },
+        {
+          "lineCount": 3467,
+          "id": "cls:org.apache.rocketmq.broker.processor.AdminBrokerProcessor"
+        },
+        {
+          "lineCount": 3193,
+          "id": "cls:org.apache.rocketmq.store.DefaultMessageStore"
+        },
+        {
+          "lineCount": 2653,
+          "id": "cls:org.apache.rocketmq.broker.BrokerController"
+        },
+        {
+          "lineCount": 2573,
+          "id": "cls:org.apache.rocketmq.common.BrokerConfig"
+        }
+      ],
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --where 'lineCount>500' --snapshot b9f6bb5e-5d2c-4460-9add-85890acb06d2",
+        "serverCount": 116,
+        "match": true
+      }
+    },
+    "C2": {
+      "id": "C2",
+      "name": "cyclomatic-complexity-p90",
+      "label": "圈复杂度 P90",
+      "domain": "C",
+      "direction": "lower-better",
+      "value": 4,
+      "denominator": 21810,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot b9f6bb5e-5d2c-4460-9add-85890acb06d2",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,lineCount,complexity --snapshot b9f6bb5e-5d2c-4460-9add-85890acb06d2"
+      ],
+      "percentiles": {
+        "p25": 1,
+        "p50": 1,
+        "p75": 2,
+        "p90": 4
+      },
+      "mean": 1.9547,
+      "max": 145,
+      "top": [
+        {
+          "cyclomaticComplexity": 145,
+          "id": "mtd:org.apache.rocketmq.filter.parser.SelectorParserTokenManager.jjMoveNfa_0(:int:int)"
+        },
+        {
+          "cyclomaticComplexity": 95,
+          "id": "mtd:org.apache.rocketmq.auth.authorization.builder.DefaultAuthorizationContextBuilder.build(:ChannelHandlerContext:RemotingCommand)"
+        },
+        {
+          "cyclomaticComplexity": 78,
+          "id": "mtd:org.apache.rocketmq.filter.parser.SelectorParser.comparisonExpression"
+        },
+        {
+          "cyclomaticComplexity": 77,
+          "id": "mtd:org.apache.rocketmq.broker.processor.AdminBrokerProcessor.processRequest(:ChannelHandlerContext:RemotingCommand)"
+        },
+        {
+          "cyclomaticComplexity": 64,
+          "id": "mtd:org.apache.rocketmq.broker.BrokerController.shutdownBasicService"
+        }
+      ],
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot b9f6bb5e-5d2c-4460-9add-85890acb06d2",
+        "serverCount": 21810,
+        "match": true
+      }
+    },
+    "C3": {
+      "id": "C3",
+      "name": "test-method-ratio",
+      "label": "测试方法占比",
+      "domain": "C",
+      "direction": "higher-better",
+      "value": 0.161345,
+      "numerator": 3719,
+      "denominator": 23050,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'isTest=true' --snapshot b9f6bb5e-5d2c-4460-9add-85890acb06d2",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot b9f6bb5e-5d2c-4460-9add-85890acb06d2",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,isTest,testType --snapshot b9f6bb5e-5d2c-4460-9add-85890acb06d2"
+      ],
+      "testTypes": {
+        "UnitTest": 3719
+      },
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'isTest=true' --snapshot b9f6bb5e-5d2c-4460-9add-85890acb06d2",
+        "serverCount": 3719,
+        "match": true
+      }
+    },
+    "C4": {
+      "id": "C4",
+      "name": "giant-method-ratio",
+      "label": "巨型方法占比",
+      "domain": "C",
+      "direction": "lower-better",
+      "value": 0.009462,
+      "numerator": 207,
+      "denominator": 21876,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount>80' --snapshot b9f6bb5e-5d2c-4460-9add-85890acb06d2",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount=0' --snapshot b9f6bb5e-5d2c-4460-9add-85890acb06d2",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot b9f6bb5e-5d2c-4460-9add-85890acb06d2",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,lineCount --snapshot b9f6bb5e-5d2c-4460-9add-85890acb06d2"
+      ],
+      "threshold": "lineCount > 80",
+      "excludedFromDenominator": {
+        "lineCountIsZero": 1174,
+        "lineCountIsNull": 0
+      },
+      "top": [
+        {
+          "lineCount": 529,
+          "id": "mtd:org.apache.rocketmq.proxy.grpc.v2.producer.SendMessageActivityTest.testParameterValidate"
+        },
+        {
+          "lineCount": 430,
+          "id": "mtd:org.apache.rocketmq.auth.authorization.builder.DefaultAuthorizationContextBuilder.build(:ChannelHandlerContext:RemotingCommand)"
+        },
+        {
+          "lineCount": 429,
+          "id": "mtd:org.apache.rocketmq.broker.processor.PopMessageProcessor.processRequest(:ChannelHandlerContext:RemotingCommand)"
+        },
+        {
+          "lineCount": 328,
+          "id": "mtd:org.apache.rocketmq.filter.parser.SelectorParserTokenManager.jjMoveNfa_0(:int:int)"
+        },
+        {
+          "lineCount": 307,
+          "id": "mtd:org.apache.rocketmq.broker.processor.PullMessageProcessor.processRequest(:Channel:RemotingCommand:boolean:boolean)"
+        }
+      ],
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount>80' --snapshot b9f6bb5e-5d2c-4460-9add-85890acb06d2",
+        "serverCount": 207,
+        "match": true
+      }
+    },
+    "D3": {
+      "id": "D3",
+      "name": "scale-profile",
+      "label": "规模画像",
+      "domain": "D",
+      "direction": "none",
+      "value": 26142,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" snapshot list --repo rocketmq",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Repository --snapshot b9f6bb5e-5d2c-4460-9add-85890acb06d2",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot b9f6bb5e-5d2c-4460-9add-85890acb06d2",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --snapshot b9f6bb5e-5d2c-4460-9add-85890acb06d2",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Interface --snapshot b9f6bb5e-5d2c-4460-9add-85890acb06d2",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot b9f6bb5e-5d2c-4460-9add-85890acb06d2",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Dependency --snapshot b9f6bb5e-5d2c-4460-9add-85890acb06d2",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot b9f6bb5e-5d2c-4460-9add-85890acb06d2",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Mapper --snapshot b9f6bb5e-5d2c-4460-9add-85890acb06d2",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Module --snapshot b9f6bb5e-5d2c-4460-9add-85890acb06d2",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Component --snapshot b9f6bb5e-5d2c-4460-9add-85890acb06d2",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Function --snapshot b9f6bb5e-5d2c-4460-9add-85890acb06d2",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Store --snapshot b9f6bb5e-5d2c-4460-9add-85890acb06d2",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Route --snapshot b9f6bb5e-5d2c-4460-9add-85890acb06d2",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot b9f6bb5e-5d2c-4460-9add-85890acb06d2"
+      ],
+      "typeCounts": {
+        "Repository": 1,
+        "Package": 342,
+        "Class": 2445,
+        "Interface": 198,
+        "Method": 23050,
+        "Dependency": 105,
+        "Table": 1,
+        "Mapper": 0,
+        "Module": 0,
+        "Component": 0,
+        "Function": 0,
+        "Store": 0,
+        "Route": 0,
+        "ApiEndpoint": 0
+      },
+      "linkCount": 107952
+    }
+  },
+  "nullMetrics": {
+    "A1": {
+      "id": "A1",
+      "name": "full-chain-coverage",
+      "label": "全链路贯通率",
+      "domain": "A",
+      "direction": "higher-better",
+      "value": null,
+      "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot b9f6bb5e-5d2c-4460-9add-85890acb06d2"
+      ],
+      "evidence": {
+        "apiEndpointCount": 0
+      }
+    },
+    "A2": {
+      "id": "A2",
+      "name": "api-backend-breakrate",
+      "label": "前后端断链率",
+      "domain": "A",
+      "direction": "lower-better",
+      "value": null,
+      "reason": "无 ApiEndpoint 对象（纯后端仓库——按口径置空）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot b9f6bb5e-5d2c-4460-9add-85890acb06d2"
+      ],
+      "evidence": {
+        "apiEndpointCount": 0
+      }
+    },
+    "B1.frontend": {
+      "id": "B1.frontend",
+      "name": "circular-dependency-density",
+      "label": "循环依赖密度（前端）",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": null,
+      "reason": "无 Module 对象（纯后端仓库——按口径置空）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Module --snapshot b9f6bb5e-5d2c-4460-9add-85890acb06d2"
+      ],
+      "evidence": {
+        "moduleCount": 0
+      }
+    },
+    "B4": {
+      "id": "B4",
+      "name": "component-coupling-degree",
+      "label": "组件耦合度",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": null,
+      "reason": "无 Component 对象（纯后端仓库——按口径置空）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Component --snapshot b9f6bb5e-5d2c-4460-9add-85890acb06d2"
+      ],
+      "evidence": {
+        "componentCount": 0
+      }
+    },
+    "C1": {
+      "id": "C1",
+      "name": "endpoint-table-hops",
+      "label": "端到端跳数",
+      "domain": "C",
+      "direction": "interval",
+      "value": null,
+      "reason": "无 ApiEndpoint 对象（贯通链分母为 0）",
+      "evidence": {
+        "apiEndpointCount": 0
+      }
+    },
+    "D1": {
+      "id": "D1",
+      "name": "framework-version-coverage",
+      "label": "技术栈版本覆盖率",
+      "domain": "D",
+      "direction": "higher-better",
+      "value": null,
+      "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Dependency --all --field id,name,version,scope --snapshot b9f6bb5e-5d2c-4460-9add-85890acb06d2"
+      ],
+      "evidence": {
+        "total": 105,
+        "emptyVersion": 15,
+        "placeholder": 83,
+        "determinable": 7
+      }
+    },
+    "D2": {
+      "id": "D2",
+      "name": "dependency-homogeneity",
+      "label": "依赖同质度",
+      "domain": "D",
+      "direction": "none",
+      "value": null,
+      "reason": "cohort 级指标（依赖 cohort 众数集合——单体层不产出）",
+      "evidence": {
+        "dependencyCount": 105
+      }
+    },
+    "D4": {
+      "id": "D4",
+      "name": "evolution-trend",
+      "label": "年度演进趋势",
+      "domain": "D",
+      "direction": "none",
+      "value": null,
+      "reason": "单快照（首次导入——无时序）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" snapshot list --repo rocketmq"
+      ],
+      "evidence": {
+        "completeSnapshotCount": 1
+      }
+    }
+  },
+  "dataQuality": {
+    "dq.null-complexity-ratio": {
+      "id": "dq.null-complexity-ratio",
+      "name": "null-complexity-ratio",
+      "label": "complexity 为 null 的方法占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": 0.053796,
+      "numerator": 1240,
+      "denominator": 23050,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot b9f6bb5e-5d2c-4460-9add-85890acb06d2",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot b9f6bb5e-5d2c-4460-9add-85890acb06d2"
+      ]
+    },
+    "dq.missing-version-ratio": {
+      "id": "dq.missing-version-ratio",
+      "name": "missing-version-ratio",
+      "label": "version 为空串的依赖占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": 0.142857,
+      "numerator": 15,
+      "denominator": 105,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Dependency --all --field id,name,version,scope --snapshot b9f6bb5e-5d2c-4460-9add-85890acb06d2"
+      ],
+      "placeholderVersionCount": 83
+    },
+    "dq.ext-call-ratio": {
+      "id": "dq.ext-call-ratio",
+      "name": "ext-call-ratio",
+      "label": "ext: 虚拟调用过滤占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": null,
+      "reason": "不可观测（ext: 虚拟边在导入物化时已过滤——查询面天然免疫）"
+    }
+  }
+}
