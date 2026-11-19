@@ -51,6 +51,7 @@ jobs:
           echo "PATH prepended: $KE_CLI_DIR/bin"
       - name: Clone repo (depth 1)
         run: |
+          mkdir -p "$RUNNER_TEMP/src"
           echo "::group::clone ${{ matrix.owner }}/${{ matrix.repo }}"
           git clone --depth 1 https://github.com/${{ matrix.owner }}/${{ matrix.repo }}.git "$RUNNER_TEMP/src/${{ matrix.repo }}" 2>&1 | tail -3
           echo "::endgroup::"
@@ -62,15 +63,16 @@ jobs:
         run: |
           set -o pipefail
           REPO_SRC="$RUNNER_TEMP/src/${{ matrix.repo }}"
+          KE_BIN="$RUNNER_TEMP/ke-cli/bin/ke.cjs"
           echo "=== import start ${{ matrix.owner }}/${{ matrix.repo }} ==="
           KE_LOG="$RUNNER_TEMP/import-${{ matrix.repo }}.log"
-          if ! ke --mode server import start --repo "$REPO_SRC" 2>&1 | tee "$KE_LOG"; then
+          if ! node "$KE_BIN" --mode server --url "$KE_SERVER_URL" --token "$KE_API_KEY" import start --repo "$REPO_SRC" 2>&1 | tee "$KE_LOG"; then
             echo "IMPORT FAILED — 提取 job 详情（ke job logs）"
             JOB_ID=$(grep -oE '"jobId": *"[0-9a-f-]+' "$KE_LOG" | head -1 | grep -oE '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}' || true)
             if [ -n "$JOB_ID" ]; then
               echo "=== ke job logs $JOB_ID（parse/失败项明细）==="
-              ke --mode server job logs "$JOB_ID" --level warn --limit 20 2>&1 | head -80 || \
-              ke --mode server job logs "$JOB_ID" 2>&1 | head -80 || true
+              node "$KE_BIN" --mode server --url "$KE_SERVER_URL" --token "$KE_API_KEY" job logs "$JOB_ID" --level warn --limit 20 2>&1 | head -80 || \
+              node "$KE_BIN" --mode server --url "$KE_SERVER_URL" --token "$KE_API_KEY" job logs "$JOB_ID" 2>&1 | head -80 || true
             fi
             exit 1
           fi
