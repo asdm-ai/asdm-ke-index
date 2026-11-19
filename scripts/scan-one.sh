@@ -44,7 +44,7 @@ else
   git clone --depth 1 "https://github.com/$OWNER/$REPO.git" "$REPO_DIR"
 fi
 
-echo "== ke import start（--mode server → ${KE_SERVER_URL}${SCAN_FORCE:+，--force 重扫轨}）=="
+echo "== ke import start（--mode server → ${KE_SERVER_URL}$([ "${SCAN_FORCE:-}" = "true" ] && printf '，--force 重扫轨')）=="
 FORCE_ARG=""
 if [ "${SCAN_FORCE:-}" = "true" ]; then
   FORCE_ARG="--force"
