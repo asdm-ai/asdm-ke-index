@@ -1,12 +1,12 @@
 {
   "schemaVersion": "draft-v1",
   "implementation": "ke-index census.py (transitional; L2 aggregation over compute-metrics reports)",
-  "status": "accumulating",
-  "samples": 20,
+  "status": "published",
+  "samples": 30,
   "gate": {
     "publishThreshold": 30,
     "privacyFloor": 5,
-    "statusReason": "N=20 < 30（accumulating——不出分位，仅样本计数与缺失标注）",
+    "statusReason": "N=30 >= 30（统计充分——发布分位）",
     "note": "publishThreshold 为统计充分性门槛（P2-D10）；privacyFloor 为 k-匿名隐私护栏（Schema §4.2）——两者显式区分，不混用"
   },
   "repos": [
@@ -17,6 +17,24 @@
       "snapshotId": "8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
       "objectCount": 41911,
       "linkCount": 206379,
+      "schemaVersion": "draft-v1"
+    },
+    {
+      "owner": "alibaba",
+      "repo": "druid",
+      "sourceId": "druid",
+      "snapshotId": "3124736e-602f-4dde-8694-dac2bf2cc4c3",
+      "objectCount": 41208,
+      "linkCount": 234102,
+      "schemaVersion": "draft-v1"
+    },
+    {
+      "owner": "alibaba",
+      "repo": "nacos",
+      "sourceId": "nacos",
+      "snapshotId": "93839017-149f-4503-940f-460207e07e1d",
+      "objectCount": 57010,
+      "linkCount": 431791,
       "schemaVersion": "draft-v1"
     },
     {
@@ -35,6 +53,24 @@
       "snapshotId": "93a81a8c-60ed-4d76-868a-78ec89b698c5",
       "objectCount": 51445,
       "linkCount": 254633,
+      "schemaVersion": "draft-v1"
+    },
+    {
+      "owner": "apache",
+      "repo": "rocketmq",
+      "sourceId": "rocketmq",
+      "snapshotId": "b9f6bb5e-5d2c-4460-9add-85890acb06d2",
+      "objectCount": 26142,
+      "linkCount": 107952,
+      "schemaVersion": "draft-v1"
+    },
+    {
+      "owner": "apache",
+      "repo": "shardingsphere",
+      "sourceId": "shardingsphere",
+      "snapshotId": "75152fdc-1043-40e8-9044-c963fef9ec2d",
+      "objectCount": 56015,
+      "linkCount": 444866,
       "schemaVersion": "draft-v1"
     },
     {
@@ -74,6 +110,15 @@
       "schemaVersion": "draft-v1"
     },
     {
+      "owner": "flowable",
+      "repo": "flowable-engine",
+      "sourceId": "flowable-engine",
+      "snapshotId": "49647250-425e-4a24-80bd-2c5fa5b14ce5",
+      "objectCount": 76080,
+      "linkCount": 214446,
+      "schemaVersion": "draft-v1"
+    },
+    {
       "owner": "jeecgboot",
       "repo": "JeecgBoot",
       "sourceId": "JeecgBoot",
@@ -83,12 +128,30 @@
       "schemaVersion": "draft-v1"
     },
     {
+      "owner": "keycloak",
+      "repo": "keycloak",
+      "sourceId": "keycloak",
+      "snapshotId": "fffee011-9543-4984-b282-9d20845be817",
+      "objectCount": 91724,
+      "linkCount": 497305,
+      "schemaVersion": "draft-v1"
+    },
+    {
       "owner": "lenve",
       "repo": "vhr",
       "sourceId": "vhr",
       "snapshotId": "cd66de5d-de5b-4c74-a342-b13152701d92",
       "objectCount": 991,
       "linkCount": 1436,
+      "schemaVersion": "draft-v1"
+    },
+    {
+      "owner": "linlinjava",
+      "repo": "litemall",
+      "sourceId": "litemall",
+      "snapshotId": "c1024294-9020-466d-8010-a4a3f8a1006d",
+      "objectCount": 13172,
+      "linkCount": 34102,
       "schemaVersion": "draft-v1"
     },
     {
@@ -107,6 +170,15 @@
       "snapshotId": "80940bc3-2c26-46f5-b5f2-1cdea1fd0df5",
       "objectCount": 14527,
       "linkCount": 35226,
+      "schemaVersion": "draft-v1"
+    },
+    {
+      "owner": "metersphere",
+      "repo": "metersphere",
+      "sourceId": "metersphere",
+      "snapshotId": "e3eadec9-222f-49f2-ab5e-3183b979f358",
+      "objectCount": 43718,
+      "linkCount": 157807,
       "schemaVersion": "draft-v1"
     },
     {
@@ -143,6 +215,24 @@
       "snapshotId": "0c95df2a-f1d5-44e0-b832-3f2c2b9443aa",
       "objectCount": 777,
       "linkCount": 3326,
+      "schemaVersion": "draft-v1"
+    },
+    {
+      "owner": "spring-projects",
+      "repo": "spring-boot",
+      "sourceId": "spring-boot",
+      "snapshotId": "12b33cb6-bfe3-4e22-ada5-850fb67e3681",
+      "objectCount": 64887,
+      "linkCount": 141436,
+      "schemaVersion": "draft-v1"
+    },
+    {
+      "owner": "spring-projects",
+      "repo": "spring-framework",
+      "sourceId": "spring-framework",
+      "snapshotId": "290a057e-3a18-407d-9704-79989dbecc46",
+      "objectCount": 105848,
+      "linkCount": 286043,
       "schemaVersion": "draft-v1"
     },
     {
@@ -199,11 +289,19 @@
       "domain": "A",
       "direction": "higher-better",
       "N": 0,
-      "missing": 20,
+      "missing": 30,
       "missingRepos": [
         {
           "repo": "YunaiV/ruoyi-vue-pro",
           "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）"
+        },
+        {
+          "repo": "alibaba/druid",
+          "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）"
+        },
+        {
+          "repo": "alibaba/nacos",
+          "reason": "calls 传递闭包与 Method→Mapper 名字 join 未实现（过渡实现——待 ke checkup）"
         },
         {
           "repo": "apache/dubbo",
@@ -211,6 +309,14 @@
         },
         {
           "repo": "apache/fineract",
+          "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）"
+        },
+        {
+          "repo": "apache/rocketmq",
+          "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）"
+        },
+        {
+          "repo": "apache/shardingsphere",
           "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）"
         },
         {
@@ -230,11 +336,23 @@
           "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）"
         },
         {
+          "repo": "flowable/flowable-engine",
+          "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）"
+        },
+        {
           "repo": "jeecgboot/JeecgBoot",
           "reason": "calls 传递闭包与 Method→Mapper 名字 join 未实现（过渡实现——待 ke checkup）"
         },
         {
+          "repo": "keycloak/keycloak",
+          "reason": "calls 传递闭包与 Method→Mapper 名字 join 未实现（过渡实现——待 ke checkup）"
+        },
+        {
           "repo": "lenve/vhr",
+          "reason": "calls 传递闭包与 Method→Mapper 名字 join 未实现（过渡实现——待 ke checkup）"
+        },
+        {
+          "repo": "linlinjava/litemall",
           "reason": "calls 传递闭包与 Method→Mapper 名字 join 未实现（过渡实现——待 ke checkup）"
         },
         {
@@ -244,6 +362,10 @@
         {
           "repo": "macrozheng/mall-swarm",
           "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）"
+        },
+        {
+          "repo": "metersphere/metersphere",
+          "reason": "calls 传递闭包与 Method→Mapper 名字 join 未实现（过渡实现——待 ke checkup）"
         },
         {
           "repo": "newbee-ltd/newbee-mall",
@@ -259,6 +381,14 @@
         },
         {
           "repo": "renrenio/renren-fast",
+          "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）"
+        },
+        {
+          "repo": "spring-projects/spring-boot",
+          "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）"
+        },
+        {
+          "repo": "spring-projects/spring-framework",
           "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）"
         },
         {
@@ -284,7 +414,8 @@
       ],
       "mean": null,
       "percentiles": null,
-      "percentileMethod": "nearest-rank (Schema §4.2)"
+      "percentileMethod": "nearest-rank (Schema §4.2)",
+      "gateNote": "k-匿名隐私护栏：切片 N=0 < 5，整组不出分位（与发布门槛显式区分）"
     },
     "A2": {
       "id": "A2",
@@ -292,11 +423,15 @@
       "label": "前后端断链率",
       "domain": "A",
       "direction": "lower-better",
-      "N": 5,
-      "missing": 15,
+      "N": 9,
+      "missing": 21,
       "missingRepos": [
         {
           "repo": "YunaiV/ruoyi-vue-pro",
+          "reason": "无 ApiEndpoint 对象（纯后端仓库——按口径置空）"
+        },
+        {
+          "repo": "alibaba/druid",
           "reason": "无 ApiEndpoint 对象（纯后端仓库——按口径置空）"
         },
         {
@@ -305,6 +440,14 @@
         },
         {
           "repo": "apache/fineract",
+          "reason": "无 ApiEndpoint 对象（纯后端仓库——按口径置空）"
+        },
+        {
+          "repo": "apache/rocketmq",
+          "reason": "无 ApiEndpoint 对象（纯后端仓库——按口径置空）"
+        },
+        {
+          "repo": "apache/shardingsphere",
           "reason": "无 ApiEndpoint 对象（纯后端仓库——按口径置空）"
         },
         {
@@ -321,6 +464,10 @@
         },
         {
           "repo": "elunez/eladmin",
+          "reason": "无 ApiEndpoint 对象（纯后端仓库——按口径置空）"
+        },
+        {
+          "repo": "flowable/flowable-engine",
           "reason": "无 ApiEndpoint 对象（纯后端仓库——按口径置空）"
         },
         {
@@ -344,6 +491,14 @@
           "reason": "无 ApiEndpoint 对象（纯后端仓库——按口径置空）"
         },
         {
+          "repo": "spring-projects/spring-boot",
+          "reason": "无 ApiEndpoint 对象（纯后端仓库——按口径置空）"
+        },
+        {
+          "repo": "spring-projects/spring-framework",
+          "reason": "无 ApiEndpoint 对象（纯后端仓库——按口径置空）"
+        },
+        {
           "repo": "spring-projects/spring-petclinic",
           "reason": "无 ApiEndpoint 对象（纯后端仓库——按口径置空）"
         },
@@ -356,8 +511,13 @@
           "reason": "无 ApiEndpoint 对象（纯后端仓库——按口径置空）"
         }
       ],
-      "mean": null,
-      "percentiles": null,
+      "mean": 0.878205,
+      "percentiles": {
+        "p25": 1.0,
+        "p50": 1.0,
+        "p75": 1.0,
+        "p90": 1.0
+      },
       "percentileMethod": "nearest-rank (Schema §4.2)"
     },
     "A3": {
@@ -366,11 +526,15 @@
       "label": "孤儿表率",
       "domain": "A",
       "direction": "lower-better",
-      "N": 17,
-      "missing": 3,
+      "N": 26,
+      "missing": 4,
       "missingRepos": [
         {
           "repo": "apache/dubbo",
+          "reason": "无 Table 对象（分母为 0）"
+        },
+        {
+          "repo": "keycloak/keycloak",
           "reason": "无 Table 对象（分母为 0）"
         },
         {
@@ -382,8 +546,13 @@
           "reason": "无 Table 对象（分母为 0）"
         }
       ],
-      "mean": null,
-      "percentiles": null,
+      "mean": 0.533151,
+      "percentiles": {
+        "p25": 0.142857,
+        "p50": 0.488372,
+        "p75": 0.980645,
+        "p90": 1.0
+      },
       "percentileMethod": "nearest-rank (Schema §4.2)"
     },
     "A4": {
@@ -392,11 +561,15 @@
       "label": "表↔实体映射率",
       "domain": "A",
       "direction": "higher-better",
-      "N": 17,
-      "missing": 3,
+      "N": 26,
+      "missing": 4,
       "missingRepos": [
         {
           "repo": "apache/dubbo",
+          "reason": "无 Table 对象（分母为 0）"
+        },
+        {
+          "repo": "keycloak/keycloak",
           "reason": "无 Table 对象（分母为 0）"
         },
         {
@@ -408,8 +581,13 @@
           "reason": "无 Table 对象（分母为 0）"
         }
       ],
-      "mean": null,
-      "percentiles": null,
+      "mean": 0.466849,
+      "percentiles": {
+        "p25": 0.019355,
+        "p50": 0.463768,
+        "p75": 0.857143,
+        "p90": 1.0
+      },
       "percentileMethod": "nearest-rank (Schema §4.2)"
     },
     "B1.backend": {
@@ -418,7 +596,7 @@
       "label": "循环依赖密度（后端）",
       "domain": "B",
       "direction": "lower-better",
-      "N": 19,
+      "N": 29,
       "missing": 1,
       "missingRepos": [
         {
@@ -426,8 +604,13 @@
           "reason": "无 Package 对象（分母为 0）"
         }
       ],
-      "mean": null,
-      "percentiles": null,
+      "mean": 0.224926,
+      "percentiles": {
+        "p25": 0.06383,
+        "p50": 0.163636,
+        "p75": 0.387008,
+        "p90": 0.50306
+      },
       "percentileMethod": "nearest-rank (Schema §4.2)"
     },
     "B1.frontend": {
@@ -436,11 +619,19 @@
       "label": "循环依赖密度（前端）",
       "domain": "B",
       "direction": "lower-better",
-      "N": 10,
-      "missing": 10,
+      "N": 18,
+      "missing": 12,
       "missingRepos": [
         {
           "repo": "apache/dubbo",
+          "reason": "无 Module 对象（纯后端仓库——按口径置空）"
+        },
+        {
+          "repo": "apache/rocketmq",
+          "reason": "无 Module 对象（纯后端仓库——按口径置空）"
+        },
+        {
+          "repo": "apache/shardingsphere",
           "reason": "无 Module 对象（纯后端仓库——按口径置空）"
         },
         {
@@ -480,8 +671,13 @@
           "reason": "无 Module 对象（纯后端仓库——按口径置空）"
         }
       ],
-      "mean": null,
-      "percentiles": null,
+      "mean": 0.011598,
+      "percentiles": {
+        "p25": 0.0,
+        "p50": 0.0,
+        "p75": 0.0,
+        "p90": 0.009695
+      },
       "percentileMethod": "nearest-rank (Schema §4.2)"
     },
     "B2": {
@@ -490,7 +686,7 @@
       "label": "包依赖密度",
       "domain": "B",
       "direction": "interval",
-      "N": 19,
+      "N": 29,
       "missing": 1,
       "missingRepos": [
         {
@@ -498,8 +694,13 @@
           "reason": "无 Package 对象（分母为 0）"
         }
       ],
-      "mean": null,
-      "percentiles": null,
+      "mean": 4.746086,
+      "percentiles": {
+        "p25": 2.3077,
+        "p50": 3.521,
+        "p75": 7.5035,
+        "p90": 9.0819
+      },
       "percentileMethod": "nearest-rank (Schema §4.2)"
     },
     "B3": {
@@ -508,7 +709,7 @@
       "label": "巨型类占比",
       "domain": "B",
       "direction": "lower-better",
-      "N": 19,
+      "N": 29,
       "missing": 1,
       "missingRepos": [
         {
@@ -516,8 +717,13 @@
           "reason": "无 Class 对象（分母为 0）"
         }
       ],
-      "mean": null,
-      "percentiles": null,
+      "mean": 0.036185,
+      "percentiles": {
+        "p25": 0.004831,
+        "p50": 0.021739,
+        "p75": 0.035642,
+        "p90": 0.151771
+      },
       "percentileMethod": "nearest-rank (Schema §4.2)"
     },
     "B4": {
@@ -526,15 +732,27 @@
       "label": "组件耦合度",
       "domain": "B",
       "direction": "lower-better",
-      "N": 6,
-      "missing": 14,
+      "N": 10,
+      "missing": 20,
       "missingRepos": [
+        {
+          "repo": "alibaba/druid",
+          "reason": "无 Component 对象（纯后端仓库——按口径置空）"
+        },
         {
           "repo": "apache/dubbo",
           "reason": "无 Component 对象（纯后端仓库——按口径置空）"
         },
         {
           "repo": "apache/fineract",
+          "reason": "无 Component 对象（纯后端仓库——按口径置空）"
+        },
+        {
+          "repo": "apache/rocketmq",
+          "reason": "无 Component 对象（纯后端仓库——按口径置空）"
+        },
+        {
+          "repo": "apache/shardingsphere",
           "reason": "无 Component 对象（纯后端仓库——按口径置空）"
         },
         {
@@ -551,6 +769,10 @@
         },
         {
           "repo": "elunez/eladmin",
+          "reason": "无 Component 对象（纯后端仓库——按口径置空）"
+        },
+        {
+          "repo": "flowable/flowable-engine",
           "reason": "无 Component 对象（纯后端仓库——按口径置空）"
         },
         {
@@ -574,6 +796,14 @@
           "reason": "无 Component 对象（纯后端仓库——按口径置空）"
         },
         {
+          "repo": "spring-projects/spring-boot",
+          "reason": "无 Component 对象（纯后端仓库——按口径置空）"
+        },
+        {
+          "repo": "spring-projects/spring-framework",
+          "reason": "无 Component 对象（纯后端仓库——按口径置空）"
+        },
+        {
           "repo": "spring-projects/spring-petclinic",
           "reason": "无 Component 对象（纯后端仓库——按口径置空）"
         },
@@ -586,8 +816,13 @@
           "reason": "无 Component 对象（纯后端仓库——按口径置空）"
         }
       ],
-      "mean": null,
-      "percentiles": null,
+      "mean": 0.37824,
+      "percentiles": {
+        "p25": 0.0503,
+        "p50": 0.1429,
+        "p75": 0.3462,
+        "p90": 1.0
+      },
       "percentileMethod": "nearest-rank (Schema §4.2)"
     },
     "C1": {
@@ -597,11 +832,19 @@
       "domain": "C",
       "direction": "interval",
       "N": 0,
-      "missing": 20,
+      "missing": 30,
       "missingRepos": [
         {
           "repo": "YunaiV/ruoyi-vue-pro",
           "reason": "无 ApiEndpoint 对象（贯通链分母为 0）"
+        },
+        {
+          "repo": "alibaba/druid",
+          "reason": "无 ApiEndpoint 对象（贯通链分母为 0）"
+        },
+        {
+          "repo": "alibaba/nacos",
+          "reason": "依赖 A1 贯通链算法（过渡实现未含——待 ke checkup）"
         },
         {
           "repo": "apache/dubbo",
@@ -609,6 +852,14 @@
         },
         {
           "repo": "apache/fineract",
+          "reason": "无 ApiEndpoint 对象（贯通链分母为 0）"
+        },
+        {
+          "repo": "apache/rocketmq",
+          "reason": "无 ApiEndpoint 对象（贯通链分母为 0）"
+        },
+        {
+          "repo": "apache/shardingsphere",
           "reason": "无 ApiEndpoint 对象（贯通链分母为 0）"
         },
         {
@@ -628,11 +879,23 @@
           "reason": "无 ApiEndpoint 对象（贯通链分母为 0）"
         },
         {
+          "repo": "flowable/flowable-engine",
+          "reason": "无 ApiEndpoint 对象（贯通链分母为 0）"
+        },
+        {
           "repo": "jeecgboot/JeecgBoot",
           "reason": "依赖 A1 贯通链算法（过渡实现未含——待 ke checkup）"
         },
         {
+          "repo": "keycloak/keycloak",
+          "reason": "依赖 A1 贯通链算法（过渡实现未含——待 ke checkup）"
+        },
+        {
           "repo": "lenve/vhr",
+          "reason": "依赖 A1 贯通链算法（过渡实现未含——待 ke checkup）"
+        },
+        {
+          "repo": "linlinjava/litemall",
           "reason": "依赖 A1 贯通链算法（过渡实现未含——待 ke checkup）"
         },
         {
@@ -642,6 +905,10 @@
         {
           "repo": "macrozheng/mall-swarm",
           "reason": "无 ApiEndpoint 对象（贯通链分母为 0）"
+        },
+        {
+          "repo": "metersphere/metersphere",
+          "reason": "依赖 A1 贯通链算法（过渡实现未含——待 ke checkup）"
         },
         {
           "repo": "newbee-ltd/newbee-mall",
@@ -657,6 +924,14 @@
         },
         {
           "repo": "renrenio/renren-fast",
+          "reason": "无 ApiEndpoint 对象（贯通链分母为 0）"
+        },
+        {
+          "repo": "spring-projects/spring-boot",
+          "reason": "无 ApiEndpoint 对象（贯通链分母为 0）"
+        },
+        {
+          "repo": "spring-projects/spring-framework",
           "reason": "无 ApiEndpoint 对象（贯通链分母为 0）"
         },
         {
@@ -682,7 +957,8 @@
       ],
       "mean": null,
       "percentiles": null,
-      "percentileMethod": "nearest-rank (Schema §4.2)"
+      "percentileMethod": "nearest-rank (Schema §4.2)",
+      "gateNote": "k-匿名隐私护栏：切片 N=0 < 5，整组不出分位（与发布门槛显式区分）"
     },
     "C2": {
       "id": "C2",
@@ -690,7 +966,7 @@
       "label": "圈复杂度 P90",
       "domain": "C",
       "direction": "lower-better",
-      "N": 19,
+      "N": 29,
       "missing": 1,
       "missingRepos": [
         {
@@ -698,8 +974,13 @@
           "reason": "无 complexity 非 null 的 Method（分母为 0）"
         }
       ],
-      "mean": null,
-      "percentiles": null,
+      "mean": 2.724138,
+      "percentiles": {
+        "p25": 2,
+        "p50": 3,
+        "p75": 3,
+        "p90": 4
+      },
       "percentileMethod": "nearest-rank (Schema §4.2)"
     },
     "C3": {
@@ -708,7 +989,7 @@
       "label": "测试方法占比",
       "domain": "C",
       "direction": "higher-better",
-      "N": 19,
+      "N": 29,
       "missing": 1,
       "missingRepos": [
         {
@@ -716,8 +997,13 @@
           "reason": "无 Method 对象（分母为 0）"
         }
       ],
-      "mean": null,
-      "percentiles": null,
+      "mean": 0.104018,
+      "percentiles": {
+        "p25": 0.003521,
+        "p50": 0.031908,
+        "p75": 0.161345,
+        "p90": 0.350408
+      },
       "percentileMethod": "nearest-rank (Schema §4.2)"
     },
     "C4": {
@@ -726,7 +1012,7 @@
       "label": "巨型方法占比",
       "domain": "C",
       "direction": "lower-better",
-      "N": 19,
+      "N": 29,
       "missing": 1,
       "missingRepos": [
         {
@@ -734,8 +1020,13 @@
           "reason": "无 Method 对象（分母为 0）"
         }
       ],
-      "mean": null,
-      "percentiles": null,
+      "mean": 0.004576,
+      "percentiles": {
+        "p25": 0.000744,
+        "p50": 0.002815,
+        "p75": 0.005435,
+        "p90": 0.015979
+      },
       "percentileMethod": "nearest-rank (Schema §4.2)"
     },
     "D1": {
@@ -745,10 +1036,18 @@
       "domain": "D",
       "direction": "higher-better",
       "N": 0,
-      "missing": 20,
+      "missing": 30,
       "missingRepos": [
         {
           "repo": "YunaiV/ruoyi-vue-pro",
+          "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）"
+        },
+        {
+          "repo": "alibaba/druid",
+          "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）"
+        },
+        {
+          "repo": "alibaba/nacos",
           "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）"
         },
         {
@@ -758,6 +1057,14 @@
         {
           "repo": "apache/fineract",
           "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）"
+        },
+        {
+          "repo": "apache/rocketmq",
+          "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）"
+        },
+        {
+          "repo": "apache/shardingsphere",
+          "reason": "无可判定版本（空串 39 / 属性占位 398 / 合计 437——分母为 0，按口径置空）"
         },
         {
           "repo": "chillzhuang/SpringBlade",
@@ -776,11 +1083,23 @@
           "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）"
         },
         {
+          "repo": "flowable/flowable-engine",
+          "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）"
+        },
+        {
           "repo": "jeecgboot/JeecgBoot",
           "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）"
         },
         {
+          "repo": "keycloak/keycloak",
+          "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）"
+        },
+        {
           "repo": "lenve/vhr",
+          "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）"
+        },
+        {
+          "repo": "linlinjava/litemall",
           "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）"
         },
         {
@@ -790,6 +1109,10 @@
         {
           "repo": "macrozheng/mall-swarm",
           "reason": "无可判定版本（空串 19 / 属性占位 27 / 合计 46——分母为 0，按口径置空）"
+        },
+        {
+          "repo": "metersphere/metersphere",
+          "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）"
         },
         {
           "repo": "newbee-ltd/newbee-mall",
@@ -806,6 +1129,14 @@
         {
           "repo": "renrenio/renren-fast",
           "reason": "无可判定版本（空串 9 / 属性占位 25 / 合计 34——分母为 0，按口径置空）"
+        },
+        {
+          "repo": "spring-projects/spring-boot",
+          "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）"
+        },
+        {
+          "repo": "spring-projects/spring-framework",
+          "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）"
         },
         {
           "repo": "spring-projects/spring-petclinic",
@@ -830,7 +1161,8 @@
       ],
       "mean": null,
       "percentiles": null,
-      "percentileMethod": "nearest-rank (Schema §4.2)"
+      "percentileMethod": "nearest-rank (Schema §4.2)",
+      "gateNote": "k-匿名隐私护栏：切片 N=0 < 5，整组不出分位（与发布门槛显式区分）"
     }
   }
 }
