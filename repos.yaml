@@ -20,8 +20,7 @@
 #   C. JPA 数据访问层 8——与 MyBatis 系对照的 JPA 形态（含 JPA 实现本体）
 #   D. 前后端配对 7——A 层仓的官方前端仓（配对聚合轮未启用，先单列为前端形态样本）
 #
-#   当前批次：3/4（40 仓落库）——分批 push ≤10 新仓/批，批序即提交序
-#   （批 3 = C 层 4 + D 层 6；批 4 = D 层剩余 1 仓）
+#   当前批次：4/4（41 仓全量落库——S0 铺底清单完成）——分批 push ≤10 新仓/批，批序即提交序
 # =============================================================================
 
 repos:
@@ -166,7 +165,7 @@ repos:
     repo: BroadleafCommerce
     skip: false
     notes: "C·Broadleaf 电商框架（JPA 老牌商业开源——JPA 电商形态，与 mall MyBatis 电商对照）"
-  # ---- 分层 D：前后端配对前端仓（6 of 7，批 3 入列；余 1 仓批 4）----
+  # ---- 分层 D：前后端配对前端仓（7 of 7）----
   - owner: macrozheng
     repo: mall-admin-web
     skip: false
@@ -197,3 +196,8 @@ repos:
     skip: false
     notes: "D·eladmin 官方前端（Vue2 + Element——JPA 系前端轨）"
     # frontend-pair: elunez/eladmin（前后端配对聚合用——扩展位占位）
+  - owner: newbee-ltd
+    repo: newbee-mall-vue3-app
+    skip: false
+    notes: "D·newbee-mall 官方 Vue3 前端（小体量电商前端轨——41 仓清单收尾）"
+    # frontend-pair: newbee-ltd/newbee-mall（前后端配对聚合用——扩展位占位）
