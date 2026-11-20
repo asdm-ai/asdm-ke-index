@@ -49,7 +49,21 @@ bash scripts/scan-one.sh
 - 判别：force 轨 summary `status == "completed"`（重建）；默认轨同 HEAD 为 `"skipped"`（数值不变）
 - 口径分界：force 重扫 commit 即 A3/A4 前后口径的自然分界（git 历史可追溯）
 
-## 仓库索引（种子批 10 仓——分层选样：admin/业务系统 6 + 大型 2 + JPA 2）
+## 仓库索引（S0 铺底扩容 41 仓——分层选样：A admin/业务系统 18 + B 大型 8 + C JPA 8 + D 前后端配对 7）
+
+### 分层构成（P5H-D6 配额）
+
+| 分层 | 配额 | 数量 | 形态说明 |
+|---|---|---|---|
+| A·admin/业务系统 | ≥18 | 18 | Java 脚手架与业务系统（MyBatis/MP/JPA 混合形态——RuoYi 系/Jeecg/芋道/Pig 等多脚手架对照 + 电商/办公/工具型业务系统） |
+| B·大型仓 | ≥8 | 8 | 超大型多模块（Gradle 轨为主——Apache 系中间件 + Spring 生态基石仓） |
+| C·JPA 数据访问层 | ≥8 | 8 | 纯 JPA 形态（与 MyBatis 系对照——IAM/BPM/ERP 业务侧 + hibernate-orm 实现本体） |
+| D·前后端配对 | ≥6 | 7 | A 层仓的官方前端仓（Vue 系——配对聚合轮未启用，单列为前端形态样本） |
+
+> 全量清单见 [repos.yaml](repos.yaml)（notes 首字符为分层标记）；新入选仓 report 随扩容批
+> 扫描逐仓落库（分批 push ≤10 仓/批——批序即提交序）。
+
+### 种子批已扫描（10 仓——2026-10 首跑基线）
 
 | owner/repo | 分层 | Report | 快照 | 状态 |
 |---|---|---|---|---|
