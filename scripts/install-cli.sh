@@ -15,10 +15,10 @@ set -euo pipefail
 
 : "${KE_API_KEY:?KE_API_KEY is required}"
 KE_SERVER_URL="${KE_SERVER_URL:-https://console.kengine.ai}"
-# 版本锚点随生产发版联动升级（R6）：0.3.7 = v1.3.9 Part02 Hotfix 三案（504 终态确认/503 分钟级预算+僵尸回收/深嵌套迭代化）
+# 版本锚点随生产发版联动升级（R6）：0.3.8 = 1.3.9-1121-002（applyOpsMysql spread 爆栈修复——Hotfix-4）
 # （@TableName / BaseMapper 泛型 / @Select 注解三轨——A3/A4 口径修正；0.3.4 重扫
 #   run 43804026050 发现渐进轨伪投影缺 MP 三字段后递增重发，0.3.4 制品已放量不覆盖）
-EXPECTED_VERSION="${EXPECTED_CLI_VERSION:-0.3.7}"
+EXPECTED_VERSION="${EXPECTED_CLI_VERSION:-0.3.8}"
 DEST="${1:-$PWD/ke-cli}"
 
 if command -v shasum >/dev/null 2>&1; then
