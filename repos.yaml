@@ -159,10 +159,10 @@ repos:
     notes: "C·Hibernate ORM 本体（JPA 实现祖师仓——与 keycloak 业务侧 JPA 构成实现/使用两端对照）"
   - owner: dhis2
     repo: dhis2-core
-    # 2026-11-20 暂停：applyBatch 深层嵌套输入栈溢出（确定性平台 bug——v1.3.9
-    # Part02 Hotfix-3，批次避免阻塞）；平台修复后回补并复测
-    skip: true
-    notes: "C·DHIS2 卫生信息平台（Hibernate 重度大型业务系统——国际组织级 JPA 业务形态）｜Hotfix-3 暂停中"
+    # 2026-11-21 回补：Hotfix-3 平台修复已上生产（stableStringify 递归→迭代
+    # ——1.3.9-1121-001）；解除 skip 首次导入即 L1 红转绿实证
+    skip: false
+    notes: "C·DHIS2 卫生信息平台（Hibernate 重度大型业务系统——国际组织级 JPA 业务形态）｜Hotfix-3 已修复回补（2026-11-21）"
   - owner: BroadleafCommerce
     repo: BroadleafCommerce
     skip: false
