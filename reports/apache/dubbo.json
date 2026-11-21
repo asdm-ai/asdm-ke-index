@@ -13,7 +13,7 @@
     "linkCount": 136866,
     "completedAt": "2026-11-20T03:29:57.658Z"
   },
-  "cliVersion": "0.3.6",
+  "cliVersion": "0.3.7",
   "metrics": {
     "B1.backend": {
       "id": "B1.backend",
