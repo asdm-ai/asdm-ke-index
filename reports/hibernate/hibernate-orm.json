@@ -1,0 +1,1138 @@
+{
+  "schemaVersion": "draft-v1",
+  "implementation": "ke-index compute-metrics.py (transitional; to be superseded by ke checkup)",
+  "owner": "hibernate",
+  "repo": "hibernate-orm",
+  "sourceId": "hibernate-orm",
+  "snapshot": {
+    "snapshotId": "f8aa1edd-27df-46a9-b9ee-5d866cdf8e48",
+    "status": "complete",
+    "sourceVersion": "0a6ed12c1169397f2b9ca9fc2d3dc03cec60dfe3",
+    "sourceHead": "0a6ed12c1169397f2b9ca9fc2d3dc03cec60dfe3",
+    "objectCount": 179428,
+    "linkCount": 417086,
+    "completedAt": "2026-11-21T11:49:44.607Z"
+  },
+  "cliVersion": "0.3.7",
+  "metrics": {
+    "A3": {
+      "id": "A3",
+      "name": "orphan-table-rate",
+      "label": "孤儿表率",
+      "domain": "A",
+      "direction": "lower-better",
+      "value": 0.25,
+      "numerator": 5,
+      "denominator": 20,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Table --all --field id,name,matchedEntityClass --snapshot f8aa1edd-27df-46a9-b9ee-5d866cdf8e48",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Mapper --all --field id,namespace,mappedTableIds --snapshot f8aa1edd-27df-46a9-b9ee-5d866cdf8e48",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot f8aa1edd-27df-46a9-b9ee-5d866cdf8e48"
+      ]
+    },
+    "A4": {
+      "id": "A4",
+      "name": "table-entity-mapping-rate",
+      "label": "表↔实体映射率",
+      "domain": "A",
+      "direction": "higher-better",
+      "value": 0.75,
+      "numerator": 15,
+      "denominator": 20,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Table --all --field id,name,matchedEntityClass --snapshot f8aa1edd-27df-46a9-b9ee-5d866cdf8e48",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Mapper --all --field id,namespace,mappedTableIds --snapshot f8aa1edd-27df-46a9-b9ee-5d866cdf8e48",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot f8aa1edd-27df-46a9-b9ee-5d866cdf8e48"
+      ],
+      "evidence": {
+        "mapperEdgeOnly": 0,
+        "entityClassOnly": 15,
+        "both": 0
+      }
+    },
+    "B1.backend": {
+      "id": "B1.backend",
+      "name": "circular-dependency-density",
+      "label": "循环依赖密度（后端）",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": 0.245902,
+      "numerator": 585,
+      "denominator": 2379,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Package --all --field id,dependsOnPackageIds --snapshot f8aa1edd-27df-46a9-b9ee-5d866cdf8e48",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot f8aa1edd-27df-46a9-b9ee-5d866cdf8e48"
+      ],
+      "sccCount": 21,
+      "sccs": [
+        {
+          "size": 478,
+          "members": [
+            "pkg:org.hibernate",
+            "pkg:org.hibernate.action.internal",
+            "pkg:org.hibernate.action.queue.internal",
+            "pkg:org.hibernate.action.queue.internal.audit",
+            "pkg:org.hibernate.action.queue.internal.constraint",
+            "pkg:org.hibernate.action.queue.internal.cyclebreak",
+            "pkg:org.hibernate.action.queue.internal.decompose",
+            "pkg:org.hibernate.action.queue.internal.decompose.collection",
+            "pkg:org.hibernate.action.queue.internal.decompose.entity",
+            "pkg:org.hibernate.action.queue.internal.exec",
+            "pkg:org.hibernate.action.queue.internal.graph",
+            "pkg:org.hibernate.action.queue.internal.plan",
+            "pkg:org.hibernate.action.queue.internal.support",
+            "pkg:org.hibernate.action.queue.spi",
+            "pkg:org.hibernate.action.queue.spi.bind",
+            "pkg:org.hibernate.action.queue.spi.decompose",
+            "pkg:org.hibernate.action.queue.spi.decompose.collection",
+            "pkg:org.hibernate.action.queue.spi.decompose.entity",
+            "pkg:org.hibernate.action.queue.spi.meta",
+            "pkg:org.hibernate.action.queue.spi.plan",
+            "pkg:org.hibernate.action.spi",
+            "pkg:org.hibernate.annotations",
+            "pkg:org.hibernate.audit",
+            "pkg:org.hibernate.audit.internal",
+            "pkg:org.hibernate.audit.spi",
+            "pkg:org.hibernate.binder",
+            "pkg:org.hibernate.binder.internal",
+            "pkg:org.hibernate.boot",
+            "pkg:org.hibernate.boot.archive.internal",
+            "pkg:org.hibernate.boot.archive.spi",
+            "pkg:org.hibernate.boot.beanvalidation",
+            "pkg:org.hibernate.boot.cfgxml.internal",
+            "pkg:org.hibernate.boot.cfgxml.spi",
+            "pkg:org.hibernate.boot.internal",
+            "pkg:org.hibernate.boot.jaxb",
+            "pkg:org.hibernate.boot.jaxb.hbm.spi",
+            "pkg:org.hibernate.boot.jaxb.hbm.transform",
+            "pkg:org.hibernate.boot.jaxb.internal",
+            "pkg:org.hibernate.boot.jaxb.internal.stax",
+            "pkg:org.hibernate.boot.jaxb.mapping",
+            "pkg:org.hibernate.boot.jaxb.mapping.spi",
+            "pkg:org.hibernate.boot.jaxb.mapping.spi.db",
+            "pkg:org.hibernate.boot.jaxb.spi",
+            "pkg:org.hibernate.boot.model",
+            "pkg:org.hibernate.boot.model.convert.internal",
+            "pkg:org.hibernate.boot.model.convert.spi",
+            "pkg:org.hibernate.boot.model.internal",
+            "pkg:org.hibernate.boot.model.naming",
+            "pkg:org.hibernate.boot.model.process.internal",
+            "pkg:org.hibernate.boot.model.process.spi",
+            "pkg:org.hibernate.boot.model.relational",
+            "pkg:org.hibernate.boot.model.relational.internal",
+            "pkg:org.hibernate.boot.model.source.internal",
+            "pkg:org.hibernate.boot.model.source.internal.annotations",
+            "pkg:org.hibernate.boot.model.source.internal.hbm",
+            "pkg:org.hibernate.boot.model.source.spi",
+            "pkg:org.hibernate.boot.models",
+            "pkg:org.hibernate.boot.models.annotations.internal",
+            "pkg:org.hibernate.boot.models.annotations.spi",
+            "pkg:org.hibernate.boot.models.internal",
+            "pkg:org.hibernate.boot.models.spi",
+            "pkg:org.hibernate.boot.models.xml",
+            "pkg:org.hibernate.boot.models.xml.internal",
+            "pkg:org.hibernate.boot.models.xml.internal.attr",
+            "pkg:org.hibernate.boot.models.xml.internal.db",
+            "pkg:org.hibernate.boot.models.xml.spi",
+            "pkg:org.hibernate.boot.query",
+            "pkg:org.hibernate.boot.query.internal",
+            "pkg:org.hibernate.boot.registry",
+            "pkg:org.hibernate.boot.registry.classloading.internal",
+            "pkg:org.hibernate.boot.registry.classloading.spi",
+            "pkg:org.hibernate.boot.registry.internal",
+            "pkg:org.hibernate.boot.registry.selector",
+            "pkg:org.hibernate.boot.registry.selector.internal",
+            "pkg:org.hibernate.boot.registry.selector.spi",
+            "pkg:org.hibernate.boot.scan.internal",
+            "pkg:org.hibernate.boot.scan.spi",
+            "pkg:org.hibernate.boot.spi",
+            "pkg:org.hibernate.boot.xsd",
+            "pkg:org.hibernate.bytecode.enhance",
+            "pkg:org.hibernate.bytecode.enhance.internal.bytebuddy",
+            "pkg:org.hibernate.bytecode.enhance.internal.tracker",
+            "pkg:org.hibernate.bytecode.enhance.spi",
+            "pkg:org.hibernate.bytecode.enhance.spi.interceptor",
+            "pkg:org.hibernate.bytecode.internal",
+            "pkg:org.hibernate.bytecode.internal.bytebuddy",
+            "pkg:org.hibernate.bytecode.internal.none",
+            "pkg:org.hibernate.bytecode.spi",
+            "pkg:org.hibernate.cache",
+            "pkg:org.hibernate.cache.cfg.internal",
+            "pkg:org.hibernate.cache.cfg.spi",
+            "pkg:org.hibernate.cache.internal",
+            "pkg:org.hibernate.cache.spi",
+            "pkg:org.hibernate.cache.spi.access",
+            "pkg:org.hibernate.cache.spi.entry",
+            "pkg:org.hibernate.cache.spi.support",
+            "pkg:org.hibernate.callback.internal",
+            "pkg:org.hibernate.callback.spi",
+            "pkg:org.hibernate.cascade.internal",
+            "pkg:org.hibernate.cascade.spi",
+            "pkg:org.hibernate.cfg",
+            "pkg:org.hibernate.collection.internal",
+            "pkg:org.hibernate.collection.spi",
+            "pkg:org.hibernate.community.dialect",
+            "pkg:org.hibernate.community.dialect.aggregate.internal",
+            "pkg:org.hibernate.community.dialect.function",
+            "pkg:org.hibernate.community.dialect.function.array",
+            "pkg:org.hibernate.community.dialect.function.json",
+            "pkg:org.hibernate.community.dialect.identity.internal",
+            "pkg:org.hibernate.community.dialect.internal",
+            "pkg:org.hibernate.community.dialect.lock.internal",
+            "pkg:org.hibernate.community.dialect.pagination",
+            "pkg:org.hibernate.community.dialect.sequence",
+            "pkg:org.hibernate.community.dialect.temporal",
+            "pkg:org.hibernate.community.dialect.temptable.internal",
+            "pkg:org.hibernate.community.dialect.unique",
+            "pkg:org.hibernate.context",
+            "pkg:org.hibernate.context.internal",
+            "pkg:org.hibernate.context.spi",
+            "pkg:org.hibernate.dialect",
+            "pkg:org.hibernate.dialect.aggregate.internal",
+            "pkg:org.hibernate.dialect.aggregate.spi",
+            "pkg:org.hibernate.dialect.array.spi",
+            "pkg:org.hibernate.dialect.constraint.spi",
+            "pkg:org.hibernate.dialect.function",
+            "pkg:org.hibernate.dialect.function.array",
+            "pkg:org.hibernate.dialect.function.json",
+            "pkg:org.hibernate.dialect.function.spi",
+            "pkg:org.hibernate.dialect.function.xml",
+            "pkg:org.hibernate.dialect.generated.spi",
+            "pkg:org.hibernate.dialect.identifier.spi",
+            "pkg:org.hibernate.dialect.identity.internal",
+            "pkg:org.hibernate.dialect.identity.spi",
+            "pkg:org.hibernate.dialect.jdbc.spi",
+            "pkg:org.hibernate.dialect.literal.spi",
+            "pkg:org.hibernate.dialect.lob.internal",
+            "pkg:org.hibernate.dialect.lob.spi",
+            "pkg:org.hibernate.dialect.lock",
+            "pkg:org.hibernate.dialect.lock.internal",
+            "pkg:org.hibernate.dialect.lock.spi",
+            "pkg:org.hibernate.dialect.mutation.internal",
+            "pkg:org.hibernate.dialect.mutation.spi",
+            "pkg:org.hibernate.dialect.namespace.internal",
+            "pkg:org.hibernate.dialect.namespace.spi",
+            "pkg:org.hibernate.dialect.pagination.spi",
+            "pkg:org.hibernate.dialect.queryhint.spi",
+            "pkg:org.hibernate.dialect.rowid.internal",
+            "pkg:org.hibernate.dialect.rowid.spi",
+            "pkg:org.hibernate.dialect.rowsecurity.internal",
+            "pkg:org.hibernate.dialect.rowsecurity.spi",
+            "pkg:org.hibernate.dialect.schema.internal",
+            "pkg:org.hibernate.dialect.schema.spi",
+            "pkg:org.hibernate.dialect.sequence.internal",
+            "pkg:org.hibernate.dialect.sequence.spi",
+            "pkg:org.hibernate.dialect.spi",
+            "pkg:org.hibernate.dialect.sql.ast.internal",
+            "pkg:org.hibernate.dialect.sql.ast.spi",
+            "pkg:org.hibernate.dialect.temporal.internal",
+            "pkg:org.hibernate.dialect.temporal.spi",
+            "pkg:org.hibernate.dialect.temporaltype.internal",
+            "pkg:org.hibernate.dialect.temporaltype.spi",
+            "pkg:org.hibernate.dialect.temptable.internal",
+            "pkg:org.hibernate.dialect.temptable.spi",
+            "pkg:org.hibernate.dialect.testing",
+            "pkg:org.hibernate.dialect.testing.internal",
+            "pkg:org.hibernate.dialect.testing.spi",
+            "pkg:org.hibernate.dialect.type.internal",
+            "pkg:org.hibernate.dialect.type.spi",
+            "pkg:org.hibernate.dialect.unique.internal",
+            "pkg:org.hibernate.dialect.unique.spi",
+            "pkg:org.hibernate.engine",
+            "pkg:org.hibernate.engine.config.internal",
+            "pkg:org.hibernate.engine.config.spi",
+            "pkg:org.hibernate.engine.creation",
+            "pkg:org.hibernate.engine.creation.internal",
+            "pkg:org.hibernate.engine.creation.internal.options",
+            "pkg:org.hibernate.engine.creation.spi",
+            "pkg:org.hibernate.engine.extension.internal",
+            "pkg:org.hibernate.engine.extension.spi",
+            "pkg:org.hibernate.engine.internal",
+            "pkg:org.hibernate.engine.jdbc",
+            "pkg:org.hibernate.engine.jdbc.batch.internal",
+            "pkg:org.hibernate.engine.jdbc.batch.spi",
+            "pkg:org.hibernate.engine.jdbc.connections.internal",
+            "pkg:org.hibernate.engine.jdbc.connections.spi",
+            "pkg:org.hibernate.engine.jdbc.cursor.internal",
+            "pkg:org.hibernate.engine.jdbc.cursor.spi",
+            "pkg:org.hibernate.engine.jdbc.dialect.internal",
+            "pkg:org.hibernate.engine.jdbc.dialect.spi",
+            "pkg:org.hibernate.engine.jdbc.env",
+            "pkg:org.hibernate.engine.jdbc.env.internal",
+            "pkg:org.hibernate.engine.jdbc.env.spi",
+            "pkg:org.hibernate.engine.jdbc.internal",
+            "pkg:org.hibernate.engine.jdbc.mutation",
+            "pkg:org.hibernate.engine.jdbc.mutation.group",
+            "pkg:org.hibernate.engine.jdbc.mutation.internal",
+            "pkg:org.hibernate.engine.jdbc.mutation.spi",
+            "pkg:org.hibernate.engine.jdbc.proxy",
+            "pkg:org.hibernate.engine.jdbc.spi",
+            "pkg:org.hibernate.engine.jndi",
+            "pkg:org.hibernate.engine.jndi.internal",
+            "pkg:org.hibernate.engine.jndi.spi",
+            "pkg:org.hibernate.engine.profile",
+            "pkg:org.hibernate.engine.query",
+            "pkg:org.hibernate.engine.query.internal",
+            "pkg:org.hibernate.engine.query.spi",
+            "pkg:org.hibernate.engine.spi",
+            "pkg:org.hibernate.engine.transaction.internal",
+            "pkg:org.hibernate.engine.transaction.internal.jta",
+            "pkg:org.hibernate.engine.transaction.jta.platform.internal",
+            "pkg:org.hibernate.engine.transaction.jta.platform.spi",
+            "pkg:org.hibernate.event.internal",
+            "pkg:org.hibernate.event.jpa.internal",
+            "pkg:org.hibernate.event.monitor.internal",
+            "pkg:org.hibernate.event.monitor.spi",
+            "pkg:org.hibernate.event.service.internal",
+            "pkg:org.hibernate.event.service.spi",
+            "pkg:org.hibernate.event.spi",
+            "pkg:org.hibernate.exception",
+            "pkg:org.hibernate.exception.internal",
+            "pkg:org.hibernate.exception.spi",
+            "pkg:org.hibernate.generator",
+            "pkg:org.hibernate.generator.internal",
+            "pkg:org.hibernate.generator.values",
+            "pkg:org.hibernate.generator.values.internal",
+            "pkg:org.hibernate.graph",
+            "pkg:org.hibernate.graph.internal",
+            "pkg:org.hibernate.graph.internal.parse",
+            "pkg:org.hibernate.graph.internal.parse.strategy",
+            "pkg:org.hibernate.graph.spi",
+            "pkg:org.hibernate.id",
+            "pkg:org.hibernate.id.enhanced",
+            "pkg:org.hibernate.id.insert",
+            "pkg:org.hibernate.id.uuid",
+            "pkg:org.hibernate.integrator.internal",
+            "pkg:org.hibernate.integrator.spi",
+            "pkg:org.hibernate.internal",
+            "pkg:org.hibernate.internal.find",
+            "pkg:org.hibernate.internal.log",
+            "pkg:org.hibernate.internal.scrollable",
+            "pkg:org.hibernate.internal.util",
+            "pkg:org.hibernate.internal.util.beans",
+            "pkg:org.hibernate.internal.util.cache",
+            "pkg:org.hibernate.internal.util.collections",
+            "pkg:org.hibernate.internal.util.config",
+            "pkg:org.hibernate.internal.util.xml",
+            "pkg:org.hibernate.jdbc",
+            "pkg:org.hibernate.jdbc.spi",
+            "pkg:org.hibernate.jpa",
+            "pkg:org.hibernate.jpa.boot.internal",
+            "pkg:org.hibernate.jpa.boot.spi",
+            "pkg:org.hibernate.jpa.event.internal",
+            "pkg:org.hibernate.jpa.internal",
+            "pkg:org.hibernate.jpa.internal.enhance",
+            "pkg:org.hibernate.jpa.internal.util",
+            "pkg:org.hibernate.jpa.spi",
+            "pkg:org.hibernate.loader",
+            "pkg:org.hibernate.loader.ast.internal",
+            "pkg:org.hibernate.loader.ast.spi",
+            "pkg:org.hibernate.loader.internal",
+            "pkg:org.hibernate.mapping",
+            "pkg:org.hibernate.metamodel",
+            "pkg:org.hibernate.metamodel.internal",
+            "pkg:org.hibernate.metamodel.mapping",
+            "pkg:org.hibernate.metamodel.mapping.internal",
+            "pkg:org.hibernate.metamodel.mapping.ordering",
+            "pkg:org.hibernate.metamodel.mapping.ordering.ast",
+            "pkg:org.hibernate.metamodel.mapping.ordering.spi",
+            "pkg:org.hibernate.metamodel.model.domain",
+            "pkg:org.hibernate.metamodel.model.domain.internal",
+            "pkg:org.hibernate.metamodel.model.domain.spi",
+            "pkg:org.hibernate.metamodel.spi",
+            "pkg:org.hibernate.orm.test.dialect",
+            "pkg:org.hibernate.orm.test.dialect.resolver",
+            "pkg:org.hibernate.orm.test.jpa",
+            "pkg:org.hibernate.orm.test.jpa.model",
+            "pkg:org.hibernate.orm.test.jpa.procedure",
+            "pkg:org.hibernate.orm.test.jpa.transaction",
+            "pkg:org.hibernate.orm.test.jpa.txn",
+            "pkg:org.hibernate.orm.test.length",
+            "pkg:org.hibernate.orm.test.sql.hand",
+            "pkg:org.hibernate.orm.test.sql.hand.custom",
+            "pkg:org.hibernate.persister.collection",
+            "pkg:org.hibernate.persister.collection.mutation",
+            "pkg:org.hibernate.persister.entity",
+            "pkg:org.hibernate.persister.entity.mutation",
+            "pkg:org.hibernate.persister.filter.internal",
+            "pkg:org.hibernate.persister.internal",
+            "pkg:org.hibernate.persister.spi",
+            "pkg:org.hibernate.persister.state.internal",
+            "pkg:org.hibernate.persister.state.spi",
+            "pkg:org.hibernate.pretty",
+            "pkg:org.hibernate.procedure",
+            "pkg:org.hibernate.procedure.internal",
+            "pkg:org.hibernate.procedure.spi",
+            "pkg:org.hibernate.property.access.internal",
+            "pkg:org.hibernate.property.access.spi",
+            "pkg:org.hibernate.proxy",
+            "pkg:org.hibernate.proxy.map",
+            "pkg:org.hibernate.proxy.pojo",
+            "pkg:org.hibernate.proxy.pojo.bytebuddy",
+            "pkg:org.hibernate.query",
+            "pkg:org.hibernate.query.assignment",
+            "pkg:org.hibernate.query.common",
+            "pkg:org.hibernate.query.criteria",
+            "pkg:org.hibernate.query.criteria.spi",
+            "pkg:org.hibernate.query.hql",
+            "pkg:org.hibernate.query.hql.internal",
+            "pkg:org.hibernate.query.hql.spi",
+            "pkg:org.hibernate.query.internal",
+            "pkg:org.hibernate.query.named.internal",
+            "pkg:org.hibernate.query.named.spi",
+            "pkg:org.hibernate.query.range",
+            "pkg:org.hibernate.query.restriction",
+            "pkg:org.hibernate.query.results",
+            "pkg:org.hibernate.query.results.internal",
+            "pkg:org.hibernate.query.results.internal.complete",
+            "pkg:org.hibernate.query.results.internal.dynamic",
+            "pkg:org.hibernate.query.results.internal.implicit",
+            "pkg:org.hibernate.query.results.internal.jpa",
+            "pkg:org.hibernate.query.results.spi",
+            "pkg:org.hibernate.query.specification",
+            "pkg:org.hibernate.query.specification.internal",
+            "pkg:org.hibernate.query.spi",
+            "pkg:org.hibernate.query.sql.internal",
+            "pkg:org.hibernate.query.sql.spi",
+            "pkg:org.hibernate.query.sqm",
+            "pkg:org.hibernate.query.sqm.function",
+            "pkg:org.hibernate.query.sqm.internal",
+            "pkg:org.hibernate.query.sqm.mutation.internal",
+            "pkg:org.hibernate.query.sqm.mutation.internal.cte",
+            "pkg:org.hibernate.query.sqm.mutation.internal.temptable",
+            "pkg:org.hibernate.query.sqm.mutation.spi",
+            "pkg:org.hibernate.query.sqm.produce.function",
+            "pkg:org.hibernate.query.sqm.produce.function.internal",
+            "pkg:org.hibernate.query.sqm.spi",
+            "pkg:org.hibernate.query.sqm.sql.internal",
+            "pkg:org.hibernate.query.sqm.sql.spi",
+            "pkg:org.hibernate.query.sqm.tree.spi",
+            "pkg:org.hibernate.query.sqm.tree.spi.cte",
+            "pkg:org.hibernate.query.sqm.tree.spi.delete",
+            "pkg:org.hibernate.query.sqm.tree.spi.domain",
+            "pkg:org.hibernate.query.sqm.tree.spi.expression",
+            "pkg:org.hibernate.query.sqm.tree.spi.from",
+            "pkg:org.hibernate.query.sqm.tree.spi.insert",
+            "pkg:org.hibernate.query.sqm.tree.spi.jpa",
+            "pkg:org.hibernate.query.sqm.tree.spi.predicate",
+            "pkg:org.hibernate.query.sqm.tree.spi.select",
+            "pkg:org.hibernate.query.sqm.tree.spi.update",
+            "pkg:org.hibernate.query.sqm.tuple.internal",
+            "pkg:org.hibernate.query.sqm.tuple.spi",
+            "pkg:org.hibernate.relational",
+            "pkg:org.hibernate.relational.internal",
+            "pkg:org.hibernate.resource.beans.container.internal",
+            "pkg:org.hibernate.resource.beans.container.spi",
+            "pkg:org.hibernate.resource.beans.internal",
+            "pkg:org.hibernate.resource.beans.spi",
+            "pkg:org.hibernate.resource.jdbc.internal",
+            "pkg:org.hibernate.resource.jdbc.spi",
+            "pkg:org.hibernate.resource.transaction",
+            "pkg:org.hibernate.resource.transaction.backend.jdbc.internal",
+            "pkg:org.hibernate.resource.transaction.backend.jdbc.spi",
+            "pkg:org.hibernate.resource.transaction.backend.jta.internal",
+            "pkg:org.hibernate.resource.transaction.backend.jta.internal.synchronization",
+            "pkg:org.hibernate.resource.transaction.internal",
+            "pkg:org.hibernate.resource.transaction.spi",
+            "pkg:org.hibernate.service",
+            "pkg:org.hibernate.service.internal",
+            "pkg:org.hibernate.service.spi",
+            "pkg:org.hibernate.settings",
+            "pkg:org.hibernate.settings.internal",
+            "pkg:org.hibernate.spi",
+            "pkg:org.hibernate.sql",
+            "pkg:org.hibernate.sql.ast.internal",
+            "pkg:org.hibernate.sql.ast.internal.model.builder",
+            "pkg:org.hibernate.sql.ast.spi",
+            "pkg:org.hibernate.sql.ast.spi.analysis",
+            "pkg:org.hibernate.sql.ast.spi.creation",
+            "pkg:org.hibernate.sql.ast.spi.model",
+            "pkg:org.hibernate.sql.ast.spi.model.builder",
+            "pkg:org.hibernate.sql.ast.spi.query",
+            "pkg:org.hibernate.sql.ast.spi.query.cte",
+            "pkg:org.hibernate.sql.ast.spi.query.delete",
+            "pkg:org.hibernate.sql.ast.spi.query.expression",
+            "pkg:org.hibernate.sql.ast.spi.query.from",
+            "pkg:org.hibernate.sql.ast.spi.query.insert",
+            "pkg:org.hibernate.sql.ast.spi.query.predicate",
+            "pkg:org.hibernate.sql.ast.spi.query.select",
+            "pkg:org.hibernate.sql.ast.spi.query.update",
+            "pkg:org.hibernate.sql.ast.spi.result",
+            "pkg:org.hibernate.sql.ast.spi.transform",
+            "pkg:org.hibernate.sql.ast.spi.translation",
+            "pkg:org.hibernate.sql.exec",
+            "pkg:org.hibernate.sql.exec.internal",
+            "pkg:org.hibernate.sql.exec.internal.lock",
+            "pkg:org.hibernate.sql.exec.spi",
+            "pkg:org.hibernate.sql.model",
+            "pkg:org.hibernate.sql.model.internal",
+            "pkg:org.hibernate.sql.results.caching.internal",
+            "pkg:org.hibernate.sql.results.graph",
+            "pkg:org.hibernate.sql.results.graph.basic",
+            "pkg:org.hibernate.sql.results.graph.collection",
+            "pkg:org.hibernate.sql.results.graph.collection.internal",
+            "pkg:org.hibernate.sql.results.graph.embeddable",
+            "pkg:org.hibernate.sql.results.graph.embeddable.internal",
+            "pkg:org.hibernate.sql.results.graph.entity",
+            "pkg:org.hibernate.sql.results.graph.entity.internal",
+            "pkg:org.hibernate.sql.results.graph.instantiation",
+            "pkg:org.hibernate.sql.results.graph.instantiation.internal",
+            "pkg:org.hibernate.sql.results.graph.internal",
+            "pkg:org.hibernate.sql.results.graph.tuple",
+            "pkg:org.hibernate.sql.results.internal",
+            "pkg:org.hibernate.sql.results.internal.domain",
+            "pkg:org.hibernate.sql.results.jdbc.internal",
+            "pkg:org.hibernate.sql.results.jdbc.spi",
+            "pkg:org.hibernate.sql.results.spi",
+            "pkg:org.hibernate.sql.spi",
+            "pkg:org.hibernate.sql.spi.mutation",
+            "pkg:org.hibernate.sql.spi.mutation.jdbc",
+            "pkg:org.hibernate.stat",
+            "pkg:org.hibernate.stat.internal",
+            "pkg:org.hibernate.stat.spi",
+            "pkg:org.hibernate.temporal",
+            "pkg:org.hibernate.temporal.internal",
+            "pkg:org.hibernate.temporal.spi",
+            "pkg:org.hibernate.testing",
+            "pkg:org.hibernate.testing.boot",
+            "pkg:org.hibernate.testing.bytecode.enhancement",
+            "pkg:org.hibernate.testing.cache",
+            "pkg:org.hibernate.testing.env",
+            "pkg:org.hibernate.testing.jdbc",
+            "pkg:org.hibernate.testing.jdbc.leak",
+            "pkg:org.hibernate.testing.jta",
+            "pkg:org.hibernate.testing.junit4",
+            "pkg:org.hibernate.testing.logger",
+            "pkg:org.hibernate.testing.orm",
+            "pkg:org.hibernate.testing.orm.domain",
+            "pkg:org.hibernate.testing.orm.domain.animal",
+            "pkg:org.hibernate.testing.orm.domain.contacts",
+            "pkg:org.hibernate.testing.orm.domain.gambit",
+            "pkg:org.hibernate.testing.orm.domain.helpdesk",
+            "pkg:org.hibernate.testing.orm.domain.library",
+            "pkg:org.hibernate.testing.orm.domain.retail",
+            "pkg:org.hibernate.testing.orm.domain.userguide",
+            "pkg:org.hibernate.testing.orm.jpa",
+            "pkg:org.hibernate.testing.orm.junit",
+            "pkg:org.hibernate.testing.orm.logger",
+            "pkg:org.hibernate.testing.orm.transaction",
+            "pkg:org.hibernate.testing.transaction",
+            "pkg:org.hibernate.testing.util",
+            "pkg:org.hibernate.testing.util.ast",
+            "pkg:org.hibernate.tool.schema",
+            "pkg:org.hibernate.tool.schema.extract.internal",
+            "pkg:org.hibernate.tool.schema.extract.spi",
+            "pkg:org.hibernate.tool.schema.internal",
+            "pkg:org.hibernate.tool.schema.internal.exec",
+            "pkg:org.hibernate.tool.schema.internal.script",
+            "pkg:org.hibernate.tool.schema.spi",
+            "pkg:org.hibernate.type",
+            "pkg:org.hibernate.type.descriptor",
+            "pkg:org.hibernate.type.descriptor.converter.internal",
+            "pkg:org.hibernate.type.descriptor.converter.spi",
+            "pkg:org.hibernate.type.descriptor.java",
+            "pkg:org.hibernate.type.descriptor.java.spi",
+            "pkg:org.hibernate.type.descriptor.jdbc",
+            "pkg:org.hibernate.type.descriptor.jdbc.internal",
+            "pkg:org.hibernate.type.descriptor.jdbc.spi",
+            "pkg:org.hibernate.type.descriptor.sql",
+            "pkg:org.hibernate.type.descriptor.sql.internal",
+            "pkg:org.hibernate.type.descriptor.sql.spi",
+            "pkg:org.hibernate.type.format",
+            "pkg:org.hibernate.type.format.jackson",
+            "pkg:org.hibernate.type.format.jakartajson",
+            "pkg:org.hibernate.type.format.jaxb",
+            "pkg:org.hibernate.type.internal",
+            "pkg:org.hibernate.type.spi",
+            "pkg:org.hibernate.usertype",
+            "pkg:org.hibernate.usertype.internal"
+          ]
+        },
+        {
+          "size": 37,
+          "members": [
+            "pkg:org.hibernate.envers",
+            "pkg:org.hibernate.envers.boot.internal",
+            "pkg:org.hibernate.envers.boot.model",
+            "pkg:org.hibernate.envers.boot.registry.classloading",
+            "pkg:org.hibernate.envers.boot.spi",
+            "pkg:org.hibernate.envers.configuration",
+            "pkg:org.hibernate.envers.configuration.internal",
+            "pkg:org.hibernate.envers.configuration.internal.metadata",
+            "pkg:org.hibernate.envers.configuration.internal.metadata.reader",
+            "pkg:org.hibernate.envers.enhanced",
+            "pkg:org.hibernate.envers.event.spi",
+            "pkg:org.hibernate.envers.internal.entities",
+            "pkg:org.hibernate.envers.internal.entities.mapper",
+            "pkg:org.hibernate.envers.internal.entities.mapper.id",
+            "pkg:org.hibernate.envers.internal.entities.mapper.relation",
+            "pkg:org.hibernate.envers.internal.entities.mapper.relation.component",
+            "pkg:org.hibernate.envers.internal.entities.mapper.relation.lazy",
+            "pkg:org.hibernate.envers.internal.entities.mapper.relation.lazy.initializor",
+            "pkg:org.hibernate.envers.internal.entities.mapper.relation.lazy.proxy",
+            "pkg:org.hibernate.envers.internal.entities.mapper.relation.query",
+            "pkg:org.hibernate.envers.internal.reader",
+            "pkg:org.hibernate.envers.internal.revisioninfo",
+            "pkg:org.hibernate.envers.internal.synchronization",
+            "pkg:org.hibernate.envers.internal.synchronization.work",
+            "pkg:org.hibernate.envers.internal.tools",
+            "pkg:org.hibernate.envers.internal.tools.query",
+            "pkg:org.hibernate.envers.query",
+            "pkg:org.hibernate.envers.query.criteria",
+            "pkg:org.hibernate.envers.query.criteria.internal",
+            "pkg:org.hibernate.envers.query.internal.impl",
+            "pkg:org.hibernate.envers.query.internal.property",
+            "pkg:org.hibernate.envers.query.order",
+            "pkg:org.hibernate.envers.query.order.internal",
+            "pkg:org.hibernate.envers.query.projection",
+            "pkg:org.hibernate.envers.query.projection.internal",
+            "pkg:org.hibernate.envers.strategy",
+            "pkg:org.hibernate.envers.strategy.spi"
+          ]
+        },
+        {
+          "size": 17,
+          "members": [
+            "pkg:org.hibernate.spatial.contributor",
+            "pkg:org.hibernate.spatial.dialect.cockroachdb",
+            "pkg:org.hibernate.spatial.dialect.h2gis",
+            "pkg:org.hibernate.spatial.dialect.hana",
+            "pkg:org.hibernate.spatial.dialect.mariadb",
+            "pkg:org.hibernate.spatial.dialect.mysql",
+            "pkg:org.hibernate.spatial.dialect.oracle",
+            "pkg:org.hibernate.spatial.dialect.postgis",
+            "pkg:org.hibernate.spatial.dialect.sqlserver",
+            "pkg:org.hibernate.spatial.integration",
+            "pkg:org.hibernate.spatial.integration.functions",
+            "pkg:org.hibernate.spatial.testing",
+            "pkg:org.hibernate.spatial.testing.dialects.db2",
+            "pkg:org.hibernate.spatial.testing.dialects.h2gis",
+            "pkg:org.hibernate.spatial.testing.dialects.hana",
+            "pkg:org.hibernate.spatial.testing.dialects.mariadb",
+            "pkg:org.hibernate.spatial.testing.dialects.mysql"
+          ]
+        },
+        {
+          "size": 8,
+          "members": [
+            "pkg:org.hibernate.processor",
+            "pkg:org.hibernate.processor.annotation",
+            "pkg:org.hibernate.processor.internal",
+            "pkg:org.hibernate.processor.model",
+            "pkg:org.hibernate.processor.spi",
+            "pkg:org.hibernate.processor.util",
+            "pkg:org.hibernate.processor.util.xml",
+            "pkg:org.hibernate.processor.xml"
+          ]
+        },
+        {
+          "size": 5,
+          "members": [
+            "pkg:org.hibernate.tool.reveng.api.core",
+            "pkg:org.hibernate.tool.reveng.guide",
+            "pkg:org.hibernate.tool.reveng.internal.core.dialect",
+            "pkg:org.hibernate.tool.reveng.internal.core.strategy",
+            "pkg:org.hibernate.tool.reveng.internal.core.util"
+          ]
+        },
+        {
+          "size": 5,
+          "members": [
+            "pkg:org.hibernate.tool.reveng.api.metadata",
+            "pkg:org.hibernate.tool.reveng.internal.core",
+            "pkg:org.hibernate.tool.reveng.internal.core.binder",
+            "pkg:org.hibernate.tool.reveng.internal.core.reader",
+            "pkg:org.hibernate.tool.reveng.internal.metadata"
+          ]
+        },
+        {
+          "size": 4,
+          "members": [
+            "pkg:org.hibernate.orm.test.event.collection",
+            "pkg:org.hibernate.orm.test.event.collection.association",
+            "pkg:org.hibernate.orm.test.event.collection.association.bidirectional.manytomany",
+            "pkg:org.hibernate.orm.test.event.collection.association.unidirectional"
+          ]
+        },
+        {
+          "size": 4,
+          "members": [
+            "pkg:org.hibernate.tool.reveng.api.export",
+            "pkg:org.hibernate.tool.reveng.internal.export.common",
+            "pkg:org.hibernate.tool.reveng.internal.export.hbm",
+            "pkg:org.hibernate.tool.reveng.internal.export.java"
+          ]
+        },
+        {
+          "size": 3,
+          "members": [
+            "pkg:org.hibernate.orm.test.bytecode.enhancement.optimizer",
+            "pkg:org.hibernate.orm.test.bytecode.enhancement.optimizer.child",
+            "pkg:org.hibernate.orm.test.bytecode.enhancement.optimizer.parent"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.hibernate.orm.properties",
+            "pkg:org.hibernate.orm.properties.jdk17"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.hibernate.orm.test.annotations",
+            "pkg:org.hibernate.orm.test.annotations.inheritance"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.hibernate.orm.test.annotations.fetchprofile",
+            "pkg:org.hibernate.orm.test.annotations.fetchprofile.mappedby"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.hibernate.orm.test.bytecode",
+            "pkg:org.hibernate.orm.test.bytecode.foreignpackage"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.hibernate.orm.test.envers.entities.onetomany.detached.inheritance",
+            "pkg:org.hibernate.orm.test.envers.integration.onetomany.detached"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.hibernate.orm.test.mapping.mutability.attribute",
+            "pkg:org.hibernate.orm.test.mapping.mutability.converted"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.hibernate.orm.test.multitenancy",
+            "pkg:org.hibernate.orm.test.multitenancy.guide"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.hibernate.orm.tooling.gradle",
+            "pkg:org.hibernate.orm.tooling.gradle.enhance"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.hibernate.processor.test.hhh17613",
+            "pkg:org.hibernate.processor.test.hhh17613.a"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.hibernate.testing.bytecode.enhancement.extension",
+            "pkg:org.hibernate.testing.bytecode.enhancement.extension.engine"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.hibernate.tool.reveng.api.xml",
+            "pkg:org.hibernate.tool.reveng.internal.xml"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.hibernate.vector",
+            "pkg:org.hibernate.vector.internal"
+          ]
+        }
+      ]
+    },
+    "B2": {
+      "id": "B2",
+      "name": "package-dependency-density",
+      "label": "包依赖密度",
+      "domain": "B",
+      "direction": "interval",
+      "value": 7.5788,
+      "numerator": 18030,
+      "denominator": 2379,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Package --all --field id,dependsOnPackageIds --snapshot f8aa1edd-27df-46a9-b9ee-5d866cdf8e48",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot f8aa1edd-27df-46a9-b9ee-5d866cdf8e48"
+      ]
+    },
+    "B3": {
+      "id": "B3",
+      "name": "giant-class-ratio",
+      "label": "巨型类占比",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": 0.014795,
+      "numerator": 416,
+      "denominator": 28118,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Class --all --field id,lineCount --snapshot f8aa1edd-27df-46a9-b9ee-5d866cdf8e48",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --where 'lineCount>500' --snapshot f8aa1edd-27df-46a9-b9ee-5d866cdf8e48",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --snapshot f8aa1edd-27df-46a9-b9ee-5d866cdf8e48"
+      ],
+      "threshold": "lineCount > 500",
+      "top": [
+        {
+          "lineCount": 10409,
+          "id": "cls:org.hibernate.dialect.sql.ast.spi.AbstractSqlAstTranslator"
+        },
+        {
+          "lineCount": 9132,
+          "id": "cls:org.hibernate.query.sqm.sql.spi.BaseSqmToSqlAstConverter"
+        },
+        {
+          "lineCount": 7098,
+          "id": "cls:org.hibernate.persister.entity.AbstractEntityPersister"
+        },
+        {
+          "lineCount": 7082,
+          "id": "cls:org.hibernate.query.sqm.internal.SqmCriteriaNodeBuilder"
+        },
+        {
+          "lineCount": 6120,
+          "id": "cls:org.hibernate.query.hql.internal.SemanticQueryBuilder"
+        }
+      ],
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --where 'lineCount>500' --snapshot f8aa1edd-27df-46a9-b9ee-5d866cdf8e48",
+        "serverCount": 416,
+        "match": true
+      }
+    },
+    "C2": {
+      "id": "C2",
+      "name": "cyclomatic-complexity-p90",
+      "label": "圈复杂度 P90",
+      "domain": "C",
+      "direction": "lower-better",
+      "value": 3,
+      "denominator": 131816,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot f8aa1edd-27df-46a9-b9ee-5d866cdf8e48",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,lineCount,complexity --snapshot f8aa1edd-27df-46a9-b9ee-5d866cdf8e48"
+      ],
+      "percentiles": {
+        "p25": 1,
+        "p50": 1,
+        "p75": 1,
+        "p90": 3
+      },
+      "mean": 1.4911,
+      "max": 167,
+      "top": [
+        {
+          "cyclomaticComplexity": 167,
+          "id": "mtd:org.hibernate.dialect.aggregate.internal.OracleAggregateSupport.aggregateComponentCustomReadExpression(:String:String:String:String:int:SqlTypedMapping:TypeConfiguration)"
+        },
+        {
+          "cyclomaticComplexity": 91,
+          "id": "mtd:org.hibernate.dialect.aggregate.internal.SQLServerAggregateSupport.aggregateComponentCustomReadExpression(:String:String:String:String:int:SqlTypedMapping:TypeConfiguration)"
+        },
+        {
+          "cyclomaticComplexity": 91,
+          "id": "mtd:org.hibernate.dialect.aggregate.internal.HANAAggregateSupport.aggregateComponentCustomReadExpression(:String:String:String:String:int:SqlTypedMapping:TypeConfiguration)"
+        },
+        {
+          "cyclomaticComplexity": 83,
+          "id": "mtd:org.hibernate.boot.models.xml.internal.SimpleTypeInterpretation.interpret(:String)"
+        },
+        {
+          "cyclomaticComplexity": 70,
+          "id": "mtd:org.hibernate.dialect.aggregate.internal.PostgreSQLAggregateSupport.aggregateComponentCustomReadExpression(:String:String:String:String:int:SqlTypedMapping:TypeConfiguration)"
+        }
+      ],
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot f8aa1edd-27df-46a9-b9ee-5d866cdf8e48",
+        "serverCount": 131816,
+        "match": true
+      }
+    },
+    "C3": {
+      "id": "C3",
+      "name": "test-method-ratio",
+      "label": "测试方法占比",
+      "domain": "C",
+      "direction": "higher-better",
+      "value": 0.136225,
+      "numerator": 19922,
+      "denominator": 146243,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'isTest=true' --snapshot f8aa1edd-27df-46a9-b9ee-5d866cdf8e48",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot f8aa1edd-27df-46a9-b9ee-5d866cdf8e48",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,isTest,testType --snapshot f8aa1edd-27df-46a9-b9ee-5d866cdf8e48"
+      ],
+      "testTypes": {
+        "UnitTest": 18629,
+        "IntegrationTest": 1293
+      },
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'isTest=true' --snapshot f8aa1edd-27df-46a9-b9ee-5d866cdf8e48",
+        "serverCount": 19922,
+        "match": true
+      }
+    },
+    "C4": {
+      "id": "C4",
+      "name": "giant-method-ratio",
+      "label": "巨型方法占比",
+      "domain": "C",
+      "direction": "lower-better",
+      "value": 0.004952,
+      "numerator": 656,
+      "denominator": 132462,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount>80' --snapshot f8aa1edd-27df-46a9-b9ee-5d866cdf8e48",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount=0' --snapshot f8aa1edd-27df-46a9-b9ee-5d866cdf8e48",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot f8aa1edd-27df-46a9-b9ee-5d866cdf8e48",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,lineCount --snapshot f8aa1edd-27df-46a9-b9ee-5d866cdf8e48"
+      ],
+      "threshold": "lineCount > 80",
+      "excludedFromDenominator": {
+        "lineCountIsZero": 13781,
+        "lineCountIsNull": 0
+      },
+      "top": [
+        {
+          "lineCount": 652,
+          "id": "mtd:org.hibernate.type.StandardBasicTypes.prime(:TypeConfiguration:boolean:DirectJavaTimeJdbcSupport)"
+        },
+        {
+          "lineCount": 407,
+          "id": "mtd:org.hibernate.query.sqm.mutation.internal.cte.CteInsertHandler.addDmlCtes(:CteContainer:CteStatement:EntityPersister:List<Map.Entry<List<CteColumn>, Assignment>>:boolean:MultiTableSqmMutationConverter:SessionFactoryImplementor)"
+        },
+        {
+          "lineCount": 368,
+          "id": "mtd:org.hibernate.dialect.type.spi.AbstractPostgreSQLStructJdbcType.deserializeStruct(:String:int:int:Object[]:boolean:WrapperOptions)"
+        },
+        {
+          "lineCount": 367,
+          "id": "mtd:org.hibernate.bytecode.enhance.internal.bytebuddy.SetPropertyValues.apply(:MethodVisitor:Implementation.Context:MethodDescription)"
+        },
+        {
+          "lineCount": 363,
+          "id": "mtd:org.hibernate.dialect.SpannerDialect.initializeFunctionRegistry(:FunctionContributions)"
+        }
+      ],
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount>80' --snapshot f8aa1edd-27df-46a9-b9ee-5d866cdf8e48",
+        "serverCount": 656,
+        "match": true
+      }
+    },
+    "D3": {
+      "id": "D3",
+      "name": "scale-profile",
+      "label": "规模画像",
+      "domain": "D",
+      "direction": "none",
+      "value": 179428,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" snapshot list --repo hibernate-orm",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Repository --snapshot f8aa1edd-27df-46a9-b9ee-5d866cdf8e48",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot f8aa1edd-27df-46a9-b9ee-5d866cdf8e48",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --snapshot f8aa1edd-27df-46a9-b9ee-5d866cdf8e48",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Interface --snapshot f8aa1edd-27df-46a9-b9ee-5d866cdf8e48",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot f8aa1edd-27df-46a9-b9ee-5d866cdf8e48",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Dependency --snapshot f8aa1edd-27df-46a9-b9ee-5d866cdf8e48",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot f8aa1edd-27df-46a9-b9ee-5d866cdf8e48",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Mapper --snapshot f8aa1edd-27df-46a9-b9ee-5d866cdf8e48",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Module --snapshot f8aa1edd-27df-46a9-b9ee-5d866cdf8e48",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Component --snapshot f8aa1edd-27df-46a9-b9ee-5d866cdf8e48",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Function --snapshot f8aa1edd-27df-46a9-b9ee-5d866cdf8e48",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Store --snapshot f8aa1edd-27df-46a9-b9ee-5d866cdf8e48",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Route --snapshot f8aa1edd-27df-46a9-b9ee-5d866cdf8e48",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot f8aa1edd-27df-46a9-b9ee-5d866cdf8e48"
+      ],
+      "typeCounts": {
+        "Repository": 1,
+        "Package": 2379,
+        "Class": 28118,
+        "Interface": 2659,
+        "Method": 146243,
+        "Dependency": 8,
+        "Table": 20,
+        "Mapper": 0,
+        "Module": 0,
+        "Component": 0,
+        "Function": 0,
+        "Store": 0,
+        "Route": 0,
+        "ApiEndpoint": 0
+      },
+      "linkCount": 417086
+    }
+  },
+  "nullMetrics": {
+    "A1": {
+      "id": "A1",
+      "name": "full-chain-coverage",
+      "label": "全链路贯通率",
+      "domain": "A",
+      "direction": "higher-better",
+      "value": null,
+      "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot f8aa1edd-27df-46a9-b9ee-5d866cdf8e48"
+      ],
+      "evidence": {
+        "apiEndpointCount": 0
+      }
+    },
+    "A2": {
+      "id": "A2",
+      "name": "api-backend-breakrate",
+      "label": "前后端断链率",
+      "domain": "A",
+      "direction": "lower-better",
+      "value": null,
+      "reason": "无 ApiEndpoint 对象（纯后端仓库——按口径置空）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot f8aa1edd-27df-46a9-b9ee-5d866cdf8e48"
+      ],
+      "evidence": {
+        "apiEndpointCount": 0
+      }
+    },
+    "B1.frontend": {
+      "id": "B1.frontend",
+      "name": "circular-dependency-density",
+      "label": "循环依赖密度（前端）",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": null,
+      "reason": "无 Module 对象（纯后端仓库——按口径置空）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Module --snapshot f8aa1edd-27df-46a9-b9ee-5d866cdf8e48"
+      ],
+      "evidence": {
+        "moduleCount": 0
+      }
+    },
+    "B4": {
+      "id": "B4",
+      "name": "component-coupling-degree",
+      "label": "组件耦合度",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": null,
+      "reason": "无 Component 对象（纯后端仓库——按口径置空）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Component --snapshot f8aa1edd-27df-46a9-b9ee-5d866cdf8e48"
+      ],
+      "evidence": {
+        "componentCount": 0
+      }
+    },
+    "C1": {
+      "id": "C1",
+      "name": "endpoint-table-hops",
+      "label": "端到端跳数",
+      "domain": "C",
+      "direction": "interval",
+      "value": null,
+      "reason": "无 ApiEndpoint 对象（贯通链分母为 0）",
+      "evidence": {
+        "apiEndpointCount": 0
+      }
+    },
+    "D1": {
+      "id": "D1",
+      "name": "framework-version-coverage",
+      "label": "技术栈版本覆盖率",
+      "domain": "D",
+      "direction": "higher-better",
+      "value": null,
+      "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Dependency --all --field id,name,version,scope --snapshot f8aa1edd-27df-46a9-b9ee-5d866cdf8e48"
+      ],
+      "evidence": {
+        "total": 8,
+        "emptyVersion": 0,
+        "placeholder": 1,
+        "determinable": 7
+      }
+    },
+    "D2": {
+      "id": "D2",
+      "name": "dependency-homogeneity",
+      "label": "依赖同质度",
+      "domain": "D",
+      "direction": "none",
+      "value": null,
+      "reason": "cohort 级指标（依赖 cohort 众数集合——单体层不产出）",
+      "evidence": {
+        "dependencyCount": 8
+      }
+    },
+    "D4": {
+      "id": "D4",
+      "name": "evolution-trend",
+      "label": "年度演进趋势",
+      "domain": "D",
+      "direction": "none",
+      "value": null,
+      "reason": "时序聚合未实现（过渡实现——该 source 已有 3 个 complete 快照）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" snapshot list --repo hibernate-orm"
+      ],
+      "evidence": {
+        "completeSnapshotCount": 3
+      }
+    }
+  },
+  "dataQuality": {
+    "dq.null-complexity-ratio": {
+      "id": "dq.null-complexity-ratio",
+      "name": "null-complexity-ratio",
+      "label": "complexity 为 null 的方法占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": 0.098651,
+      "numerator": 14427,
+      "denominator": 146243,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot f8aa1edd-27df-46a9-b9ee-5d866cdf8e48",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot f8aa1edd-27df-46a9-b9ee-5d866cdf8e48"
+      ]
+    },
+    "dq.missing-version-ratio": {
+      "id": "dq.missing-version-ratio",
+      "name": "missing-version-ratio",
+      "label": "version 为空串的依赖占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": 0.0,
+      "numerator": 0,
+      "denominator": 8,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Dependency --all --field id,name,version,scope --snapshot f8aa1edd-27df-46a9-b9ee-5d866cdf8e48"
+      ],
+      "placeholderVersionCount": 1
+    },
+    "dq.ext-call-ratio": {
+      "id": "dq.ext-call-ratio",
+      "name": "ext-call-ratio",
+      "label": "ext: 虚拟调用过滤占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": null,
+      "reason": "不可观测（ext: 虚拟边在导入物化时已过滤——查询面天然免疫）"
+    }
+  }
+}
