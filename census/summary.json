@@ -2,28 +2,46 @@
   "schemaVersion": "draft-v1",
   "implementation": "ke-index census.py (transitional; L2 aggregation over compute-metrics reports)",
   "status": "published",
-  "samples": 30,
+  "samples": 41,
   "gate": {
     "publishThreshold": 30,
     "privacyFloor": 5,
-    "statusReason": "N=30 >= 30（统计充分——发布分位）",
+    "statusReason": "N=41 >= 30（统计充分——发布分位）",
     "note": "publishThreshold 为统计充分性门槛（P2-D10）；privacyFloor 为 k-匿名隐私护栏（Schema §4.2）——两者显式区分，不混用"
   },
   "repos": [
     {
+      "owner": "Activiti",
+      "repo": "Activiti",
+      "sourceId": "Activiti",
+      "snapshotId": "56eae428-37ae-4c2a-9ba9-3928bbf32963",
+      "objectCount": 24192,
+      "linkCount": 85659,
+      "schemaVersion": "draft-v1"
+    },
+    {
+      "owner": "BroadleafCommerce",
+      "repo": "BroadleafCommerce",
+      "sourceId": "BroadleafCommerce",
+      "snapshotId": "5a3520aa-c5e2-49ec-b024-c13037172159",
+      "objectCount": 25682,
+      "linkCount": 108282,
+      "schemaVersion": "draft-v1"
+    },
+    {
       "owner": "YunaiV",
       "repo": "ruoyi-vue-pro",
       "sourceId": "ruoyi-vue-pro",
-      "snapshotId": "8cafd6d3-5982-4314-97fe-d3aa3ac7934e",
-      "objectCount": 41911,
-      "linkCount": 206379,
+      "snapshotId": "972f0e6c-72bb-422b-80aa-0c2cdfd8eb1f",
+      "objectCount": 46360,
+      "linkCount": 229929,
       "schemaVersion": "draft-v1"
     },
     {
       "owner": "alibaba",
       "repo": "druid",
       "sourceId": "druid",
-      "snapshotId": "3124736e-602f-4dde-8694-dac2bf2cc4c3",
+      "snapshotId": "1b0af407-523b-4d7b-8e6a-bc93b2fabe8d",
       "objectCount": 41208,
       "linkCount": 234102,
       "schemaVersion": "draft-v1"
@@ -32,34 +50,34 @@
       "owner": "alibaba",
       "repo": "nacos",
       "sourceId": "nacos",
-      "snapshotId": "93839017-149f-4503-940f-460207e07e1d",
-      "objectCount": 57010,
-      "linkCount": 431791,
+      "snapshotId": "e44fb020-ee9d-4066-b0ad-d8f456e958d4",
+      "objectCount": 57082,
+      "linkCount": 432175,
       "schemaVersion": "draft-v1"
     },
     {
       "owner": "apache",
       "repo": "dubbo",
       "sourceId": "dubbo",
-      "snapshotId": "11e24cb9-e01f-497d-9b7a-be8c95422f4e",
-      "objectCount": 33947,
-      "linkCount": 136560,
+      "snapshotId": "f5872695-ed6f-41d8-80de-482731ae5b64",
+      "objectCount": 34058,
+      "linkCount": 136866,
       "schemaVersion": "draft-v1"
     },
     {
       "owner": "apache",
       "repo": "fineract",
       "sourceId": "fineract",
-      "snapshotId": "93a81a8c-60ed-4d76-868a-78ec89b698c5",
-      "objectCount": 51445,
-      "linkCount": 254633,
+      "snapshotId": "2043544d-d18f-4493-9ef3-b6ecc65a7357",
+      "objectCount": 53251,
+      "linkCount": 262444,
       "schemaVersion": "draft-v1"
     },
     {
       "owner": "apache",
       "repo": "rocketmq",
       "sourceId": "rocketmq",
-      "snapshotId": "b9f6bb5e-5d2c-4460-9add-85890acb06d2",
+      "snapshotId": "96e1c4ec-bb56-4788-a64f-388d98561f70",
       "objectCount": 26142,
       "linkCount": 107952,
       "schemaVersion": "draft-v1"
@@ -68,43 +86,61 @@
       "owner": "apache",
       "repo": "shardingsphere",
       "sourceId": "shardingsphere",
-      "snapshotId": "75152fdc-1043-40e8-9044-c963fef9ec2d",
-      "objectCount": 56015,
-      "linkCount": 444866,
+      "snapshotId": "23ae8595-b09f-44f2-acd7-adc94032ab05",
+      "objectCount": 56062,
+      "linkCount": 447401,
       "schemaVersion": "draft-v1"
     },
     {
       "owner": "chillzhuang",
       "repo": "SpringBlade",
       "sourceId": "SpringBlade",
-      "snapshotId": "8719cbdf-3a7c-4a8b-8a83-b3bab0658663",
-      "objectCount": 1073,
-      "linkCount": 3002,
+      "snapshotId": "fccc1701-76fb-4a16-a63e-f14e2ea57b21",
+      "objectCount": 1068,
+      "linkCount": 2974,
+      "schemaVersion": "draft-v1"
+    },
+    {
+      "owner": "dhis2",
+      "repo": "dhis2-core",
+      "sourceId": "dhis2-core",
+      "snapshotId": "c588af1b-a81c-4a9d-800c-f7c1f40a9a57",
+      "objectCount": 63439,
+      "linkCount": 411168,
       "schemaVersion": "draft-v1"
     },
     {
       "owner": "dromara",
       "repo": "RuoYi-Vue-Plus",
       "sourceId": "RuoYi-Vue-Plus",
-      "snapshotId": "0ec53155-b5a4-47f6-b714-0ec36994ef83",
-      "objectCount": 4777,
-      "linkCount": 22903,
+      "snapshotId": "e1980d60-0ab8-4b46-8fd5-28edb502c696",
+      "objectCount": 4741,
+      "linkCount": 22840,
       "schemaVersion": "draft-v1"
     },
     {
       "owner": "dromara",
       "repo": "dante-cloud",
       "sourceId": "dante-cloud",
-      "snapshotId": "7d066261-b51c-4c8c-a014-9bfe3593dfd3",
-      "objectCount": 545,
-      "linkCount": 860,
+      "snapshotId": "7ef97920-001b-47ad-8736-0d588c6326ab",
+      "objectCount": 476,
+      "linkCount": 728,
+      "schemaVersion": "draft-v1"
+    },
+    {
+      "owner": "elunez",
+      "repo": "eladmin-web",
+      "sourceId": "eladmin-web",
+      "snapshotId": "addc2f13-38a2-4c4f-b4be-68ecd40e751e",
+      "objectCount": 538,
+      "linkCount": 1133,
       "schemaVersion": "draft-v1"
     },
     {
       "owner": "elunez",
       "repo": "eladmin",
       "sourceId": "eladmin",
-      "snapshotId": "7bc87e2f-4a46-4eee-a284-db7fcb8d5b75",
+      "snapshotId": "7e704cfb-277b-48ad-8330-bb36d87f5500",
       "objectCount": 1357,
       "linkCount": 5096,
       "schemaVersion": "draft-v1"
@@ -113,34 +149,52 @@
       "owner": "flowable",
       "repo": "flowable-engine",
       "sourceId": "flowable-engine",
-      "snapshotId": "49647250-425e-4a24-80bd-2c5fa5b14ce5",
-      "objectCount": 76080,
-      "linkCount": 214446,
+      "snapshotId": "d4ba53ac-81b5-4158-9fab-765d1de1ad2e",
+      "objectCount": 76150,
+      "linkCount": 214675,
+      "schemaVersion": "draft-v1"
+    },
+    {
+      "owner": "hibernate",
+      "repo": "hibernate-orm",
+      "sourceId": "hibernate-orm",
+      "snapshotId": "970fddca-1982-4b95-a159-14b4ce8729f9",
+      "objectCount": 179512,
+      "linkCount": 417203,
       "schemaVersion": "draft-v1"
     },
     {
       "owner": "jeecgboot",
       "repo": "JeecgBoot",
       "sourceId": "JeecgBoot",
-      "snapshotId": "af9fdfe8-f060-4070-b042-6166233e7009",
-      "objectCount": 15697,
-      "linkCount": 116780,
+      "snapshotId": "d859f502-ebcd-4971-995a-afba19f73762",
+      "objectCount": 15637,
+      "linkCount": 116657,
+      "schemaVersion": "draft-v1"
+    },
+    {
+      "owner": "jeecgboot",
+      "repo": "jeecgboot-vue3",
+      "sourceId": "jeecgboot-vue3",
+      "snapshotId": "3e4c04ac-46b9-41ff-bc3e-4fa51c9c52a6",
+      "objectCount": 4755,
+      "linkCount": 25600,
       "schemaVersion": "draft-v1"
     },
     {
       "owner": "keycloak",
       "repo": "keycloak",
       "sourceId": "keycloak",
-      "snapshotId": "fffee011-9543-4984-b282-9d20845be817",
-      "objectCount": 91724,
-      "linkCount": 497305,
+      "snapshotId": "d1f0e091-7548-4307-b12d-25c262bee804",
+      "objectCount": 91774,
+      "linkCount": 497565,
       "schemaVersion": "draft-v1"
     },
     {
       "owner": "lenve",
       "repo": "vhr",
       "sourceId": "vhr",
-      "snapshotId": "cd66de5d-de5b-4c74-a342-b13152701d92",
+      "snapshotId": "9870c982-cc89-4490-b213-97bab42ccc78",
       "objectCount": 991,
       "linkCount": 1436,
       "schemaVersion": "draft-v1"
@@ -149,16 +203,25 @@
       "owner": "linlinjava",
       "repo": "litemall",
       "sourceId": "litemall",
-      "snapshotId": "c1024294-9020-466d-8010-a4a3f8a1006d",
+      "snapshotId": "16fd0f70-58c3-4d0c-8b0e-a1a33c660f34",
       "objectCount": 13172,
       "linkCount": 34102,
       "schemaVersion": "draft-v1"
     },
     {
       "owner": "macrozheng",
+      "repo": "mall-admin-web",
+      "sourceId": "mall-admin-web",
+      "snapshotId": "d604b784-fc24-40dc-91d0-9d47ef0a8f49",
+      "objectCount": 1662,
+      "linkCount": 29228,
+      "schemaVersion": "draft-v1"
+    },
+    {
+      "owner": "macrozheng",
       "repo": "mall-swarm",
       "sourceId": "mall-swarm",
-      "snapshotId": "21a1a085-5f2a-4df0-9c64-150703dcb3f5",
+      "snapshotId": "83bd648b-74f3-418b-a9de-15b3f52c4767",
       "objectCount": 14878,
       "linkCount": 36007,
       "schemaVersion": "draft-v1"
@@ -167,7 +230,7 @@
       "owner": "macrozheng",
       "repo": "mall",
       "sourceId": "mall",
-      "snapshotId": "80940bc3-2c26-46f5-b5f2-1cdea1fd0df5",
+      "snapshotId": "2ebf57c6-bac8-45e5-8248-82c82898a62c",
       "objectCount": 14527,
       "linkCount": 35226,
       "schemaVersion": "draft-v1"
@@ -176,16 +239,25 @@
       "owner": "metersphere",
       "repo": "metersphere",
       "sourceId": "metersphere",
-      "snapshotId": "e3eadec9-222f-49f2-ab5e-3183b979f358",
+      "snapshotId": "d65655ca-996d-4c96-88b6-69f775669c14",
       "objectCount": 43718,
       "linkCount": 157807,
       "schemaVersion": "draft-v1"
     },
     {
       "owner": "newbee-ltd",
+      "repo": "newbee-mall-vue3-app",
+      "sourceId": "newbee-mall-vue3-app",
+      "snapshotId": "a8210c8d-9443-468a-bed0-7c74a10f7da3",
+      "objectCount": 181,
+      "linkCount": 382,
+      "schemaVersion": "draft-v1"
+    },
+    {
+      "owner": "newbee-ltd",
       "repo": "newbee-mall",
       "sourceId": "newbee-mall",
-      "snapshotId": "c6688bbc-9350-4dd9-81bf-6b0d7cdbc8a6",
+      "snapshotId": "386d988d-9765-4353-b87c-56898fb75385",
       "objectCount": 933,
       "linkCount": 1470,
       "schemaVersion": "draft-v1"
@@ -194,25 +266,34 @@
       "owner": "o2oa",
       "repo": "o2oa",
       "sourceId": "o2oa",
-      "snapshotId": "085955ed-e5af-4d46-a8b3-874e40b089f0",
+      "snapshotId": "3a6462ac-4d2c-4ee0-a676-fe4301dfed1a",
       "objectCount": 70501,
       "linkCount": 710059,
       "schemaVersion": "draft-v1"
     },
     {
       "owner": "pig-mesh",
+      "repo": "pig-ui",
+      "sourceId": "pig-ui",
+      "snapshotId": "d7d5ff3e-3327-4c22-bbbd-d6011722c209",
+      "objectCount": 1974,
+      "linkCount": 11417,
+      "schemaVersion": "draft-v1"
+    },
+    {
+      "owner": "pig-mesh",
       "repo": "pig",
       "sourceId": "pig",
-      "snapshotId": "a96d5ed4-8c0d-432a-83d5-2bad8793b320",
-      "objectCount": 2531,
-      "linkCount": 7769,
+      "snapshotId": "9e2969c8-a9c2-4ccb-a3ec-74b7c2af4b5a",
+      "objectCount": 2546,
+      "linkCount": 7737,
       "schemaVersion": "draft-v1"
     },
     {
       "owner": "renrenio",
       "repo": "renren-fast",
       "sourceId": "renren-fast",
-      "snapshotId": "0c95df2a-f1d5-44e0-b832-3f2c2b9443aa",
+      "snapshotId": "67a3dc34-ac20-49b5-a87d-f872fcfe909d",
       "objectCount": 777,
       "linkCount": 3326,
       "schemaVersion": "draft-v1"
@@ -221,25 +302,25 @@
       "owner": "spring-projects",
       "repo": "spring-boot",
       "sourceId": "spring-boot",
-      "snapshotId": "12b33cb6-bfe3-4e22-ada5-850fb67e3681",
-      "objectCount": 64887,
-      "linkCount": 141436,
+      "snapshotId": "3f16b907-2f04-4563-928b-9065648e18b6",
+      "objectCount": 65024,
+      "linkCount": 141706,
       "schemaVersion": "draft-v1"
     },
     {
       "owner": "spring-projects",
       "repo": "spring-framework",
       "sourceId": "spring-framework",
-      "snapshotId": "290a057e-3a18-407d-9704-79989dbecc46",
-      "objectCount": 105848,
-      "linkCount": 286043,
+      "snapshotId": "7434dc5e-a91d-4554-bf91-701128bf2cee",
+      "objectCount": 105945,
+      "linkCount": 286262,
       "schemaVersion": "draft-v1"
     },
     {
       "owner": "spring-projects",
       "repo": "spring-petclinic",
       "sourceId": "spring-petclinic",
-      "snapshotId": "64c61162-4eea-43a2-98f8-54a1ebcff27f",
+      "snapshotId": "863530e4-09d8-4f63-8552-ffccbb3ad3bc",
       "objectCount": 283,
       "linkCount": 626,
       "schemaVersion": "draft-v1"
@@ -248,7 +329,7 @@
       "owner": "stylefeng",
       "repo": "Guns",
       "sourceId": "Guns",
-      "snapshotId": "6901ed73-6c7d-4ba4-8232-345364d5cd37",
+      "snapshotId": "e28322d1-8663-41a4-8a9b-1b3c44da4d55",
       "objectCount": 1377,
       "linkCount": 10042,
       "schemaVersion": "draft-v1"
@@ -257,7 +338,7 @@
       "owner": "thinkgem",
       "repo": "jeesite",
       "sourceId": "jeesite",
-      "snapshotId": "e9065968-9239-4d62-8cd7-72dc81822566",
+      "snapshotId": "e13c7334-ad93-4ac4-b24e-eb6a0c79a9f0",
       "objectCount": 2670,
       "linkCount": 14623,
       "schemaVersion": "draft-v1"
@@ -266,18 +347,36 @@
       "owner": "yangzongzhuan",
       "repo": "RuoYi-Cloud",
       "sourceId": "RuoYi-Cloud",
-      "snapshotId": "41743cb0-0c4d-4ef3-854a-0432971c709b",
-      "objectCount": 2528,
-      "linkCount": 8723,
+      "snapshotId": "4752c413-86b8-4fc6-a6de-00e10cf63472",
+      "objectCount": 2531,
+      "linkCount": 8740,
       "schemaVersion": "draft-v1"
     },
     {
       "owner": "yangzongzhuan",
       "repo": "RuoYi-Vue",
       "sourceId": "RuoYi-Vue",
-      "snapshotId": "143cde85-e3f3-4a1b-b83e-245518613a73",
-      "objectCount": 2556,
-      "linkCount": 7747,
+      "snapshotId": "97bf9bce-2eb1-4ec1-a025-ceb8f20b3129",
+      "objectCount": 2559,
+      "linkCount": 7764,
+      "schemaVersion": "draft-v1"
+    },
+    {
+      "owner": "yangzongzhuan",
+      "repo": "RuoYi-Vue3",
+      "sourceId": "RuoYi-Vue3",
+      "snapshotId": "20b3ad0d-140b-4a26-a6e8-3e512b2c699d",
+      "objectCount": 1077,
+      "linkCount": 6240,
+      "schemaVersion": "draft-v1"
+    },
+    {
+      "owner": "yudaocode",
+      "repo": "yudao-ui-admin-vue3",
+      "sourceId": "yudao-ui-admin-vue3",
+      "snapshotId": "b4ecbe31-6f9b-4804-a737-5993aa53a65c",
+      "objectCount": 16456,
+      "linkCount": 3065439,
       "schemaVersion": "draft-v1"
     }
   ],
@@ -289,8 +388,16 @@
       "domain": "A",
       "direction": "higher-better",
       "N": 0,
-      "missing": 30,
+      "missing": 41,
       "missingRepos": [
+        {
+          "repo": "Activiti/Activiti",
+          "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）"
+        },
+        {
+          "repo": "BroadleafCommerce/BroadleafCommerce",
+          "reason": "calls 传递闭包与 Method→Mapper 名字 join 未实现（过渡实现——待 ke checkup）"
+        },
         {
           "repo": "YunaiV/ruoyi-vue-pro",
           "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）"
@@ -324,6 +431,10 @@
           "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）"
         },
         {
+          "repo": "dhis2/dhis2-core",
+          "reason": "calls 传递闭包与 Method→Mapper 名字 join 未实现（过渡实现——待 ke checkup）"
+        },
+        {
           "repo": "dromara/RuoYi-Vue-Plus",
           "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）"
         },
@@ -336,11 +447,23 @@
           "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）"
         },
         {
+          "repo": "elunez/eladmin-web",
+          "reason": "calls 传递闭包与 Method→Mapper 名字 join 未实现（过渡实现——待 ke checkup）"
+        },
+        {
           "repo": "flowable/flowable-engine",
           "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）"
         },
         {
+          "repo": "hibernate/hibernate-orm",
+          "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）"
+        },
+        {
           "repo": "jeecgboot/JeecgBoot",
+          "reason": "calls 传递闭包与 Method→Mapper 名字 join 未实现（过渡实现——待 ke checkup）"
+        },
+        {
+          "repo": "jeecgboot/jeecgboot-vue3",
           "reason": "calls 传递闭包与 Method→Mapper 名字 join 未实现（过渡实现——待 ke checkup）"
         },
         {
@@ -360,6 +483,10 @@
           "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）"
         },
         {
+          "repo": "macrozheng/mall-admin-web",
+          "reason": "calls 传递闭包与 Method→Mapper 名字 join 未实现（过渡实现——待 ke checkup）"
+        },
+        {
           "repo": "macrozheng/mall-swarm",
           "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）"
         },
@@ -372,12 +499,20 @@
           "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）"
         },
         {
+          "repo": "newbee-ltd/newbee-mall-vue3-app",
+          "reason": "calls 传递闭包与 Method→Mapper 名字 join 未实现（过渡实现——待 ke checkup）"
+        },
+        {
           "repo": "o2oa/o2oa",
           "reason": "calls 传递闭包与 Method→Mapper 名字 join 未实现（过渡实现——待 ke checkup）"
         },
         {
           "repo": "pig-mesh/pig",
           "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）"
+        },
+        {
+          "repo": "pig-mesh/pig-ui",
+          "reason": "calls 传递闭包与 Method→Mapper 名字 join 未实现（过渡实现——待 ke checkup）"
         },
         {
           "repo": "renrenio/renren-fast",
@@ -410,6 +545,14 @@
         {
           "repo": "yangzongzhuan/RuoYi-Vue",
           "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）"
+        },
+        {
+          "repo": "yangzongzhuan/RuoYi-Vue3",
+          "reason": "calls 传递闭包与 Method→Mapper 名字 join 未实现（过渡实现——待 ke checkup）"
+        },
+        {
+          "repo": "yudaocode/yudao-ui-admin-vue3",
+          "reason": "calls 传递闭包与 Method→Mapper 名字 join 未实现（过渡实现——待 ke checkup）"
         }
       ],
       "mean": null,
@@ -423,9 +566,13 @@
       "label": "前后端断链率",
       "domain": "A",
       "direction": "lower-better",
-      "N": 9,
-      "missing": 21,
+      "N": 18,
+      "missing": 23,
       "missingRepos": [
+        {
+          "repo": "Activiti/Activiti",
+          "reason": "无 ApiEndpoint 对象（纯后端仓库——按口径置空）"
+        },
         {
           "repo": "YunaiV/ruoyi-vue-pro",
           "reason": "无 ApiEndpoint 对象（纯后端仓库——按口径置空）"
@@ -471,6 +618,10 @@
           "reason": "无 ApiEndpoint 对象（纯后端仓库——按口径置空）"
         },
         {
+          "repo": "hibernate/hibernate-orm",
+          "reason": "无 ApiEndpoint 对象（纯后端仓库——按口径置空）"
+        },
+        {
           "repo": "macrozheng/mall",
           "reason": "无 ApiEndpoint 对象（纯后端仓库——按口径置空）"
         },
@@ -511,7 +662,7 @@
           "reason": "无 ApiEndpoint 对象（纯后端仓库——按口径置空）"
         }
       ],
-      "mean": 0.878205,
+      "mean": 0.939103,
       "percentiles": {
         "p25": 1.0,
         "p50": 1.0,
@@ -526,11 +677,23 @@
       "label": "孤儿表率",
       "domain": "A",
       "direction": "lower-better",
-      "N": 26,
-      "missing": 4,
+      "N": 29,
+      "missing": 12,
       "missingRepos": [
         {
+          "repo": "BroadleafCommerce/BroadleafCommerce",
+          "reason": "无 Table 对象（分母为 0）"
+        },
+        {
           "repo": "apache/dubbo",
+          "reason": "无 Table 对象（分母为 0）"
+        },
+        {
+          "repo": "elunez/eladmin-web",
+          "reason": "无 Table 对象（分母为 0）"
+        },
+        {
+          "repo": "jeecgboot/jeecgboot-vue3",
           "reason": "无 Table 对象（分母为 0）"
         },
         {
@@ -538,18 +701,38 @@
           "reason": "无 Table 对象（分母为 0）"
         },
         {
+          "repo": "macrozheng/mall-admin-web",
+          "reason": "无 Table 对象（分母为 0）"
+        },
+        {
+          "repo": "newbee-ltd/newbee-mall-vue3-app",
+          "reason": "无 Table 对象（分母为 0）"
+        },
+        {
           "repo": "o2oa/o2oa",
+          "reason": "无 Table 对象（分母为 0）"
+        },
+        {
+          "repo": "pig-mesh/pig-ui",
           "reason": "无 Table 对象（分母为 0）"
         },
         {
           "repo": "thinkgem/jeesite",
           "reason": "无 Table 对象（分母为 0）"
+        },
+        {
+          "repo": "yangzongzhuan/RuoYi-Vue3",
+          "reason": "无 Table 对象（分母为 0）"
+        },
+        {
+          "repo": "yudaocode/yudao-ui-admin-vue3",
+          "reason": "无 Table 对象（分母为 0）"
         }
       ],
-      "mean": 0.533151,
+      "mean": 0.581174,
       "percentiles": {
-        "p25": 0.142857,
-        "p50": 0.488372,
+        "p25": 0.21,
+        "p50": 0.607843,
         "p75": 0.980645,
         "p90": 1.0
       },
@@ -561,11 +744,23 @@
       "label": "表↔实体映射率",
       "domain": "A",
       "direction": "higher-better",
-      "N": 26,
-      "missing": 4,
+      "N": 29,
+      "missing": 12,
       "missingRepos": [
         {
+          "repo": "BroadleafCommerce/BroadleafCommerce",
+          "reason": "无 Table 对象（分母为 0）"
+        },
+        {
           "repo": "apache/dubbo",
+          "reason": "无 Table 对象（分母为 0）"
+        },
+        {
+          "repo": "elunez/eladmin-web",
+          "reason": "无 Table 对象（分母为 0）"
+        },
+        {
+          "repo": "jeecgboot/jeecgboot-vue3",
           "reason": "无 Table 对象（分母为 0）"
         },
         {
@@ -573,19 +768,39 @@
           "reason": "无 Table 对象（分母为 0）"
         },
         {
+          "repo": "macrozheng/mall-admin-web",
+          "reason": "无 Table 对象（分母为 0）"
+        },
+        {
+          "repo": "newbee-ltd/newbee-mall-vue3-app",
+          "reason": "无 Table 对象（分母为 0）"
+        },
+        {
           "repo": "o2oa/o2oa",
+          "reason": "无 Table 对象（分母为 0）"
+        },
+        {
+          "repo": "pig-mesh/pig-ui",
           "reason": "无 Table 对象（分母为 0）"
         },
         {
           "repo": "thinkgem/jeesite",
           "reason": "无 Table 对象（分母为 0）"
+        },
+        {
+          "repo": "yangzongzhuan/RuoYi-Vue3",
+          "reason": "无 Table 对象（分母为 0）"
+        },
+        {
+          "repo": "yudaocode/yudao-ui-admin-vue3",
+          "reason": "无 Table 对象（分母为 0）"
         }
       ],
-      "mean": 0.466849,
+      "mean": 0.418826,
       "percentiles": {
         "p25": 0.019355,
-        "p50": 0.463768,
-        "p75": 0.857143,
+        "p50": 0.392157,
+        "p75": 0.79,
         "p90": 1.0
       },
       "percentileMethod": "nearest-rank (Schema §4.2)"
@@ -596,19 +811,47 @@
       "label": "循环依赖密度（后端）",
       "domain": "B",
       "direction": "lower-better",
-      "N": 29,
-      "missing": 1,
+      "N": 33,
+      "missing": 8,
       "missingRepos": [
+        {
+          "repo": "elunez/eladmin-web",
+          "reason": "无 Package 对象（分母为 0）"
+        },
+        {
+          "repo": "jeecgboot/jeecgboot-vue3",
+          "reason": "无 Package 对象（分母为 0）"
+        },
+        {
+          "repo": "macrozheng/mall-admin-web",
+          "reason": "无 Package 对象（分母为 0）"
+        },
+        {
+          "repo": "newbee-ltd/newbee-mall-vue3-app",
+          "reason": "无 Package 对象（分母为 0）"
+        },
+        {
+          "repo": "pig-mesh/pig-ui",
+          "reason": "无 Package 对象（分母为 0）"
+        },
         {
           "repo": "thinkgem/jeesite",
           "reason": "无 Package 对象（分母为 0）"
+        },
+        {
+          "repo": "yangzongzhuan/RuoYi-Vue3",
+          "reason": "无 Package 对象（分母为 0）"
+        },
+        {
+          "repo": "yudaocode/yudao-ui-admin-vue3",
+          "reason": "无 Package 对象（分母为 0）"
         }
       ],
-      "mean": 0.224926,
+      "mean": 0.245858,
       "percentiles": {
-        "p25": 0.06383,
-        "p50": 0.163636,
-        "p75": 0.387008,
+        "p25": 0.090909,
+        "p50": 0.212598,
+        "p75": 0.42233,
         "p90": 0.50306
       },
       "percentileMethod": "nearest-rank (Schema §4.2)"
@@ -619,9 +862,13 @@
       "label": "循环依赖密度（前端）",
       "domain": "B",
       "direction": "lower-better",
-      "N": 18,
-      "missing": 12,
+      "N": 27,
+      "missing": 14,
       "missingRepos": [
+        {
+          "repo": "Activiti/Activiti",
+          "reason": "无 Module 对象（纯后端仓库——按口径置空）"
+        },
         {
           "repo": "apache/dubbo",
           "reason": "无 Module 对象（纯后端仓库——按口径置空）"
@@ -651,6 +898,10 @@
           "reason": "无 Module 对象（纯后端仓库——按口径置空）"
         },
         {
+          "repo": "hibernate/hibernate-orm",
+          "reason": "无 Module 对象（纯后端仓库——按口径置空）"
+        },
+        {
           "repo": "macrozheng/mall",
           "reason": "无 Module 对象（纯后端仓库——按口径置空）"
         },
@@ -671,12 +922,12 @@
           "reason": "无 Module 对象（纯后端仓库——按口径置空）"
         }
       ],
-      "mean": 0.011598,
+      "mean": 0.009705,
       "percentiles": {
         "p25": 0.0,
         "p50": 0.0,
-        "p75": 0.0,
-        "p90": 0.009695
+        "p75": 0.003007,
+        "p90": 0.011538
       },
       "percentileMethod": "nearest-rank (Schema §4.2)"
     },
@@ -686,20 +937,48 @@
       "label": "包依赖密度",
       "domain": "B",
       "direction": "interval",
-      "N": 29,
-      "missing": 1,
+      "N": 33,
+      "missing": 8,
       "missingRepos": [
+        {
+          "repo": "elunez/eladmin-web",
+          "reason": "无 Package 对象（分母为 0）"
+        },
+        {
+          "repo": "jeecgboot/jeecgboot-vue3",
+          "reason": "无 Package 对象（分母为 0）"
+        },
+        {
+          "repo": "macrozheng/mall-admin-web",
+          "reason": "无 Package 对象（分母为 0）"
+        },
+        {
+          "repo": "newbee-ltd/newbee-mall-vue3-app",
+          "reason": "无 Package 对象（分母为 0）"
+        },
+        {
+          "repo": "pig-mesh/pig-ui",
+          "reason": "无 Package 对象（分母为 0）"
+        },
         {
           "repo": "thinkgem/jeesite",
           "reason": "无 Package 对象（分母为 0）"
+        },
+        {
+          "repo": "yangzongzhuan/RuoYi-Vue3",
+          "reason": "无 Package 对象（分母为 0）"
+        },
+        {
+          "repo": "yudaocode/yudao-ui-admin-vue3",
+          "reason": "无 Package 对象（分母为 0）"
         }
       ],
-      "mean": 4.746086,
+      "mean": 5.086621,
       "percentiles": {
-        "p25": 2.3077,
-        "p50": 3.521,
-        "p75": 7.5035,
-        "p90": 9.0819
+        "p25": 2.3617,
+        "p50": 4.6335,
+        "p75": 7.5792,
+        "p90": 9.0869
       },
       "percentileMethod": "nearest-rank (Schema §4.2)"
     },
@@ -709,20 +988,48 @@
       "label": "巨型类占比",
       "domain": "B",
       "direction": "lower-better",
-      "N": 29,
-      "missing": 1,
+      "N": 33,
+      "missing": 8,
       "missingRepos": [
+        {
+          "repo": "elunez/eladmin-web",
+          "reason": "无 Class 对象（分母为 0）"
+        },
+        {
+          "repo": "jeecgboot/jeecgboot-vue3",
+          "reason": "无 Class 对象（分母为 0）"
+        },
+        {
+          "repo": "macrozheng/mall-admin-web",
+          "reason": "无 Class 对象（分母为 0）"
+        },
+        {
+          "repo": "newbee-ltd/newbee-mall-vue3-app",
+          "reason": "无 Class 对象（分母为 0）"
+        },
+        {
+          "repo": "pig-mesh/pig-ui",
+          "reason": "无 Class 对象（分母为 0）"
+        },
         {
           "repo": "thinkgem/jeesite",
           "reason": "无 Class 对象（分母为 0）"
+        },
+        {
+          "repo": "yangzongzhuan/RuoYi-Vue3",
+          "reason": "无 Class 对象（分母为 0）"
+        },
+        {
+          "repo": "yudaocode/yudao-ui-admin-vue3",
+          "reason": "无 Class 对象（分母为 0）"
         }
       ],
-      "mean": 0.036185,
+      "mean": 0.035575,
       "percentiles": {
-        "p25": 0.004831,
-        "p50": 0.021739,
-        "p75": 0.035642,
-        "p90": 0.151771
+        "p25": 0.006195,
+        "p50": 0.02531,
+        "p75": 0.035616,
+        "p90": 0.082058
       },
       "percentileMethod": "nearest-rank (Schema §4.2)"
     },
@@ -732,9 +1039,17 @@
       "label": "组件耦合度",
       "domain": "B",
       "direction": "lower-better",
-      "N": 10,
-      "missing": 20,
+      "N": 17,
+      "missing": 24,
       "missingRepos": [
+        {
+          "repo": "Activiti/Activiti",
+          "reason": "无 Component 对象（纯后端仓库——按口径置空）"
+        },
+        {
+          "repo": "BroadleafCommerce/BroadleafCommerce",
+          "reason": "无 Component 对象（纯后端仓库——按口径置空）"
+        },
         {
           "repo": "alibaba/druid",
           "reason": "无 Component 对象（纯后端仓库——按口径置空）"
@@ -760,6 +1075,10 @@
           "reason": "无 Component 对象（纯后端仓库——按口径置空）"
         },
         {
+          "repo": "dhis2/dhis2-core",
+          "reason": "无 Component 对象（纯后端仓库——按口径置空）"
+        },
+        {
           "repo": "dromara/RuoYi-Vue-Plus",
           "reason": "无 Component 对象（纯后端仓库——按口径置空）"
         },
@@ -773,6 +1092,10 @@
         },
         {
           "repo": "flowable/flowable-engine",
+          "reason": "无 Component 对象（纯后端仓库——按口径置空）"
+        },
+        {
+          "repo": "hibernate/hibernate-orm",
           "reason": "无 Component 对象（纯后端仓库——按口径置空）"
         },
         {
@@ -816,10 +1139,10 @@
           "reason": "无 Component 对象（纯后端仓库——按口径置空）"
         }
       ],
-      "mean": 0.37824,
+      "mean": 0.351824,
       "percentiles": {
         "p25": 0.0503,
-        "p50": 0.1429,
+        "p50": 0.2294,
         "p75": 0.3462,
         "p90": 1.0
       },
@@ -832,8 +1155,16 @@
       "domain": "C",
       "direction": "interval",
       "N": 0,
-      "missing": 30,
+      "missing": 41,
       "missingRepos": [
+        {
+          "repo": "Activiti/Activiti",
+          "reason": "无 ApiEndpoint 对象（贯通链分母为 0）"
+        },
+        {
+          "repo": "BroadleafCommerce/BroadleafCommerce",
+          "reason": "依赖 A1 贯通链算法（过渡实现未含——待 ke checkup）"
+        },
         {
           "repo": "YunaiV/ruoyi-vue-pro",
           "reason": "无 ApiEndpoint 对象（贯通链分母为 0）"
@@ -867,6 +1198,10 @@
           "reason": "无 ApiEndpoint 对象（贯通链分母为 0）"
         },
         {
+          "repo": "dhis2/dhis2-core",
+          "reason": "依赖 A1 贯通链算法（过渡实现未含——待 ke checkup）"
+        },
+        {
           "repo": "dromara/RuoYi-Vue-Plus",
           "reason": "无 ApiEndpoint 对象（贯通链分母为 0）"
         },
@@ -879,11 +1214,23 @@
           "reason": "无 ApiEndpoint 对象（贯通链分母为 0）"
         },
         {
+          "repo": "elunez/eladmin-web",
+          "reason": "依赖 A1 贯通链算法（过渡实现未含——待 ke checkup）"
+        },
+        {
           "repo": "flowable/flowable-engine",
           "reason": "无 ApiEndpoint 对象（贯通链分母为 0）"
         },
         {
+          "repo": "hibernate/hibernate-orm",
+          "reason": "无 ApiEndpoint 对象（贯通链分母为 0）"
+        },
+        {
           "repo": "jeecgboot/JeecgBoot",
+          "reason": "依赖 A1 贯通链算法（过渡实现未含——待 ke checkup）"
+        },
+        {
+          "repo": "jeecgboot/jeecgboot-vue3",
           "reason": "依赖 A1 贯通链算法（过渡实现未含——待 ke checkup）"
         },
         {
@@ -903,6 +1250,10 @@
           "reason": "无 ApiEndpoint 对象（贯通链分母为 0）"
         },
         {
+          "repo": "macrozheng/mall-admin-web",
+          "reason": "依赖 A1 贯通链算法（过渡实现未含——待 ke checkup）"
+        },
+        {
           "repo": "macrozheng/mall-swarm",
           "reason": "无 ApiEndpoint 对象（贯通链分母为 0）"
         },
@@ -915,12 +1266,20 @@
           "reason": "无 ApiEndpoint 对象（贯通链分母为 0）"
         },
         {
+          "repo": "newbee-ltd/newbee-mall-vue3-app",
+          "reason": "依赖 A1 贯通链算法（过渡实现未含——待 ke checkup）"
+        },
+        {
           "repo": "o2oa/o2oa",
           "reason": "依赖 A1 贯通链算法（过渡实现未含——待 ke checkup）"
         },
         {
           "repo": "pig-mesh/pig",
           "reason": "无 ApiEndpoint 对象（贯通链分母为 0）"
+        },
+        {
+          "repo": "pig-mesh/pig-ui",
+          "reason": "依赖 A1 贯通链算法（过渡实现未含——待 ke checkup）"
         },
         {
           "repo": "renrenio/renren-fast",
@@ -953,6 +1312,14 @@
         {
           "repo": "yangzongzhuan/RuoYi-Vue",
           "reason": "无 ApiEndpoint 对象（贯通链分母为 0）"
+        },
+        {
+          "repo": "yangzongzhuan/RuoYi-Vue3",
+          "reason": "依赖 A1 贯通链算法（过渡实现未含——待 ke checkup）"
+        },
+        {
+          "repo": "yudaocode/yudao-ui-admin-vue3",
+          "reason": "依赖 A1 贯通链算法（过渡实现未含——待 ke checkup）"
         }
       ],
       "mean": null,
@@ -966,15 +1333,43 @@
       "label": "圈复杂度 P90",
       "domain": "C",
       "direction": "lower-better",
-      "N": 29,
-      "missing": 1,
+      "N": 33,
+      "missing": 8,
       "missingRepos": [
+        {
+          "repo": "elunez/eladmin-web",
+          "reason": "无 complexity 非 null 的 Method（分母为 0）"
+        },
+        {
+          "repo": "jeecgboot/jeecgboot-vue3",
+          "reason": "无 complexity 非 null 的 Method（分母为 0）"
+        },
+        {
+          "repo": "macrozheng/mall-admin-web",
+          "reason": "无 complexity 非 null 的 Method（分母为 0）"
+        },
+        {
+          "repo": "newbee-ltd/newbee-mall-vue3-app",
+          "reason": "无 complexity 非 null 的 Method（分母为 0）"
+        },
+        {
+          "repo": "pig-mesh/pig-ui",
+          "reason": "无 complexity 非 null 的 Method（分母为 0）"
+        },
         {
           "repo": "thinkgem/jeesite",
           "reason": "无 complexity 非 null 的 Method（分母为 0）"
+        },
+        {
+          "repo": "yangzongzhuan/RuoYi-Vue3",
+          "reason": "无 complexity 非 null 的 Method（分母为 0）"
+        },
+        {
+          "repo": "yudaocode/yudao-ui-admin-vue3",
+          "reason": "无 complexity 非 null 的 Method（分母为 0）"
         }
       ],
-      "mean": 2.724138,
+      "mean": 2.757576,
       "percentiles": {
         "p25": 2,
         "p50": 3,
@@ -989,20 +1384,48 @@
       "label": "测试方法占比",
       "domain": "C",
       "direction": "higher-better",
-      "N": 29,
-      "missing": 1,
+      "N": 33,
+      "missing": 8,
       "missingRepos": [
+        {
+          "repo": "elunez/eladmin-web",
+          "reason": "无 Method 对象（分母为 0）"
+        },
+        {
+          "repo": "jeecgboot/jeecgboot-vue3",
+          "reason": "无 Method 对象（分母为 0）"
+        },
+        {
+          "repo": "macrozheng/mall-admin-web",
+          "reason": "无 Method 对象（分母为 0）"
+        },
+        {
+          "repo": "newbee-ltd/newbee-mall-vue3-app",
+          "reason": "无 Method 对象（分母为 0）"
+        },
+        {
+          "repo": "pig-mesh/pig-ui",
+          "reason": "无 Method 对象（分母为 0）"
+        },
         {
           "repo": "thinkgem/jeesite",
           "reason": "无 Method 对象（分母为 0）"
+        },
+        {
+          "repo": "yangzongzhuan/RuoYi-Vue3",
+          "reason": "无 Method 对象（分母为 0）"
+        },
+        {
+          "repo": "yudaocode/yudao-ui-admin-vue3",
+          "reason": "无 Method 对象（分母为 0）"
         }
       ],
-      "mean": 0.104018,
+      "mean": 0.108382,
       "percentiles": {
-        "p25": 0.003521,
-        "p50": 0.031908,
+        "p25": 0.004317,
+        "p50": 0.039664,
         "p75": 0.161345,
-        "p90": 0.350408
+        "p90": 0.301033
       },
       "percentileMethod": "nearest-rank (Schema §4.2)"
     },
@@ -1012,20 +1435,48 @@
       "label": "巨型方法占比",
       "domain": "C",
       "direction": "lower-better",
-      "N": 29,
-      "missing": 1,
+      "N": 33,
+      "missing": 8,
       "missingRepos": [
+        {
+          "repo": "elunez/eladmin-web",
+          "reason": "无 Method 对象（分母为 0）"
+        },
+        {
+          "repo": "jeecgboot/jeecgboot-vue3",
+          "reason": "无 Method 对象（分母为 0）"
+        },
+        {
+          "repo": "macrozheng/mall-admin-web",
+          "reason": "无 Method 对象（分母为 0）"
+        },
+        {
+          "repo": "newbee-ltd/newbee-mall-vue3-app",
+          "reason": "无 Method 对象（分母为 0）"
+        },
+        {
+          "repo": "pig-mesh/pig-ui",
+          "reason": "无 Method 对象（分母为 0）"
+        },
         {
           "repo": "thinkgem/jeesite",
           "reason": "无 Method 对象（分母为 0）"
+        },
+        {
+          "repo": "yangzongzhuan/RuoYi-Vue3",
+          "reason": "无 Method 对象（分母为 0）"
+        },
+        {
+          "repo": "yudaocode/yudao-ui-admin-vue3",
+          "reason": "无 Method 对象（分母为 0）"
         }
       ],
-      "mean": 0.004576,
+      "mean": 0.005103,
       "percentiles": {
-        "p25": 0.000744,
-        "p50": 0.002815,
-        "p75": 0.005435,
-        "p90": 0.015979
+        "p25": 0.001379,
+        "p50": 0.003016,
+        "p75": 0.007306,
+        "p90": 0.014918
       },
       "percentileMethod": "nearest-rank (Schema §4.2)"
     },
@@ -1036,8 +1487,16 @@
       "domain": "D",
       "direction": "higher-better",
       "N": 0,
-      "missing": 30,
+      "missing": 41,
       "missingRepos": [
+        {
+          "repo": "Activiti/Activiti",
+          "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）"
+        },
+        {
+          "repo": "BroadleafCommerce/BroadleafCommerce",
+          "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）"
+        },
         {
           "repo": "YunaiV/ruoyi-vue-pro",
           "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）"
@@ -1071,24 +1530,40 @@
           "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）"
         },
         {
+          "repo": "dhis2/dhis2-core",
+          "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）"
+        },
+        {
           "repo": "dromara/RuoYi-Vue-Plus",
           "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）"
         },
         {
           "repo": "dromara/dante-cloud",
-          "reason": "无可判定版本（空串 41 / 属性占位 13 / 合计 54——分母为 0，按口径置空）"
+          "reason": "无可判定版本（空串 26 / 属性占位 11 / 合计 37——分母为 0，按口径置空）"
         },
         {
           "repo": "elunez/eladmin",
           "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）"
         },
         {
+          "repo": "elunez/eladmin-web",
+          "reason": "无可判定版本（空串 0 / 属性占位 0 / 合计 0——分母为 0，按口径置空）"
+        },
+        {
           "repo": "flowable/flowable-engine",
+          "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）"
+        },
+        {
+          "repo": "hibernate/hibernate-orm",
           "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）"
         },
         {
           "repo": "jeecgboot/JeecgBoot",
           "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）"
+        },
+        {
+          "repo": "jeecgboot/jeecgboot-vue3",
+          "reason": "无可判定版本（空串 0 / 属性占位 0 / 合计 0——分母为 0，按口径置空）"
         },
         {
           "repo": "keycloak/keycloak",
@@ -1107,6 +1582,10 @@
           "reason": "无可判定版本（空串 14 / 属性占位 20 / 合计 34——分母为 0，按口径置空）"
         },
         {
+          "repo": "macrozheng/mall-admin-web",
+          "reason": "无可判定版本（空串 0 / 属性占位 0 / 合计 0——分母为 0，按口径置空）"
+        },
+        {
           "repo": "macrozheng/mall-swarm",
           "reason": "无可判定版本（空串 19 / 属性占位 27 / 合计 46——分母为 0，按口径置空）"
         },
@@ -1119,12 +1598,20 @@
           "reason": "无可判定版本（空串 5 / 属性占位 2 / 合计 7——分母为 0，按口径置空）"
         },
         {
+          "repo": "newbee-ltd/newbee-mall-vue3-app",
+          "reason": "无可判定版本（空串 0 / 属性占位 0 / 合计 0——分母为 0，按口径置空）"
+        },
+        {
           "repo": "o2oa/o2oa",
           "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）"
         },
         {
           "repo": "pig-mesh/pig",
-          "reason": "无可判定版本（空串 49 / 属性占位 88 / 合计 137——分母为 0，按口径置空）"
+          "reason": "无可判定版本（空串 49 / 属性占位 89 / 合计 138——分母为 0，按口径置空）"
+        },
+        {
+          "repo": "pig-mesh/pig-ui",
+          "reason": "无可判定版本（空串 0 / 属性占位 0 / 合计 0——分母为 0，按口径置空）"
         },
         {
           "repo": "renrenio/renren-fast",
@@ -1157,6 +1644,14 @@
         {
           "repo": "yangzongzhuan/RuoYi-Vue",
           "reason": "无可判定版本（空串 15 / 属性占位 20 / 合计 35——分母为 0，按口径置空）"
+        },
+        {
+          "repo": "yangzongzhuan/RuoYi-Vue3",
+          "reason": "无可判定版本（空串 0 / 属性占位 0 / 合计 0——分母为 0，按口径置空）"
+        },
+        {
+          "repo": "yudaocode/yudao-ui-admin-vue3",
+          "reason": "无可判定版本（空串 0 / 属性占位 0 / 合计 0——分母为 0，按口径置空）"
         }
       ],
       "mean": null,
