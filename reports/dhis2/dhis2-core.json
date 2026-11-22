@@ -1,0 +1,885 @@
+{
+  "schemaVersion": "draft-v1",
+  "implementation": "ke-index compute-metrics.py (transitional; to be superseded by ke checkup)",
+  "owner": "dhis2",
+  "repo": "dhis2-core",
+  "sourceId": "dhis2-core",
+  "snapshot": {
+    "snapshotId": "c588af1b-a81c-4a9d-800c-f7c1f40a9a57",
+    "status": "complete",
+    "sourceVersion": "61c940ba5f47849eab5ddcc800bdb236d54da1c3",
+    "sourceHead": "61c940ba5f47849eab5ddcc800bdb236d54da1c3",
+    "objectCount": 63439,
+    "linkCount": 411168,
+    "completedAt": "2026-11-22T05:16:23.510Z"
+  },
+  "cliVersion": "0.3.8",
+  "metrics": {
+    "A2": {
+      "id": "A2",
+      "name": "api-backend-breakrate",
+      "label": "前后端断链率",
+      "domain": "A",
+      "direction": "lower-better",
+      "value": 1.0,
+      "numerator": 2,
+      "denominator": 2,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query ApiEndpoint --all --field id,backendMethodId,matchedVia --snapshot c588af1b-a81c-4a9d-800c-f7c1f40a9a57",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot c588af1b-a81c-4a9d-800c-f7c1f40a9a57"
+      ]
+    },
+    "A3": {
+      "id": "A3",
+      "name": "orphan-table-rate",
+      "label": "孤儿表率",
+      "domain": "A",
+      "direction": "lower-better",
+      "value": 0.972452,
+      "numerator": 353,
+      "denominator": 363,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Table --all --field id,name,matchedEntityClass --snapshot c588af1b-a81c-4a9d-800c-f7c1f40a9a57",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Mapper --all --field id,namespace,mappedTableIds --snapshot c588af1b-a81c-4a9d-800c-f7c1f40a9a57",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot c588af1b-a81c-4a9d-800c-f7c1f40a9a57"
+      ]
+    },
+    "A4": {
+      "id": "A4",
+      "name": "table-entity-mapping-rate",
+      "label": "表↔实体映射率",
+      "domain": "A",
+      "direction": "higher-better",
+      "value": 0.027548,
+      "numerator": 10,
+      "denominator": 363,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Table --all --field id,name,matchedEntityClass --snapshot c588af1b-a81c-4a9d-800c-f7c1f40a9a57",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Mapper --all --field id,namespace,mappedTableIds --snapshot c588af1b-a81c-4a9d-800c-f7c1f40a9a57",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot c588af1b-a81c-4a9d-800c-f7c1f40a9a57"
+      ],
+      "evidence": {
+        "mapperEdgeOnly": 0,
+        "entityClassOnly": 10,
+        "both": 0
+      }
+    },
+    "B1.backend": {
+      "id": "B1.backend",
+      "name": "circular-dependency-density",
+      "label": "循环依赖密度（后端）",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": 0.497902,
+      "numerator": 356,
+      "denominator": 715,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Package --all --field id,dependsOnPackageIds --snapshot c588af1b-a81c-4a9d-800c-f7c1f40a9a57",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot c588af1b-a81c-4a9d-800c-f7c1f40a9a57"
+      ],
+      "sccCount": 17,
+      "sccs": [
+        {
+          "size": 298,
+          "members": [
+            "pkg:org.hisp.dhis",
+            "pkg:org.hisp.dhis.analytics",
+            "pkg:org.hisp.dhis.analytics.analyze",
+            "pkg:org.hisp.dhis.analytics.cache",
+            "pkg:org.hisp.dhis.analytics.common",
+            "pkg:org.hisp.dhis.analytics.common.params",
+            "pkg:org.hisp.dhis.analytics.common.params.dimension",
+            "pkg:org.hisp.dhis.analytics.common.processing",
+            "pkg:org.hisp.dhis.analytics.common.query",
+            "pkg:org.hisp.dhis.analytics.common.query.jsonextractor",
+            "pkg:org.hisp.dhis.analytics.common.scheme",
+            "pkg:org.hisp.dhis.analytics.data",
+            "pkg:org.hisp.dhis.analytics.data.handler",
+            "pkg:org.hisp.dhis.analytics.event",
+            "pkg:org.hisp.dhis.analytics.event.data",
+            "pkg:org.hisp.dhis.analytics.event.data.aggregate",
+            "pkg:org.hisp.dhis.analytics.event.data.ou",
+            "pkg:org.hisp.dhis.analytics.event.data.programindicator",
+            "pkg:org.hisp.dhis.analytics.event.data.programindicator.ctefactory",
+            "pkg:org.hisp.dhis.analytics.event.data.programindicator.ctefactory.coalesce",
+            "pkg:org.hisp.dhis.analytics.event.data.programindicator.disag",
+            "pkg:org.hisp.dhis.analytics.event.data.queryitem",
+            "pkg:org.hisp.dhis.analytics.event.data.stage",
+            "pkg:org.hisp.dhis.analytics.orgunit",
+            "pkg:org.hisp.dhis.analytics.orgunit.data",
+            "pkg:org.hisp.dhis.analytics.outlier",
+            "pkg:org.hisp.dhis.analytics.outlier.data",
+            "pkg:org.hisp.dhis.analytics.partition",
+            "pkg:org.hisp.dhis.analytics.resolver",
+            "pkg:org.hisp.dhis.analytics.security",
+            "pkg:org.hisp.dhis.analytics.table",
+            "pkg:org.hisp.dhis.analytics.table.model",
+            "pkg:org.hisp.dhis.analytics.table.setting",
+            "pkg:org.hisp.dhis.analytics.table.util",
+            "pkg:org.hisp.dhis.analytics.table.writer",
+            "pkg:org.hisp.dhis.analytics.trackedentity",
+            "pkg:org.hisp.dhis.analytics.trackedentity.query",
+            "pkg:org.hisp.dhis.analytics.trackedentity.query.context",
+            "pkg:org.hisp.dhis.analytics.trackedentity.query.context.querybuilder",
+            "pkg:org.hisp.dhis.analytics.trackedentity.query.context.sql",
+            "pkg:org.hisp.dhis.analytics.tracker",
+            "pkg:org.hisp.dhis.analytics.util",
+            "pkg:org.hisp.dhis.analytics.util.sql",
+            "pkg:org.hisp.dhis.apphub",
+            "pkg:org.hisp.dhis.appmanager",
+            "pkg:org.hisp.dhis.appmanager.webmodules",
+            "pkg:org.hisp.dhis.artemis",
+            "pkg:org.hisp.dhis.artemis.audit",
+            "pkg:org.hisp.dhis.artemis.audit.configuration",
+            "pkg:org.hisp.dhis.artemis.audit.legacy",
+            "pkg:org.hisp.dhis.artemis.config",
+            "pkg:org.hisp.dhis.association",
+            "pkg:org.hisp.dhis.association.jdbc",
+            "pkg:org.hisp.dhis.attribute",
+            "pkg:org.hisp.dhis.audit",
+            "pkg:org.hisp.dhis.cache",
+            "pkg:org.hisp.dhis.cacheinvalidation",
+            "pkg:org.hisp.dhis.cacheinvalidation.redis",
+            "pkg:org.hisp.dhis.calendar",
+            "pkg:org.hisp.dhis.calendar.impl",
+            "pkg:org.hisp.dhis.category",
+            "pkg:org.hisp.dhis.common",
+            "pkg:org.hisp.dhis.common.adapter",
+            "pkg:org.hisp.dhis.common.collection",
+            "pkg:org.hisp.dhis.common.comparator",
+            "pkg:org.hisp.dhis.common.coordinate",
+            "pkg:org.hisp.dhis.common.hibernate",
+            "pkg:org.hisp.dhis.common.input",
+            "pkg:org.hisp.dhis.commons.jackson.config",
+            "pkg:org.hisp.dhis.commons.util",
+            "pkg:org.hisp.dhis.condition",
+            "pkg:org.hisp.dhis.configuration",
+            "pkg:org.hisp.dhis.constant",
+            "pkg:org.hisp.dhis.csv",
+            "pkg:org.hisp.dhis.dashboard",
+            "pkg:org.hisp.dhis.dataanalysis",
+            "pkg:org.hisp.dhis.dataapproval",
+            "pkg:org.hisp.dhis.dataapproval.hibernate",
+            "pkg:org.hisp.dhis.dataelement",
+            "pkg:org.hisp.dhis.dataentryform",
+            "pkg:org.hisp.dhis.dataexchange.aggregate",
+            "pkg:org.hisp.dhis.dataexchange.client",
+            "pkg:org.hisp.dhis.dataexchange.client.response",
+            "pkg:org.hisp.dhis.dataset",
+            "pkg:org.hisp.dhis.dataset.comparator",
+            "pkg:org.hisp.dhis.dataset.notifications",
+            "pkg:org.hisp.dhis.datasource",
+            "pkg:org.hisp.dhis.datastatistics",
+            "pkg:org.hisp.dhis.datastore",
+            "pkg:org.hisp.dhis.datasummary",
+            "pkg:org.hisp.dhis.datavalue",
+            "pkg:org.hisp.dhis.db.sql",
+            "pkg:org.hisp.dhis.db.util",
+            "pkg:org.hisp.dhis.dbms",
+            "pkg:org.hisp.dhis.deletedobject",
+            "pkg:org.hisp.dhis.document",
+            "pkg:org.hisp.dhis.dxf2.adx",
+            "pkg:org.hisp.dhis.dxf2.common",
+            "pkg:org.hisp.dhis.dxf2.csv",
+            "pkg:org.hisp.dhis.dxf2.datavalue",
+            "pkg:org.hisp.dhis.dxf2.datavalueset",
+            "pkg:org.hisp.dhis.dxf2.expressiondimensionitem",
+            "pkg:org.hisp.dhis.dxf2.importsummary",
+            "pkg:org.hisp.dhis.dxf2.metadata",
+            "pkg:org.hisp.dhis.dxf2.metadata.feedback",
+            "pkg:org.hisp.dhis.dxf2.metadata.objectbundle",
+            "pkg:org.hisp.dhis.dxf2.metadata.objectbundle.feedback",
+            "pkg:org.hisp.dhis.dxf2.metadata.objectbundle.hooks",
+            "pkg:org.hisp.dhis.dxf2.metadata.objectbundle.validation",
+            "pkg:org.hisp.dhis.dxf2.metadata.objectbundle.validation.attribute",
+            "pkg:org.hisp.dhis.email",
+            "pkg:org.hisp.dhis.event",
+            "pkg:org.hisp.dhis.eventchart",
+            "pkg:org.hisp.dhis.eventdatavalue",
+            "pkg:org.hisp.dhis.eventhook",
+            "pkg:org.hisp.dhis.eventhook.handlers",
+            "pkg:org.hisp.dhis.eventhook.targets",
+            "pkg:org.hisp.dhis.eventreport",
+            "pkg:org.hisp.dhis.eventvisualization",
+            "pkg:org.hisp.dhis.expression",
+            "pkg:org.hisp.dhis.expression.dataitem",
+            "pkg:org.hisp.dhis.expression.function",
+            "pkg:org.hisp.dhis.expressiondimensionitem",
+            "pkg:org.hisp.dhis.feedback",
+            "pkg:org.hisp.dhis.fieldfilter",
+            "pkg:org.hisp.dhis.fieldfiltering",
+            "pkg:org.hisp.dhis.fieldfiltering.transformers",
+            "pkg:org.hisp.dhis.fileresource",
+            "pkg:org.hisp.dhis.fileresource.events",
+            "pkg:org.hisp.dhis.hibernate",
+            "pkg:org.hisp.dhis.hibernate.jsonb.type",
+            "pkg:org.hisp.dhis.i18n",
+            "pkg:org.hisp.dhis.i18n.locale",
+            "pkg:org.hisp.dhis.icon",
+            "pkg:org.hisp.dhis.indicator",
+            "pkg:org.hisp.dhis.interpretation",
+            "pkg:org.hisp.dhis.jdbc.batchhandler",
+            "pkg:org.hisp.dhis.leader.election",
+            "pkg:org.hisp.dhis.legend",
+            "pkg:org.hisp.dhis.legend.comparator",
+            "pkg:org.hisp.dhis.log",
+            "pkg:org.hisp.dhis.login",
+            "pkg:org.hisp.dhis.mapping",
+            "pkg:org.hisp.dhis.merge",
+            "pkg:org.hisp.dhis.message",
+            "pkg:org.hisp.dhis.message.hibernate",
+            "pkg:org.hisp.dhis.metadata.version",
+            "pkg:org.hisp.dhis.minmax",
+            "pkg:org.hisp.dhis.mock",
+            "pkg:org.hisp.dhis.node",
+            "pkg:org.hisp.dhis.node.types",
+            "pkg:org.hisp.dhis.note",
+            "pkg:org.hisp.dhis.notification",
+            "pkg:org.hisp.dhis.notification.logging",
+            "pkg:org.hisp.dhis.option",
+            "pkg:org.hisp.dhis.organisationunit",
+            "pkg:org.hisp.dhis.organisationunit.comparator",
+            "pkg:org.hisp.dhis.outboundmessage",
+            "pkg:org.hisp.dhis.outlierdetection",
+            "pkg:org.hisp.dhis.parser.expression",
+            "pkg:org.hisp.dhis.parser.expression.dataitem",
+            "pkg:org.hisp.dhis.parser.expression.function",
+            "pkg:org.hisp.dhis.parser.expression.literal",
+            "pkg:org.hisp.dhis.parser.expression.operator",
+            "pkg:org.hisp.dhis.parser.expression.statement",
+            "pkg:org.hisp.dhis.period",
+            "pkg:org.hisp.dhis.period.comparator",
+            "pkg:org.hisp.dhis.predictor",
+            "pkg:org.hisp.dhis.preheat",
+            "pkg:org.hisp.dhis.program",
+            "pkg:org.hisp.dhis.program.dataitem",
+            "pkg:org.hisp.dhis.program.function",
+            "pkg:org.hisp.dhis.program.notification",
+            "pkg:org.hisp.dhis.program.notification.template",
+            "pkg:org.hisp.dhis.program.notification.template.snapshot",
+            "pkg:org.hisp.dhis.program.variable",
+            "pkg:org.hisp.dhis.programrule",
+            "pkg:org.hisp.dhis.programrule.action.validation",
+            "pkg:org.hisp.dhis.programstagefilter",
+            "pkg:org.hisp.dhis.programstageworkinglist",
+            "pkg:org.hisp.dhis.query",
+            "pkg:org.hisp.dhis.query.operators",
+            "pkg:org.hisp.dhis.query.planner",
+            "pkg:org.hisp.dhis.relationship",
+            "pkg:org.hisp.dhis.render",
+            "pkg:org.hisp.dhis.render.type",
+            "pkg:org.hisp.dhis.report",
+            "pkg:org.hisp.dhis.reservedvalue",
+            "pkg:org.hisp.dhis.resourcetable",
+            "pkg:org.hisp.dhis.resourcetable.table",
+            "pkg:org.hisp.dhis.resourcetable.util",
+            "pkg:org.hisp.dhis.route",
+            "pkg:org.hisp.dhis.scheduling",
+            "pkg:org.hisp.dhis.scheduling.parameters",
+            "pkg:org.hisp.dhis.schema",
+            "pkg:org.hisp.dhis.schema.annotation",
+            "pkg:org.hisp.dhis.schema.descriptors",
+            "pkg:org.hisp.dhis.schema.introspection",
+            "pkg:org.hisp.dhis.schema.transformer",
+            "pkg:org.hisp.dhis.schema.validation",
+            "pkg:org.hisp.dhis.security",
+            "pkg:org.hisp.dhis.security.acl",
+            "pkg:org.hisp.dhis.security.apikey",
+            "pkg:org.hisp.dhis.security.oauth2.authorization",
+            "pkg:org.hisp.dhis.security.oauth2.client",
+            "pkg:org.hisp.dhis.security.oauth2.consent",
+            "pkg:org.hisp.dhis.security.oidc",
+            "pkg:org.hisp.dhis.security.oidc.provider",
+            "pkg:org.hisp.dhis.security.spring2fa",
+            "pkg:org.hisp.dhis.security.twofa",
+            "pkg:org.hisp.dhis.setting",
+            "pkg:org.hisp.dhis.sharing",
+            "pkg:org.hisp.dhis.sms.command",
+            "pkg:org.hisp.dhis.sms.command.code",
+            "pkg:org.hisp.dhis.sms.command.hibernate",
+            "pkg:org.hisp.dhis.sms.config",
+            "pkg:org.hisp.dhis.sms.incoming",
+            "pkg:org.hisp.dhis.sms.outbound",
+            "pkg:org.hisp.dhis.sql",
+            "pkg:org.hisp.dhis.sqlview",
+            "pkg:org.hisp.dhis.statistics",
+            "pkg:org.hisp.dhis.storage",
+            "pkg:org.hisp.dhis.subexpression",
+            "pkg:org.hisp.dhis.system",
+            "pkg:org.hisp.dhis.system.capability",
+            "pkg:org.hisp.dhis.system.database",
+            "pkg:org.hisp.dhis.system.deletion",
+            "pkg:org.hisp.dhis.system.filter",
+            "pkg:org.hisp.dhis.system.grid",
+            "pkg:org.hisp.dhis.system.notification",
+            "pkg:org.hisp.dhis.system.startup",
+            "pkg:org.hisp.dhis.system.util",
+            "pkg:org.hisp.dhis.tablereplication",
+            "pkg:org.hisp.dhis.test",
+            "pkg:org.hisp.dhis.test.api",
+            "pkg:org.hisp.dhis.test.config",
+            "pkg:org.hisp.dhis.test.integration",
+            "pkg:org.hisp.dhis.test.junit",
+            "pkg:org.hisp.dhis.test.mock",
+            "pkg:org.hisp.dhis.test.random",
+            "pkg:org.hisp.dhis.test.utils",
+            "pkg:org.hisp.dhis.textpattern",
+            "pkg:org.hisp.dhis.trackedentity",
+            "pkg:org.hisp.dhis.trackedentityfilter",
+            "pkg:org.hisp.dhis.tracker",
+            "pkg:org.hisp.dhis.tracker.acl",
+            "pkg:org.hisp.dhis.tracker.audit",
+            "pkg:org.hisp.dhis.tracker.deduplication",
+            "pkg:org.hisp.dhis.tracker.export",
+            "pkg:org.hisp.dhis.tracker.export.enrollment",
+            "pkg:org.hisp.dhis.tracker.export.event",
+            "pkg:org.hisp.dhis.tracker.export.fieldfiltering",
+            "pkg:org.hisp.dhis.tracker.export.relationship",
+            "pkg:org.hisp.dhis.tracker.export.singleevent",
+            "pkg:org.hisp.dhis.tracker.export.trackedentity",
+            "pkg:org.hisp.dhis.tracker.export.trackedentity.aggregates",
+            "pkg:org.hisp.dhis.tracker.export.trackerevent",
+            "pkg:org.hisp.dhis.tracker.imports",
+            "pkg:org.hisp.dhis.tracker.imports.bundle",
+            "pkg:org.hisp.dhis.tracker.imports.bundle.persister",
+            "pkg:org.hisp.dhis.tracker.imports.domain",
+            "pkg:org.hisp.dhis.tracker.imports.notification",
+            "pkg:org.hisp.dhis.tracker.imports.preheat",
+            "pkg:org.hisp.dhis.tracker.imports.preheat.cache",
+            "pkg:org.hisp.dhis.tracker.imports.preheat.mappers",
+            "pkg:org.hisp.dhis.tracker.imports.preheat.supplier",
+            "pkg:org.hisp.dhis.tracker.imports.preheat.supplier.strategy",
+            "pkg:org.hisp.dhis.tracker.imports.preprocess",
+            "pkg:org.hisp.dhis.tracker.imports.programrule",
+            "pkg:org.hisp.dhis.tracker.imports.programrule.engine",
+            "pkg:org.hisp.dhis.tracker.imports.programrule.executor",
+            "pkg:org.hisp.dhis.tracker.imports.programrule.executor.enrollment",
+            "pkg:org.hisp.dhis.tracker.imports.programrule.executor.event",
+            "pkg:org.hisp.dhis.tracker.imports.report",
+            "pkg:org.hisp.dhis.tracker.imports.util",
+            "pkg:org.hisp.dhis.tracker.imports.validation",
+            "pkg:org.hisp.dhis.tracker.imports.validation.validator",
+            "pkg:org.hisp.dhis.tracker.imports.validation.validator.enrollment",
+            "pkg:org.hisp.dhis.tracker.imports.validation.validator.event",
+            "pkg:org.hisp.dhis.tracker.imports.validation.validator.relationship",
+            "pkg:org.hisp.dhis.tracker.imports.validation.validator.trackedentity",
+            "pkg:org.hisp.dhis.tracker.model",
+            "pkg:org.hisp.dhis.tracker.program.message",
+            "pkg:org.hisp.dhis.tracker.program.notification",
+            "pkg:org.hisp.dhis.tracker.test",
+            "pkg:org.hisp.dhis.tracker.trackedentityattributevalue",
+            "pkg:org.hisp.dhis.trackerdataview",
+            "pkg:org.hisp.dhis.translation",
+            "pkg:org.hisp.dhis.user",
+            "pkg:org.hisp.dhis.user.sharing",
+            "pkg:org.hisp.dhis.util",
+            "pkg:org.hisp.dhis.validation",
+            "pkg:org.hisp.dhis.validation.comparator",
+            "pkg:org.hisp.dhis.validation.hibernate",
+            "pkg:org.hisp.dhis.validation.notification",
+            "pkg:org.hisp.dhis.validation.outlierdetection",
+            "pkg:org.hisp.dhis.visualization",
+            "pkg:org.hisp.dhis.webmessage"
+          ]
+        },
+        {
+          "size": 21,
+          "members": [
+            "pkg:org.hisp.dhis.test.webapi",
+            "pkg:org.hisp.dhis.webapi",
+            "pkg:org.hisp.dhis.webapi.controller",
+            "pkg:org.hisp.dhis.webapi.controller.dataelement",
+            "pkg:org.hisp.dhis.webapi.controller.metadata",
+            "pkg:org.hisp.dhis.webapi.controller.organisationunit",
+            "pkg:org.hisp.dhis.webapi.controller.security",
+            "pkg:org.hisp.dhis.webapi.controller.tracker",
+            "pkg:org.hisp.dhis.webapi.controller.tracker.export",
+            "pkg:org.hisp.dhis.webapi.controller.tracker.imports",
+            "pkg:org.hisp.dhis.webapi.fields",
+            "pkg:org.hisp.dhis.webapi.filter",
+            "pkg:org.hisp.dhis.webapi.mvc",
+            "pkg:org.hisp.dhis.webapi.mvc.messageconverter",
+            "pkg:org.hisp.dhis.webapi.openapi",
+            "pkg:org.hisp.dhis.webapi.security",
+            "pkg:org.hisp.dhis.webapi.security.config",
+            "pkg:org.hisp.dhis.webapi.service",
+            "pkg:org.hisp.dhis.webapi.servlet",
+            "pkg:org.hisp.dhis.webapi.utils",
+            "pkg:org.hisp.dhis.webapi.view"
+          ]
+        },
+        {
+          "size": 6,
+          "members": [
+            "pkg:org.hisp.dhis.dxf2.metadata.jobs",
+            "pkg:org.hisp.dhis.dxf2.metadata.sync",
+            "pkg:org.hisp.dhis.dxf2.metadata.version",
+            "pkg:org.hisp.dhis.dxf2.sync",
+            "pkg:org.hisp.dhis.dxf2.webmessage",
+            "pkg:org.hisp.dhis.dxf2.webmessage.utils"
+          ]
+        },
+        {
+          "size": 5,
+          "members": [
+            "pkg:org.hisp.dhis.test.e2e",
+            "pkg:org.hisp.dhis.test.e2e.actions",
+            "pkg:org.hisp.dhis.test.e2e.dto",
+            "pkg:org.hisp.dhis.test.e2e.helpers",
+            "pkg:org.hisp.dhis.test.e2e.utils"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.hisp.dhis.analytics.generator",
+            "pkg:org.hisp.dhis.analytics.generator.impl"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.hisp.dhis.cache.guard",
+            "pkg:org.hisp.dhis.config"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.hisp.dhis.commons.jackson.jsonpatch",
+            "pkg:org.hisp.dhis.commons.jackson.jsonpatch.operations"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.hisp.dhis.dxf2.dataset",
+            "pkg:org.hisp.dhis.dxf2.dataset.streaming"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.hisp.dhis.maintenance",
+            "pkg:org.hisp.dhis.maintenance.jdbc"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.hisp.dhis.mapgeneration",
+            "pkg:org.hisp.dhis.mapgeneration.comparator"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.hisp.dhis.merge.orgunit",
+            "pkg:org.hisp.dhis.merge.orgunit.handler"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.hisp.dhis.orgunitprofile",
+            "pkg:org.hisp.dhis.orgunitprofile.impl"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.hisp.dhis.split.orgunit",
+            "pkg:org.hisp.dhis.split.orgunit.handler"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.hisp.dhis.test.e2e.dependsOn",
+            "pkg:org.hisp.dhis.test.e2e.dependsOn.services"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.hisp.dhis.webapi.controller.tracker.export.event",
+            "pkg:org.hisp.dhis.webapi.controller.tracker.export.relationship"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.hisp.dhis.webapi.dimension",
+            "pkg:org.hisp.dhis.webapi.dimension.mappers"
+          ]
+        },
+        {
+          "size": 2,
+          "members": [
+            "pkg:org.hisp.dhis.webapi.webdomain.dataentry",
+            "pkg:org.hisp.dhis.webapi.webdomain.datavalue"
+          ]
+        }
+      ]
+    },
+    "B2": {
+      "id": "B2",
+      "name": "package-dependency-density",
+      "label": "包依赖密度",
+      "domain": "B",
+      "direction": "interval",
+      "value": 9.9552,
+      "numerator": 7118,
+      "denominator": 715,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Package --all --field id,dependsOnPackageIds --snapshot c588af1b-a81c-4a9d-800c-f7c1f40a9a57",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot c588af1b-a81c-4a9d-800c-f7c1f40a9a57"
+      ]
+    },
+    "B1.frontend": {
+      "id": "B1.frontend",
+      "name": "circular-dependency-density",
+      "label": "循环依赖密度（前端）",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": 0.0,
+      "numerator": 0,
+      "denominator": 125,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Module --all --field id,importedModuleIds --snapshot c588af1b-a81c-4a9d-800c-f7c1f40a9a57",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Module --snapshot c588af1b-a81c-4a9d-800c-f7c1f40a9a57"
+      ],
+      "sccCount": 0
+    },
+    "B3": {
+      "id": "B3",
+      "name": "giant-class-ratio",
+      "label": "巨型类占比",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": 0.05237,
+      "numerator": 337,
+      "denominator": 6435,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Class --all --field id,lineCount --snapshot c588af1b-a81c-4a9d-800c-f7c1f40a9a57",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --where 'lineCount>500' --snapshot c588af1b-a81c-4a9d-800c-f7c1f40a9a57",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --snapshot c588af1b-a81c-4a9d-800c-f7c1f40a9a57"
+      ],
+      "threshold": "lineCount > 500",
+      "top": [
+        {
+          "lineCount": 19690,
+          "id": "cls:org.hisp.dhis.analytics.aggregate.AnalyticsQueryDv5AutoTest"
+        },
+        {
+          "lineCount": 7486,
+          "id": "cls:org.hisp.dhis.analytics.event.query.EventsQuery1AutoTest"
+        },
+        {
+          "lineCount": 7265,
+          "id": "cls:org.hisp.dhis.analytics.aggregate.AnalyticsQueryDv8AutoTest"
+        },
+        {
+          "lineCount": 4718,
+          "id": "cls:org.hisp.dhis.analytics.event.query.EventsQuery6AutoTest"
+        },
+        {
+          "lineCount": 4624,
+          "id": "cls:org.hisp.dhis.analytics.aggregate.AnalyticsQueryDv7AutoTest"
+        }
+      ],
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --where 'lineCount>500' --snapshot c588af1b-a81c-4a9d-800c-f7c1f40a9a57",
+        "serverCount": 337,
+        "match": true
+      }
+    },
+    "C2": {
+      "id": "C2",
+      "name": "cyclomatic-complexity-p90",
+      "label": "圈复杂度 P90",
+      "domain": "C",
+      "direction": "lower-better",
+      "value": 3,
+      "denominator": 49191,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot c588af1b-a81c-4a9d-800c-f7c1f40a9a57",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,lineCount,complexity --snapshot c588af1b-a81c-4a9d-800c-f7c1f40a9a57"
+      ],
+      "percentiles": {
+        "p25": 1,
+        "p50": 1,
+        "p75": 1,
+        "p90": 3
+      },
+      "mean": 1.4706,
+      "max": 77,
+      "top": [
+        {
+          "cyclomaticComplexity": 77,
+          "id": "mtd:org.hisp.dhis.datavalue.DefaultDataEntryService.decodeGroup(:DataEntryGroup.Input:boolean)"
+        },
+        {
+          "cyclomaticComplexity": 52,
+          "id": "mtd:org.hisp.dhis.analytics.event.data.DefaultEventQueryValidator.validateForErrorMessage(:EventQueryParams)"
+        },
+        {
+          "cyclomaticComplexity": 45,
+          "id": "mtd:org.hisp.dhis.user.hibernate.HibernateUserStore.getUserQuery(:UserQueryParams:List<String>:QueryMode)"
+        },
+        {
+          "cyclomaticComplexity": 45,
+          "id": "mtd:org.hisp.dhis.period.RelativePeriods.getRelativePeriods(:DateField:I18nFormat:boolean:AnalyticsFinancialYearStartKey:AnalyticsWeeklyStartKey)"
+        },
+        {
+          "cyclomaticComplexity": 44,
+          "id": "mtd:org.hisp.dhis.calendar.DateUnitPeriodTypeParser.parseInternal(:Calendar:Period.Input)"
+        }
+      ],
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot c588af1b-a81c-4a9d-800c-f7c1f40a9a57",
+        "serverCount": 49191,
+        "match": true
+      }
+    },
+    "C3": {
+      "id": "C3",
+      "name": "test-method-ratio",
+      "label": "测试方法占比",
+      "domain": "C",
+      "direction": "higher-better",
+      "value": 0.298687,
+      "numerator": 16216,
+      "denominator": 54291,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'isTest=true' --snapshot c588af1b-a81c-4a9d-800c-f7c1f40a9a57",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot c588af1b-a81c-4a9d-800c-f7c1f40a9a57",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,isTest,testType --snapshot c588af1b-a81c-4a9d-800c-f7c1f40a9a57"
+      ],
+      "testTypes": {
+        "UnitTest": 16210,
+        "E2eTest": 6
+      },
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'isTest=true' --snapshot c588af1b-a81c-4a9d-800c-f7c1f40a9a57",
+        "serverCount": 16216,
+        "match": true
+      }
+    },
+    "C4": {
+      "id": "C4",
+      "name": "giant-method-ratio",
+      "label": "巨型方法占比",
+      "domain": "C",
+      "direction": "lower-better",
+      "value": 0.012025,
+      "numerator": 593,
+      "denominator": 49315,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount>80' --snapshot c588af1b-a81c-4a9d-800c-f7c1f40a9a57",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount=0' --snapshot c588af1b-a81c-4a9d-800c-f7c1f40a9a57",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot c588af1b-a81c-4a9d-800c-f7c1f40a9a57",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,lineCount --snapshot c588af1b-a81c-4a9d-800c-f7c1f40a9a57"
+      ],
+      "threshold": "lineCount > 80",
+      "excludedFromDenominator": {
+        "lineCountIsZero": 4976,
+        "lineCountIsNull": 0
+      },
+      "top": [
+        {
+          "lineCount": 13856,
+          "id": "mtd:org.hisp.dhis.analytics.aggregate.AnalyticsQueryDv5AutoTest.queryAncByLast4QuartersIndicatorsSubtotalsAndTotals"
+        },
+        {
+          "lineCount": 5376,
+          "id": "mtd:org.hisp.dhis.analytics.aggregate.AnalyticsQueryDv5AutoTest.queryAncVisits13Last12Months"
+        },
+        {
+          "lineCount": 4734,
+          "id": "mtd:org.hisp.dhis.analytics.event.query.EventsQuery1AutoTest.queryVisitOverviewThisYearBo"
+        },
+        {
+          "lineCount": 4092,
+          "id": "mtd:org.hisp.dhis.analytics.aggregate.AnalyticsQueryDv8AutoTest.queryIndicatorsByFacilityTypeOwnershipAndLocation"
+        },
+        {
+          "lineCount": 3242,
+          "id": "mtd:org.hisp.dhis.analytics.aggregate.AnalyticsQueryDv7AutoTest.queryDataByLocationDistrictsLast4Quarters"
+        }
+      ],
+      "crossCheck": {
+        "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'lineCount>80' --snapshot c588af1b-a81c-4a9d-800c-f7c1f40a9a57",
+        "serverCount": 593,
+        "match": true
+      }
+    },
+    "D3": {
+      "id": "D3",
+      "name": "scale-profile",
+      "label": "规模画像",
+      "domain": "D",
+      "direction": "none",
+      "value": 63439,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" snapshot list --repo dhis2-core",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Repository --snapshot c588af1b-a81c-4a9d-800c-f7c1f40a9a57",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot c588af1b-a81c-4a9d-800c-f7c1f40a9a57",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --snapshot c588af1b-a81c-4a9d-800c-f7c1f40a9a57",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Interface --snapshot c588af1b-a81c-4a9d-800c-f7c1f40a9a57",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot c588af1b-a81c-4a9d-800c-f7c1f40a9a57",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Dependency --snapshot c588af1b-a81c-4a9d-800c-f7c1f40a9a57",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot c588af1b-a81c-4a9d-800c-f7c1f40a9a57",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Mapper --snapshot c588af1b-a81c-4a9d-800c-f7c1f40a9a57",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Module --snapshot c588af1b-a81c-4a9d-800c-f7c1f40a9a57",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Component --snapshot c588af1b-a81c-4a9d-800c-f7c1f40a9a57",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Function --snapshot c588af1b-a81c-4a9d-800c-f7c1f40a9a57",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Store --snapshot c588af1b-a81c-4a9d-800c-f7c1f40a9a57",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Route --snapshot c588af1b-a81c-4a9d-800c-f7c1f40a9a57",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot c588af1b-a81c-4a9d-800c-f7c1f40a9a57"
+      ],
+      "typeCounts": {
+        "Repository": 1,
+        "Package": 715,
+        "Class": 6435,
+        "Interface": 823,
+        "Method": 54291,
+        "Dependency": 245,
+        "Table": 363,
+        "Mapper": 0,
+        "Module": 125,
+        "Component": 0,
+        "Function": 439,
+        "Store": 0,
+        "Route": 0,
+        "ApiEndpoint": 2
+      },
+      "linkCount": 411168
+    }
+  },
+  "nullMetrics": {
+    "A1": {
+      "id": "A1",
+      "name": "full-chain-coverage",
+      "label": "全链路贯通率",
+      "domain": "A",
+      "direction": "higher-better",
+      "value": null,
+      "reason": "calls 传递闭包与 Method→Mapper 名字 join 未实现（过渡实现——待 ke checkup）",
+      "evidence": {
+        "apiEndpointCount": 2
+      }
+    },
+    "B4": {
+      "id": "B4",
+      "name": "component-coupling-degree",
+      "label": "组件耦合度",
+      "domain": "B",
+      "direction": "lower-better",
+      "value": null,
+      "reason": "无 Component 对象（纯后端仓库——按口径置空）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Component --snapshot c588af1b-a81c-4a9d-800c-f7c1f40a9a57"
+      ],
+      "evidence": {
+        "componentCount": 0
+      }
+    },
+    "C1": {
+      "id": "C1",
+      "name": "endpoint-table-hops",
+      "label": "端到端跳数",
+      "domain": "C",
+      "direction": "interval",
+      "value": null,
+      "reason": "依赖 A1 贯通链算法（过渡实现未含——待 ke checkup）",
+      "evidence": {
+        "apiEndpointCount": 2
+      }
+    },
+    "D1": {
+      "id": "D1",
+      "name": "framework-version-coverage",
+      "label": "技术栈版本覆盖率",
+      "domain": "D",
+      "direction": "higher-better",
+      "value": null,
+      "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Dependency --all --field id,name,version,scope --snapshot c588af1b-a81c-4a9d-800c-f7c1f40a9a57"
+      ],
+      "evidence": {
+        "total": 245,
+        "emptyVersion": 8,
+        "placeholder": 220,
+        "determinable": 17
+      }
+    },
+    "D2": {
+      "id": "D2",
+      "name": "dependency-homogeneity",
+      "label": "依赖同质度",
+      "domain": "D",
+      "direction": "none",
+      "value": null,
+      "reason": "cohort 级指标（依赖 cohort 众数集合——单体层不产出）",
+      "evidence": {
+        "dependencyCount": 245
+      }
+    },
+    "D4": {
+      "id": "D4",
+      "name": "evolution-trend",
+      "label": "年度演进趋势",
+      "domain": "D",
+      "direction": "none",
+      "value": null,
+      "reason": "单快照（首次导入——无时序）",
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" snapshot list --repo dhis2-core"
+      ],
+      "evidence": {
+        "completeSnapshotCount": 1
+      }
+    }
+  },
+  "dataQuality": {
+    "dq.null-complexity-ratio": {
+      "id": "dq.null-complexity-ratio",
+      "name": "null-complexity-ratio",
+      "label": "complexity 为 null 的方法占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": 0.093938,
+      "numerator": 5100,
+      "denominator": 54291,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot c588af1b-a81c-4a9d-800c-f7c1f40a9a57",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot c588af1b-a81c-4a9d-800c-f7c1f40a9a57"
+      ]
+    },
+    "dq.missing-version-ratio": {
+      "id": "dq.missing-version-ratio",
+      "name": "missing-version-ratio",
+      "label": "version 为空串的依赖占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": 0.032653,
+      "numerator": 8,
+      "denominator": 245,
+      "commands": [
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Dependency --all --field id,name,version,scope --snapshot c588af1b-a81c-4a9d-800c-f7c1f40a9a57"
+      ],
+      "placeholderVersionCount": 220
+    },
+    "dq.ext-call-ratio": {
+      "id": "dq.ext-call-ratio",
+      "name": "ext-call-ratio",
+      "label": "ext: 虚拟调用过滤占比",
+      "domain": "dq",
+      "direction": "none",
+      "value": null,
+      "reason": "不可观测（ext: 虚拟边在导入物化时已过滤——查询面天然免疫）"
+    }
+  }
+}
