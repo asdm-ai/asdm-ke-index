@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "pipeline-status-v1",
+  "owner": "dhis2",
+  "repo": "dhis2-core",
+  "sourceHead": "72e44852d72401dd68d78c642d1548e4be84921a",
+  "snapshotId": "d3c20ab4-db17-4113-9cea-8b59c5611e94",
+  "objectCount": 63457,
+  "importStatus": "completed",
+  "steps": {
+    "scan": "ok",
+    "projection": "ok",
+    "metrics": "ok",
+    "consistency": "ok"
+  },
+  "consistencyResult": "pass",
+  "overall": "pass"
+}
