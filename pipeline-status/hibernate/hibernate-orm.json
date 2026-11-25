@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "pipeline-status-v1",
+  "owner": "hibernate",
+  "repo": "hibernate-orm",
+  "sourceHead": "732edd8c97ec5548cc8535e6cc56dcbc1407e97b",
+  "snapshotId": "580817a3-c6fc-4539-84c8-22bbccc38167",
+  "objectCount": 180572,
+  "importStatus": "skipped",
+  "steps": {
+    "scan": "ok",
+    "projection": "ok",
+    "metrics": "ok",
+    "consistency": "ok"
+  },
+  "consistencyResult": "pass",
+  "overall": "pass"
+}
