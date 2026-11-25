@@ -1,6 +1,6 @@
 {
   "schemaVersion": "draft-v1",
-  "implementation": "ke-index census.py (transitional; L2 aggregation over compute-metrics reports)",
+  "implementation": "ke-index census.py (5.1.4: L2 aggregation + D2 cohort + per-repo pipeline validation roll-up)",
   "status": "published",
   "samples": 41,
   "gate": {
@@ -14,16 +14,16 @@
       "owner": "Activiti",
       "repo": "Activiti",
       "sourceId": "Activiti",
-      "snapshotId": "56eae428-37ae-4c2a-9ba9-3928bbf32963",
-      "objectCount": 24192,
-      "linkCount": 85659,
+      "snapshotId": "75de49c8-a80d-4d26-a1d1-86bd67e84e10",
+      "objectCount": 24198,
+      "linkCount": 85691,
       "schemaVersion": "draft-v1"
     },
     {
       "owner": "BroadleafCommerce",
       "repo": "BroadleafCommerce",
       "sourceId": "BroadleafCommerce",
-      "snapshotId": "5a3520aa-c5e2-49ec-b024-c13037172159",
+      "snapshotId": "c97061b6-7e47-42ab-86e7-649e5a5dbcd0",
       "objectCount": 25682,
       "linkCount": 108282,
       "schemaVersion": "draft-v1"
@@ -32,16 +32,16 @@
       "owner": "YunaiV",
       "repo": "ruoyi-vue-pro",
       "sourceId": "ruoyi-vue-pro",
-      "snapshotId": "972f0e6c-72bb-422b-80aa-0c2cdfd8eb1f",
-      "objectCount": 46360,
-      "linkCount": 229929,
+      "snapshotId": "76d33f77-3431-47a5-aa95-52d124cc7f48",
+      "objectCount": 46623,
+      "linkCount": 230904,
       "schemaVersion": "draft-v1"
     },
     {
       "owner": "alibaba",
       "repo": "druid",
       "sourceId": "druid",
-      "snapshotId": "1b0af407-523b-4d7b-8e6a-bc93b2fabe8d",
+      "snapshotId": "bc11dd7d-262f-4986-b8b8-8951baf2a079",
       "objectCount": 41208,
       "linkCount": 234102,
       "schemaVersion": "draft-v1"
@@ -50,16 +50,16 @@
       "owner": "alibaba",
       "repo": "nacos",
       "sourceId": "nacos",
-      "snapshotId": "e44fb020-ee9d-4066-b0ad-d8f456e958d4",
-      "objectCount": 57082,
-      "linkCount": 432175,
+      "snapshotId": "68f7ffbf-fd9a-437c-93db-b9a02628d39b",
+      "objectCount": 57084,
+      "linkCount": 432187,
       "schemaVersion": "draft-v1"
     },
     {
       "owner": "apache",
       "repo": "dubbo",
       "sourceId": "dubbo",
-      "snapshotId": "f5872695-ed6f-41d8-80de-482731ae5b64",
+      "snapshotId": "66147f91-e7da-433b-a69e-eeb8e57a016c",
       "objectCount": 34058,
       "linkCount": 136866,
       "schemaVersion": "draft-v1"
@@ -68,61 +68,61 @@
       "owner": "apache",
       "repo": "fineract",
       "sourceId": "fineract",
-      "snapshotId": "2043544d-d18f-4493-9ef3-b6ecc65a7357",
-      "objectCount": 53251,
-      "linkCount": 262444,
+      "snapshotId": "bdf77fcf-68f8-436d-aee5-85cbf725e768",
+      "objectCount": 53556,
+      "linkCount": 263944,
       "schemaVersion": "draft-v1"
     },
     {
       "owner": "apache",
       "repo": "rocketmq",
       "sourceId": "rocketmq",
-      "snapshotId": "96e1c4ec-bb56-4788-a64f-388d98561f70",
-      "objectCount": 26142,
-      "linkCount": 107952,
+      "snapshotId": "2f071cac-5971-44fe-bf65-66f56edafbb4",
+      "objectCount": 26245,
+      "linkCount": 108262,
       "schemaVersion": "draft-v1"
     },
     {
       "owner": "apache",
       "repo": "shardingsphere",
       "sourceId": "shardingsphere",
-      "snapshotId": "23ae8595-b09f-44f2-acd7-adc94032ab05",
-      "objectCount": 56062,
-      "linkCount": 447401,
+      "snapshotId": "8fc5671b-9f17-4999-a348-374f6efb54a0",
+      "objectCount": 56165,
+      "linkCount": 447763,
       "schemaVersion": "draft-v1"
     },
     {
       "owner": "chillzhuang",
       "repo": "SpringBlade",
       "sourceId": "SpringBlade",
-      "snapshotId": "fccc1701-76fb-4a16-a63e-f14e2ea57b21",
-      "objectCount": 1068,
-      "linkCount": 2974,
+      "snapshotId": "00cbdc67-d672-4f68-a625-0c78a35f08a2",
+      "objectCount": 1073,
+      "linkCount": 3002,
       "schemaVersion": "draft-v1"
     },
     {
       "owner": "dhis2",
       "repo": "dhis2-core",
       "sourceId": "dhis2-core",
-      "snapshotId": "c588af1b-a81c-4a9d-800c-f7c1f40a9a57",
-      "objectCount": 63439,
-      "linkCount": 411168,
+      "snapshotId": "471cf573-9bbf-442c-ab4f-3e6016de014f",
+      "objectCount": 63457,
+      "linkCount": 411972,
       "schemaVersion": "draft-v1"
     },
     {
       "owner": "dromara",
       "repo": "RuoYi-Vue-Plus",
       "sourceId": "RuoYi-Vue-Plus",
-      "snapshotId": "e1980d60-0ab8-4b46-8fd5-28edb502c696",
-      "objectCount": 4741,
-      "linkCount": 22840,
+      "snapshotId": "ed5e6d8e-5ed9-4786-adab-95d66005244c",
+      "objectCount": 4777,
+      "linkCount": 22903,
       "schemaVersion": "draft-v1"
     },
     {
       "owner": "dromara",
       "repo": "dante-cloud",
       "sourceId": "dante-cloud",
-      "snapshotId": "7ef97920-001b-47ad-8736-0d588c6326ab",
+      "snapshotId": "2ab08e1c-2224-460b-9d4d-485df514760d",
       "objectCount": 476,
       "linkCount": 728,
       "schemaVersion": "draft-v1"
@@ -131,7 +131,7 @@
       "owner": "elunez",
       "repo": "eladmin-web",
       "sourceId": "eladmin-web",
-      "snapshotId": "addc2f13-38a2-4c4f-b4be-68ecd40e751e",
+      "snapshotId": "988c1cd8-c7f9-46fa-a8b1-6441aed8e602",
       "objectCount": 538,
       "linkCount": 1133,
       "schemaVersion": "draft-v1"
@@ -140,7 +140,7 @@
       "owner": "elunez",
       "repo": "eladmin",
       "sourceId": "eladmin",
-      "snapshotId": "7e704cfb-277b-48ad-8330-bb36d87f5500",
+      "snapshotId": "1264d186-f419-4a52-9fea-dcdebaea9a2b",
       "objectCount": 1357,
       "linkCount": 5096,
       "schemaVersion": "draft-v1"
@@ -149,9 +149,9 @@
       "owner": "flowable",
       "repo": "flowable-engine",
       "sourceId": "flowable-engine",
-      "snapshotId": "d4ba53ac-81b5-4158-9fab-765d1de1ad2e",
-      "objectCount": 76150,
-      "linkCount": 214675,
+      "snapshotId": "4ef0d6fe-d51a-40f3-a998-00319f47d48f",
+      "objectCount": 76265,
+      "linkCount": 215262,
       "schemaVersion": "draft-v1"
     },
     {
@@ -167,16 +167,16 @@
       "owner": "jeecgboot",
       "repo": "JeecgBoot",
       "sourceId": "JeecgBoot",
-      "snapshotId": "d859f502-ebcd-4971-995a-afba19f73762",
-      "objectCount": 15637,
-      "linkCount": 116657,
+      "snapshotId": "8481a87b-6667-48fc-bc24-51ff7ffbd025",
+      "objectCount": 15697,
+      "linkCount": 116780,
       "schemaVersion": "draft-v1"
     },
     {
       "owner": "jeecgboot",
       "repo": "jeecgboot-vue3",
       "sourceId": "jeecgboot-vue3",
-      "snapshotId": "3e4c04ac-46b9-41ff-bc3e-4fa51c9c52a6",
+      "snapshotId": "d29dfbf3-8e0d-4341-978d-7f033f8737d1",
       "objectCount": 4755,
       "linkCount": 25600,
       "schemaVersion": "draft-v1"
@@ -194,7 +194,7 @@
       "owner": "lenve",
       "repo": "vhr",
       "sourceId": "vhr",
-      "snapshotId": "9870c982-cc89-4490-b213-97bab42ccc78",
+      "snapshotId": "660d33e0-dd6e-4a94-a079-3d854d14568d",
       "objectCount": 991,
       "linkCount": 1436,
       "schemaVersion": "draft-v1"
@@ -203,7 +203,7 @@
       "owner": "linlinjava",
       "repo": "litemall",
       "sourceId": "litemall",
-      "snapshotId": "16fd0f70-58c3-4d0c-8b0e-a1a33c660f34",
+      "snapshotId": "59656209-d036-4f98-9b99-256bae72c60b",
       "objectCount": 13172,
       "linkCount": 34102,
       "schemaVersion": "draft-v1"
@@ -212,7 +212,7 @@
       "owner": "macrozheng",
       "repo": "mall-admin-web",
       "sourceId": "mall-admin-web",
-      "snapshotId": "d604b784-fc24-40dc-91d0-9d47ef0a8f49",
+      "snapshotId": "a8a257f7-e067-4383-a062-eaa9f3501ac9",
       "objectCount": 1662,
       "linkCount": 29228,
       "schemaVersion": "draft-v1"
@@ -221,7 +221,7 @@
       "owner": "macrozheng",
       "repo": "mall-swarm",
       "sourceId": "mall-swarm",
-      "snapshotId": "83bd648b-74f3-418b-a9de-15b3f52c4767",
+      "snapshotId": "6fee1a28-ab8e-426f-81da-b25e8f6e4db0",
       "objectCount": 14878,
       "linkCount": 36007,
       "schemaVersion": "draft-v1"
@@ -230,7 +230,7 @@
       "owner": "macrozheng",
       "repo": "mall",
       "sourceId": "mall",
-      "snapshotId": "2ebf57c6-bac8-45e5-8248-82c82898a62c",
+      "snapshotId": "6522b9b6-c9ee-470b-bf43-aeff28f64690",
       "objectCount": 14527,
       "linkCount": 35226,
       "schemaVersion": "draft-v1"
@@ -239,7 +239,7 @@
       "owner": "metersphere",
       "repo": "metersphere",
       "sourceId": "metersphere",
-      "snapshotId": "d65655ca-996d-4c96-88b6-69f775669c14",
+      "snapshotId": "14a4f943-e2f3-436b-bf4e-edbd2ebfa79a",
       "objectCount": 43718,
       "linkCount": 157807,
       "schemaVersion": "draft-v1"
@@ -248,7 +248,7 @@
       "owner": "newbee-ltd",
       "repo": "newbee-mall-vue3-app",
       "sourceId": "newbee-mall-vue3-app",
-      "snapshotId": "a8210c8d-9443-468a-bed0-7c74a10f7da3",
+      "snapshotId": "1d0c1c7e-230d-4ed5-b7ab-844d080957a4",
       "objectCount": 181,
       "linkCount": 382,
       "schemaVersion": "draft-v1"
@@ -257,7 +257,7 @@
       "owner": "newbee-ltd",
       "repo": "newbee-mall",
       "sourceId": "newbee-mall",
-      "snapshotId": "386d988d-9765-4353-b87c-56898fb75385",
+      "snapshotId": "b6a980e6-f6e2-4ad4-8d7a-07c7bd54915c",
       "objectCount": 933,
       "linkCount": 1470,
       "schemaVersion": "draft-v1"
@@ -266,7 +266,7 @@
       "owner": "o2oa",
       "repo": "o2oa",
       "sourceId": "o2oa",
-      "snapshotId": "3a6462ac-4d2c-4ee0-a676-fe4301dfed1a",
+      "snapshotId": "b55157d4-da49-4684-8afb-c6e4699f12a9",
       "objectCount": 70501,
       "linkCount": 710059,
       "schemaVersion": "draft-v1"
@@ -275,7 +275,7 @@
       "owner": "pig-mesh",
       "repo": "pig-ui",
       "sourceId": "pig-ui",
-      "snapshotId": "d7d5ff3e-3327-4c22-bbbd-d6011722c209",
+      "snapshotId": "fef13230-8d6f-459c-832f-addeacb99f2b",
       "objectCount": 1974,
       "linkCount": 11417,
       "schemaVersion": "draft-v1"
@@ -284,7 +284,7 @@
       "owner": "pig-mesh",
       "repo": "pig",
       "sourceId": "pig",
-      "snapshotId": "9e2969c8-a9c2-4ccb-a3ec-74b7c2af4b5a",
+      "snapshotId": "43990c70-282f-413a-8941-b11f18e17077",
       "objectCount": 2546,
       "linkCount": 7737,
       "schemaVersion": "draft-v1"
@@ -293,7 +293,7 @@
       "owner": "renrenio",
       "repo": "renren-fast",
       "sourceId": "renren-fast",
-      "snapshotId": "67a3dc34-ac20-49b5-a87d-f872fcfe909d",
+      "snapshotId": "926635a6-33d7-4393-a5a3-c88830ed8296",
       "objectCount": 777,
       "linkCount": 3326,
       "schemaVersion": "draft-v1"
@@ -302,7 +302,7 @@
       "owner": "spring-projects",
       "repo": "spring-boot",
       "sourceId": "spring-boot",
-      "snapshotId": "3f16b907-2f04-4563-928b-9065648e18b6",
+      "snapshotId": "e1e59dd2-596f-478c-9220-9261f1f1c832",
       "objectCount": 65024,
       "linkCount": 141706,
       "schemaVersion": "draft-v1"
@@ -311,16 +311,16 @@
       "owner": "spring-projects",
       "repo": "spring-framework",
       "sourceId": "spring-framework",
-      "snapshotId": "7434dc5e-a91d-4554-bf91-701128bf2cee",
-      "objectCount": 105945,
-      "linkCount": 286262,
+      "snapshotId": "07f82750-becd-4815-9d27-c6b82f4fb279",
+      "objectCount": 105955,
+      "linkCount": 286272,
       "schemaVersion": "draft-v1"
     },
     {
       "owner": "spring-projects",
       "repo": "spring-petclinic",
       "sourceId": "spring-petclinic",
-      "snapshotId": "863530e4-09d8-4f63-8552-ffccbb3ad3bc",
+      "snapshotId": "138c94bb-67c8-4ea2-9f9e-855229a975a2",
       "objectCount": 283,
       "linkCount": 626,
       "schemaVersion": "draft-v1"
@@ -329,7 +329,7 @@
       "owner": "stylefeng",
       "repo": "Guns",
       "sourceId": "Guns",
-      "snapshotId": "e28322d1-8663-41a4-8a9b-1b3c44da4d55",
+      "snapshotId": "df8c701c-1341-4600-9a76-1f75f2639bc9",
       "objectCount": 1377,
       "linkCount": 10042,
       "schemaVersion": "draft-v1"
@@ -338,7 +338,7 @@
       "owner": "thinkgem",
       "repo": "jeesite",
       "sourceId": "jeesite",
-      "snapshotId": "e13c7334-ad93-4ac4-b24e-eb6a0c79a9f0",
+      "snapshotId": "6886eb5c-c952-48d5-a74a-238e372a747a",
       "objectCount": 2670,
       "linkCount": 14623,
       "schemaVersion": "draft-v1"
@@ -347,25 +347,25 @@
       "owner": "yangzongzhuan",
       "repo": "RuoYi-Cloud",
       "sourceId": "RuoYi-Cloud",
-      "snapshotId": "4752c413-86b8-4fc6-a6de-00e10cf63472",
-      "objectCount": 2531,
-      "linkCount": 8740,
+      "snapshotId": "f3712925-3228-4848-bb98-8aeb3fdb3fd8",
+      "objectCount": 2532,
+      "linkCount": 8741,
       "schemaVersion": "draft-v1"
     },
     {
       "owner": "yangzongzhuan",
       "repo": "RuoYi-Vue",
       "sourceId": "RuoYi-Vue",
-      "snapshotId": "97bf9bce-2eb1-4ec1-a025-ceb8f20b3129",
-      "objectCount": 2559,
-      "linkCount": 7764,
+      "snapshotId": "65a81b53-db3d-4f75-ae12-96f50f47826e",
+      "objectCount": 2560,
+      "linkCount": 7765,
       "schemaVersion": "draft-v1"
     },
     {
       "owner": "yangzongzhuan",
       "repo": "RuoYi-Vue3",
       "sourceId": "RuoYi-Vue3",
-      "snapshotId": "20b3ad0d-140b-4a26-a6e8-3e512b2c699d",
+      "snapshotId": "9c82ba15-95c7-4113-acaa-4ee50ff1aa0f",
       "objectCount": 1077,
       "linkCount": 6240,
       "schemaVersion": "draft-v1"
@@ -729,10 +729,10 @@
           "reason": "无 Table 对象（分母为 0）"
         }
       ],
-      "mean": 0.581174,
+      "mean": 0.554634,
       "percentiles": {
         "p25": 0.21,
-        "p50": 0.607843,
+        "p50": 0.536232,
         "p75": 0.980645,
         "p90": 1.0
       },
@@ -796,10 +796,10 @@
           "reason": "无 Table 对象（分母为 0）"
         }
       ],
-      "mean": 0.418826,
+      "mean": 0.445366,
       "percentiles": {
         "p25": 0.019355,
-        "p50": 0.392157,
+        "p50": 0.463768,
         "p75": 0.79,
         "p90": 1.0
       },
@@ -847,7 +847,7 @@
           "reason": "无 Package 对象（分母为 0）"
         }
       ],
-      "mean": 0.245858,
+      "mean": 0.246012,
       "percentiles": {
         "p25": 0.090909,
         "p50": 0.212598,
@@ -973,12 +973,12 @@
           "reason": "无 Package 对象（分母为 0）"
         }
       ],
-      "mean": 5.086621,
+      "mean": 5.087461,
       "percentiles": {
         "p25": 2.3617,
         "p50": 4.6335,
         "p75": 7.5792,
-        "p90": 9.0869
+        "p90": 9.0915
       },
       "percentileMethod": "nearest-rank (Schema §4.2)"
     },
@@ -1024,9 +1024,9 @@
           "reason": "无 Class 对象（分母为 0）"
         }
       ],
-      "mean": 0.035575,
+      "mean": 0.03557,
       "percentiles": {
-        "p25": 0.006195,
+        "p25": 0.006193,
         "p50": 0.02531,
         "p75": 0.035616,
         "p90": 0.082058
@@ -1420,12 +1420,12 @@
           "reason": "无 Method 对象（分母为 0）"
         }
       ],
-      "mean": 0.108382,
+      "mean": 0.108559,
       "percentiles": {
         "p25": 0.004317,
         "p50": 0.039664,
-        "p75": 0.161345,
-        "p90": 0.301033
+        "p75": 0.16339,
+        "p90": 0.301344
       },
       "percentileMethod": "nearest-rank (Schema §4.2)"
     },
@@ -1471,12 +1471,12 @@
           "reason": "无 Method 对象（分母为 0）"
         }
       ],
-      "mean": 0.005103,
+      "mean": 0.005099,
       "percentiles": {
         "p25": 0.001379,
-        "p50": 0.003016,
+        "p50": 0.003014,
         "p75": 0.007306,
-        "p90": 0.014918
+        "p90": 0.014888
       },
       "percentileMethod": "nearest-rank (Schema §4.2)"
     },
@@ -1658,6 +1658,97 @@
       "percentiles": null,
       "percentileMethod": "nearest-rank (Schema §4.2)",
       "gateNote": "k-匿名隐私护栏：切片 N=0 < 5，整组不出分位（与发布门槛显式区分）"
+    }
+  },
+  "validation": {
+    "reposWithStatus": 5,
+    "overall": {
+      "pass": 0,
+      "fail": 5
+    },
+    "steps": {
+      "scan": {
+        "ok": 4,
+        "failed": 0,
+        "skipped": 1
+      },
+      "projection": {
+        "ok": 0,
+        "failed": 4,
+        "skipped": 1
+      },
+      "metrics": {
+        "ok": 0,
+        "failed": 0,
+        "skipped": 5
+      },
+      "consistency": {
+        "ok": 0,
+        "failed": 0,
+        "skipped": 5
+      }
+    },
+    "consistencyResult": {
+      "pass": 0,
+      "mismatch": 0,
+      "error": 0,
+      "skipped": 5
+    },
+    "failedRepos": [
+      {
+        "repo": "dromara/RuoYi-Vue-Plus",
+        "failedSteps": [
+          "projection:failed",
+          "metrics:skipped",
+          "consistency:skipped"
+        ]
+      },
+      {
+        "repo": "jeecgboot/JeecgBoot",
+        "failedSteps": [
+          "scan:skipped",
+          "projection:skipped",
+          "metrics:skipped",
+          "consistency:skipped"
+        ]
+      },
+      {
+        "repo": "macrozheng/mall",
+        "failedSteps": [
+          "projection:failed",
+          "metrics:skipped",
+          "consistency:skipped"
+        ]
+      },
+      {
+        "repo": "macrozheng/mall-swarm",
+        "failedSteps": [
+          "projection:failed",
+          "metrics:skipped",
+          "consistency:skipped"
+        ]
+      },
+      {
+        "repo": "yangzongzhuan/RuoYi-Vue",
+        "failedSteps": [
+          "projection:failed",
+          "metrics:skipped",
+          "consistency:skipped"
+        ]
+      }
+    ],
+    "basis": "pipeline-status/{owner}/{repo}.json（scan job ⑤ annotate 确定性产物）——单仓失败不阻断聚合：reports 区聚合成功产物，本区汇总全部仓子步结论"
+  },
+  "cohort": {
+    "D2": {
+      "id": "D2",
+      "name": "dependency-homogeneity",
+      "label": "依赖同质度",
+      "domain": "D",
+      "direction": "none",
+      "value": null,
+      "frameworks": {},
+      "basis": "逐框架主版本众数份额（仓代表版本 = 命中依赖最大版本）按使用仓数加权平均"
     }
   }
 }
