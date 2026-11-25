@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "pipeline-status-v1",
+  "owner": "YunaiV",
+  "repo": "ruoyi-vue-pro",
+  "sourceHead": "e34c0f22dc542bd36aebc65afa4dd4ac81c88863",
+  "snapshotId": "ed871e9a-a05b-40f4-b52e-d916e758e06c",
+  "objectCount": 46623,
+  "importStatus": "completed",
+  "steps": {
+    "scan": "ok",
+    "projection": "ok",
+    "metrics": "ok",
+    "consistency": "ok"
+  },
+  "consistencyResult": "pass",
+  "overall": "pass"
+}
