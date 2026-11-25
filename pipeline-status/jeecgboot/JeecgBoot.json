@@ -3,15 +3,15 @@
   "owner": "jeecgboot",
   "repo": "JeecgBoot",
   "sourceHead": "6184e2448fbf0a84e7f638596324c69c1a747549",
-  "snapshotId": null,
-  "objectCount": null,
-  "importStatus": null,
+  "snapshotId": "a122ab0b-4e1f-4cfa-a7c3-26bbcfabee68",
+  "objectCount": 15697,
+  "importStatus": "completed",
   "steps": {
-    "scan": "skipped",
-    "projection": "skipped",
-    "metrics": "skipped",
-    "consistency": "skipped"
+    "scan": "ok",
+    "projection": "ok",
+    "metrics": "ok",
+    "consistency": "ok"
   },
-  "consistencyResult": "skipped",
-  "overall": "fail"
+  "consistencyResult": "pass",
+  "overall": "pass"
 }
