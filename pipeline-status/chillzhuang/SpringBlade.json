@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "pipeline-status-v1",
+  "owner": "chillzhuang",
+  "repo": "SpringBlade",
+  "sourceHead": "4995ddb714a5c1ec30aaadb5db6ffc8dc0a61fcf",
+  "snapshotId": "6006192a-ae4d-4148-a406-9421fcfdf7af",
+  "objectCount": 1073,
+  "importStatus": "completed",
+  "steps": {
+    "scan": "ok",
+    "projection": "ok",
+    "metrics": "ok",
+    "consistency": "ok"
+  },
+  "consistencyResult": "pass",
+  "overall": "pass"
+}
