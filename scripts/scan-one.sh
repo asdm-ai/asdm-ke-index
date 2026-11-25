@@ -13,7 +13,15 @@
 # 重扫轨（R3）：SCAN_FORCE=true 时 import start 透传 --force——同 HEAD 异分析器
 #       版本强制重建 manifest/links（默认 dedup skipped 会静默吞掉分析器修复）；
 #       缺省（空/false）为月度重扫轨——同 HEAD dedup skipped 属正确行为不视为失败
-# 出参：步骤末行回显原始 summary JSON（Action 日志对账锚——objectCount）
+# 投影错峰轨（B3 / Hotfix-14）：DEFER_PROJECTION=true（缺省）时 import start
+#       透传 --defer-projection——commit 跳过在途 Neo4j 投影，由 projection-sweep
+#       job 统一补投（ke project --snapshots-file 批量）。批扫场景投影风暴治理
+#       （run #29：每仓 commit 即投影 + CLI 重试风暴曾致 6× 重复节点污染）；
+#       单仓冒烟需要即刻投影时设 DEFER_PROJECTION=false
+# 分桶 clone 缓存（B3）：CLONE_CACHE_DIR 提供时 clone 落桶目录（actions/cache
+#       按仓键缓存——同仓重跑/重扫免全量 clone，命中桶 fetch --depth 1 增量刷新）
+# 出参：步骤末行回显原始 summary JSON（Action 日志对账锚——objectCount）；
+#       GITHUB_OUTPUT：head=<sha> snapshot_id=<id>（projection-sweep 消费）
 # =============================================================================
 set -euo pipefail
 
@@ -37,11 +45,32 @@ fi
 
 echo "== clone ${OWNER}/${REPO}（--depth 1${BRANCH:+，branch=$BRANCH}）=="
 REPO_DIR="$WORK/$REPO"
-rm -rf "$REPO_DIR"
-if [ -n "$BRANCH" ]; then
-  git clone --depth 1 --branch "$BRANCH" "https://github.com/$OWNER/$REPO.git" "$REPO_DIR"
+CLONE_CACHE_DIR="${CLONE_CACHE_DIR:-}"
+if [ -n "$CLONE_CACHE_DIR" ] && mkdir -p "$CLONE_CACHE_DIR" 2>/dev/null; then
+  # 分桶 clone 缓存（B3）：桶 = $CLONE_CACHE_DIR/<repo>（actions/cache 按仓键
+  # 恢复/保存——矩阵各 job 独立 runner，同仓重跑命中免全量 clone）
+  BUCKET="$CLONE_CACHE_DIR/$REPO"
+  if [ -d "$BUCKET/.git" ]; then
+    echo "== clone 缓存桶命中：fetch --depth 1 增量刷新 =="
+    git -C "$BUCKET" fetch --depth 1 origin "${BRANCH:-HEAD}"
+    git -C "$BUCKET" reset --hard FETCH_HEAD
+    git -C "$BUCKET" clean -fdq
+  else
+    rm -rf "$BUCKET"
+    if [ -n "$BRANCH" ]; then
+      git clone --depth 1 --branch "$BRANCH" "https://github.com/$OWNER/$REPO.git" "$BUCKET"
+    else
+      git clone --depth 1 "https://github.com/$OWNER/$REPO.git" "$BUCKET"
+    fi
+  fi
+  REPO_DIR="$BUCKET"
 else
-  git clone --depth 1 "https://github.com/$OWNER/$REPO.git" "$REPO_DIR"
+  rm -rf "$REPO_DIR"
+  if [ -n "$BRANCH" ]; then
+    git clone --depth 1 --branch "$BRANCH" "https://github.com/$OWNER/$REPO.git" "$REPO_DIR"
+  else
+    git clone --depth 1 "https://github.com/$OWNER/$REPO.git" "$REPO_DIR"
+  fi
 fi
 
 # 源仓 HEAD 锚（preflight-skip.sh 服务端锚判据输入——import start --commit 落
@@ -52,14 +81,22 @@ if [ -n "${GITHUB_OUTPUT:-}" ]; then
   echo "head=$SCAN_HEAD" >> "$GITHUB_OUTPUT"
 fi
 
-echo "== ke import start（--mode server → ${KE_SERVER_URL}，--commit ${SCAN_HEAD:0:12}${SCAN_FORCE:+，--force 重扫轨}）=="
+# 投影错峰轨（B3）：缺省 defer（批扫投影风暴治理）；DEFER_PROJECTION=false 显式关闭
+DEFER_PROJECTION="${DEFER_PROJECTION:-true}"
+DEFER_ARG="--defer-projection"
+DEFER_LABEL="，--defer-projection 投影错峰"
+if [ "$DEFER_PROJECTION" = "false" ]; then
+  DEFER_ARG=""
+  DEFER_LABEL=""
+fi
+echo "== ke import start（--mode server → ${KE_SERVER_URL}，--commit ${SCAN_HEAD:0:12}${SCAN_FORCE:+，--force 重扫轨}${DEFER_LABEL}）=="
 FORCE_ARG=""
 if [ "${SCAN_FORCE:-}" = "true" ]; then
   FORCE_ARG="--force"
 fi
 set +e
 ke --mode server --url "$KE_SERVER_URL" --token "$KE_API_KEY" \
-  import start --repo "$REPO_DIR" --commit "$SCAN_HEAD" $FORCE_ARG > "$WORK/import.log" 2>&1
+  import start --repo "$REPO_DIR" --commit "$SCAN_HEAD" $FORCE_ARG $DEFER_ARG > "$WORK/import.log" 2>&1
 RC=$?
 set -e
 tail -n 15 "$WORK/import.log"
@@ -82,5 +119,9 @@ OBJECT_COUNT=$(printf '%s' "$SUMMARY" | jq -r '.objectCount')
 SNAPSHOT_ID=$(printf '%s' "$SUMMARY" | jq -r '.snapshotId')
 STATUS=$(printf '%s' "$SUMMARY" | jq -r '.status')
 echo "scan-one: $OWNER/$REPO ${STATUS} objectCount=$OBJECT_COUNT snapshotId=$SNAPSHOT_ID"
+# snapshot_id 出参（B3）：projection-sweep job 经 artifact 消费（错峰补投对象）
+if [ -n "${GITHUB_OUTPUT:-}" ] && [ -n "$SNAPSHOT_ID" ] && [ "$SNAPSHOT_ID" != "null" ]; then
+  echo "snapshot_id=$SNAPSHOT_ID" >> "$GITHUB_OUTPUT"
+fi
 # 末行回显单行紧凑 summary JSON（服务端对账锚——与 /api/snapshots objectCount 逐位对照）
 printf '%s\n' "$SUMMARY" | jq -c .

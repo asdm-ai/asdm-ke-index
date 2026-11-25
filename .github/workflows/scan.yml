@@ -26,6 +26,10 @@ on:
         description: "重扫轨（R3）：true 时 scan-one 透传 --force——同 HEAD 异分析器版本强制重建（分析器升级后的口径修正重扫用）"
         type: boolean
         default: false
+      defer_projection:
+        description: "投影错峰轨（B3/Hotfix-14）：true 时 import 传 --defer-projection、扫描收口后由 projection-sweep 统一补投；false 单仓冒烟即刻投影"
+        type: boolean
+        default: true
   # schedule:
   #   - cron: "0 2 1 * *"   # 每月 1 日 02:00 UTC（聚合轮启用）
 
@@ -103,6 +107,16 @@ jobs:
           echo "$RUNNER_TEMP/ke-cli/bin" >> "$GITHUB_PATH"
           PATH="$RUNNER_TEMP/ke-cli/bin:$PATH" ke --version
 
+      # 分桶 clone 缓存（B3）：按仓键恢复 clone 桶（矩阵 job 独立 runner——同仓
+      # 重跑/重扫命中桶免全量 clone，scan-one.sh fetch --depth 1 增量刷新；
+      # 桶体量受 GitHub 10GB 缓存配额 LRU 约束，超限自动逐出最旧仓）
+      - name: Restore clone cache (bucketed per repo)
+        if: steps.preflight.outputs.skip != 'true'
+        uses: actions/cache@v4
+        with:
+          path: ${{ runner.temp }}/clone-buckets
+          key: clone-bucket-${{ matrix.owner }}-${{ matrix.repo }}-v1
+
       - name: Scan ${{ matrix.owner }}/${{ matrix.repo }}
         id: scan
         if: steps.preflight.outputs.skip != 'true'
@@ -113,7 +127,30 @@ jobs:
           REPO: ${{ matrix.repo }}
           BRANCH: ${{ matrix.branch }}
           SCAN_FORCE: ${{ inputs.scan_force }}
+          # 投影错峰轨（B3）：push/schedule 触发无 inputs → 空 → scan-one 缺省 defer
+          DEFER_PROJECTION: ${{ inputs.defer_projection }}
+          CLONE_CACHE_DIR: ${{ runner.temp }}/clone-buckets
         run: bash scripts/scan-one.sh
+
+      # 快照 ID 落 artifact（B3）：projection-sweep 统一补投的消费面——仅成功
+      # job 上传（scan 失败 exit 1 后续步默认跳过；defer=false 即刻投影时同样
+      # 上传——幂等重投零副作用，保持 sweep 驱动面统一）
+      - name: Record snapshot id
+        if: steps.preflight.outputs.skip != 'true' && steps.scan.outputs.snapshot_id != ''
+        env:
+          SNAPSHOT_ID: ${{ steps.scan.outputs.snapshot_id }}
+          OWNER: ${{ matrix.owner }}
+          REPO: ${{ matrix.repo }}
+        run: echo "$SNAPSHOT_ID" > "snap-${OWNER}-${REPO}.txt"
+
+      - name: Upload snapshot id artifact
+        if: steps.preflight.outputs.skip != 'true' && steps.scan.outputs.snapshot_id != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: snapshot-id-${{ matrix.owner }}-${{ matrix.repo }}
+          path: snap-${{ matrix.owner }}-${{ matrix.repo }}.txt
+          if-no-files-found: error
+          retention-days: 3
 
       # 任务 2.3.1：L1 指标计算——scan-one 成功后执行（dedup skipped 同样出报告：
       # 数值未变时产物逐字节一致，commit 步骤自动跳过）；--source-head 落 report
@@ -158,11 +195,62 @@ jobs:
           echo "FAIL: push retries exhausted" >&2
           exit 1
 
-  # 任务 2.5.1：census 聚合——全批 scan job 完成后单 job 聚合并 commit
-  # （守门 N<30 → accumulating 不出分位——P2H-D6；checkout 默认停在触发 commit，
-  #  需 fetch 拉齐 matrix 各 job 的 bot report 提交后聚合）
-  census:
+  # 投影错峰补投（B3 / Hotfix-14/15——0→1 执行计划）：全批 scan 收口后单 job
+  # 统一补投延迟投影（--defer-projection 落库的快照经 artifact 汇聚 →
+  # ke project --snapshots-file 串行补投）。风暴治理：42 job 串行扫描时每仓
+  # commit 即投影 + CLI fetch failed 重试风暴曾致 Neo4j 6× 重复节点污染
+  # （run #29 实证）；错峰后投影窗口与导入窗口彻底分离，且服务端侧另有
+  # obj_unique 唯一约束（ff6e1af）+ 全局并发上限 + 同快照互斥（B1）三重防护。
+  # if: always()——部分 scan 失败仍补投已完成快照（artifact 只含成功 job）；
+  # 无 artifact（全批 preflight skip / defer=false 未产 artifact 场景）时安静退出。
+  projection-sweep:
     needs: scan
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Collect snapshot ids (from scan artifacts)
+        uses: actions/download-artifact@v4
+        with:
+          pattern: snapshot-id-*
+          path: snapids
+          merge-multiple: true
+          if-no-files-found: ignore
+
+      - name: Prepare KE CLI
+        env:
+          KE_API_KEY: ${{ secrets.KE_API_KEY }}
+          KE_SERVER_URL: ${{ secrets.KE_SERVER_URL }}
+        run: |
+          bash scripts/install-cli.sh "$RUNNER_TEMP/ke-cli"
+          echo "$RUNNER_TEMP/ke-cli/bin" >> "$GITHUB_PATH"
+
+      - name: Sweep deferred projections (ke project)
+        env:
+          KE_API_KEY: ${{ secrets.KE_API_KEY }}
+          KE_SERVER_URL: ${{ secrets.KE_SERVER_URL }}
+        run: |
+          cat snapids/*.txt 2>/dev/null | sed 's/[[:space:]]//g' | grep -v '^$' | sort -u > snapshots.txt || true
+          COUNT=$(wc -l < snapshots.txt)
+          echo "projection-sweep: 待补投快照 ${COUNT} 个"
+          if [ "$COUNT" -eq 0 ]; then
+            echo "projection-sweep: 无待补投快照（全批 preflight skip）——安静退出"
+            exit 0
+          fi
+          ke --mode server --url "$KE_SERVER_URL" --token "$KE_API_KEY" \
+            project --snapshots-file snapshots.txt --timeout-min 180
+
+  # 任务 2.5.1：census 聚合——全批 scan + projection-sweep 完成后单 job 聚合
+  # 并 commit（守门 N<30 → accumulating 不出分位——P2H-D6；checkout 默认停在
+  #  触发 commit，需 fetch 拉齐 matrix 各 job 的 bot report 提交后聚合）
+  # B3 修正：if: always()——此前 `needs: scan` 有 failure 即默认 skip（run #29
+  # census job 被 skip 实证：42 仓 3 失败导致聚合丢失）；projection-sweep
+  # 入依赖链避免与 sweep 的 bot commit 推送冲突（两 job 均 fetch+rebase
+  # 重试，但串行化消解竞争窗口）
+  census:
+    needs: [scan, projection-sweep]
+    if: always()
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
