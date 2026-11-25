@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "pipeline-status-v1",
+  "owner": "jeecgboot",
+  "repo": "jeecgboot-vue3",
+  "sourceHead": "defd8d93da7fbe03b8aa37bae27585449d041132",
+  "snapshotId": "896b3950-a093-4c89-8103-364130b237b5",
+  "objectCount": 4755,
+  "importStatus": "completed",
+  "steps": {
+    "scan": "ok",
+    "projection": "ok",
+    "metrics": "ok",
+    "consistency": "ok"
+  },
+  "consistencyResult": "pass",
+  "overall": "pass"
+}
