@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "pipeline-status-v1",
+  "owner": "spring-projects",
+  "repo": "spring-petclinic",
+  "sourceHead": "500158f732419217507c7656904b8e6aa1bcc0d6",
+  "snapshotId": "636f6857-7711-4dae-9f7b-ac0fcb3530a1",
+  "objectCount": 283,
+  "importStatus": "completed",
+  "steps": {
+    "scan": "ok",
+    "projection": "ok",
+    "metrics": "ok",
+    "consistency": "ok"
+  },
+  "consistencyResult": "pass",
+  "overall": "pass"
+}
