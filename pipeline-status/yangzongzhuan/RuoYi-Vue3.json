@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "pipeline-status-v1",
+  "owner": "yangzongzhuan",
+  "repo": "RuoYi-Vue3",
+  "sourceHead": "3c2b70c30ff933721a8b54430142bba236c1821e",
+  "snapshotId": "fbc90f26-2553-4d2e-a855-d2132e202413",
+  "objectCount": 1078,
+  "importStatus": "completed",
+  "steps": {
+    "scan": "ok",
+    "projection": "ok",
+    "metrics": "ok",
+    "consistency": "ok"
+  },
+  "consistencyResult": "pass",
+  "overall": "pass"
+}
