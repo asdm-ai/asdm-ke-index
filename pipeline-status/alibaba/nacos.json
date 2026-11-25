@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "pipeline-status-v1",
+  "owner": "alibaba",
+  "repo": "nacos",
+  "sourceHead": "7a9787de2c4836f59795fd6ecfba38f0f02be8aa",
+  "snapshotId": "3821b9eb-853e-4927-952e-5c4877593b86",
+  "objectCount": 57376,
+  "importStatus": "completed",
+  "steps": {
+    "scan": "ok",
+    "projection": "ok",
+    "metrics": "ok",
+    "consistency": "ok"
+  },
+  "consistencyResult": "pass",
+  "overall": "pass"
+}
