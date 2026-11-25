@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "pipeline-status-v1",
+  "owner": "metersphere",
+  "repo": "metersphere",
+  "sourceHead": "f1565d99a03dfa54935eabcaab5da3473b6d0744",
+  "snapshotId": "159293bc-8fa0-45a5-bafc-c8feb992059b",
+  "objectCount": 43718,
+  "importStatus": "completed",
+  "steps": {
+    "scan": "ok",
+    "projection": "ok",
+    "metrics": "ok",
+    "consistency": "ok"
+  },
+  "consistencyResult": "pass",
+  "overall": "pass"
+}
