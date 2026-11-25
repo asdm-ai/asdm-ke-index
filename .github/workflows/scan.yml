@@ -17,7 +17,11 @@
 #     ⑤ annotate    四子步结论落 pipeline-status/{owner}/{repo}.json（确定性
 #                   产物入库）+ ::error:: 标注 + graph evidence artifact
 #   子步门控：② ③ 仅要求 ① 成功（投影失败仍算指标——census 能聚合多少聚合
-#   多少，但该仓任务已判失败）；④ 要求 ② ③ 均成功。
+#   多少，但该仓任务已判失败）；④ 要求 ② ③ 均成功。凡"前序失败仍要跑"的
+#   步骤 if 必须显式 (success() || failure())——GitHub Actions 对不含状态
+#   函数的 if 隐式前缀 success()（run #31 实证：投影 403 后 metrics 被
+#   意外 skip）。② 用 KE_ADMIN_API_KEY（tenant-admin——reproject 端点需要；
+#   member 键 403，最小权限仅此步），其余子步仍用 KE_API_KEY（member）。
 #   防风暴背景（Hotfix-14/15，B1/B3——原错峰轨 projection-sweep 已由穿行结构
 #   取代）：穿行 = 单仓串行（max-parallel 1），投影天然独占窗口；服务端侧
 #   obj_unique 唯一约束 + 投影并发上限 + 同快照互斥三重防护仍在位。
@@ -148,11 +152,17 @@ jobs:
       # ---- ② projection：ke project <snapshotId>（Neo4j 投影——幂等可重跑）----
       # 门控：仅要求 ① 成功。失败 → 本仓任务失败（job conclusion 即失败），
       # 但 ③ 仍执行（MySQL 数据已在——census 能聚合多少聚合多少）
+      # 凭据：KE_ADMIN_API_KEY（tenant-admin——POST /api/admin/maintenance/
+      # reproject 需 platform-admin/tenant-admin；member 键 403 实证 run #31。
+      # 最小权限：仅本步用 admin 键，import/metrics/consistency 仍用 member 键）
+      # if 门控注记：GitHub Actions 对不含状态函数的 if 隐式前缀 success()——
+      # 前序任何失败都会连带 skip 后续步（run #31 实证：投影 403 后 metrics
+      # 被意外 skip）。凡"前序失败仍要跑"的步必须显式 (success() || failure())
       - name: Projection (ke project)
         id: projection
-        if: steps.scan.conclusion == 'success'
+        if: (success() || failure()) && steps.scan.conclusion == 'success'
         env:
-          KE_API_KEY: ${{ secrets.KE_API_KEY }}
+          KE_ADMIN_API_KEY: ${{ secrets.KE_ADMIN_API_KEY }}
           KE_SERVER_URL: ${{ secrets.KE_SERVER_URL }}
           SNAPSHOT_ID: ${{ steps.scan.outputs.snapshot_id }}
         run: |
@@ -160,14 +170,15 @@ jobs:
             echo "FAIL: scan 未产出 snapshot_id——无法键控投影" >&2
             exit 1
           fi
-          ke --mode server --url "$KE_SERVER_URL" --token "$KE_API_KEY" \
+          ke --mode server --url "$KE_SERVER_URL" --token "$KE_ADMIN_API_KEY" \
             project "$SNAPSHOT_ID" --timeout-min 120
 
       # ---- ③ metrics：compute-metrics.py（MySQL 直查形态——投影无关）----
-      # 门控：仅要求 ① 成功（投影失败仍算——该仓任务已判失败，report 照出）
+      # 门控：仅要求 ① 成功（投影失败仍算——该仓任务已判失败，report 照出；
+      # 显式 (success() || failure()) 破隐式 success() 前缀——见 ② 注记）
       - name: Compute metrics report (${{ matrix.owner }}/${{ matrix.repo }})
         id: metrics
-        if: steps.scan.conclusion == 'success'
+        if: (success() || failure()) && steps.scan.conclusion == 'success'
         env:
           KE_API_KEY: ${{ secrets.KE_API_KEY }}
           KE_SERVER_URL: ${{ secrets.KE_SERVER_URL }}
@@ -193,7 +204,7 @@ jobs:
       # （穿行结构用户裁决：任何子步不通过即失败；证据照落 artifact 供定位）
       - name: Consistency check (graph form + equivalence)
         id: consistency
-        if: steps.projection.conclusion == 'success' && steps.metrics.conclusion == 'success'
+        if: (success() || failure()) && steps.projection.conclusion == 'success' && steps.metrics.conclusion == 'success'
         env:
           KE_API_KEY: ${{ secrets.KE_API_KEY }}
           KE_SERVER_URL: ${{ secrets.KE_SERVER_URL }}
@@ -216,10 +227,12 @@ jobs:
           echo "rc=$RC" >> "$GITHUB_OUTPUT"
           exit $RC
 
-      # graph evidence artifact（MISMATCH 时最需要落证据——失败也上传）：
+      # graph evidence artifact（MISMATCH 时最需要落证据——失败也上传：
+      # 显式 (success() || failure()) 破隐式 success() 前缀，否则一致性失败
+      # （已置 job 失败态）时本步被意外 skip——恰是最需要证据的场景）：
       # 遥测含分位延迟（逐 run 波动）不入库，走 3 天保留期 artifact
       - name: Upload graph evidence
-        if: steps.consistency.conclusion != 'skipped'
+        if: (success() || failure()) && steps.consistency.conclusion != 'skipped'
         uses: actions/upload-artifact@v4
         with:
           name: graph-evidence-${{ matrix.owner }}-${{ matrix.repo }}
