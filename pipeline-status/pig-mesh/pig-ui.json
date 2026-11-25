@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "pipeline-status-v1",
+  "owner": "pig-mesh",
+  "repo": "pig-ui",
+  "sourceHead": "ecdb12baaf81cbcd0ff68164ee0b1adbb5434f52",
+  "snapshotId": "1f9ae681-915d-40b7-acdd-e43a7b41ccb0",
+  "objectCount": 1974,
+  "importStatus": "completed",
+  "steps": {
+    "scan": "ok",
+    "projection": "ok",
+    "metrics": "ok",
+    "consistency": "ok"
+  },
+  "consistencyResult": "pass",
+  "overall": "pass"
+}
