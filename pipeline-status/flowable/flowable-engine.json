@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "pipeline-status-v1",
+  "owner": "flowable",
+  "repo": "flowable-engine",
+  "sourceHead": "2af890cdccdaf9b53d07eb92ab8ffb79918c82c5",
+  "snapshotId": "682bf7a1-d6ac-4e93-a19a-9d2a6896e201",
+  "objectCount": 76265,
+  "importStatus": "completed",
+  "steps": {
+    "scan": "ok",
+    "projection": "ok",
+    "metrics": "ok",
+    "consistency": "ok"
+  },
+  "consistencyResult": "pass",
+  "overall": "pass"
+}
