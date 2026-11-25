@@ -32,6 +32,12 @@
 # 单仓失败不阻断聚合（能聚合多少聚合多少）——reports 区聚合成功产物，
 # validation 区汇总全部状态含失败仓（产品验证面）。
 #
+# 矩阵对账（2026-11-26——run #33 hibernate-orm 教训）：--matrix-json 传入
+# prepare job 的扫描矩阵时，清单内每仓必须有 pipeline-status 文件；缺仓
+# （如末步 push 失败致 status 未落库）计入 validation.missingRepos 并按失败
+# 列入 failedRepos、validation.ok=false——summary 仍写出（聚合不被阻断），
+# ok 由 scan.yml 的独立断言步判定 job 结论。
+#
 # 分位算法：nearest-rank（Schema §4.2——升序第 ceil(p*N) 个值）。
 # 输出确定性：同一批 report 产出逐字节一致的 summary（不含墙钟时间戳）。
 #
@@ -101,11 +107,47 @@ def load_statuses(status_dir):
     return out
 
 
+def load_matrix(matrix_json):
+    """解析 prepare job 输出的 matrix JSON → {(owner, repo)}；None 表示不做对账。
+
+    matrix_json 为 JSON 字符串或 "@<path>"（文件内容为 JSON）；形态与
+    scan.yml prepare 步一致：{"include": [{"owner", "repo", "branch"}]}。
+    不可解析即 FAIL（对账基准坏了不能静默降级为"无缺仓"）。
+    """
+    if not matrix_json:
+        return None
+    if matrix_json.startswith("@"):
+        try:
+            with open(matrix_json[1:], encoding="utf-8") as f:
+                raw = f.read()
+        except OSError as e:
+            print("FAIL: matrix 文件不可读 %s：%s" % (matrix_json[1:], e), file=sys.stderr)
+            sys.exit(1)
+    else:
+        raw = matrix_json
+    try:
+        data = json.loads(raw)
+    except ValueError as e:
+        print("FAIL: matrix JSON 不可解析：%s" % e, file=sys.stderr)
+        sys.exit(1)
+    items = data.get("include") if isinstance(data, dict) else data
+    out = set()
+    for it in items or []:
+        if not isinstance(it, dict) or not it.get("owner") or not it.get("repo"):
+            print("FAIL: matrix 条目缺 owner/repo 或形态不符：%r" % (it,), file=sys.stderr)
+            sys.exit(1)
+        out.add((it["owner"], it["repo"]))
+    return out
+
+
 def main():
     ap = argparse.ArgumentParser(description="KE Index census 聚合（N 守门）")
     ap.add_argument("--reports-dir", default="reports", help="report 目录（缺省 reports/）")
     ap.add_argument("--status-dir", default="pipeline-status",
                     help="穿行状态目录（缺省 pipeline-status/——validation roll-up 数据源）")
+    ap.add_argument("--matrix-json", default="",
+                    help="prepare job 的 matrix JSON（字符串或 @file）——对账基准：清单内每仓"
+                         "必须有 pipeline-status；缺省不对账（本地复算旧形态）")
     ap.add_argument("--out", default="census/summary.json", help="输出文件（缺省 census/summary.json）")
     ap.add_argument("--publish-threshold", type=int, default=30, help="发布门槛（统计充分性——P2-D10）")
     ap.add_argument("--privacy-floor", type=int, default=5, help="k-匿名隐私护栏（单指标级——Schema §4.2）")
@@ -245,7 +287,11 @@ def main():
                     if len({v for v in vs if v}) > 1)
         version_count = {}
         for vs in users.values():
-            rep_ver = max((v for v in vs if v), key=_version_key)
+            # 先排序再取最大：vs 为 set，遍历序随进程哈希种子变化；并列时
+            # （如多个 Maven 属性占位符 ${x.version} 的 _version_key 均为空元组）
+            # max 取首个命中 → dominantVersion 逐次运行漂移，违反本脚本
+            # "逐字节一致"承诺（2026-11-26 run #33 复算实证）。无并列车为不变。
+            rep_ver = max(sorted(v for v in vs if v), key=_version_key)
             version_count[rep_ver] = version_count.get(rep_ver, 0) + 1
         dominant, dom_count = max(sorted(version_count.items()), key=lambda kv: kv[1])
         share = round(dom_count / n, 6)
@@ -286,13 +332,33 @@ def main():
             cons_counts[cr] += 1
         if ov != "pass" and bad_steps:
             failed_repos.append({"repo": rep_label, "failedSteps": bad_steps})
+
+    # ---- 矩阵对账（2026-11-26——run #33 hibernate-orm 教训）----
+    # 该仓产品链路 overall=pass，但末步 push 被 GitHub 5xx 连拒 → status 未落库
+    # → 上方 roll-up 只见 40 仓：既不计 pass 也不计 fail，census 报"40/40 全过"。
+    # 缺仓 = 本轮无法验证其链路结论，按失败列出；summary 仍照常写出并入库
+    # （能聚合多少聚合多少），validation.ok 由 scan.yml 的独立断言步判定。
+    expected = load_matrix(args.matrix_json)
+    present = {(o, r) for o, r, _ in statuses}
+    missing_repos = []
+    if expected is not None:
+        missing_repos = ["%s/%s" % (o, r) for o, r in sorted(expected - present)]
+        for rep_label in missing_repos:
+            failed_repos.append({
+                "repo": rep_label,
+                "failedSteps": ["status:missing（无 pipeline-status 文件——链路结论未落库）"],
+            })
     validation = {
         "reposWithStatus": len(statuses),
+        "expectedRepos": len(expected) if expected is not None else None,
+        "reconciled": expected is not None,
+        "missingRepos": missing_repos,
+        "ok": not missing_repos,
         "overall": overall_counts,
         "steps": step_counts,
         "consistencyResult": cons_counts,
         "failedRepos": sorted(failed_repos, key=lambda x: x["repo"]),
-        "basis": "pipeline-status/{owner}/{repo}.json（scan job ⑤ annotate 确定性产物）——单仓失败不阻断聚合：reports 区聚合成功产物，本区汇总全部仓子步结论",
+        "basis": "pipeline-status/{owner}/{repo}.json（scan job ⑤ annotate 确定性产物）——单仓失败不阻断聚合：reports 区聚合成功产物，本区汇总全部仓子步结论；reconciled=true 时另与扫描矩阵对账（missingRepos 非空即 ok=false）",
     }
 
     summary = {
@@ -332,6 +398,11 @@ def main():
     print("validation: repos=%d pass=%d fail=%d | consistency pass/mismatch/error/skipped = %d/%d/%d/%d" % (
         len(statuses), overall_counts["pass"], overall_counts["fail"],
         cons_counts["pass"], cons_counts["mismatch"], cons_counts["error"], cons_counts["skipped"]))
+    if expected is not None:
+        print("validation: matrix reconcile expected=%d withStatus=%d missing=%d ok=%s" % (
+            len(expected), len(statuses), len(missing_repos), "true" if not missing_repos else "false"))
+        for rep_label in missing_repos:
+            print("FAIL: missing pipeline-status: %s" % rep_label, file=sys.stderr)
     if failed_repos:
         print("failed repos: %s" % ", ".join(f["repo"] for f in failed_repos))
     for mid in sorted(metrics_out):

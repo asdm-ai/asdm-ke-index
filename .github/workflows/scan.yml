@@ -261,9 +261,15 @@ jobs:
           CONSISTENCY_RC: ${{ steps.consistency.outputs.rc }}
         run: bash scripts/pipeline-status.sh
 
-      # 产物入库（bot 身份；matrix 并发推送冲突 → fetch+rebase 重试）
+      # 产物入库（bot 身份；matrix 并发推送冲突 → 分类重试）
       # if: always()——失败仓的 status 同样入库（审计面）；preflight skip 时
       # report 与 status 均无变化——无新增可提交，整步安静退出
+      # push 重试按拒绝原因分类（run #33 hibernate-orm 教训：GitHub 瞬时 5xx
+      # 连拒 5 次、旧循环总窗口仅 82s → status 未落库、该仓从 census validation
+      # 静默消失）——非快进才 rebase；服务端瞬时错误不 rebase、指数退避，
+      # 预算 15min。细节见 scripts/push-with-retry.sh 头注。
+      # 本步失败 = 链路结论未落库 → 该仓 job 判失败（结论不可审计即视为未通过）；
+      # census 的矩阵对账断言会把缺仓显式列出，不再静默。
       - name: Commit report + status
         if: always() && steps.annotate.conclusion != 'skipped'
         env:
@@ -278,15 +284,7 @@ jobs:
             exit 0
           fi
           git commit -m "report: pipeline for ${OWNER}/${REPO}"
-          for i in 1 2 3 4 5; do
-            if git push; then exit 0; fi
-            echo "push conflict (attempt $i) — fetch + rebase retry"
-            git fetch origin
-            git rebase "origin/${GITHUB_REF_NAME}" || { git rebase --abort; echo "FAIL: rebase conflict" >&2; exit 1; }
-            sleep $((i * 5))
-          done
-          echo "FAIL: push retries exhausted" >&2
-          exit 1
+          bash scripts/push-with-retry.sh
 
   # 任务 2.5.1：census 聚合——全批 scan 完成后单 job 聚合并 commit（守门 N<30
   # → accumulating 不出分位——P2H-D6；checkout 默认停在触发 commit，需 fetch
@@ -294,20 +292,31 @@ jobs:
   # 按仓穿行（2026-11-25）：needs: [scan] + if: always()——单仓/多仓失败均不
   # 阻断聚合，能聚合多少聚合多少（reports 区聚合成功产物；validation 区汇总
   # 全部 pipeline-status 含失败仓——产品验证面）
+  # 矩阵对账（2026-11-26——run #33 hibernate-orm 教训）：链路 overall=pass 但
+  # 末步 push 被 GitHub 5xx 连拒 → status 未落库 → validation 只见 40 仓且
+  # 报"40/40 全过"（缺仓既不计 pass 也不计 fail）。prepare 的矩阵经 needs 传入
+  # census.py --matrix-json 对账；缺仓入 validation.missingRepos/failedRepos、
+  # ok=false。summary 仍写出并入库（聚合不被阻断），其后独立断言步据 ok 把
+  # census job 置红——"能聚合多少聚合多少"与"缺仓必须可见"两者兼顾。
   census:
-    needs: [scan]
+    needs: [prepare, scan]
     if: always()
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
       - name: Sync latest reports (bot commits from matrix jobs)
+        env:
+          SCAN_MATRIX: ${{ needs.prepare.outputs.matrix }}
         run: |
           git fetch origin "${GITHUB_REF_NAME}"
           git reset --hard "origin/${GITHUB_REF_NAME}"
+          # 矩阵落文件再以 @file 传入（env 传递——不把清单内容拼进 shell 源码）
+          printf '%s' "$SCAN_MATRIX" > "$RUNNER_TEMP/scan-matrix.json"
+          jq -e '.include | length' "$RUNNER_TEMP/scan-matrix.json"
 
-      - name: Aggregate census summary (N gate + validation roll-up)
-        run: python3 scripts/census.py
+      - name: Aggregate census summary (N gate + validation roll-up + matrix reconcile)
+        run: python3 scripts/census.py --matrix-json "@$RUNNER_TEMP/scan-matrix.json"
 
       - name: Commit census summary
         run: |
@@ -319,12 +328,15 @@ jobs:
             exit 0
           fi
           git commit -m "census: aggregate summary (N gate)"
-          for i in 1 2 3 4 5; do
-            if git push; then exit 0; fi
-            echo "push conflict (attempt $i) — fetch + rebase retry"
-            git fetch origin
-            git rebase "origin/${GITHUB_REF_NAME}" || { git rebase --abort; echo "FAIL: rebase conflict" >&2; exit 1; }
-            sleep $((i * 5))
-          done
-          echo "FAIL: push retries exhausted" >&2
-          exit 1
+          bash scripts/push-with-retry.sh
+
+      # 断言独立于提交步之后：缺仓时 summary（含 missingRepos）已入库可查，
+      # 再把 job 置红——run 结论不再掩盖"某仓结论未落库"
+      - name: Assert validation (every matrix repo has pipeline-status)
+        run: |
+          if ! jq -e '.validation.ok == true' census/summary.json > /dev/null; then
+            jq -r '.validation.missingRepos[] | "::error title=census validation::缺少 pipeline-status（链路结论未落库，需补跑该仓）：" + .' census/summary.json
+            echo "FAIL: validation.ok=false——见 census/summary.json validation.missingRepos" >&2
+            exit 1
+          fi
+          echo "validation.ok=true（矩阵 $(jq -r '.validation.expectedRepos' census/summary.json) 仓均有 pipeline-status）"
