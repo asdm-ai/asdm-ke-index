@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "pipeline-status-v1",
+  "owner": "alibaba",
+  "repo": "druid",
+  "sourceHead": "fa8dc9912637a2f729eef9f55356621fec18d40e",
+  "snapshotId": "df9c2523-281c-46a3-8e3b-d2c1157108a9",
+  "objectCount": 41208,
+  "importStatus": "completed",
+  "steps": {
+    "scan": "ok",
+    "projection": "ok",
+    "metrics": "ok",
+    "consistency": "ok"
+  },
+  "consistencyResult": "pass",
+  "overall": "pass"
+}
