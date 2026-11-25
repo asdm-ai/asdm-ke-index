@@ -3,15 +3,15 @@
   "owner": "macrozheng",
   "repo": "mall-swarm",
   "sourceHead": "04c442fe318356bae4445a109dde7af297ce1e84",
-  "snapshotId": "a8792da8-7a71-4660-b8b5-6428323b2df4",
+  "snapshotId": "e3399e3b-fa13-42a6-a5b3-05fc0d71da3b",
   "objectCount": 14878,
   "importStatus": "completed",
   "steps": {
     "scan": "ok",
-    "projection": "failed",
-    "metrics": "skipped",
-    "consistency": "skipped"
+    "projection": "ok",
+    "metrics": "ok",
+    "consistency": "ok"
   },
-  "consistencyResult": "skipped",
-  "overall": "fail"
+  "consistencyResult": "pass",
+  "overall": "pass"
 }
