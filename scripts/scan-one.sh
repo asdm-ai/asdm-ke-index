@@ -13,15 +13,17 @@
 # 重扫轨（R3）：SCAN_FORCE=true 时 import start 透传 --force——同 HEAD 异分析器
 #       版本强制重建 manifest/links（默认 dedup skipped 会静默吞掉分析器修复）；
 #       缺省（空/false）为月度重扫轨——同 HEAD dedup skipped 属正确行为不视为失败
-# 投影错峰轨（B3 / Hotfix-14）：DEFER_PROJECTION=true（缺省）时 import start
-#       透传 --defer-projection——commit 跳过在途 Neo4j 投影，由 projection-sweep
-#       job 统一补投（ke project --snapshots-file 批量）。批扫场景投影风暴治理
-#       （run #29：每仓 commit 即投影 + CLI 重试风暴曾致 6× 重复节点污染）；
-#       单仓冒烟需要即刻投影时设 DEFER_PROJECTION=false
+# 投影错峰（B3 / Hotfix-14 → 2026-11-25 按仓穿行）：DEFER_PROJECTION=true（缺省）
+#       时 import start 透传 --defer-projection——commit 跳过在途 Neo4j 投影，
+#       由同 job 的下一显式子步 ke project <snapshotId> 键控补投（穿行结构：
+#       扫描→投影→指标→一致性四子步各自独立结论；防风暴背景 run #29——服务端
+#       侧另有 obj_unique 唯一约束 + 投影并发上限 + 同快照互斥三重防护）
+#       早期形态（projection-sweep 尾部 job 批量补投）已由穿行结构取代。
 # 分桶 clone 缓存（B3）：CLONE_CACHE_DIR 提供时 clone 落桶目录（actions/cache
 #       按仓键缓存——同仓重跑/重扫免全量 clone，命中桶 fetch --depth 1 增量刷新）
 # 出参：步骤末行回显原始 summary JSON（Action 日志对账锚——objectCount）；
-#       GITHUB_OUTPUT：head=<sha> snapshot_id=<id>（projection-sweep 消费）
+#       GITHUB_OUTPUT：head=<sha> snapshot_id=<id> snapshot_count=<n>
+#       import_status=completed|skipped（穿行 ⑤ annotate 消费——子步结论落盘）
 # =============================================================================
 set -euo pipefail
 
@@ -119,11 +121,12 @@ OBJECT_COUNT=$(printf '%s' "$SUMMARY" | jq -r '.objectCount')
 SNAPSHOT_ID=$(printf '%s' "$SUMMARY" | jq -r '.snapshotId')
 STATUS=$(printf '%s' "$SUMMARY" | jq -r '.status')
 echo "scan-one: $OWNER/$REPO ${STATUS} objectCount=$OBJECT_COUNT snapshotId=$SNAPSHOT_ID"
-# snapshot_id/count 出参（B3）：projection-sweep job 经 artifact 消费（错峰补投
-# 对象 + objectCount 降序排程——大仓独占窗口，Hotfix-14 步骤 5 设计）
+# snapshot_id/count 出参（B3）：穿行结构下由同 job 投影/指标/一致性子步消费
+# （ke project 键控补投对象 + metrics --snapshot 显式键控 + annotate 状态落盘）
 if [ -n "${GITHUB_OUTPUT:-}" ] && [ -n "$SNAPSHOT_ID" ] && [ "$SNAPSHOT_ID" != "null" ]; then
   echo "snapshot_id=$SNAPSHOT_ID" >> "$GITHUB_OUTPUT"
   echo "snapshot_count=${OBJECT_COUNT:-0}" >> "$GITHUB_OUTPUT"
+  echo "import_status=${STATUS}" >> "$GITHUB_OUTPUT"
 fi
 # 末行回显单行紧凑 summary JSON（服务端对账锚——与 /api/snapshots objectCount 逐位对照）
 printf '%s\n' "$SUMMARY" | jq -c .

@@ -5,13 +5,30 @@
 #   - push（paths 仅 repos.yaml——清单变更即重扫）
 #   - 手动触发面（单仓冒烟/全批首跑——Actions 页 dispatch）
 #   - schedule（月度重扫——聚合轮启用，启用前保持注释态）
+#
+# 按仓穿行（2026-11-25 用户裁决——日常扫描即产品验证目标）：
+#   每仓单 job 内串行执行完整链路，任何子步失败即该仓任务失败（fail-fast:
+#   false + max-parallel 1——单仓失败不级联取消其它仓，也不阻断尾部 census）：
+#     ① scan        clone → import --defer-projection（仅 MySQL 落库）
+#     ② projection  ke project <snapshotId>（Neo4j 投影——本 job 内显式子步）
+#     ③ metrics     compute-metrics.py（MySQL 直查形态 → report）
+#     ④ consistency graph-metrics.py --compare（图形态重算 + 双路径等价比对
+#                   + 遥测差分——exit 2 MISMATCH 亦判失败）
+#     ⑤ annotate    四子步结论落 pipeline-status/{owner}/{repo}.json（确定性
+#                   产物入库）+ ::error:: 标注 + graph evidence artifact
+#   子步门控：② ③ 仅要求 ① 成功（投影失败仍算指标——census 能聚合多少聚合
+#   多少，但该仓任务已判失败）；④ 要求 ② ③ 均成功。
+#   防风暴背景（Hotfix-14/15，B1/B3——原错峰轨 projection-sweep 已由穿行结构
+#   取代）：穿行 = 单仓串行（max-parallel 1），投影天然独占窗口；服务端侧
+#   obj_unique 唯一约束 + 投影并发上限 + 同快照互斥三重防护仍在位。
+#
 # job 流水（零漂移短路——服务端锚版，2026-11-19 优化）：
 #   preflight（ls-remote 远端 HEAD vs 服务端快照 sourceVersion——import start
 #   --commit <sha> 落锚；report 新鲜度双锚 cliVersion+snapshotId；命中即整 job
-#   跳过）→ CLI 装配缓存（actions/cache 按版本键——matrix 独立 runner 间共享
-#   安装产物，等效只装一次）→ scan（clone + import --commit HEAD）→ metrics
-#   （--source-head 落 report）→ commit；存量 "head" 快照首轮全量重导入一轮
-#   落新锚（迁移注记见 preflight-skip.sh 头注）；ops 删快照即不命中→自然重建
+#   跳过）→ CLI 装配缓存（actions/cache 按版本键）→ scan（clone + import
+#   --commit HEAD）→ 投影 → 指标 → 一致性 → 标注；存量 "head" 快照首轮全量
+#   重导入一轮落新锚（迁移注记见 preflight-skip.sh 头注）；ops 删快照即不
+#   命中→自然重建
 # 并发护栏：matrix 并发上限（单实例吞吐——Plan R4）
 # =============================================================================
 name: scan
@@ -26,10 +43,6 @@ on:
         description: "重扫轨（R3）：true 时 scan-one 透传 --force——同 HEAD 异分析器版本强制重建（分析器升级后的口径修正重扫用）"
         type: boolean
         default: false
-      defer_projection:
-        description: "投影错峰轨（B3/Hotfix-14）：true 时 import 传 --defer-projection、扫描收口后由 projection-sweep 统一补投；false 单仓冒烟即刻投影"
-        type: boolean
-        default: true
   # schedule:
   #   - cron: "0 2 1 * *"   # 每月 1 日 02:00 UTC（聚合轮启用）
 
@@ -60,10 +73,9 @@ jobs:
       # 形态，服务端后台继续处理，重跑 dispatch dedup skipped 即自愈；级联取消会
       # 浪费同批已跑一半的 job——2026-11-17 批 2 教训：1 失败取消 13）
       fail-fast: false
-      # max-parallel 2→1（2026-11-17/18 用户裁决：单仓串行——批 2 重跑 #2（4 并发）时段
-      # 出现 Lock wait timeout / Pool closed / JSON 解析失败等资源竞争失败；2 并发因
-      # 服务器 Azure 平台关机（16:04:18 有序 shutdown——非扫描压力所致）未经充分验证，
-      # 收口期采用最保守的完全串行。代价：批次总时长最长，S0 铺底优先稳定性）
+      # max-parallel 1（2026-11-17/18 用户裁决：单仓串行；2026-11-25 穿行结构
+      # 沿用——串行是投影独占窗口与逐仓完整链路判读的前提，收口期稳定性
+      # 优先，吞吐代价可接受）
       max-parallel: 1
       matrix: ${{ fromJson(needs.prepare.outputs.matrix) }}
     steps:
@@ -71,7 +83,7 @@ jobs:
 
       # 本地短路（零漂移轨·服务端锚）：ls-remote 远端 HEAD vs 服务端快照 sourceVersion
       # （import start --commit 落锚）+ report 新鲜度（cliVersion+snapshotId）；
-      # ——命中即整 job 跳过（不装 CLI/不 clone/不 import/不跑 metrics）；force 轨永不跳过
+      # ——命中即整 job 跳过（不装 CLI/不 clone/不跑穿行链）；force 轨永不跳过
       - name: Preflight (skip check)
         id: preflight
         env:
@@ -84,7 +96,7 @@ jobs:
         run: bash scripts/preflight-skip.sh
 
       # CLI 装配缓存（matrix 每 job 独立 runner——按版本键共享安装产物：首 job 安装落缓存，
-      # 后续 job 秒级恢复，等效"只安装一次"；全批 skip 时本步与装配步均不执行）
+      # 后续 job 秒级恢复，等效"只装一次"；全批 skip 时本步与装配步均不执行）
       - name: Restore KE CLI cache
         id: cli_cache
         if: steps.preflight.outputs.skip != 'true'
@@ -117,6 +129,8 @@ jobs:
           path: ${{ runner.temp }}/clone-buckets
           key: clone-bucket-${{ matrix.owner }}-${{ matrix.repo }}-v1
 
+      # ---- ① scan：clone + import --defer-projection（仅 MySQL 落库）----
+      # defer 固定（穿行结构）：投影是本 job 下一显式子步（独立结论 + 独立失败面）
       - name: Scan ${{ matrix.owner }}/${{ matrix.repo }}
         id: scan
         if: steps.preflight.outputs.skip != 'true'
@@ -127,66 +141,130 @@ jobs:
           REPO: ${{ matrix.repo }}
           BRANCH: ${{ matrix.branch }}
           SCAN_FORCE: ${{ inputs.scan_force }}
-          # 投影错峰轨（B3）：push/schedule 触发无 inputs → 空 → scan-one 缺省 defer
-          DEFER_PROJECTION: ${{ inputs.defer_projection }}
+          DEFER_PROJECTION: "true"
           CLONE_CACHE_DIR: ${{ runner.temp }}/clone-buckets
         run: bash scripts/scan-one.sh
 
-      # 快照 ID 落 artifact（B3）：projection-sweep 统一补投的消费面——仅成功
-      # job 上传（scan 失败 exit 1 后续步默认跳过；defer=false 即刻投影时同样
-      # 上传——幂等重投零副作用，保持 sweep 驱动面统一）。行格式
-      # "<snapshotId> <objectCount>"——sweep 按 count 降序排程（大仓独占窗口）
-      - name: Record snapshot id
-        if: steps.preflight.outputs.skip != 'true' && steps.scan.outputs.snapshot_id != ''
+      # ---- ② projection：ke project <snapshotId>（Neo4j 投影——幂等可重跑）----
+      # 门控：仅要求 ① 成功。失败 → 本仓任务失败（job conclusion 即失败），
+      # 但 ③ 仍执行（MySQL 数据已在——census 能聚合多少聚合多少）
+      - name: Projection (ke project)
+        id: projection
+        if: steps.scan.conclusion == 'success'
         env:
+          KE_API_KEY: ${{ secrets.KE_API_KEY }}
+          KE_SERVER_URL: ${{ secrets.KE_SERVER_URL }}
           SNAPSHOT_ID: ${{ steps.scan.outputs.snapshot_id }}
-          OBJECT_COUNT: ${{ steps.scan.outputs.snapshot_count }}
-          OWNER: ${{ matrix.owner }}
-          REPO: ${{ matrix.repo }}
-        run: echo "$SNAPSHOT_ID ${OBJECT_COUNT:-0}" > "snap-${OWNER}-${REPO}.txt"
+        run: |
+          if [ -z "$SNAPSHOT_ID" ]; then
+            echo "FAIL: scan 未产出 snapshot_id——无法键控投影" >&2
+            exit 1
+          fi
+          ke --mode server --url "$KE_SERVER_URL" --token "$KE_API_KEY" \
+            project "$SNAPSHOT_ID" --timeout-min 120
 
-      - name: Upload snapshot id artifact
-        if: steps.preflight.outputs.skip != 'true' && steps.scan.outputs.snapshot_id != ''
-        uses: actions/upload-artifact@v4
-        with:
-          name: snapshot-id-${{ matrix.owner }}-${{ matrix.repo }}
-          path: snap-${{ matrix.owner }}-${{ matrix.repo }}.txt
-          if-no-files-found: error
-          retention-days: 3
-
-      # 任务 2.3.1：L1 指标计算——scan-one 成功后执行（dedup skipped 同样出报告：
-      # 数值未变时产物逐字节一致，commit 步骤自动跳过）；--source-head 落 report
-      # 供下轮 preflight 跳过判据用
+      # ---- ③ metrics：compute-metrics.py（MySQL 直查形态——投影无关）----
+      # 门控：仅要求 ① 成功（投影失败仍算——该仓任务已判失败，report 照出）
       - name: Compute metrics report (${{ matrix.owner }}/${{ matrix.repo }})
-        if: steps.preflight.outputs.skip != 'true'
+        id: metrics
+        if: steps.scan.conclusion == 'success'
         env:
           KE_API_KEY: ${{ secrets.KE_API_KEY }}
           KE_SERVER_URL: ${{ secrets.KE_SERVER_URL }}
           OWNER: ${{ matrix.owner }}
           REPO: ${{ matrix.repo }}
+          SNAPSHOT_ID: ${{ steps.scan.outputs.snapshot_id }}
         run: |
+          ARGS=""
+          if [ -n "$SNAPSHOT_ID" ]; then
+            ARGS="--snapshot $SNAPSHOT_ID"
+          fi
           python3 scripts/compute-metrics.py \
             --owner "$OWNER" --repo "$REPO" \
             --ke-cli "ke" \
             --source-head "${{ steps.scan.outputs.head }}" \
+            $ARGS \
             --out "reports/$OWNER/$REPO.json"
 
+      # ---- ④ consistency：graph-metrics.py --compare（图形态重算 + 双路径
+      # 等价比对 + 遥测差分）----
+      # 门控：② ③ 均成功（图形态依赖投影；比对目标依赖 report）。
+      # 退出码契约：0=PASS / 2=MISMATCH / 1=崩溃——MISMATCH 亦判本仓任务失败
+      # （穿行结构用户裁决：任何子步不通过即失败；证据照落 artifact 供定位）
+      - name: Consistency check (graph form + equivalence)
+        id: consistency
+        if: steps.projection.conclusion == 'success' && steps.metrics.conclusion == 'success'
+        env:
+          KE_API_KEY: ${{ secrets.KE_API_KEY }}
+          KE_SERVER_URL: ${{ secrets.KE_SERVER_URL }}
+          OWNER: ${{ matrix.owner }}
+          REPO: ${{ matrix.repo }}
+          SNAPSHOT_ID: ${{ steps.scan.outputs.snapshot_id }}
+        run: |
+          ARGS=""
+          if [ -n "$SNAPSHOT_ID" ]; then
+            ARGS="--snapshot $SNAPSHOT_ID"
+          fi
+          set +e
+          python3 scripts/graph-metrics.py \
+            --owner "$OWNER" --repo "$REPO" \
+            $ARGS \
+            --out "graph-evidence/$OWNER-$REPO.graph.json" \
+            --compare "reports/$OWNER/$REPO.json"
+          RC=$?
+          set -e
+          echo "rc=$RC" >> "$GITHUB_OUTPUT"
+          exit $RC
+
+      # graph evidence artifact（MISMATCH 时最需要落证据——失败也上传）：
+      # 遥测含分位延迟（逐 run 波动）不入库，走 3 天保留期 artifact
+      - name: Upload graph evidence
+        if: steps.consistency.conclusion != 'skipped'
+        uses: actions/upload-artifact@v4
+        with:
+          name: graph-evidence-${{ matrix.owner }}-${{ matrix.repo }}
+          path: graph-evidence/
+          if-no-files-found: ignore
+          retention-days: 3
+
+      # ---- ⑤ annotate：四子步结论落 pipeline-status（确定性产物）----
+      # 确定性：内容仅含 owner/repo/heads/快照/子步结论——同仓同快照重跑逐字节
+      # 一致（无墙钟）→ 月度 dedup skip 不产生 git diff；scan 未被尝试
+      # （preflight skip）时本步整体跳过——不覆盖上一轮的既有状态文件
+      - name: Annotate pipeline status
+        id: annotate
+        if: always() && steps.scan.conclusion != 'skipped'
+        env:
+          OWNER: ${{ matrix.owner }}
+          REPO: ${{ matrix.repo }}
+          SOURCE_HEAD: ${{ steps.scan.outputs.head }}
+          SNAPSHOT_ID: ${{ steps.scan.outputs.snapshot_id }}
+          OBJECT_COUNT: ${{ steps.scan.outputs.snapshot_count }}
+          IMPORT_STATUS: ${{ steps.scan.outputs.import_status }}
+          SCAN_C: ${{ steps.scan.conclusion }}
+          PROJECTION_C: ${{ steps.projection.conclusion }}
+          METRICS_C: ${{ steps.metrics.conclusion }}
+          CONSISTENCY_C: ${{ steps.consistency.conclusion }}
+          CONSISTENCY_RC: ${{ steps.consistency.outputs.rc }}
+        run: bash scripts/pipeline-status.sh
+
       # 产物入库（bot 身份；matrix 并发推送冲突 → fetch+rebase 重试）
-      # （preflight skip 时 report 未变——无新增可提交，整步跳过）
-      - name: Commit report
-        if: steps.preflight.outputs.skip != 'true'
+      # if: always()——失败仓的 status 同样入库（审计面）；preflight skip 时
+      # report 与 status 均无变化——无新增可提交，整步安静退出
+      - name: Commit report + status
+        if: always() && steps.annotate.conclusion != 'skipped'
         env:
           OWNER: ${{ matrix.owner }}
           REPO: ${{ matrix.repo }}
         run: |
           git config user.name "ke-index-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add reports/
+          git add -A reports pipeline-status 2>/dev/null || true
           if git diff --cached --quiet; then
-            echo "report unchanged — no commit"
+            echo "report/status unchanged — no commit"
             exit 0
           fi
-          git commit -m "report: metrics for ${OWNER}/${REPO}"
+          git commit -m "report: pipeline for ${OWNER}/${REPO}"
           for i in 1 2 3 4 5; do
             if git push; then exit 0; fi
             echo "push conflict (attempt $i) — fetch + rebase retry"
@@ -197,120 +275,14 @@ jobs:
           echo "FAIL: push retries exhausted" >&2
           exit 1
 
-  # 投影错峰补投（B3 / Hotfix-14/15——0→1 执行计划）：全批 scan 收口后单 job
-  # 统一补投延迟投影（--defer-projection 落库的快照经 artifact 汇聚 →
-  # ke project --snapshots-file 串行补投）。风暴治理：42 job 串行扫描时每仓
-  # commit 即投影 + CLI fetch failed 重试风暴曾致 Neo4j 6× 重复节点污染
-  # （run #29 实证）；错峰后投影窗口与导入窗口彻底分离，且服务端侧另有
-  # obj_unique 唯一约束（ff6e1af）+ 全局并发上限 + 同快照互斥（B1）三重防护。
-  # if: always()——部分 scan 失败仍补投已完成快照（artifact 只含成功 job）；
-  # 无 artifact（全批 preflight skip / defer=false 未产 artifact 场景）时安静退出。
-  projection-sweep:
-    needs: scan
-    if: always()
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Collect snapshot ids (from scan artifacts)
-        uses: actions/download-artifact@v4
-        with:
-          pattern: snapshot-id-*
-          path: snapids
-          merge-multiple: true
-          if-no-files-found: ignore
-
-      - name: Prepare KE CLI
-        env:
-          KE_API_KEY: ${{ secrets.KE_API_KEY }}
-          KE_SERVER_URL: ${{ secrets.KE_SERVER_URL }}
-        run: |
-          bash scripts/install-cli.sh "$RUNNER_TEMP/ke-cli"
-          echo "$RUNNER_TEMP/ke-cli/bin" >> "$GITHUB_PATH"
-
-      - name: Sweep deferred projections (ke project)
-        env:
-          KE_API_KEY: ${{ secrets.KE_API_KEY }}
-          KE_SERVER_URL: ${{ secrets.KE_SERVER_URL }}
-        run: |
-          # 行格式 "<snapshotId> <objectCount>"——objectCount 降序排程（大仓独占
-          # 窗口：46k 节点投影独占态 ~200-250/s vs 并发劣化 70/s，Hotfix-14 步骤 5）
-          cat snapids/*.txt 2>/dev/null | sed 's/[[:space:]]\+/ /g' | grep -v '^$' \
-            | sort -t' ' -k2 -rn -u > snapshot-rows.txt || true
-          COUNT=$(wc -l < snapshot-rows.txt)
-          echo "projection-sweep: 待补投快照 ${COUNT} 个（objectCount 降序）"
-          head -n 5 snapshot-rows.txt || true
-          if [ "$COUNT" -eq 0 ]; then
-            echo "projection-sweep: 无待补投快照（全批 preflight skip）——安静退出"
-            exit 0
-          fi
-          cut -d' ' -f1 snapshot-rows.txt > snapshots.txt
-          ke --mode server --url "$KE_SERVER_URL" --token "$KE_API_KEY" \
-            project --snapshots-file snapshots.txt --timeout-min 180
-
-      # 5.1.4.7（V5.1.4.4/.7 图指标阶段）：投影补投完成后，对本批全部仓跑
-      # graph-metrics（逐 ApiEndpoint expand 闭包——图查询引擎真实压测面，
-      # 4k-20k 次闭包查询/全轮）+ 与 scan job 已落 report 的本地形态双路径
-      # 等价性比对（graph-accelerated vs MySQL 直查功能等价验证）+ 遥测差分
-      # （route 分布/分位延迟/truncated 计数落 evidence artifact）。
-      # 快照→仓映射经 scan job 的 report 文件（git fetch 拉齐 bot commits）。
-      - name: Graph metrics (expand closure + telemetry loop)
-        env:
-          KE_API_KEY: ${{ secrets.KE_API_KEY }}
-          KE_SERVER_URL: ${{ secrets.KE_SERVER_URL }}
-        run: |
-          git fetch origin "${GITHUB_REF_NAME}" --depth=50
-          git reset --hard "origin/${GITHUB_REF_NAME}" || true
-          if [ ! -s snapshot-rows.txt ]; then
-            echo "graph-metrics: 无快照（全批 skip）——安静退出"
-            exit 0
-          fi
-          mkdir -p graph-reports
-          FAILS=0
-          while read -r SNAP _COUNT; do
-            [ -n "$SNAP" ] || continue
-            # 快照 → source/repo 归属：scan job report 的 snapshot.snapshotId 反查
-            META=$(ls reports/*/*.json 2>/dev/null | xargs grep -l "\"snapshotId\": \"$SNAP\"" 2>/dev/null | head -1 || true)
-            if [ -z "$META" ]; then
-              echo "graph-metrics: 快照 $SNAP 无对应 report（scan 失败仓）——跳过"
-              continue
-            fi
-            OWNER=$(basename $(dirname "$META"))
-            REPO=$(basename "$META" .json)
-            echo "== graph-metrics: $OWNER/$REPO（snapshot $SNAP）=="
-            if ! python3 scripts/graph-metrics.py \
-                --owner "$OWNER" --repo "$REPO" --snapshot "$SNAP" \
-                --out "graph-reports/$OWNER-$REPO.graph.json" \
-                --compare "$META"; then
-              RC=$?
-              if [ "$RC" -eq 2 ]; then
-                echo "graph-metrics: $OWNER/$REPO 双路径等价性 MISMATCH（exit 2）"
-              fi
-              FAILS=$((FAILS+1))
-            fi
-          done < snapshot-rows.txt
-          echo "graph-metrics 完成：失败仓 $FAILS 个（等价性 MISMATCH 计入）"
-          # 等价性 MISMATCH 不判批失败（记录→定位→修复面——exit 2 仅落 evidence）；
-          # 脚本级崩溃（exit 1）同样不阻断 census（图指标为独立观察面）
-          exit 0
-
-      - name: Upload graph metrics evidence
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: graph-metrics-evidence
-          path: graph-reports/
-          if-no-files-found: ignore
-
-  # 任务 2.5.1：census 聚合——全批 scan + projection-sweep 完成后单 job 聚合
-  # 并 commit（守门 N<30 → accumulating 不出分位——P2H-D6；checkout 默认停在
-  #  触发 commit，需 fetch 拉齐 matrix 各 job 的 bot report 提交后聚合）
-  # B3 修正：if: always()——此前 `needs: scan` 有 failure 即默认 skip（run #29
-  # census job 被 skip 实证：42 仓 3 失败导致聚合丢失）；projection-sweep
-  # 入依赖链避免与 sweep 的 bot commit 推送冲突（两 job 均 fetch+rebase
-  # 重试，但串行化消解竞争窗口）
+  # 任务 2.5.1：census 聚合——全批 scan 完成后单 job 聚合并 commit（守门 N<30
+  # → accumulating 不出分位——P2H-D6；checkout 默认停在触发 commit，需 fetch
+  # 拉齐 matrix 各 job 的 bot 提交后聚合）
+  # 按仓穿行（2026-11-25）：needs: [scan] + if: always()——单仓/多仓失败均不
+  # 阻断聚合，能聚合多少聚合多少（reports 区聚合成功产物；validation 区汇总
+  # 全部 pipeline-status 含失败仓——产品验证面）
   census:
-    needs: [scan, projection-sweep]
+    needs: [scan]
     if: always()
     runs-on: ubuntu-latest
     steps:
@@ -321,7 +293,7 @@ jobs:
           git fetch origin "${GITHUB_REF_NAME}"
           git reset --hard "origin/${GITHUB_REF_NAME}"
 
-      - name: Aggregate census summary (N gate)
+      - name: Aggregate census summary (N gate + validation roll-up)
         run: python3 scripts/census.py
 
       - name: Commit census summary

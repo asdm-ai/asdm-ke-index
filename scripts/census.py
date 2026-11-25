@@ -26,6 +26,12 @@
 # 逐框架跨仓版本分布 + 主版本众数份额（依赖同质度）；direction "none"
 # 描述面（cohort 区，不进分位分母）。
 #
+# 按仓穿行验证 roll-up（2026-11-25 用户裁决）：数据源 = pipeline-status/
+# {owner}/{repo}.json（scan job ⑤ annotate 确定性产物）——汇总各仓四子步
+# （scan/projection/metrics/consistency）结论与 consistencyResult 分布；
+# 单仓失败不阻断聚合（能聚合多少聚合多少）——reports 区聚合成功产物，
+# validation 区汇总全部状态含失败仓（产品验证面）。
+#
 # 分位算法：nearest-rank（Schema §4.2——升序第 ceil(p*N) 个值）。
 # 输出确定性：同一批 report 产出逐字节一致的 summary（不含墙钟时间戳）。
 #
@@ -40,10 +46,14 @@ import sys
 from math import ceil
 
 SCHEMA_VERSION = "draft-v1"
-IMPLEMENTATION = "ke-index census.py (5.1.4: L2 aggregation + D2 cohort layer over compute-metrics reports)"
+IMPLEMENTATION = "ke-index census.py (5.1.4: L2 aggregation + D2 cohort + per-repo pipeline validation roll-up)"
 
 # 标准分位集（Schema §4.2）
 PERCENTILES = [("p25", 0.25), ("p50", 0.50), ("p75", 0.75), ("p90", 0.90)]
+
+# 穿行子步键（与 pipeline-status.sh 状态机对齐——ok/failed/skipped 三值）
+PIPELINE_STEPS = ["scan", "projection", "metrics", "consistency"]
+CONSISTENCY_RESULTS = ["pass", "mismatch", "error", "skipped"]
 
 
 def nearest_rank(sorted_vals, p):
@@ -74,9 +84,28 @@ def load_reports(reports_dir):
     return out
 
 
+def load_statuses(status_dir):
+    """读 pipeline-status/{owner}/{repo}.json → [(owner, repo, status)]。
+
+    容错：单文件坏/缺失不阻断聚合（穿行裁决——聚合多少算多少，warn 后跳过）。
+    """
+    out = []
+    for path in sorted(glob.glob(os.path.join(status_dir, "*", "*.json"))):
+        owner = os.path.basename(os.path.dirname(path))
+        repo = os.path.splitext(os.path.basename(path))[0]
+        try:
+            with open(path, encoding="utf-8") as f:
+                out.append((owner, repo, json.load(f)))
+        except (OSError, ValueError) as e:
+            print("WARN: pipeline-status 不可读（跳过）%s：%s" % (path, e), file=sys.stderr)
+    return out
+
+
 def main():
     ap = argparse.ArgumentParser(description="KE Index census 聚合（N 守门）")
     ap.add_argument("--reports-dir", default="reports", help="report 目录（缺省 reports/）")
+    ap.add_argument("--status-dir", default="pipeline-status",
+                    help="穿行状态目录（缺省 pipeline-status/——validation roll-up 数据源）")
     ap.add_argument("--out", default="census/summary.json", help="输出文件（缺省 census/summary.json）")
     ap.add_argument("--publish-threshold", type=int, default=30, help="发布门槛（统计充分性——P2-D10）")
     ap.add_argument("--privacy-floor", type=int, default=5, help="k-匿名隐私护栏（单指标级——Schema §4.2）")
@@ -233,6 +262,39 @@ def main():
     d2_overall = (round(sum(d for _, d in weighted) / total_using, 6)
                   if total_using else None)
 
+    # ---- 按仓穿行验证 roll-up（2026-11-25——单仓失败不阻断聚合）----
+    statuses = load_statuses(args.status_dir)
+    step_counts = {k: {"ok": 0, "failed": 0, "skipped": 0} for k in PIPELINE_STEPS}
+    cons_counts = {r: 0 for r in CONSISTENCY_RESULTS}
+    overall_counts = {"pass": 0, "fail": 0}
+    failed_repos = []
+    for owner, repo, st in statuses:
+        rep_label = "%s/%s" % (owner, repo)
+        ov = st.get("overall")
+        if ov in overall_counts:
+            overall_counts[ov] += 1
+        steps = st.get("steps") or {}
+        bad_steps = []
+        for k in PIPELINE_STEPS:
+            v = steps.get(k)
+            if v in step_counts[k]:
+                step_counts[k][v] += 1
+            if v != "ok":
+                bad_steps.append("%s:%s" % (k, v or "missing"))
+        cr = st.get("consistencyResult")
+        if cr in cons_counts:
+            cons_counts[cr] += 1
+        if ov != "pass" and bad_steps:
+            failed_repos.append({"repo": rep_label, "failedSteps": bad_steps})
+    validation = {
+        "reposWithStatus": len(statuses),
+        "overall": overall_counts,
+        "steps": step_counts,
+        "consistencyResult": cons_counts,
+        "failedRepos": sorted(failed_repos, key=lambda x: x["repo"]),
+        "basis": "pipeline-status/{owner}/{repo}.json（scan job ⑤ annotate 确定性产物）——单仓失败不阻断聚合：reports 区聚合成功产物，本区汇总全部仓子步结论",
+    }
+
     summary = {
         "schemaVersion": SCHEMA_VERSION,
         "implementation": IMPLEMENTATION,
@@ -246,6 +308,7 @@ def main():
         },
         "repos": repo_index,
         "metrics": metrics_out,
+        "validation": validation,
         "cohort": {
             "D2": {
                 "id": "D2",
@@ -266,6 +329,11 @@ def main():
         f.write("\n")
     print("census written: %s（status=%s samples=%d metrics=%d）" % (
         args.out, status, samples, len(metrics_out)))
+    print("validation: repos=%d pass=%d fail=%d | consistency pass/mismatch/error/skipped = %d/%d/%d/%d" % (
+        len(statuses), overall_counts["pass"], overall_counts["fail"],
+        cons_counts["pass"], cons_counts["mismatch"], cons_counts["error"], cons_counts["skipped"]))
+    if failed_repos:
+        print("failed repos: %s" % ", ".join(f["repo"] for f in failed_repos))
     for mid in sorted(metrics_out):
         m = metrics_out[mid]
         print("  %s: N=%d missing=%d mean=%s" % (mid, m["N"], m["missing"], m["mean"]))
