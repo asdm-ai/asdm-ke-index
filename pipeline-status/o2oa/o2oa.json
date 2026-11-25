@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "pipeline-status-v1",
+  "owner": "o2oa",
+  "repo": "o2oa",
+  "sourceHead": "8ce6a68c2630ed3fa7d2891e34d30309a2f8a7e8",
+  "snapshotId": "a869137f-eab9-4c6a-99f0-c6d7cfa391a4",
+  "objectCount": 70501,
+  "importStatus": "completed",
+  "steps": {
+    "scan": "ok",
+    "projection": "ok",
+    "metrics": "ok",
+    "consistency": "ok"
+  },
+  "consistencyResult": "pass",
+  "overall": "pass"
+}
