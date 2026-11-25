@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "pipeline-status-v1",
+  "owner": "yudaocode",
+  "repo": "yudao-ui-admin-vue3",
+  "sourceHead": "af5d4870b70ef69133254769554ff6a929ee0ccf",
+  "snapshotId": "e260a772-bfdf-4b74-9f6c-71e7a4cd51e5",
+  "objectCount": 16456,
+  "importStatus": "completed",
+  "steps": {
+    "scan": "ok",
+    "projection": "ok",
+    "metrics": "ok",
+    "consistency": "ok"
+  },
+  "consistencyResult": "pass",
+  "overall": "pass"
+}
