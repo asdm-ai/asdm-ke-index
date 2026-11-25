@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "pipeline-status-v1",
+  "owner": "jeecgboot",
+  "repo": "JeecgBoot",
+  "sourceHead": "6184e2448fbf0a84e7f638596324c69c1a747549",
+  "snapshotId": null,
+  "objectCount": null,
+  "importStatus": null,
+  "steps": {
+    "scan": "skipped",
+    "projection": "skipped",
+    "metrics": "skipped",
+    "consistency": "skipped"
+  },
+  "consistencyResult": "skipped",
+  "overall": "fail"
+}
