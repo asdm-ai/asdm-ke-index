@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "pipeline-status-v1",
+  "owner": "dromara",
+  "repo": "dante-cloud",
+  "sourceHead": "c0402026db41dbd1d1c5b0f904cfdb38cbb9d7d2",
+  "snapshotId": "de5262db-9e6f-42dd-952a-abaa085fc566",
+  "objectCount": 476,
+  "importStatus": "completed",
+  "steps": {
+    "scan": "ok",
+    "projection": "ok",
+    "metrics": "ok",
+    "consistency": "ok"
+  },
+  "consistencyResult": "pass",
+  "overall": "pass"
+}
