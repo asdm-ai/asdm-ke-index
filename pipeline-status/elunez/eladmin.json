@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "pipeline-status-v1",
+  "owner": "elunez",
+  "repo": "eladmin",
+  "sourceHead": "646c58c30f2e9aecf998b054f05f4d9ba0008995",
+  "snapshotId": "5f43da18-2522-4257-b5ec-cbf636c65ce6",
+  "objectCount": 1357,
+  "importStatus": "completed",
+  "steps": {
+    "scan": "ok",
+    "projection": "ok",
+    "metrics": "ok",
+    "consistency": "ok"
+  },
+  "consistencyResult": "pass",
+  "overall": "pass"
+}
