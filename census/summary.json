@@ -32,7 +32,7 @@
       "owner": "YunaiV",
       "repo": "ruoyi-vue-pro",
       "sourceId": "ruoyi-vue-pro",
-      "snapshotId": "76d33f77-3431-47a5-aa95-52d124cc7f48",
+      "snapshotId": "ed871e9a-a05b-40f4-b52e-d916e758e06c",
       "objectCount": 46623,
       "linkCount": 230904,
       "schemaVersion": "draft-v1"
@@ -59,9 +59,9 @@
       "owner": "apache",
       "repo": "dubbo",
       "sourceId": "dubbo",
-      "snapshotId": "66147f91-e7da-433b-a69e-eeb8e57a016c",
-      "objectCount": 34058,
-      "linkCount": 136866,
+      "snapshotId": "c85c69f7-f555-4aaa-a5cd-ad32e6e042d3",
+      "objectCount": 34065,
+      "linkCount": 136879,
       "schemaVersion": "draft-v1"
     },
     {
@@ -95,7 +95,7 @@
       "owner": "chillzhuang",
       "repo": "SpringBlade",
       "sourceId": "SpringBlade",
-      "snapshotId": "00cbdc67-d672-4f68-a625-0c78a35f08a2",
+      "snapshotId": "6006192a-ae4d-4148-a406-9421fcfdf7af",
       "objectCount": 1073,
       "linkCount": 3002,
       "schemaVersion": "draft-v1"
@@ -113,7 +113,7 @@
       "owner": "dromara",
       "repo": "RuoYi-Vue-Plus",
       "sourceId": "RuoYi-Vue-Plus",
-      "snapshotId": "ed5e6d8e-5ed9-4786-adab-95d66005244c",
+      "snapshotId": "ef3b70ea-b6e9-4826-b75f-bf92369017f5",
       "objectCount": 4777,
       "linkCount": 22903,
       "schemaVersion": "draft-v1"
@@ -122,7 +122,7 @@
       "owner": "dromara",
       "repo": "dante-cloud",
       "sourceId": "dante-cloud",
-      "snapshotId": "2ab08e1c-2224-460b-9d4d-485df514760d",
+      "snapshotId": "de5262db-9e6f-42dd-952a-abaa085fc566",
       "objectCount": 476,
       "linkCount": 728,
       "schemaVersion": "draft-v1"
@@ -167,7 +167,7 @@
       "owner": "jeecgboot",
       "repo": "JeecgBoot",
       "sourceId": "JeecgBoot",
-      "snapshotId": "8481a87b-6667-48fc-bc24-51ff7ffbd025",
+      "snapshotId": "a122ab0b-4e1f-4cfa-a7c3-26bbcfabee68",
       "objectCount": 15697,
       "linkCount": 116780,
       "schemaVersion": "draft-v1"
@@ -194,7 +194,7 @@
       "owner": "lenve",
       "repo": "vhr",
       "sourceId": "vhr",
-      "snapshotId": "660d33e0-dd6e-4a94-a079-3d854d14568d",
+      "snapshotId": "b6f3dc1f-5154-467e-88be-d9ae13071272",
       "objectCount": 991,
       "linkCount": 1436,
       "schemaVersion": "draft-v1"
@@ -203,7 +203,7 @@
       "owner": "linlinjava",
       "repo": "litemall",
       "sourceId": "litemall",
-      "snapshotId": "59656209-d036-4f98-9b99-256bae72c60b",
+      "snapshotId": "bdd58ec0-fcfe-4019-889d-99c5bc35fbec",
       "objectCount": 13172,
       "linkCount": 34102,
       "schemaVersion": "draft-v1"
@@ -221,7 +221,7 @@
       "owner": "macrozheng",
       "repo": "mall-swarm",
       "sourceId": "mall-swarm",
-      "snapshotId": "6fee1a28-ab8e-426f-81da-b25e8f6e4db0",
+      "snapshotId": "e3399e3b-fa13-42a6-a5b3-05fc0d71da3b",
       "objectCount": 14878,
       "linkCount": 36007,
       "schemaVersion": "draft-v1"
@@ -230,7 +230,7 @@
       "owner": "macrozheng",
       "repo": "mall",
       "sourceId": "mall",
-      "snapshotId": "6522b9b6-c9ee-470b-bf43-aeff28f64690",
+      "snapshotId": "7997c769-c9d4-47b5-8d60-f20b1d731cae",
       "objectCount": 14527,
       "linkCount": 35226,
       "schemaVersion": "draft-v1"
@@ -239,7 +239,7 @@
       "owner": "metersphere",
       "repo": "metersphere",
       "sourceId": "metersphere",
-      "snapshotId": "14a4f943-e2f3-436b-bf4e-edbd2ebfa79a",
+      "snapshotId": "159293bc-8fa0-45a5-bafc-c8feb992059b",
       "objectCount": 43718,
       "linkCount": 157807,
       "schemaVersion": "draft-v1"
@@ -257,7 +257,7 @@
       "owner": "newbee-ltd",
       "repo": "newbee-mall",
       "sourceId": "newbee-mall",
-      "snapshotId": "b6a980e6-f6e2-4ad4-8d7a-07c7bd54915c",
+      "snapshotId": "0a5c3f9c-fed4-40c4-9dc3-846998a4a2c1",
       "objectCount": 933,
       "linkCount": 1470,
       "schemaVersion": "draft-v1"
@@ -266,7 +266,7 @@
       "owner": "o2oa",
       "repo": "o2oa",
       "sourceId": "o2oa",
-      "snapshotId": "b55157d4-da49-4684-8afb-c6e4699f12a9",
+      "snapshotId": "a869137f-eab9-4c6a-99f0-c6d7cfa391a4",
       "objectCount": 70501,
       "linkCount": 710059,
       "schemaVersion": "draft-v1"
@@ -284,7 +284,7 @@
       "owner": "pig-mesh",
       "repo": "pig",
       "sourceId": "pig",
-      "snapshotId": "43990c70-282f-413a-8941-b11f18e17077",
+      "snapshotId": "a4a88c5d-4594-4733-971a-6a4287473637",
       "objectCount": 2546,
       "linkCount": 7737,
       "schemaVersion": "draft-v1"
@@ -293,7 +293,7 @@
       "owner": "renrenio",
       "repo": "renren-fast",
       "sourceId": "renren-fast",
-      "snapshotId": "926635a6-33d7-4393-a5a3-c88830ed8296",
+      "snapshotId": "d202e066-3fcd-45c2-9a9b-89ae3dacb2e1",
       "objectCount": 777,
       "linkCount": 3326,
       "schemaVersion": "draft-v1"
@@ -329,7 +329,7 @@
       "owner": "stylefeng",
       "repo": "Guns",
       "sourceId": "Guns",
-      "snapshotId": "df8c701c-1341-4600-9a76-1f75f2639bc9",
+      "snapshotId": "2c22ff38-c30b-40a4-8d46-72f29168f6e1",
       "objectCount": 1377,
       "linkCount": 10042,
       "schemaVersion": "draft-v1"
@@ -338,7 +338,7 @@
       "owner": "thinkgem",
       "repo": "jeesite",
       "sourceId": "jeesite",
-      "snapshotId": "6886eb5c-c952-48d5-a74a-238e372a747a",
+      "snapshotId": "590057b4-69dd-4258-8472-5896b2b0e555",
       "objectCount": 2670,
       "linkCount": 14623,
       "schemaVersion": "draft-v1"
@@ -347,7 +347,7 @@
       "owner": "yangzongzhuan",
       "repo": "RuoYi-Cloud",
       "sourceId": "RuoYi-Cloud",
-      "snapshotId": "f3712925-3228-4848-bb98-8aeb3fdb3fd8",
+      "snapshotId": "f247d3e5-58d9-4584-8f32-62d3eb2dab9c",
       "objectCount": 2532,
       "linkCount": 8741,
       "schemaVersion": "draft-v1"
@@ -356,7 +356,7 @@
       "owner": "yangzongzhuan",
       "repo": "RuoYi-Vue",
       "sourceId": "RuoYi-Vue",
-      "snapshotId": "65a81b53-db3d-4f75-ae12-96f50f47826e",
+      "snapshotId": "25e1ab95-4a53-44e4-aaa1-17e739f1932a",
       "objectCount": 2560,
       "linkCount": 7765,
       "schemaVersion": "draft-v1"
@@ -387,8 +387,8 @@
       "label": "全链路贯通率",
       "domain": "A",
       "direction": "higher-better",
-      "N": 0,
-      "missing": 41,
+      "N": 7,
+      "missing": 34,
       "missingRepos": [
         {
           "repo": "Activiti/Activiti",
@@ -459,23 +459,11 @@
           "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）"
         },
         {
-          "repo": "jeecgboot/JeecgBoot",
-          "reason": "calls 传递闭包与 Method→Mapper 名字 join 未实现（过渡实现——待 ke checkup）"
-        },
-        {
           "repo": "jeecgboot/jeecgboot-vue3",
           "reason": "calls 传递闭包与 Method→Mapper 名字 join 未实现（过渡实现——待 ke checkup）"
         },
         {
           "repo": "keycloak/keycloak",
-          "reason": "calls 传递闭包与 Method→Mapper 名字 join 未实现（过渡实现——待 ke checkup）"
-        },
-        {
-          "repo": "lenve/vhr",
-          "reason": "calls 传递闭包与 Method→Mapper 名字 join 未实现（过渡实现——待 ke checkup）"
-        },
-        {
-          "repo": "linlinjava/litemall",
           "reason": "calls 传递闭包与 Method→Mapper 名字 join 未实现（过渡实现——待 ke checkup）"
         },
         {
@@ -491,19 +479,11 @@
           "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）"
         },
         {
-          "repo": "metersphere/metersphere",
-          "reason": "calls 传递闭包与 Method→Mapper 名字 join 未实现（过渡实现——待 ke checkup）"
-        },
-        {
           "repo": "newbee-ltd/newbee-mall",
           "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）"
         },
         {
           "repo": "newbee-ltd/newbee-mall-vue3-app",
-          "reason": "calls 传递闭包与 Method→Mapper 名字 join 未实现（过渡实现——待 ke checkup）"
-        },
-        {
-          "repo": "o2oa/o2oa",
           "reason": "calls 传递闭包与 Method→Mapper 名字 join 未实现（过渡实现——待 ke checkup）"
         },
         {
@@ -531,14 +511,6 @@
           "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）"
         },
         {
-          "repo": "stylefeng/Guns",
-          "reason": "calls 传递闭包与 Method→Mapper 名字 join 未实现（过渡实现——待 ke checkup）"
-        },
-        {
-          "repo": "thinkgem/jeesite",
-          "reason": "calls 传递闭包与 Method→Mapper 名字 join 未实现（过渡实现——待 ke checkup）"
-        },
-        {
           "repo": "yangzongzhuan/RuoYi-Cloud",
           "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）"
         },
@@ -555,10 +527,14 @@
           "reason": "calls 传递闭包与 Method→Mapper 名字 join 未实现（过渡实现——待 ke checkup）"
         }
       ],
-      "mean": null,
-      "percentiles": null,
-      "percentileMethod": "nearest-rank (Schema §4.2)",
-      "gateNote": "k-匿名隐私护栏：切片 N=0 < 5，整组不出分位（与发布门槛显式区分）"
+      "mean": 0.142857,
+      "percentiles": {
+        "p25": 0.0,
+        "p50": 0.0,
+        "p75": 0.0,
+        "p90": 1.0
+      },
+      "percentileMethod": "nearest-rank (Schema §4.2)"
     },
     "A2": {
       "id": "A2",
@@ -1154,8 +1130,8 @@
       "label": "端到端跳数",
       "domain": "C",
       "direction": "interval",
-      "N": 0,
-      "missing": 41,
+      "N": 1,
+      "missing": 40,
       "missingRepos": [
         {
           "repo": "Activiti/Activiti",
@@ -1227,7 +1203,7 @@
         },
         {
           "repo": "jeecgboot/JeecgBoot",
-          "reason": "依赖 A1 贯通链算法（过渡实现未含——待 ke checkup）"
+          "reason": "无贯通链（全部 API 闭包未到达带表映射的 Mapper——跳数分布分母为 0）"
         },
         {
           "repo": "jeecgboot/jeecgboot-vue3",
@@ -1238,12 +1214,8 @@
           "reason": "依赖 A1 贯通链算法（过渡实现未含——待 ke checkup）"
         },
         {
-          "repo": "lenve/vhr",
-          "reason": "依赖 A1 贯通链算法（过渡实现未含——待 ke checkup）"
-        },
-        {
           "repo": "linlinjava/litemall",
-          "reason": "依赖 A1 贯通链算法（过渡实现未含——待 ke checkup）"
+          "reason": "无贯通链（全部 API 闭包未到达带表映射的 Mapper——跳数分布分母为 0）"
         },
         {
           "repo": "macrozheng/mall",
@@ -1259,7 +1231,7 @@
         },
         {
           "repo": "metersphere/metersphere",
-          "reason": "依赖 A1 贯通链算法（过渡实现未含——待 ke checkup）"
+          "reason": "无贯通链（全部 API 闭包未到达带表映射的 Mapper——跳数分布分母为 0）"
         },
         {
           "repo": "newbee-ltd/newbee-mall",
@@ -1271,7 +1243,7 @@
         },
         {
           "repo": "o2oa/o2oa",
-          "reason": "依赖 A1 贯通链算法（过渡实现未含——待 ke checkup）"
+          "reason": "无贯通链（全部 API 闭包未到达带表映射的 Mapper——跳数分布分母为 0）"
         },
         {
           "repo": "pig-mesh/pig",
@@ -1299,11 +1271,11 @@
         },
         {
           "repo": "stylefeng/Guns",
-          "reason": "依赖 A1 贯通链算法（过渡实现未含——待 ke checkup）"
+          "reason": "无贯通链（全部 API 闭包未到达带表映射的 Mapper——跳数分布分母为 0）"
         },
         {
           "repo": "thinkgem/jeesite",
-          "reason": "依赖 A1 贯通链算法（过渡实现未含——待 ke checkup）"
+          "reason": "无贯通链（全部 API 闭包未到达带表映射的 Mapper——跳数分布分母为 0）"
         },
         {
           "repo": "yangzongzhuan/RuoYi-Cloud",
@@ -1325,7 +1297,7 @@
       "mean": null,
       "percentiles": null,
       "percentileMethod": "nearest-rank (Schema §4.2)",
-      "gateNote": "k-匿名隐私护栏：切片 N=0 < 5，整组不出分位（与发布门槛显式区分）"
+      "gateNote": "k-匿名隐私护栏：切片 N=1 < 5，整组不出分位（与发布门槛显式区分）"
     },
     "C2": {
       "id": "C2",
@@ -1420,7 +1392,7 @@
           "reason": "无 Method 对象（分母为 0）"
         }
       ],
-      "mean": 0.108559,
+      "mean": 0.108564,
       "percentiles": {
         "p25": 0.004317,
         "p50": 0.039664,
@@ -1486,8 +1458,8 @@
       "label": "技术栈版本覆盖率",
       "domain": "D",
       "direction": "higher-better",
-      "N": 0,
-      "missing": 41,
+      "N": 3,
+      "missing": 38,
       "missingRepos": [
         {
           "repo": "Activiti/Activiti",
@@ -1499,7 +1471,7 @@
         },
         {
           "repo": "YunaiV/ruoyi-vue-pro",
-          "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）"
+          "reason": "策略框架命中依赖无可判定版本（全仓可判定版本 2 个均不匹配策略表）"
         },
         {
           "repo": "alibaba/druid",
@@ -1511,7 +1483,7 @@
         },
         {
           "repo": "apache/dubbo",
-          "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）"
+          "reason": "策略框架命中依赖无可判定版本（全仓可判定版本 10 个均不匹配策略表）"
         },
         {
           "repo": "apache/fineract",
@@ -1527,7 +1499,7 @@
         },
         {
           "repo": "chillzhuang/SpringBlade",
-          "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）"
+          "reason": "策略框架命中依赖无可判定版本（全仓可判定版本 2 个均不匹配策略表）"
         },
         {
           "repo": "dhis2/dhis2-core",
@@ -1535,11 +1507,11 @@
         },
         {
           "repo": "dromara/RuoYi-Vue-Plus",
-          "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）"
+          "reason": "策略框架命中依赖无可判定版本（全仓可判定版本 2 个均不匹配策略表）"
         },
         {
           "repo": "dromara/dante-cloud",
-          "reason": "无可判定版本（空串 26 / 属性占位 11 / 合计 37——分母为 0，按口径置空）"
+          "reason": "无可判定版本（策略框架命中 0 或全部空串/占位——分母为 0，按口径置空）"
         },
         {
           "repo": "elunez/eladmin",
@@ -1558,10 +1530,6 @@
           "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）"
         },
         {
-          "repo": "jeecgboot/JeecgBoot",
-          "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）"
-        },
-        {
           "repo": "jeecgboot/jeecgboot-vue3",
           "reason": "无可判定版本（空串 0 / 属性占位 0 / 合计 0——分母为 0，按口径置空）"
         },
@@ -1571,15 +1539,11 @@
         },
         {
           "repo": "lenve/vhr",
-          "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）"
-        },
-        {
-          "repo": "linlinjava/litemall",
-          "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）"
+          "reason": "策略框架命中依赖无可判定版本（全仓可判定版本 3 个均不匹配策略表）"
         },
         {
           "repo": "macrozheng/mall",
-          "reason": "无可判定版本（空串 14 / 属性占位 20 / 合计 34——分母为 0，按口径置空）"
+          "reason": "无可判定版本（策略框架命中 0 或全部空串/占位——分母为 0，按口径置空）"
         },
         {
           "repo": "macrozheng/mall-admin-web",
@@ -1587,27 +1551,23 @@
         },
         {
           "repo": "macrozheng/mall-swarm",
-          "reason": "无可判定版本（空串 19 / 属性占位 27 / 合计 46——分母为 0，按口径置空）"
+          "reason": "无可判定版本（策略框架命中 0 或全部空串/占位——分母为 0，按口径置空）"
         },
         {
           "repo": "metersphere/metersphere",
-          "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）"
+          "reason": "策略框架命中依赖无可判定版本（全仓可判定版本 4 个均不匹配策略表）"
         },
         {
           "repo": "newbee-ltd/newbee-mall",
-          "reason": "无可判定版本（空串 5 / 属性占位 2 / 合计 7——分母为 0，按口径置空）"
+          "reason": "无可判定版本（策略框架命中 0 或全部空串/占位——分母为 0，按口径置空）"
         },
         {
           "repo": "newbee-ltd/newbee-mall-vue3-app",
           "reason": "无可判定版本（空串 0 / 属性占位 0 / 合计 0——分母为 0，按口径置空）"
         },
         {
-          "repo": "o2oa/o2oa",
-          "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）"
-        },
-        {
           "repo": "pig-mesh/pig",
-          "reason": "无可判定版本（空串 49 / 属性占位 89 / 合计 138——分母为 0，按口径置空）"
+          "reason": "无可判定版本（策略框架命中 0 或全部空串/占位——分母为 0，按口径置空）"
         },
         {
           "repo": "pig-mesh/pig-ui",
@@ -1615,7 +1575,7 @@
         },
         {
           "repo": "renrenio/renren-fast",
-          "reason": "无可判定版本（空串 9 / 属性占位 25 / 合计 34——分母为 0，按口径置空）"
+          "reason": "无可判定版本（策略框架命中 0 或全部空串/占位——分母为 0，按口径置空）"
         },
         {
           "repo": "spring-projects/spring-boot",
@@ -1631,19 +1591,19 @@
         },
         {
           "repo": "stylefeng/Guns",
-          "reason": "无可判定版本（空串 2 / 属性占位 3 / 合计 5——分母为 0，按口径置空）"
+          "reason": "无可判定版本（策略框架命中 0 或全部空串/占位——分母为 0，按口径置空）"
         },
         {
           "repo": "thinkgem/jeesite",
-          "reason": "无可判定版本（空串 0 / 属性占位 0 / 合计 0——分母为 0，按口径置空）"
+          "reason": "无可判定版本（策略框架命中 0 或全部空串/占位——分母为 0，按口径置空）"
         },
         {
           "repo": "yangzongzhuan/RuoYi-Cloud",
-          "reason": "无可判定版本（空串 25 / 属性占位 28 / 合计 53——分母为 0，按口径置空）"
+          "reason": "无可判定版本（策略框架命中 0 或全部空串/占位——分母为 0，按口径置空）"
         },
         {
           "repo": "yangzongzhuan/RuoYi-Vue",
-          "reason": "无可判定版本（空串 15 / 属性占位 20 / 合计 35——分母为 0，按口径置空）"
+          "reason": "无可判定版本（策略框架命中 0 或全部空串/占位——分母为 0，按口径置空）"
         },
         {
           "repo": "yangzongzhuan/RuoYi-Vue3",
@@ -1657,81 +1617,48 @@
       "mean": null,
       "percentiles": null,
       "percentileMethod": "nearest-rank (Schema §4.2)",
-      "gateNote": "k-匿名隐私护栏：切片 N=0 < 5，整组不出分位（与发布门槛显式区分）"
+      "gateNote": "k-匿名隐私护栏：切片 N=3 < 5，整组不出分位（与发布门槛显式区分）"
     }
   },
   "validation": {
-    "reposWithStatus": 5,
+    "reposWithStatus": 20,
     "overall": {
-      "pass": 0,
-      "fail": 5
+      "pass": 19,
+      "fail": 1
     },
     "steps": {
       "scan": {
-        "ok": 4,
+        "ok": 20,
         "failed": 0,
-        "skipped": 1
+        "skipped": 0
       },
       "projection": {
-        "ok": 0,
-        "failed": 4,
+        "ok": 19,
+        "failed": 0,
         "skipped": 1
       },
       "metrics": {
-        "ok": 0,
+        "ok": 19,
         "failed": 0,
-        "skipped": 5
+        "skipped": 1
       },
       "consistency": {
-        "ok": 0,
+        "ok": 19,
         "failed": 0,
-        "skipped": 5
+        "skipped": 1
       }
     },
     "consistencyResult": {
-      "pass": 0,
+      "pass": 19,
       "mismatch": 0,
       "error": 0,
-      "skipped": 5
+      "skipped": 1
     },
     "failedRepos": [
       {
-        "repo": "dromara/RuoYi-Vue-Plus",
+        "repo": "apache/fineract",
         "failedSteps": [
-          "projection:failed",
-          "metrics:skipped",
-          "consistency:skipped"
-        ]
-      },
-      {
-        "repo": "jeecgboot/JeecgBoot",
-        "failedSteps": [
-          "scan:skipped",
           "projection:skipped",
-          "metrics:skipped",
-          "consistency:skipped"
-        ]
-      },
-      {
-        "repo": "macrozheng/mall",
-        "failedSteps": [
-          "projection:failed",
-          "metrics:skipped",
-          "consistency:skipped"
-        ]
-      },
-      {
-        "repo": "macrozheng/mall-swarm",
-        "failedSteps": [
-          "projection:failed",
-          "metrics:skipped",
-          "consistency:skipped"
-        ]
-      },
-      {
-        "repo": "yangzongzhuan/RuoYi-Vue",
-        "failedSteps": [
-          "projection:failed",
           "metrics:skipped",
           "consistency:skipped"
         ]
@@ -1746,8 +1673,43 @@
       "label": "依赖同质度",
       "domain": "D",
       "direction": "none",
-      "value": null,
-      "frameworks": {},
+      "value": 0.428571,
+      "frameworks": {
+        "druid": {
+          "reposUsing": 3,
+          "distinctVersions": 3,
+          "dominantVersion": "1.2.1",
+          "dominantShare": 0.333333,
+          "mixedVersionRepos": 0,
+          "versionDistribution": {
+            "1.2.1": 1,
+            "1.2.28": 1,
+            "1.2.8": 1
+          }
+        },
+        "mysql-connector-j": {
+          "reposUsing": 3,
+          "distinctVersions": 3,
+          "dominantVersion": "${mysql-connector-java.version}",
+          "dominantShare": 0.333333,
+          "mixedVersionRepos": 0,
+          "versionDistribution": {
+            "${mysql-connector-java.version}": 1,
+            "8.0.28": 1,
+            "8.0.33": 1
+          }
+        },
+        "spring-boot": {
+          "reposUsing": 1,
+          "distinctVersions": 1,
+          "dominantVersion": "2.1.5.RELEASE",
+          "dominantShare": 1.0,
+          "mixedVersionRepos": 0,
+          "versionDistribution": {
+            "2.1.5.RELEASE": 1
+          }
+        }
+      },
       "basis": "逐框架主版本众数份额（仓代表版本 = 命中依赖最大版本）按使用仓数加权平均"
     }
   }
