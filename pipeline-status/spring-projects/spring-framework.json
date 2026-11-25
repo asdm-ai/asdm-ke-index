@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "pipeline-status-v1",
+  "owner": "spring-projects",
+  "repo": "spring-framework",
+  "sourceHead": "0bbae075ecf81ce7c8e44262c4087470d2413fab",
+  "snapshotId": "98e14231-633f-4244-a63a-fe759a8b4995",
+  "objectCount": 105968,
+  "importStatus": "completed",
+  "steps": {
+    "scan": "ok",
+    "projection": "ok",
+    "metrics": "ok",
+    "consistency": "ok"
+  },
+  "consistencyResult": "pass",
+  "overall": "pass"
+}
