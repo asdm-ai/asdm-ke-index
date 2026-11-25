@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "pipeline-status-v1",
+  "owner": "stylefeng",
+  "repo": "Guns",
+  "sourceHead": "2a12947733945d5c06197d99ecaa77d7f2b0aeba",
+  "snapshotId": "2c22ff38-c30b-40a4-8d46-72f29168f6e1",
+  "objectCount": 1377,
+  "importStatus": "completed",
+  "steps": {
+    "scan": "ok",
+    "projection": "ok",
+    "metrics": "ok",
+    "consistency": "ok"
+  },
+  "consistencyResult": "pass",
+  "overall": "pass"
+}
