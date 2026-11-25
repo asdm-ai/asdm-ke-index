@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "pipeline-status-v1",
+  "owner": "Activiti",
+  "repo": "Activiti",
+  "sourceHead": "610f3e785dbce2ce7e35e0836e311d5777cc2de5",
+  "snapshotId": "b4a8661c-939b-4946-9033-0da059662953",
+  "objectCount": 24198,
+  "importStatus": "completed",
+  "steps": {
+    "scan": "ok",
+    "projection": "ok",
+    "metrics": "ok",
+    "consistency": "ok"
+  },
+  "consistencyResult": "pass",
+  "overall": "pass"
+}
