@@ -3,15 +3,15 @@
   "owner": "apache",
   "repo": "fineract",
   "sourceHead": "9c7f397727d4681f95aeed749e1eaf5e8edd8a66",
-  "snapshotId": "c051a14f-5d63-47b4-921f-11f3028c4711",
+  "snapshotId": "4f9e5c36-da96-4349-b682-0bebacae68d7",
   "objectCount": 53718,
   "importStatus": "completed",
   "steps": {
     "scan": "ok",
-    "projection": "skipped",
-    "metrics": "skipped",
-    "consistency": "skipped"
+    "projection": "ok",
+    "metrics": "ok",
+    "consistency": "ok"
   },
-  "consistencyResult": "skipped",
-  "overall": "fail"
+  "consistencyResult": "pass",
+  "overall": "pass"
 }
