@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "pipeline-status-v1",
+  "owner": "dromara",
+  "repo": "RuoYi-Vue-Plus",
+  "sourceHead": "835246ebeb7b70ee9b5c9b8dd20c935f736be4d2",
+  "snapshotId": "5262ac9a-b4fa-46eb-92ae-ccf7edcaf4dc",
+  "objectCount": 4777,
+  "importStatus": "completed",
+  "steps": {
+    "scan": "ok",
+    "projection": "failed",
+    "metrics": "skipped",
+    "consistency": "skipped"
+  },
+  "consistencyResult": "skipped",
+  "overall": "fail"
+}
