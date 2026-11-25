@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "pipeline-status-v1",
+  "owner": "newbee-ltd",
+  "repo": "newbee-mall",
+  "sourceHead": "a069069b07027613bf0e7f571736be86f431faee",
+  "snapshotId": "0a5c3f9c-fed4-40c4-9dc3-846998a4a2c1",
+  "objectCount": 933,
+  "importStatus": "completed",
+  "steps": {
+    "scan": "ok",
+    "projection": "ok",
+    "metrics": "ok",
+    "consistency": "ok"
+  },
+  "consistencyResult": "pass",
+  "overall": "pass"
+}
