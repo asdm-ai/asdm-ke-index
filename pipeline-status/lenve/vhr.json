@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "pipeline-status-v1",
+  "owner": "lenve",
+  "repo": "vhr",
+  "sourceHead": "28a9f8a5b5619234b9d6d99389f9046dd79c99d5",
+  "snapshotId": "b6f3dc1f-5154-467e-88be-d9ae13071272",
+  "objectCount": 991,
+  "importStatus": "completed",
+  "steps": {
+    "scan": "ok",
+    "projection": "ok",
+    "metrics": "ok",
+    "consistency": "ok"
+  },
+  "consistencyResult": "pass",
+  "overall": "pass"
+}
