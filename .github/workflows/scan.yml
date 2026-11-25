@@ -134,14 +134,16 @@ jobs:
 
       # 快照 ID 落 artifact（B3）：projection-sweep 统一补投的消费面——仅成功
       # job 上传（scan 失败 exit 1 后续步默认跳过；defer=false 即刻投影时同样
-      # 上传——幂等重投零副作用，保持 sweep 驱动面统一）
+      # 上传——幂等重投零副作用，保持 sweep 驱动面统一）。行格式
+      # "<snapshotId> <objectCount>"——sweep 按 count 降序排程（大仓独占窗口）
       - name: Record snapshot id
         if: steps.preflight.outputs.skip != 'true' && steps.scan.outputs.snapshot_id != ''
         env:
           SNAPSHOT_ID: ${{ steps.scan.outputs.snapshot_id }}
+          OBJECT_COUNT: ${{ steps.scan.outputs.snapshot_count }}
           OWNER: ${{ matrix.owner }}
           REPO: ${{ matrix.repo }}
-        run: echo "$SNAPSHOT_ID" > "snap-${OWNER}-${REPO}.txt"
+        run: echo "$SNAPSHOT_ID ${OBJECT_COUNT:-0}" > "snap-${OWNER}-${REPO}.txt"
 
       - name: Upload snapshot id artifact
         if: steps.preflight.outputs.skip != 'true' && steps.scan.outputs.snapshot_id != ''
@@ -231,13 +233,18 @@ jobs:
           KE_API_KEY: ${{ secrets.KE_API_KEY }}
           KE_SERVER_URL: ${{ secrets.KE_SERVER_URL }}
         run: |
-          cat snapids/*.txt 2>/dev/null | sed 's/[[:space:]]//g' | grep -v '^$' | sort -u > snapshots.txt || true
-          COUNT=$(wc -l < snapshots.txt)
-          echo "projection-sweep: 待补投快照 ${COUNT} 个"
+          # 行格式 "<snapshotId> <objectCount>"——objectCount 降序排程（大仓独占
+          # 窗口：46k 节点投影独占态 ~200-250/s vs 并发劣化 70/s，Hotfix-14 步骤 5）
+          cat snapids/*.txt 2>/dev/null | sed 's/[[:space:]]\+/ /g' | grep -v '^$' \
+            | sort -t' ' -k2 -rn -u > snapshot-rows.txt || true
+          COUNT=$(wc -l < snapshot-rows.txt)
+          echo "projection-sweep: 待补投快照 ${COUNT} 个（objectCount 降序）"
+          head -n 5 snapshot-rows.txt || true
           if [ "$COUNT" -eq 0 ]; then
             echo "projection-sweep: 无待补投快照（全批 preflight skip）——安静退出"
             exit 0
           fi
+          cut -d' ' -f1 snapshot-rows.txt > snapshots.txt
           ke --mode server --url "$KE_SERVER_URL" --token "$KE_API_KEY" \
             project --snapshots-file snapshots.txt --timeout-min 180
 

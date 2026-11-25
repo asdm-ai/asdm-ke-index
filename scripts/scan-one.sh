@@ -119,9 +119,11 @@ OBJECT_COUNT=$(printf '%s' "$SUMMARY" | jq -r '.objectCount')
 SNAPSHOT_ID=$(printf '%s' "$SUMMARY" | jq -r '.snapshotId')
 STATUS=$(printf '%s' "$SUMMARY" | jq -r '.status')
 echo "scan-one: $OWNER/$REPO ${STATUS} objectCount=$OBJECT_COUNT snapshotId=$SNAPSHOT_ID"
-# snapshot_id 出参（B3）：projection-sweep job 经 artifact 消费（错峰补投对象）
+# snapshot_id/count 出参（B3）：projection-sweep job 经 artifact 消费（错峰补投
+# 对象 + objectCount 降序排程——大仓独占窗口，Hotfix-14 步骤 5 设计）
 if [ -n "${GITHUB_OUTPUT:-}" ] && [ -n "$SNAPSHOT_ID" ] && [ "$SNAPSHOT_ID" != "null" ]; then
   echo "snapshot_id=$SNAPSHOT_ID" >> "$GITHUB_OUTPUT"
+  echo "snapshot_count=${OBJECT_COUNT:-0}" >> "$GITHUB_OUTPUT"
 fi
 # 末行回显单行紧凑 summary JSON（服务端对账锚——与 /api/snapshots objectCount 逐位对照）
 printf '%s\n' "$SUMMARY" | jq -c .
