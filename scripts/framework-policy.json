@@ -1,0 +1,37 @@
+{
+  "version": "1.0",
+  "comment": "KE Index D1 技术栈版本覆盖率目标区间表——运营策略输入（非工程事实）。单体 D1 = 匹配策略框架且版本可判定的依赖中，落在目标区间的占比；非框架依赖不入分母。区间语法：空格分隔多约束全与（>=x.y.z <a.b.c），版本比较取前导数字段（5.3.39-RELEASE → 5.3.39）。",
+  "defaultsNote": "默认值草案（2026-11-24 D1 释义会话定稿）；后续调整走版本化修订（本文件入 git——变更可追溯）。",
+  "frameworks": [
+    {
+      "framework": "spring-boot",
+      "match": ["org.springframework.boot:"],
+      "targetRange": ">=2.7.0 <4.0.0",
+      "note": "starter 全家与 boot 本体（groupId 前缀匹配）"
+    },
+    {
+      "framework": "spring-framework",
+      "match": ["org.springframework:spring-"],
+      "targetRange": ">=5.3.0 <7.0.0",
+      "note": "spring-core/webmvc/context 等（org.springframework:spring-* ——不含 spring-boot 与 spring-data 等 groupId 不同的家族）"
+    },
+    {
+      "framework": "mybatis",
+      "match": ["org.mybatis:"],
+      "targetRange": ">=3.5.0",
+      "note": "mybatis / mybatis-spring / generator（org.mybatis groupId 全家）"
+    },
+    {
+      "framework": "mysql-connector-j",
+      "match": ["com.mysql:mysql-connector-j", "mysql:mysql-connector-java"],
+      "targetRange": ">=8.0.28",
+      "note": "8.x 新坐标 com.mysql:mysql-connector-j 与 5.x/6.x 旧坐标 mysql:mysql-connector-java 双形态"
+    },
+    {
+      "framework": "druid",
+      "match": ["com.alibaba:druid"],
+      "targetRange": ">=1.2.0",
+      "note": "Alibaba Druid 连接池"
+    }
+  ]
+}

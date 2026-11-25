@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # =============================================================================
-# KE Index · L1 指标计算（过渡实现——P2H-D5）
+# KE Index · L1 指标计算（5.1.4 全量指标版——A1/C1 图闭包 + D1 策略 + D4 时序）
 # -----------------------------------------------------------------------------
 # 用法（GitHub Actions 与本地复算同形）：
 #   KE_SERVER_URL=https://... KE_API_KEY=... python3 scripts/compute-metrics.py \
@@ -13,8 +13,15 @@
 #     Method/Dependency）+ 条件拉取前端类（ApiEndpoint/Module/Component 存在时）
 #   - 内存聚合：双条件判定（A3/A4）、Tarjan SCC（B1）、nearest-rank 分位（C2）、
 #     比率指标（B3/C3/C4）、规模画像（D3）
+#   - 5.1.4（A1/C1/D1/D4 补全——P2-D16 第一优先级）：
+#     * A1/C1：graph 端点 NDJSON 全量边拉取 + 本地 calls 闭包 BFS +
+#       Method→Mapper FQN join（V5.1.4.3 过渡形态；图查询形态见 graph-metrics.py）
+#     * D1：framework-policy.json 目标 semver 区间匹配（运营策略输入）
+#     * D4：历史 report 差分（同 source 多快照时序）
+#     * stats 端点单次收敛（14 次 ke count → 1 次 /api/ontology/stats）
 #   - 交叉验证：分子/基数与 `ke count --where` 服务端计数逐位对账——不一致
-#     即失败（记录→定位→修复，不静默吞差）
+#     即失败（记录→定位→修复，不静默吞差）；graph 边总数 vs 快照 linkCount
+#     通道不一致即失败（拉取完整性硬判据）
 #   - 可复算：每指标附 commands 指令清单（连接参数以 $KE_SERVER_URL /
 #     $KE_API_KEY 环境变量占位——导出后可直接粘贴执行）
 #   - 置空口径：分母为 0 或对象类缺失时指标置 null 并记录 reason（对齐
@@ -28,13 +35,17 @@
 import argparse
 import json
 import os
+import re
 import shlex
 import subprocess
 import sys
+import urllib.parse
+import urllib.request
+from collections import deque
 from math import ceil
 
 SCHEMA_VERSION = "draft-v1"
-IMPLEMENTATION = "ke-index compute-metrics.py (transitional; to be superseded by ke checkup)"
+IMPLEMENTATION = "ke-index compute-metrics.py (5.1.4 full metrics: A1/C1 graph closure, D1 policy, D4 trend; to be superseded by ke checkup)"
 
 # 蓝图 14 对象类型（D3 typeCounts 口径——逐类型 count）
 OBJECT_TYPES = [
@@ -141,6 +152,149 @@ def query_cmd(obj_type, fields, snapshot_id):
 
 
 # =============================================================================
+# 5.1.4 · HTTP 直连面（stats 收敛 / graph NDJSON 拉取——Bearer 同 CLI token）
+# =============================================================================
+
+def http_json(url, token, timeout=120):
+    req = urllib.request.Request(url, headers={"Authorization": "Bearer " + token})
+    with urllib.request.urlopen(req, timeout=timeout) as resp:
+        return json.loads(resp.read().decode("utf-8"))
+
+
+def http_ndjson(url, token, timeout=900):
+    """流式拉取 NDJSON 端点（graph 全量 dump——逐行 yield，避免大仓整载）。"""
+    req = urllib.request.Request(url, headers={"Authorization": "Bearer " + token})
+    with urllib.request.urlopen(req, timeout=timeout) as resp:
+        for raw in resp:
+            line = raw.strip()
+            if line:
+                try:
+                    yield json.loads(line)
+                except ValueError:
+                    continue
+
+
+def api_cmd(path):
+    """可复算指令记录（HTTP 端点形态——curl 占位与 ke 命令同风格）。"""
+    return 'curl -s -H "Authorization: Bearer $KE_API_KEY" "$KE_SERVER_URL%s"' % path
+
+
+# =============================================================================
+# 5.1.4 · framework-policy（D1 目标 semver 区间——运营策略输入，非工程事实）
+# =============================================================================
+
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+DEFAULT_POLICY_PATH = os.path.join(SCRIPT_DIR, "framework-policy.json")
+
+
+def load_framework_policy(path=None):
+    with open(path or DEFAULT_POLICY_PATH, encoding="utf-8") as f:
+        policy = json.load(f)
+    frameworks = policy.get("frameworks") or []
+    if not frameworks:
+        raise KeError("framework-policy.json 无 frameworks 条目")
+    return policy
+
+
+def version_key(v):
+    """宽松版本序键：取前导数字段（"5.3.39-RELEASE"→(5,3,39)；"1.2.23.Final"→(1,2,23)）。
+    无数字段（如 "jdk18on" 起头）→ 空元组（参与比较但排序最前——不满足任何 >= 下界）。"""
+    parts = re.split(r"[.\-_]", str(v))
+    nums = []
+    for p in parts:
+        if p.isdigit():
+            nums.append(int(p))
+            continue
+        lead = ""
+        for ch in p:
+            if ch.isdigit():
+                lead += ch
+            else:
+                break
+        if lead:
+            nums.append(int(lead))
+        break
+    return tuple(nums)
+
+
+def _key_tuple_pad(a, b):
+    width = max(len(a), len(b))
+    return a + (0,) * (width - len(a)), b + (0,) * (width - len(b))
+
+
+def satisfies_range(version, range_expr):
+    """semver 区间判定："">=2.7.0 <4.0.0"" / "">=3.5"" / ""=8.0.33""——空格分隔多约束全与。"""
+    if not version:
+        return False
+    vk = version_key(version)
+    for token in str(range_expr).split():
+        m = re.match(r"^(>=|<=|>|<|=)\s*(.+)$", token)
+        if not m:
+            return False
+        op, ref = m.group(1), m.group(2)
+        rvk = version_key(ref)
+        a, b = _key_tuple_pad(vk, rvk)
+        if op == ">=" and not a >= b:
+            return False
+        if op == "<=" and not a <= b:
+            return False
+        if op == ">" and not a > b:
+            return False
+        if op == "<" and not a < b:
+            return False
+        if op == "=" and a != b:
+            return False
+    return True
+
+
+def is_determinable_version(v):
+    """可判定版本：非空且非属性占位（"${...}"）。"""
+    return bool(v) and isinstance(v, str) and "${" not in v
+
+
+# =============================================================================
+# 5.1.4 · A1/C1 闭包算法（calls 出边 BFS + Method→Mapper FQN join）
+# =============================================================================
+
+def strip_type_prefix(node_id):
+    """对象 id 剥类型前缀取裸 FQN（"mtd:com.x.Y.m"→"com.x.Y.m"；无前缀原样）。"""
+    return node_id.split(":", 1)[1] if ":" in node_id else node_id
+
+
+def declaring_fqn(method_id):
+    """方法 id → 声明者 FQN（去末段方法名——与 Mapper.namespace 裸 FQN 同形）。"""
+    fqn = strip_type_prefix(method_id)
+    return fqn.rsplit(".", 1)[0] if "." in fqn else ""
+
+
+def closure_chain(start_method, calls_adj, mapper_by_ns):
+    """calls 出边 BFS（本地完整闭包——无深度上限）。
+
+    返回 (first_table_level, closure_size, mapper_method_count)：
+    - first_table_level：首个"所属 Mapper 带 mappedTableIds"方法的 BFS 层
+      （起点=0；边数语义——多链取最短即 BFS 首中；None=未贯通）
+    - closure_size：闭包节点数（含起点）
+    - mapper_method_count：闭包中命中 Mapper namespace 的方法数
+    """
+    q = deque([(start_method, 0)])
+    visited = {start_method}
+    first_table_level = None
+    mapper_methods = 0
+    while q:
+        node, lvl = q.popleft()
+        mp = mapper_by_ns.get(declaring_fqn(node))
+        if mp is not None:
+            mapper_methods += 1
+            if first_table_level is None and (mp.get("mappedTableIds") or []):
+                first_table_level = lvl
+        for nxt in calls_adj.get(node, ()):
+            if nxt not in visited:
+                visited.add(nxt)
+                q.append((nxt, lvl + 1))
+    return first_table_level, len(visited), mapper_methods
+
+
+# =============================================================================
 # 内存聚合算法
 # =============================================================================
 
@@ -199,6 +353,14 @@ def nearest_rank(sorted_vals, p):
         return None
     idx = max(1, ceil(p * n))
     return sorted_vals[min(idx, n) - 1]
+
+
+def _bucketize(vals):
+    """值→计数分布（C1 跳数直方图——离散小值域）。"""
+    out = {}
+    for v in vals:
+        out[v] = out.get(v, 0) + 1
+    return out
 
 
 def num_or_zero(v):
@@ -275,6 +437,8 @@ def main():
     ap.add_argument("--url", default=os.environ.get("KE_SERVER_URL"), help="aos-server 基址（缺省读 KE_SERVER_URL）")
     ap.add_argument("--token", default=os.environ.get("KE_API_KEY"), help="API key（缺省读 KE_API_KEY）")
     ap.add_argument("--out", default=None, help="输出文件（缺省 reports/{owner}/{repo}.json）")
+    ap.add_argument("--framework-policy", default=None,
+                    help="framework-policy.json 路径（缺省 scripts/ 同目录）")
     ap.add_argument("--skip-cross-check", action="store_true", help="跳过 count 交叉验证（仅调试用）")
     args = ap.parse_args()
 
@@ -307,9 +471,22 @@ def main():
     print("target snapshot: %s (%s, objectCount=%s)" % (
         snap_id, target.get("status"), target.get("objectCount")))
 
-    # ---- 14 类型 count（D3 typeCounts + 前端类存在性判定）----
-    counts = {t: ke.count(t, snap_id) for t in OBJECT_TYPES}
+    # ---- 14 类型 count（5.1.4：stats 端点单次收敛——14 次 ke count → 1 次 HTTP）----
+    # objectCounts 源自 manifest 键控 GROUP BY（与 legacy ke count 异源）——
+    # 收敛后双通道对账价值保持：下方明细拉取数 vs stats objectCounts 逐位对照。
+    base = args.url.rstrip("/")
+    stats = http_json("%s/api/ontology/stats?snapshotId=%s" % (base, urllib.parse.quote(snap_id)), args.token)
+    if not stats.get("ok"):
+        print("FAIL: /api/ontology/stats 返回 ok!=true", file=sys.stderr)
+        return 1
+    counts = {t: int((stats.get("objectCounts") or {}).get(t, 0)) for t in OBJECT_TYPES}
+    stats_link_total = sum(int(v) for v in (stats.get("linkCounts") or {}).values())
+    snap_link_count = int(target.get("linkCount") or 0)
     print("typeCounts: " + json.dumps(counts, ensure_ascii=False))
+    if stats_link_total != snap_link_count:
+        print("FAIL: stats linkCounts 合计 %d != 快照 linkCount %d（通道不一致）" % (
+            stats_link_total, snap_link_count), file=sys.stderr)
+        return 1
 
     # ---- 明细拉取（七类核心 + 条件前端类）----
     tables = ke.query("Table", ["id", "name", "matchedEntityClass"], snap_id)
@@ -339,19 +516,96 @@ def main():
             print("FAIL: %s 拉取数 %d != count %d（查询通道不一致）" % (label, len(pulled), cnt), file=sys.stderr)
             return 1
 
+    # ---- 5.1.4 图数据拉取（A1/C1 数据源 + 拉取完整性硬判据）----
+    # graph 端点 NDJSON 全量 dump（meta + node + edge 行）；A1/C1 仅消费 calls
+    # 出边。完整性断言：实拉边行数 == meta.edgeCount == 快照 linkCount——通道
+    # 不一致即 FAIL（服务端 SQL 直查与 Neo4j 投影均满足——route 无关数据等价）。
+    # ⚠️ snapshotId 必须显式键控：端点缺省解析租户最新快照——多快照并存时
+    # 显式 --snapshot（非最新）会拉错图（litemall canary 404 实证）。
+    graph_meta = None
+    graph_edge_rows = 0
+    calls_adj = {}
+    for line in http_ndjson(
+            "%s/api/ontology/graph?snapshotId=%s" % (base, urllib.parse.quote(snap_id)),
+            args.token):
+        kind = line.get("kind")
+        if kind == "meta":
+            graph_meta = line
+        elif kind == "edge":
+            graph_edge_rows += 1
+            if line.get("linkType") == "calls":
+                calls_adj.setdefault(line["source"], []).append(line["target"])
+    if graph_meta is None:
+        print("FAIL: graph 端点无 meta 行", file=sys.stderr)
+        return 1
+    meta_edge_count = int(graph_meta.get("edgeCount") or 0)
+    if meta_edge_count != snap_link_count or graph_edge_rows != snap_link_count:
+        print("FAIL: graph 边总数不一致（meta=%d 实拉=%d 快照 linkCount=%d）" % (
+            meta_edge_count, graph_edge_rows, snap_link_count), file=sys.stderr)
+        return 1
+    print("graph pull: edges=%d calls=%d（完整性断言过）" % (graph_edge_rows, sum(len(v) for v in calls_adj.values())))
+
     metrics = {}
     null_metrics = {}
 
     # ================= 域 A · 跨层映射 =================
 
-    # A1 全链路贯通率：calls 传递闭包 + Method→Mapper 名字 join 未实现（过渡实现）
-    null_metrics["A1"] = null_metric(
-        "A1", "full-chain-coverage", "全链路贯通率", "A", "higher-better",
-        "无 ApiEndpoint 对象（分母为 0，按口径降级）" if counts["ApiEndpoint"] == 0
-        else "calls 传递闭包与 Method→Mapper 名字 join 未实现（过渡实现——待 ke checkup）",
-        commands=[count_cmd("ApiEndpoint", None, snap_id)] if counts["ApiEndpoint"] == 0 else None,
-        evidence={"apiEndpointCount": counts["ApiEndpoint"]},
-    )
+    # A1 全链路贯通率（5.1.4.3）：calls 出边 BFS 闭包 + Method→Mapper FQN join
+    # 口径（V5.1.4.1 定案）：分母 = 全部 ApiEndpoint（含无 backendMethodId——与
+    # A2 互补：A2 量化断链面，A1 量化贯通面）；贯通 = 闭包含"所属 Mapper 带
+    # mappedTableIds"的方法（端到端 = ApiEndpoint→Method→calls*→Mapper→Table）。
+    if counts["ApiEndpoint"] == 0:
+        null_metrics["A1"] = null_metric(
+            "A1", "full-chain-coverage", "全链路贯通率", "A", "higher-better",
+            "无 ApiEndpoint 对象（分母为 0，按口径降级）",
+            commands=[count_cmd("ApiEndpoint", None, snap_id)],
+            evidence={"apiEndpointCount": 0},
+        )
+    else:
+        mapper_by_ns = {}
+        for m in mappers:
+            ns = m.get("namespace")
+            if ns:
+                mapper_by_ns[ns] = m
+        method_id_set = {m["id"] for m in methods}
+        a1_hops = []           # 贯通链跳数（C1 消费）
+        a1_closure_spans = []
+        a1_complete = 0
+        a1_with_backend = 0
+        a1_join_hits = 0
+        for a in apis:
+            bm = a.get("backendMethodId")
+            if not bm:
+                continue
+            a1_with_backend += 1
+            # backendMethodId 归一化（裸 FQN / 带前缀两种形态→命中方法 id 集）
+            seed = bm if bm in method_id_set else ("mtd:" + bm if ("mtd:" + bm) in method_id_set else None)
+            if seed is None:
+                continue
+            level, span, mm_count = closure_chain(seed, calls_adj, mapper_by_ns)
+            a1_closure_spans.append(span)
+            a1_join_hits += 1 if mm_count > 0 else 0
+            if level is not None:
+                a1_complete += 1
+                a1_hops.append(level)
+        span_sorted = sorted(a1_closure_spans)
+        metrics["A1"] = metric(
+            "A1", "full-chain-coverage", "全链路贯通率", "A", "higher-better",
+            ratio(a1_complete, len(apis)),
+            [query_cmd("ApiEndpoint", ["id", "backendMethodId", "matchedVia"], snap_id),
+             query_cmd("Mapper", ["id", "namespace", "mappedTableIds"], snap_id),
+             api_cmd("/api/ontology/graph")],
+            numerator=a1_complete, denominator=len(apis),
+            evidence={
+                "apiCount": len(apis),
+                "withBackendMethod": a1_with_backend,
+                "chainComplete": a1_complete,
+                "joinHitClosures": a1_join_hits,
+                "closureSpanMedian": nearest_rank(span_sorted, 0.5) if span_sorted else 0,
+                "closureSpanMax": span_sorted[-1] if span_sorted else 0,
+                "algorithm": "local BFS over calls edges (graph NDJSON full pull)",
+            },
+        )
 
     # A2 前后端断链率：backendMethodId 为空的 ApiEndpoint 占比
     if counts["ApiEndpoint"] == 0:
@@ -512,13 +766,43 @@ def main():
 
     # ================= 域 C · 纵深复杂度 =================
 
-    # C1 端到端跳数：依赖 A1 贯通链算法（过渡实现未含）
-    null_metrics["C1"] = null_metric(
-        "C1", "endpoint-table-hops", "端到端跳数", "C", "interval",
-        "依赖 A1 贯通链算法（过渡实现未含——待 ke checkup）"
-        if counts["ApiEndpoint"] > 0 else "无 ApiEndpoint 对象（贯通链分母为 0）",
-        evidence={"apiEndpointCount": counts["ApiEndpoint"]},
-    )
+    # C1 端到端跳数（5.1.4.3）：A1 贯通链的 calls 边数（口径 V5.1.4.1——跳数 =
+    # BFS 边数语义：backendMethod→首个"所属 Mapper 带表映射"方法的最短路径；
+    # api↔method 与 mapper↔table 两段为结构映射不计入调用跳数；多链取最短）
+    if counts["ApiEndpoint"] == 0:
+        null_metrics["C1"] = null_metric(
+            "C1", "endpoint-table-hops", "端到端跳数", "C", "interval",
+            "无 ApiEndpoint 对象（贯通链分母为 0）",
+            evidence={"apiEndpointCount": 0},
+        )
+    elif not a1_hops:
+        null_metrics["C1"] = null_metric(
+            "C1", "endpoint-table-hops", "端到端跳数", "C", "interval",
+            "无贯通链（全部 API 闭包未到达带表映射的 Mapper——跳数分布分母为 0）",
+            evidence={"apiEndpointCount": counts["ApiEndpoint"],
+                      "chainComplete": a1_complete},
+        )
+    else:
+        hops_sorted = sorted(a1_hops)
+        metrics["C1"] = metric(
+            "C1", "endpoint-table-hops", "端到端跳数", "C", "interval",
+            nearest_rank(hops_sorted, 0.50),
+            [query_cmd("ApiEndpoint", ["id", "backendMethodId"], snap_id),
+             api_cmd("/api/ontology/graph")],
+            denominator=len(hops_sorted),
+            percentiles={
+                "p25": nearest_rank(hops_sorted, 0.25),
+                "p50": nearest_rank(hops_sorted, 0.50),
+                "p75": nearest_rank(hops_sorted, 0.75),
+                "p90": nearest_rank(hops_sorted, 0.90),
+            },
+            min=hops_sorted[0],
+            max=hops_sorted[-1],
+            mean=round(sum(hops_sorted) / len(hops_sorted), 4),
+            hopsBasis="calls edges, shortest BFS path (V5.1.4.1 定案)",
+            distribution={str(k): v for k, v in sorted(
+                _bucketize(hops_sorted).items())},
+        )
 
     # C2 圈复杂度 P90（complexity 非 null 的 Method，nearest-rank）
     method_cc = []
@@ -596,22 +880,73 @@ def main():
 
     # ================= 域 D · 技术栈演进 =================
 
-    # D1 版本覆盖率：目标 semver range 为 cohort 级策略输入——单体层不出值
+    # D1 版本覆盖率（5.1.4.5）：framework-policy.json 目标区间匹配——
+    # 分母 = 匹配策略框架且版本可判定的依赖；分子 = 落在目标区间的。
+    # 非框架依赖不入 D1 分母（策略表之外的栈不构成覆盖率判定面）。
     empty_ver = sum(1 for d in deps if not d.get("version"))
     placeholder_ver = sum(1 for d in deps if isinstance(d.get("version"), str) and "${" in d["version"])
-    determinable = len(deps) - empty_ver - placeholder_ver
-    if determinable == 0:
-        d1_reason = "无可判定版本（空串 %d / 属性占位 %d / 合计 %d——分母为 0，按口径置空）" % (
-            empty_ver, placeholder_ver, len(deps))
+    try:
+        policy = load_framework_policy(args.framework_policy)
+    except (OSError, ValueError) as e:
+        print("FAIL: framework-policy.json 不可读：%s" % e, file=sys.stderr)
+        return 1
+    d1_frameworks = []
+    d1_framework_deps = []   # 逐框架命中依赖清单（census D2 cohort 聚合消费面）
+    d1_in_range = 0
+    d1_determinable = 0
+    for fw in policy.get("frameworks", []):
+        fw_name = fw.get("framework") or "?"
+        matches_list = fw.get("match") or []
+        target_range = fw.get("targetRange") or ""
+        matched = [d for d in deps
+                   if isinstance(d.get("name"), str)
+                   and any(d["name"].startswith(pfx) for pfx in matches_list)]
+        det = [d for d in matched if is_determinable_version(d.get("version"))]
+        in_range = [d for d in det if satisfies_range(d.get("version"), target_range)]
+        d1_determinable += len(det)
+        d1_in_range += len(in_range)
+        d1_frameworks.append({
+            "framework": fw_name,
+            "targetRange": target_range,
+            "matched": len(matched),
+            "determinable": len(det),
+            "inRange": len(in_range),
+            "outOfRange": sorted([
+                {"name": d["name"], "version": d["version"]}
+                for d in det if d not in in_range], key=lambda x: x["name"]),
+        })
+        d1_framework_deps.extend(
+            {"framework": fw_name, "name": d["name"], "version": d.get("version") or ""}
+            for d in sorted(matched, key=lambda x: x["name"]))
+    if d1_determinable == 0:
+        d1_reason = "无可判定版本（策略框架命中 0 或全部空串/占位——分母为 0，按口径置空）"
+        determinable_all = len(deps) - empty_ver - placeholder_ver
+        if len(deps) and determinable_all:
+            d1_reason = "策略框架命中依赖无可判定版本（全仓可判定版本 %d 个均不匹配策略表）" % determinable_all
+        null_metrics["D1"] = null_metric(
+            "D1", "framework-version-coverage", "技术栈版本覆盖率", "D", "higher-better",
+            d1_reason,
+            commands=[query_cmd("Dependency", ["id", "name", "version", "scope"], snap_id)],
+            evidence={"total": len(deps), "emptyVersion": empty_ver,
+                      "placeholder": placeholder_ver,
+                      "determinableAll": len(deps) - empty_ver - placeholder_ver,
+                      "policyMatched": sum(f["matched"] for f in d1_frameworks),
+                      "frameworks": d1_frameworks},
+        )
     else:
-        d1_reason = "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）"
-    null_metrics["D1"] = null_metric(
-        "D1", "framework-version-coverage", "技术栈版本覆盖率", "D", "higher-better",
-        d1_reason,
-        commands=[query_cmd("Dependency", ["id", "name", "version", "scope"], snap_id)],
-        evidence={"total": len(deps), "emptyVersion": empty_ver,
-                  "placeholder": placeholder_ver, "determinable": determinable},
-    )
+        metrics["D1"] = metric(
+            "D1", "framework-version-coverage", "技术栈版本覆盖率", "D", "higher-better",
+            ratio(d1_in_range, d1_determinable),
+            [query_cmd("Dependency", ["id", "name", "version", "scope"], snap_id)],
+            numerator=d1_in_range, denominator=d1_determinable,
+            evidence={
+                "total": len(deps), "emptyVersion": empty_ver,
+                "placeholder": placeholder_ver,
+                "policy": os.path.basename(args.framework_policy or DEFAULT_POLICY_PATH),
+                "frameworks": d1_frameworks,
+            },
+            frameworkDeps=d1_framework_deps,
+        )
 
     # D2 依赖同质度：cohort 级指标（单体层不产出）
     null_metrics["D2"] = null_metric(
@@ -630,15 +965,60 @@ def main():
         linkCount=int(target.get("linkCount") or 0),
     )
 
-    # D4 年度演进趋势：时序聚合未实现（过渡实现）
+    # D4 年度演进趋势（5.1.4.5）：历史 report 差分（同 source 多快照时序）——
+    # 磁盘上的既有 report（上轮 scan 提交产物）与本次快照不同时，输出逐指标
+    # delta + 规模增速。单快照/同快照重算/无历史文件 → null（口径性合法）。
     snap_count = len(complete)
-    null_metrics["D4"] = null_metric(
-        "D4", "evolution-trend", "年度演进趋势", "D", "none",
-        "单快照（首次导入——无时序）" if snap_count <= 1
-        else "时序聚合未实现（过渡实现——该 source 已有 %d 个 complete 快照）" % snap_count,
-        commands=["ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" snapshot list --repo " + source_id],
-        evidence={"completeSnapshotCount": snap_count},
-    )
+    prev_report = None
+    if out_path and os.path.exists(out_path):
+        try:
+            with open(out_path, encoding="utf-8") as f:
+                prev_report = json.load(f)
+        except (OSError, ValueError):
+            prev_report = None
+    prev_snap = (prev_report or {}).get("snapshot", {})
+    prev_snap_id = prev_snap.get("snapshotId")
+    d4_snapshot_cmd = ("ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" "
+                       "snapshot list --repo " + source_id)
+    if prev_report is None or prev_snap_id == snap_id or snap_count <= 1:
+        d4_reason = "单快照（首次导入——无时序）" if snap_count <= 1 else (
+            "无历史 report 或为同快照重算（时序分母为 0）")
+        null_metrics["D4"] = null_metric(
+            "D4", "evolution-trend", "年度演进趋势", "D", "none",
+            d4_reason,
+            commands=[d4_snapshot_cmd],
+            evidence={"completeSnapshotCount": snap_count,
+                      "previousReportSnapshot": prev_snap_id},
+        )
+    else:
+        prev_metrics = prev_report.get("metrics", {})
+        d4_deltas = {}
+        for mid, m in sorted(metrics.items()):
+            pv = (prev_metrics.get(mid) or {}).get("value")
+            cv = m.get("value")
+            if (isinstance(pv, (int, float)) and not isinstance(pv, bool)
+                    and isinstance(cv, (int, float)) and not isinstance(cv, bool)):
+                d4_deltas[mid] = {"prev": pv, "curr": cv,
+                                  "delta": round(cv - pv, 6)}
+        prev_obj = int(prev_snap.get("objectCount") or 0)
+        curr_obj = int(target.get("objectCount") or 0)
+        growth = round((curr_obj - prev_obj) / prev_obj, 6) if prev_obj else None
+        metrics["D4"] = metric(
+            "D4", "evolution-trend", "年度演进趋势", "D", "none",
+            growth,
+            [d4_snapshot_cmd],
+            evidence={
+                "completeSnapshotCount": snap_count,
+                "previousSnapshot": {
+                    "snapshotId": prev_snap_id,
+                    "objectCount": prev_obj,
+                    "linkCount": int(prev_snap.get("linkCount") or 0),
+                    "completedAt": prev_snap.get("completedAt"),
+                },
+                "metricDeltas": d4_deltas,
+                "valueBasis": "objectCount 环比增速（prev→curr）",
+            },
+        )
 
     # ================= 数据质量（dq——不评分）=================
 

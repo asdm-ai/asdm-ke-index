@@ -248,6 +248,60 @@ jobs:
           ke --mode server --url "$KE_SERVER_URL" --token "$KE_API_KEY" \
             project --snapshots-file snapshots.txt --timeout-min 180
 
+      # 5.1.4.7（V5.1.4.4/.7 图指标阶段）：投影补投完成后，对本批全部仓跑
+      # graph-metrics（逐 ApiEndpoint expand 闭包——图查询引擎真实压测面，
+      # 4k-20k 次闭包查询/全轮）+ 与 scan job 已落 report 的本地形态双路径
+      # 等价性比对（graph-accelerated vs MySQL 直查功能等价验证）+ 遥测差分
+      # （route 分布/分位延迟/truncated 计数落 evidence artifact）。
+      # 快照→仓映射经 scan job 的 report 文件（git fetch 拉齐 bot commits）。
+      - name: Graph metrics (expand closure + telemetry loop)
+        env:
+          KE_API_KEY: ${{ secrets.KE_API_KEY }}
+          KE_SERVER_URL: ${{ secrets.KE_SERVER_URL }}
+        run: |
+          git fetch origin "${GITHUB_REF_NAME}" --depth=50
+          git reset --hard "origin/${GITHUB_REF_NAME}" || true
+          if [ ! -s snapshot-rows.txt ]; then
+            echo "graph-metrics: 无快照（全批 skip）——安静退出"
+            exit 0
+          fi
+          mkdir -p graph-reports
+          FAILS=0
+          while read -r SNAP _COUNT; do
+            [ -n "$SNAP" ] || continue
+            # 快照 → source/repo 归属：scan job report 的 snapshot.snapshotId 反查
+            META=$(ls reports/*/*.json 2>/dev/null | xargs grep -l "\"snapshotId\": \"$SNAP\"" 2>/dev/null | head -1 || true)
+            if [ -z "$META" ]; then
+              echo "graph-metrics: 快照 $SNAP 无对应 report（scan 失败仓）——跳过"
+              continue
+            fi
+            OWNER=$(basename $(dirname "$META"))
+            REPO=$(basename "$META" .json)
+            echo "== graph-metrics: $OWNER/$REPO（snapshot $SNAP）=="
+            if ! python3 scripts/graph-metrics.py \
+                --owner "$OWNER" --repo "$REPO" --snapshot "$SNAP" \
+                --out "graph-reports/$OWNER-$REPO.graph.json" \
+                --compare "$META"; then
+              RC=$?
+              if [ "$RC" -eq 2 ]; then
+                echo "graph-metrics: $OWNER/$REPO 双路径等价性 MISMATCH（exit 2）"
+              fi
+              FAILS=$((FAILS+1))
+            fi
+          done < snapshot-rows.txt
+          echo "graph-metrics 完成：失败仓 $FAILS 个（等价性 MISMATCH 计入）"
+          # 等价性 MISMATCH 不判批失败（记录→定位→修复面——exit 2 仅落 evidence）；
+          # 脚本级崩溃（exit 1）同样不阻断 census（图指标为独立观察面）
+          exit 0
+
+      - name: Upload graph metrics evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: graph-metrics-evidence
+          path: graph-reports/
+          if-no-files-found: ignore
+
   # 任务 2.5.1：census 聚合——全批 scan + projection-sweep 完成后单 job 聚合
   # 并 commit（守门 N<30 → accumulating 不出分位——P2H-D6；checkout 默认停在
   #  触发 commit，需 fetch 拉齐 matrix 各 job 的 bot report 提交后聚合）

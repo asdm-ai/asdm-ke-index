@@ -16,11 +16,15 @@
 #     → 该指标整组不出分位（Schema §4.2——开源公开数据本不涉隐私，
 #     护栏按 Schema 口径保留并显式标注）
 #
-# 聚合面：report.metrics 中 direction != "none" 的数值指标（A2/A3/A4/
-# B1.backend/B1.frontend/B2/B3/B4/C2/C3/C4）；D3 规模画像、D2 cohort 级
-# 指标与 dq.*（direction 均为 "none"）为描述面——不进分位分母。
+# 聚合面：report.metrics 中 direction != "none" 的数值指标（A1/A2/A3/A4/
+# B1.backend/B1.frontend/B2/B3/B4/C1/C2/C3/C4/D1）；D3 规模画像与 dq.*
+# （direction 均为 "none"）为描述面——不进分位分母。
 # 缺失语义：指标在某仓为 null（nullMetrics 区）或 value 非数值 → 该样本
 # 不进分位分母，计入 missing 并标注仓列表（missingRepos）。
+#
+# 5.1.4.5 D2 cohort 聚合层：数据源 = 各 report metrics.D1.frameworkDeps——
+# 逐框架跨仓版本分布 + 主版本众数份额（依赖同质度）；direction "none"
+# 描述面（cohort 区，不进分位分母）。
 #
 # 分位算法：nearest-rank（Schema §4.2——升序第 ceil(p*N) 个值）。
 # 输出确定性：同一批 report 产出逐字节一致的 summary（不含墙钟时间戳）。
@@ -31,11 +35,12 @@ import argparse
 import glob
 import json
 import os
+import re
 import sys
 from math import ceil
 
 SCHEMA_VERSION = "draft-v1"
-IMPLEMENTATION = "ke-index census.py (transitional; L2 aggregation over compute-metrics reports)"
+IMPLEMENTATION = "ke-index census.py (5.1.4: L2 aggregation + D2 cohort layer over compute-metrics reports)"
 
 # 标准分位集（Schema §4.2）
 PERCENTILES = [("p25", 0.25), ("p50", 0.50), ("p75", 0.75), ("p90", 0.90)]
@@ -166,6 +171,68 @@ def main():
                 n, args.privacy_floor)
         metrics_out[mid] = entry
 
+    # ---- 5.1.4.5 D2 cohort 聚合（依赖同质度——跨仓框架版本一致性）----
+    # 数据源 = 各 report metrics.D1.frameworkDeps；仓代表版本 = 该仓命中的
+    # 框架依赖中最大版本（同仓多版本记 mixedRepos 披露）；D2 总值 = 逐框架
+    # 众数份额按使用仓数加权平均（direction "none"——cohort 描述面）。
+    def _version_key(v):
+        parts = re.split(r"[.\-_]", str(v))
+        nums = []
+        for p in parts:
+            if p.isdigit():
+                nums.append(int(p))
+                continue
+            lead = ""
+            for ch in p:
+                if ch.isdigit():
+                    lead += ch
+                else:
+                    break
+            if lead:
+                nums.append(int(lead))
+            break
+        return tuple(nums)
+
+    fw_repos = {}   # framework -> {rep_label: set(versions)}
+    for owner, repo, r in reports:
+        rep_label = "%s/%s" % (owner, repo)
+        d1 = (r.get("metrics", {}) or {}).get("D1") or {}
+        for fd in d1.get("frameworkDeps") or []:
+            fw = fd.get("framework")
+            if not fw:
+                continue
+            fw_repos.setdefault(fw, {}).setdefault(rep_label, set()).add(
+                fd.get("version") or "")
+    cohort_d2 = {}
+    weighted = []
+    for fw in sorted(fw_repos):
+        per_repo = fw_repos[fw]
+        users = {rep: vs for rep, vs in per_repo.items() if any(vs)}
+        n = len(users)
+        if n == 0:
+            cohort_d2[fw] = {"reposUsing": 0}
+            continue
+        mixed = sum(1 for vs in users.values()
+                    if len({v for v in vs if v}) > 1)
+        version_count = {}
+        for vs in users.values():
+            rep_ver = max((v for v in vs if v), key=_version_key)
+            version_count[rep_ver] = version_count.get(rep_ver, 0) + 1
+        dominant, dom_count = max(sorted(version_count.items()), key=lambda kv: kv[1])
+        share = round(dom_count / n, 6)
+        weighted.append((n, dom_count))
+        cohort_d2[fw] = {
+            "reposUsing": n,
+            "distinctVersions": len(version_count),
+            "dominantVersion": dominant,
+            "dominantShare": share,
+            "mixedVersionRepos": mixed,
+            "versionDistribution": dict(sorted(version_count.items())),
+        }
+    total_using = sum(n for n, _ in weighted)
+    d2_overall = (round(sum(d for _, d in weighted) / total_using, 6)
+                  if total_using else None)
+
     summary = {
         "schemaVersion": SCHEMA_VERSION,
         "implementation": IMPLEMENTATION,
@@ -179,6 +246,18 @@ def main():
         },
         "repos": repo_index,
         "metrics": metrics_out,
+        "cohort": {
+            "D2": {
+                "id": "D2",
+                "name": "dependency-homogeneity",
+                "label": "依赖同质度",
+                "domain": "D",
+                "direction": "none",
+                "value": d2_overall,
+                "frameworks": cohort_d2,
+                "basis": "逐框架主版本众数份额（仓代表版本 = 命中依赖最大版本）按使用仓数加权平均",
+            },
+        },
     }
 
     os.makedirs(os.path.dirname(args.out) or ".", exist_ok=True)
