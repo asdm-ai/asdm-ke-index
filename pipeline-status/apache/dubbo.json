@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "pipeline-status-v1",
+  "owner": "apache",
+  "repo": "dubbo",
+  "sourceHead": "ae46e0a5f6fc4ab8489232b0848453818da92e2c",
+  "snapshotId": "c85c69f7-f555-4aaa-a5cd-ad32e6e042d3",
+  "objectCount": 34065,
+  "importStatus": "completed",
+  "steps": {
+    "scan": "ok",
+    "projection": "ok",
+    "metrics": "ok",
+    "consistency": "ok"
+  },
+  "consistencyResult": "pass",
+  "overall": "pass"
+}
