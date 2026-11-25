@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "pipeline-status-v1",
+  "owner": "macrozheng",
+  "repo": "mall-admin-web",
+  "sourceHead": "81fc17e5a19f452bd854b106a9d59fa1ed5c7eac",
+  "snapshotId": "b61b793d-afed-4a8a-850e-ff7ceb078a44",
+  "objectCount": 1662,
+  "importStatus": "completed",
+  "steps": {
+    "scan": "ok",
+    "projection": "ok",
+    "metrics": "ok",
+    "consistency": "ok"
+  },
+  "consistencyResult": "pass",
+  "overall": "pass"
+}
