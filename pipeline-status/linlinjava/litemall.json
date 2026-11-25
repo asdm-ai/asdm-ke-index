@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "pipeline-status-v1",
+  "owner": "linlinjava",
+  "repo": "litemall",
+  "sourceHead": "a1ef964a718b7277925b19ea26afe78ea3a1d325",
+  "snapshotId": "bdd58ec0-fcfe-4019-889d-99c5bc35fbec",
+  "objectCount": 13172,
+  "importStatus": "completed",
+  "steps": {
+    "scan": "ok",
+    "projection": "ok",
+    "metrics": "ok",
+    "consistency": "ok"
+  },
+  "consistencyResult": "pass",
+  "overall": "pass"
+}
