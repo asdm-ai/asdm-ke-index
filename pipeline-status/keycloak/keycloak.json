@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "pipeline-status-v1",
+  "owner": "keycloak",
+  "repo": "keycloak",
+  "sourceHead": "549623e126ada0b3822f34cb0b5da4eaed269fcc",
+  "snapshotId": "e58e2f05-8a5e-4aac-a470-8c2d8e3b1b57",
+  "objectCount": 91909,
+  "importStatus": "completed",
+  "steps": {
+    "scan": "ok",
+    "projection": "ok",
+    "metrics": "ok",
+    "consistency": "ok"
+  },
+  "consistencyResult": "pass",
+  "overall": "pass"
+}
