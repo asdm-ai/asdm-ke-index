@@ -68,18 +68,18 @@
       "owner": "apache",
       "repo": "fineract",
       "sourceId": "fineract",
-      "snapshotId": "4f9e5c36-da96-4349-b682-0bebacae68d7",
-      "objectCount": 53718,
-      "linkCount": 264929,
+      "snapshotId": "a595220d-1d51-49c2-ae51-76142cb27adb",
+      "objectCount": 53936,
+      "linkCount": 265882,
       "schemaVersion": "draft-v1"
     },
     {
       "owner": "apache",
       "repo": "rocketmq",
       "sourceId": "rocketmq",
-      "snapshotId": "fdd82fd3-7fd4-4ca1-a432-cca72fba65f0",
-      "objectCount": 26407,
-      "linkCount": 109352,
+      "snapshotId": "1a8a8aaf-8ddf-4452-8f59-3ee939e2a015",
+      "objectCount": 26411,
+      "linkCount": 109365,
       "schemaVersion": "draft-v1"
     },
     {
@@ -158,9 +158,9 @@
       "owner": "hibernate",
       "repo": "hibernate-orm",
       "sourceId": "hibernate-orm",
-      "snapshotId": "970fddca-1982-4b95-a159-14b4ce8729f9",
-      "objectCount": 179512,
-      "linkCount": 417203,
+      "snapshotId": "580817a3-c6fc-4539-84c8-22bbccc38167",
+      "objectCount": 180572,
+      "linkCount": 420177,
       "schemaVersion": "draft-v1"
     },
     {
@@ -185,9 +185,9 @@
       "owner": "keycloak",
       "repo": "keycloak",
       "sourceId": "keycloak",
-      "snapshotId": "e58e2f05-8a5e-4aac-a470-8c2d8e3b1b57",
-      "objectCount": 91909,
-      "linkCount": 498033,
+      "snapshotId": "8824d864-1db0-4ccf-bd69-e7a1be93f966",
+      "objectCount": 91998,
+      "linkCount": 498423,
       "schemaVersion": "draft-v1"
     },
     {
@@ -311,7 +311,7 @@
       "owner": "spring-projects",
       "repo": "spring-framework",
       "sourceId": "spring-framework",
-      "snapshotId": "98e14231-633f-4244-a63a-fe759a8b4995",
+      "snapshotId": "ad67282d-2029-4545-b265-fe9c8ec5daf5",
       "objectCount": 105968,
       "linkCount": 286287,
       "schemaVersion": "draft-v1"
@@ -779,7 +779,7 @@
           "reason": "无 Package 对象（分母为 0）"
         }
       ],
-      "mean": 0.246006,
+      "mean": 0.246012,
       "percentiles": {
         "p25": 0.090909,
         "p50": 0.212598,
@@ -854,7 +854,7 @@
           "reason": "无 Module 对象（纯后端仓库——按口径置空）"
         }
       ],
-      "mean": 0.009692,
+      "mean": 0.009685,
       "percentiles": {
         "p25": 0.0,
         "p50": 0.0,
@@ -905,12 +905,12 @@
           "reason": "无 Package 对象（分母为 0）"
         }
       ],
-      "mean": 5.087364,
+      "mean": 5.088842,
       "percentiles": {
         "p25": 2.3617,
         "p50": 4.6335,
-        "p75": 7.5792,
-        "p90": 9.0936
+        "p75": 7.6072,
+        "p90": 9.0965
       },
       "percentileMethod": "nearest-rank (Schema §4.2)"
     },
@@ -956,11 +956,11 @@
           "reason": "无 Class 对象（分母为 0）"
         }
       ],
-      "mean": 0.035596,
+      "mean": 0.035586,
       "percentiles": {
         "p25": 0.006193,
         "p50": 0.02531,
-        "p75": 0.035711,
+        "p75": 0.035684,
         "p90": 0.082058
       },
       "percentileMethod": "nearest-rank (Schema §4.2)"
@@ -1348,11 +1348,11 @@
           "reason": "无 Method 对象（分母为 0）"
         }
       ],
-      "mean": 0.108712,
+      "mean": 0.108815,
       "percentiles": {
         "p25": 0.004317,
         "p50": 0.039664,
-        "p75": 0.166066,
+        "p75": 0.166173,
         "p90": 0.301365
       },
       "percentileMethod": "nearest-rank (Schema §4.2)"
@@ -1399,12 +1399,12 @@
           "reason": "无 Method 对象（分母为 0）"
         }
       ],
-      "mean": 0.005095,
+      "mean": 0.005092,
       "percentiles": {
         "p25": 0.001379,
         "p50": 0.003014,
-        "p75": 0.00728,
-        "p90": 0.014849
+        "p75": 0.007272,
+        "p90": 0.014808
       },
       "percentileMethod": "nearest-rank (Schema §4.2)"
     },
@@ -1475,7 +1475,7 @@
         },
         {
           "repo": "hibernate/hibernate-orm",
-          "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）"
+          "reason": "策略框架命中依赖无可判定版本（全仓可判定版本 7 个均不匹配策略表）"
         },
         {
           "repo": "jeecgboot/jeecgboot-vue3",
@@ -1569,41 +1569,45 @@
     }
   },
   "validation": {
-    "reposWithStatus": 40,
+    "reposWithStatus": 41,
+    "expectedRepos": 41,
+    "reconciled": true,
+    "missingRepos": [],
+    "ok": true,
     "overall": {
-      "pass": 40,
+      "pass": 41,
       "fail": 0
     },
     "steps": {
       "scan": {
-        "ok": 40,
+        "ok": 41,
         "failed": 0,
         "skipped": 0
       },
       "projection": {
-        "ok": 40,
+        "ok": 41,
         "failed": 0,
         "skipped": 0
       },
       "metrics": {
-        "ok": 40,
+        "ok": 41,
         "failed": 0,
         "skipped": 0
       },
       "consistency": {
-        "ok": 40,
+        "ok": 41,
         "failed": 0,
         "skipped": 0
       }
     },
     "consistencyResult": {
-      "pass": 40,
+      "pass": 41,
       "mismatch": 0,
       "error": 0,
       "skipped": 0
     },
     "failedRepos": [],
-    "basis": "pipeline-status/{owner}/{repo}.json（scan job ⑤ annotate 确定性产物）——单仓失败不阻断聚合：reports 区聚合成功产物，本区汇总全部仓子步结论"
+    "basis": "pipeline-status/{owner}/{repo}.json（scan job ⑤ annotate 确定性产物）——单仓失败不阻断聚合：reports 区聚合成功产物，本区汇总全部仓子步结论；reconciled=true 时另与扫描矩阵对账（missingRepos 非空即 ok=false）"
   },
   "cohort": {
     "D2": {
@@ -1654,11 +1658,11 @@
         "spring-boot": {
           "reposUsing": 3,
           "distinctVersions": 3,
-          "dominantVersion": "${springboot3.version}",
+          "dominantVersion": "${springboot2.version}",
           "dominantShare": 0.333333,
           "mixedVersionRepos": 1,
           "versionDistribution": {
-            "${springboot3.version}": 1,
+            "${springboot2.version}": 1,
             "2.1.5.RELEASE": 1,
             "@project.version@": 1
           }
