@@ -14,7 +14,7 @@
       "owner": "Activiti",
       "repo": "Activiti",
       "sourceId": "Activiti",
-      "snapshotId": "75de49c8-a80d-4d26-a1d1-86bd67e84e10",
+      "snapshotId": "b4a8661c-939b-4946-9033-0da059662953",
       "objectCount": 24198,
       "linkCount": 85691,
       "schemaVersion": "draft-v1"
@@ -23,7 +23,7 @@
       "owner": "BroadleafCommerce",
       "repo": "BroadleafCommerce",
       "sourceId": "BroadleafCommerce",
-      "snapshotId": "c97061b6-7e47-42ab-86e7-649e5a5dbcd0",
+      "snapshotId": "f2964888-d5e5-4fda-a4c7-6719705bc14a",
       "objectCount": 25682,
       "linkCount": 108282,
       "schemaVersion": "draft-v1"
@@ -32,7 +32,7 @@
       "owner": "YunaiV",
       "repo": "ruoyi-vue-pro",
       "sourceId": "ruoyi-vue-pro",
-      "snapshotId": "ed871e9a-a05b-40f4-b52e-d916e758e06c",
+      "snapshotId": "7b0666a4-03c3-451f-abe8-9f003c65830b",
       "objectCount": 46623,
       "linkCount": 230904,
       "schemaVersion": "draft-v1"
@@ -41,7 +41,7 @@
       "owner": "alibaba",
       "repo": "druid",
       "sourceId": "druid",
-      "snapshotId": "bc11dd7d-262f-4986-b8b8-8951baf2a079",
+      "snapshotId": "df9c2523-281c-46a3-8e3b-d2c1157108a9",
       "objectCount": 41208,
       "linkCount": 234102,
       "schemaVersion": "draft-v1"
@@ -50,16 +50,16 @@
       "owner": "alibaba",
       "repo": "nacos",
       "sourceId": "nacos",
-      "snapshotId": "68f7ffbf-fd9a-437c-93db-b9a02628d39b",
-      "objectCount": 57084,
-      "linkCount": 432187,
+      "snapshotId": "3821b9eb-853e-4927-952e-5c4877593b86",
+      "objectCount": 57376,
+      "linkCount": 433824,
       "schemaVersion": "draft-v1"
     },
     {
       "owner": "apache",
       "repo": "dubbo",
       "sourceId": "dubbo",
-      "snapshotId": "c85c69f7-f555-4aaa-a5cd-ad32e6e042d3",
+      "snapshotId": "3c195b28-cf5c-47fa-98e4-7a6704e7d221",
       "objectCount": 34065,
       "linkCount": 136879,
       "schemaVersion": "draft-v1"
@@ -68,34 +68,34 @@
       "owner": "apache",
       "repo": "fineract",
       "sourceId": "fineract",
-      "snapshotId": "bdf77fcf-68f8-436d-aee5-85cbf725e768",
-      "objectCount": 53556,
-      "linkCount": 263944,
+      "snapshotId": "4f9e5c36-da96-4349-b682-0bebacae68d7",
+      "objectCount": 53718,
+      "linkCount": 264929,
       "schemaVersion": "draft-v1"
     },
     {
       "owner": "apache",
       "repo": "rocketmq",
       "sourceId": "rocketmq",
-      "snapshotId": "2f071cac-5971-44fe-bf65-66f56edafbb4",
-      "objectCount": 26245,
-      "linkCount": 108262,
+      "snapshotId": "fdd82fd3-7fd4-4ca1-a432-cca72fba65f0",
+      "objectCount": 26407,
+      "linkCount": 109352,
       "schemaVersion": "draft-v1"
     },
     {
       "owner": "apache",
       "repo": "shardingsphere",
       "sourceId": "shardingsphere",
-      "snapshotId": "8fc5671b-9f17-4999-a348-374f6efb54a0",
-      "objectCount": 56165,
-      "linkCount": 447763,
+      "snapshotId": "3c9663b5-ff07-42ba-bd1b-796a5e855b4f",
+      "objectCount": 56172,
+      "linkCount": 447822,
       "schemaVersion": "draft-v1"
     },
     {
       "owner": "chillzhuang",
       "repo": "SpringBlade",
       "sourceId": "SpringBlade",
-      "snapshotId": "6006192a-ae4d-4148-a406-9421fcfdf7af",
+      "snapshotId": "8f677038-a83b-4f81-a684-633401b1b29c",
       "objectCount": 1073,
       "linkCount": 3002,
       "schemaVersion": "draft-v1"
@@ -104,7 +104,7 @@
       "owner": "dhis2",
       "repo": "dhis2-core",
       "sourceId": "dhis2-core",
-      "snapshotId": "471cf573-9bbf-442c-ab4f-3e6016de014f",
+      "snapshotId": "d3c20ab4-db17-4113-9cea-8b59c5611e94",
       "objectCount": 63457,
       "linkCount": 411972,
       "schemaVersion": "draft-v1"
@@ -113,7 +113,7 @@
       "owner": "dromara",
       "repo": "RuoYi-Vue-Plus",
       "sourceId": "RuoYi-Vue-Plus",
-      "snapshotId": "ef3b70ea-b6e9-4826-b75f-bf92369017f5",
+      "snapshotId": "34aacaa5-84ce-40f1-884e-482ec559af1c",
       "objectCount": 4777,
       "linkCount": 22903,
       "schemaVersion": "draft-v1"
@@ -122,7 +122,7 @@
       "owner": "dromara",
       "repo": "dante-cloud",
       "sourceId": "dante-cloud",
-      "snapshotId": "de5262db-9e6f-42dd-952a-abaa085fc566",
+      "snapshotId": "cc27d728-216c-4be3-8653-6e411165842b",
       "objectCount": 476,
       "linkCount": 728,
       "schemaVersion": "draft-v1"
@@ -131,7 +131,7 @@
       "owner": "elunez",
       "repo": "eladmin-web",
       "sourceId": "eladmin-web",
-      "snapshotId": "988c1cd8-c7f9-46fa-a8b1-6441aed8e602",
+      "snapshotId": "6d998bf1-3ecf-415d-9ef8-75c5f86baf3b",
       "objectCount": 538,
       "linkCount": 1133,
       "schemaVersion": "draft-v1"
@@ -140,7 +140,7 @@
       "owner": "elunez",
       "repo": "eladmin",
       "sourceId": "eladmin",
-      "snapshotId": "1264d186-f419-4a52-9fea-dcdebaea9a2b",
+      "snapshotId": "5f43da18-2522-4257-b5ec-cbf636c65ce6",
       "objectCount": 1357,
       "linkCount": 5096,
       "schemaVersion": "draft-v1"
@@ -149,7 +149,7 @@
       "owner": "flowable",
       "repo": "flowable-engine",
       "sourceId": "flowable-engine",
-      "snapshotId": "4ef0d6fe-d51a-40f3-a998-00319f47d48f",
+      "snapshotId": "682bf7a1-d6ac-4e93-a19a-9d2a6896e201",
       "objectCount": 76265,
       "linkCount": 215262,
       "schemaVersion": "draft-v1"
@@ -167,7 +167,7 @@
       "owner": "jeecgboot",
       "repo": "JeecgBoot",
       "sourceId": "JeecgBoot",
-      "snapshotId": "a122ab0b-4e1f-4cfa-a7c3-26bbcfabee68",
+      "snapshotId": "6cb1a82a-80fc-41a2-b685-ff95d3857f65",
       "objectCount": 15697,
       "linkCount": 116780,
       "schemaVersion": "draft-v1"
@@ -176,7 +176,7 @@
       "owner": "jeecgboot",
       "repo": "jeecgboot-vue3",
       "sourceId": "jeecgboot-vue3",
-      "snapshotId": "d29dfbf3-8e0d-4341-978d-7f033f8737d1",
+      "snapshotId": "896b3950-a093-4c89-8103-364130b237b5",
       "objectCount": 4755,
       "linkCount": 25600,
       "schemaVersion": "draft-v1"
@@ -185,16 +185,16 @@
       "owner": "keycloak",
       "repo": "keycloak",
       "sourceId": "keycloak",
-      "snapshotId": "d1f0e091-7548-4307-b12d-25c262bee804",
-      "objectCount": 91774,
-      "linkCount": 497565,
+      "snapshotId": "e58e2f05-8a5e-4aac-a470-8c2d8e3b1b57",
+      "objectCount": 91909,
+      "linkCount": 498033,
       "schemaVersion": "draft-v1"
     },
     {
       "owner": "lenve",
       "repo": "vhr",
       "sourceId": "vhr",
-      "snapshotId": "b6f3dc1f-5154-467e-88be-d9ae13071272",
+      "snapshotId": "f2fb4546-8413-41fe-8b61-b5de71b9b83c",
       "objectCount": 991,
       "linkCount": 1436,
       "schemaVersion": "draft-v1"
@@ -203,7 +203,7 @@
       "owner": "linlinjava",
       "repo": "litemall",
       "sourceId": "litemall",
-      "snapshotId": "bdd58ec0-fcfe-4019-889d-99c5bc35fbec",
+      "snapshotId": "35f50e65-15b9-40e1-bd0a-d4cf837eb9fe",
       "objectCount": 13172,
       "linkCount": 34102,
       "schemaVersion": "draft-v1"
@@ -212,7 +212,7 @@
       "owner": "macrozheng",
       "repo": "mall-admin-web",
       "sourceId": "mall-admin-web",
-      "snapshotId": "a8a257f7-e067-4383-a062-eaa9f3501ac9",
+      "snapshotId": "b61b793d-afed-4a8a-850e-ff7ceb078a44",
       "objectCount": 1662,
       "linkCount": 29228,
       "schemaVersion": "draft-v1"
@@ -221,7 +221,7 @@
       "owner": "macrozheng",
       "repo": "mall-swarm",
       "sourceId": "mall-swarm",
-      "snapshotId": "e3399e3b-fa13-42a6-a5b3-05fc0d71da3b",
+      "snapshotId": "37ddc9ab-9bb4-4b6a-bece-9a0d2a7bfd66",
       "objectCount": 14878,
       "linkCount": 36007,
       "schemaVersion": "draft-v1"
@@ -230,7 +230,7 @@
       "owner": "macrozheng",
       "repo": "mall",
       "sourceId": "mall",
-      "snapshotId": "7997c769-c9d4-47b5-8d60-f20b1d731cae",
+      "snapshotId": "3440ab25-641d-40ef-98d0-6aa5471f50f5",
       "objectCount": 14527,
       "linkCount": 35226,
       "schemaVersion": "draft-v1"
@@ -239,7 +239,7 @@
       "owner": "metersphere",
       "repo": "metersphere",
       "sourceId": "metersphere",
-      "snapshotId": "159293bc-8fa0-45a5-bafc-c8feb992059b",
+      "snapshotId": "9525ad71-ed1c-4959-ac1e-f5eb1b8fbaf4",
       "objectCount": 43718,
       "linkCount": 157807,
       "schemaVersion": "draft-v1"
@@ -248,7 +248,7 @@
       "owner": "newbee-ltd",
       "repo": "newbee-mall-vue3-app",
       "sourceId": "newbee-mall-vue3-app",
-      "snapshotId": "1d0c1c7e-230d-4ed5-b7ab-844d080957a4",
+      "snapshotId": "c770e3d8-352c-422a-9837-64949bc842dd",
       "objectCount": 181,
       "linkCount": 382,
       "schemaVersion": "draft-v1"
@@ -257,7 +257,7 @@
       "owner": "newbee-ltd",
       "repo": "newbee-mall",
       "sourceId": "newbee-mall",
-      "snapshotId": "0a5c3f9c-fed4-40c4-9dc3-846998a4a2c1",
+      "snapshotId": "a1b165a0-0358-4864-ac37-34991b5c770b",
       "objectCount": 933,
       "linkCount": 1470,
       "schemaVersion": "draft-v1"
@@ -266,7 +266,7 @@
       "owner": "o2oa",
       "repo": "o2oa",
       "sourceId": "o2oa",
-      "snapshotId": "a869137f-eab9-4c6a-99f0-c6d7cfa391a4",
+      "snapshotId": "569db6c6-fe32-4f18-a197-2a3edd8391f3",
       "objectCount": 70501,
       "linkCount": 710059,
       "schemaVersion": "draft-v1"
@@ -275,7 +275,7 @@
       "owner": "pig-mesh",
       "repo": "pig-ui",
       "sourceId": "pig-ui",
-      "snapshotId": "fef13230-8d6f-459c-832f-addeacb99f2b",
+      "snapshotId": "1f9ae681-915d-40b7-acdd-e43a7b41ccb0",
       "objectCount": 1974,
       "linkCount": 11417,
       "schemaVersion": "draft-v1"
@@ -284,7 +284,7 @@
       "owner": "pig-mesh",
       "repo": "pig",
       "sourceId": "pig",
-      "snapshotId": "a4a88c5d-4594-4733-971a-6a4287473637",
+      "snapshotId": "feb1b04a-95fd-4b2b-816c-e4c3470e6f66",
       "objectCount": 2546,
       "linkCount": 7737,
       "schemaVersion": "draft-v1"
@@ -293,7 +293,7 @@
       "owner": "renrenio",
       "repo": "renren-fast",
       "sourceId": "renren-fast",
-      "snapshotId": "d202e066-3fcd-45c2-9a9b-89ae3dacb2e1",
+      "snapshotId": "c6105573-8718-4dec-b990-d3a00fce6fdc",
       "objectCount": 777,
       "linkCount": 3326,
       "schemaVersion": "draft-v1"
@@ -302,7 +302,7 @@
       "owner": "spring-projects",
       "repo": "spring-boot",
       "sourceId": "spring-boot",
-      "snapshotId": "e1e59dd2-596f-478c-9220-9261f1f1c832",
+      "snapshotId": "97e4378f-2899-49c3-8528-4cc3255c67c3",
       "objectCount": 65024,
       "linkCount": 141706,
       "schemaVersion": "draft-v1"
@@ -311,16 +311,16 @@
       "owner": "spring-projects",
       "repo": "spring-framework",
       "sourceId": "spring-framework",
-      "snapshotId": "07f82750-becd-4815-9d27-c6b82f4fb279",
-      "objectCount": 105955,
-      "linkCount": 286272,
+      "snapshotId": "98e14231-633f-4244-a63a-fe759a8b4995",
+      "objectCount": 105968,
+      "linkCount": 286287,
       "schemaVersion": "draft-v1"
     },
     {
       "owner": "spring-projects",
       "repo": "spring-petclinic",
       "sourceId": "spring-petclinic",
-      "snapshotId": "138c94bb-67c8-4ea2-9f9e-855229a975a2",
+      "snapshotId": "636f6857-7711-4dae-9f7b-ac0fcb3530a1",
       "objectCount": 283,
       "linkCount": 626,
       "schemaVersion": "draft-v1"
@@ -329,7 +329,7 @@
       "owner": "stylefeng",
       "repo": "Guns",
       "sourceId": "Guns",
-      "snapshotId": "2c22ff38-c30b-40a4-8d46-72f29168f6e1",
+      "snapshotId": "c75b708b-c0e3-4d3a-91d7-3555612ba8f6",
       "objectCount": 1377,
       "linkCount": 10042,
       "schemaVersion": "draft-v1"
@@ -338,7 +338,7 @@
       "owner": "thinkgem",
       "repo": "jeesite",
       "sourceId": "jeesite",
-      "snapshotId": "590057b4-69dd-4258-8472-5896b2b0e555",
+      "snapshotId": "b6300c52-8b97-4458-b0df-8adcfc4ac936",
       "objectCount": 2670,
       "linkCount": 14623,
       "schemaVersion": "draft-v1"
@@ -347,7 +347,7 @@
       "owner": "yangzongzhuan",
       "repo": "RuoYi-Cloud",
       "sourceId": "RuoYi-Cloud",
-      "snapshotId": "f247d3e5-58d9-4584-8f32-62d3eb2dab9c",
+      "snapshotId": "d9545f2a-f03a-40ff-b51b-c00d47cea68e",
       "objectCount": 2532,
       "linkCount": 8741,
       "schemaVersion": "draft-v1"
@@ -356,7 +356,7 @@
       "owner": "yangzongzhuan",
       "repo": "RuoYi-Vue",
       "sourceId": "RuoYi-Vue",
-      "snapshotId": "25e1ab95-4a53-44e4-aaa1-17e739f1932a",
+      "snapshotId": "d3415eb1-c908-4191-a6d0-7f2cfc6f36b8",
       "objectCount": 2560,
       "linkCount": 7765,
       "schemaVersion": "draft-v1"
@@ -365,16 +365,16 @@
       "owner": "yangzongzhuan",
       "repo": "RuoYi-Vue3",
       "sourceId": "RuoYi-Vue3",
-      "snapshotId": "9c82ba15-95c7-4113-acaa-4ee50ff1aa0f",
-      "objectCount": 1077,
-      "linkCount": 6240,
+      "snapshotId": "fbc90f26-2553-4d2e-a855-d2132e202413",
+      "objectCount": 1078,
+      "linkCount": 6243,
       "schemaVersion": "draft-v1"
     },
     {
       "owner": "yudaocode",
       "repo": "yudao-ui-admin-vue3",
       "sourceId": "yudao-ui-admin-vue3",
-      "snapshotId": "b4ecbe31-6f9b-4804-a737-5993aa53a65c",
+      "snapshotId": "e260a772-bfdf-4b74-9f6c-71e7a4cd51e5",
       "objectCount": 16456,
       "linkCount": 3065439,
       "schemaVersion": "draft-v1"
@@ -387,16 +387,12 @@
       "label": "全链路贯通率",
       "domain": "A",
       "direction": "higher-better",
-      "N": 7,
-      "missing": 34,
+      "N": 18,
+      "missing": 23,
       "missingRepos": [
         {
           "repo": "Activiti/Activiti",
           "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）"
-        },
-        {
-          "repo": "BroadleafCommerce/BroadleafCommerce",
-          "reason": "calls 传递闭包与 Method→Mapper 名字 join 未实现（过渡实现——待 ke checkup）"
         },
         {
           "repo": "YunaiV/ruoyi-vue-pro",
@@ -405,10 +401,6 @@
         {
           "repo": "alibaba/druid",
           "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）"
-        },
-        {
-          "repo": "alibaba/nacos",
-          "reason": "calls 传递闭包与 Method→Mapper 名字 join 未实现（过渡实现——待 ke checkup）"
         },
         {
           "repo": "apache/dubbo",
@@ -431,10 +423,6 @@
           "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）"
         },
         {
-          "repo": "dhis2/dhis2-core",
-          "reason": "calls 传递闭包与 Method→Mapper 名字 join 未实现（过渡实现——待 ke checkup）"
-        },
-        {
           "repo": "dromara/RuoYi-Vue-Plus",
           "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）"
         },
@@ -447,10 +435,6 @@
           "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）"
         },
         {
-          "repo": "elunez/eladmin-web",
-          "reason": "calls 传递闭包与 Method→Mapper 名字 join 未实现（过渡实现——待 ke checkup）"
-        },
-        {
           "repo": "flowable/flowable-engine",
           "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）"
         },
@@ -459,20 +443,8 @@
           "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）"
         },
         {
-          "repo": "jeecgboot/jeecgboot-vue3",
-          "reason": "calls 传递闭包与 Method→Mapper 名字 join 未实现（过渡实现——待 ke checkup）"
-        },
-        {
-          "repo": "keycloak/keycloak",
-          "reason": "calls 传递闭包与 Method→Mapper 名字 join 未实现（过渡实现——待 ke checkup）"
-        },
-        {
           "repo": "macrozheng/mall",
           "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）"
-        },
-        {
-          "repo": "macrozheng/mall-admin-web",
-          "reason": "calls 传递闭包与 Method→Mapper 名字 join 未实现（过渡实现——待 ke checkup）"
         },
         {
           "repo": "macrozheng/mall-swarm",
@@ -483,16 +455,8 @@
           "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）"
         },
         {
-          "repo": "newbee-ltd/newbee-mall-vue3-app",
-          "reason": "calls 传递闭包与 Method→Mapper 名字 join 未实现（过渡实现——待 ke checkup）"
-        },
-        {
           "repo": "pig-mesh/pig",
           "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）"
-        },
-        {
-          "repo": "pig-mesh/pig-ui",
-          "reason": "calls 传递闭包与 Method→Mapper 名字 join 未实现（过渡实现——待 ke checkup）"
         },
         {
           "repo": "renrenio/renren-fast",
@@ -517,22 +481,14 @@
         {
           "repo": "yangzongzhuan/RuoYi-Vue",
           "reason": "无 ApiEndpoint 对象（分母为 0，按口径降级）"
-        },
-        {
-          "repo": "yangzongzhuan/RuoYi-Vue3",
-          "reason": "calls 传递闭包与 Method→Mapper 名字 join 未实现（过渡实现——待 ke checkup）"
-        },
-        {
-          "repo": "yudaocode/yudao-ui-admin-vue3",
-          "reason": "calls 传递闭包与 Method→Mapper 名字 join 未实现（过渡实现——待 ke checkup）"
         }
       ],
-      "mean": 0.142857,
+      "mean": 0.055556,
       "percentiles": {
         "p25": 0.0,
         "p50": 0.0,
         "p75": 0.0,
-        "p90": 1.0
+        "p90": 0.0
       },
       "percentileMethod": "nearest-rank (Schema §4.2)"
     },
@@ -823,7 +779,7 @@
           "reason": "无 Package 对象（分母为 0）"
         }
       ],
-      "mean": 0.246012,
+      "mean": 0.246006,
       "percentiles": {
         "p25": 0.090909,
         "p50": 0.212598,
@@ -898,7 +854,7 @@
           "reason": "无 Module 对象（纯后端仓库——按口径置空）"
         }
       ],
-      "mean": 0.009705,
+      "mean": 0.009692,
       "percentiles": {
         "p25": 0.0,
         "p50": 0.0,
@@ -949,12 +905,12 @@
           "reason": "无 Package 对象（分母为 0）"
         }
       ],
-      "mean": 5.087461,
+      "mean": 5.087364,
       "percentiles": {
         "p25": 2.3617,
         "p50": 4.6335,
         "p75": 7.5792,
-        "p90": 9.0915
+        "p90": 9.0936
       },
       "percentileMethod": "nearest-rank (Schema §4.2)"
     },
@@ -1000,11 +956,11 @@
           "reason": "无 Class 对象（分母为 0）"
         }
       ],
-      "mean": 0.03557,
+      "mean": 0.035596,
       "percentiles": {
         "p25": 0.006193,
         "p50": 0.02531,
-        "p75": 0.035616,
+        "p75": 0.035711,
         "p90": 0.082058
       },
       "percentileMethod": "nearest-rank (Schema §4.2)"
@@ -1139,7 +1095,7 @@
         },
         {
           "repo": "BroadleafCommerce/BroadleafCommerce",
-          "reason": "依赖 A1 贯通链算法（过渡实现未含——待 ke checkup）"
+          "reason": "无贯通链（全部 API 闭包未到达带表映射的 Mapper——跳数分布分母为 0）"
         },
         {
           "repo": "YunaiV/ruoyi-vue-pro",
@@ -1151,7 +1107,7 @@
         },
         {
           "repo": "alibaba/nacos",
-          "reason": "依赖 A1 贯通链算法（过渡实现未含——待 ke checkup）"
+          "reason": "无贯通链（全部 API 闭包未到达带表映射的 Mapper——跳数分布分母为 0）"
         },
         {
           "repo": "apache/dubbo",
@@ -1175,7 +1131,7 @@
         },
         {
           "repo": "dhis2/dhis2-core",
-          "reason": "依赖 A1 贯通链算法（过渡实现未含——待 ke checkup）"
+          "reason": "无贯通链（全部 API 闭包未到达带表映射的 Mapper——跳数分布分母为 0）"
         },
         {
           "repo": "dromara/RuoYi-Vue-Plus",
@@ -1191,7 +1147,7 @@
         },
         {
           "repo": "elunez/eladmin-web",
-          "reason": "依赖 A1 贯通链算法（过渡实现未含——待 ke checkup）"
+          "reason": "无贯通链（全部 API 闭包未到达带表映射的 Mapper——跳数分布分母为 0）"
         },
         {
           "repo": "flowable/flowable-engine",
@@ -1207,11 +1163,11 @@
         },
         {
           "repo": "jeecgboot/jeecgboot-vue3",
-          "reason": "依赖 A1 贯通链算法（过渡实现未含——待 ke checkup）"
+          "reason": "无贯通链（全部 API 闭包未到达带表映射的 Mapper——跳数分布分母为 0）"
         },
         {
           "repo": "keycloak/keycloak",
-          "reason": "依赖 A1 贯通链算法（过渡实现未含——待 ke checkup）"
+          "reason": "无贯通链（全部 API 闭包未到达带表映射的 Mapper——跳数分布分母为 0）"
         },
         {
           "repo": "linlinjava/litemall",
@@ -1223,7 +1179,7 @@
         },
         {
           "repo": "macrozheng/mall-admin-web",
-          "reason": "依赖 A1 贯通链算法（过渡实现未含——待 ke checkup）"
+          "reason": "无贯通链（全部 API 闭包未到达带表映射的 Mapper——跳数分布分母为 0）"
         },
         {
           "repo": "macrozheng/mall-swarm",
@@ -1239,7 +1195,7 @@
         },
         {
           "repo": "newbee-ltd/newbee-mall-vue3-app",
-          "reason": "依赖 A1 贯通链算法（过渡实现未含——待 ke checkup）"
+          "reason": "无贯通链（全部 API 闭包未到达带表映射的 Mapper——跳数分布分母为 0）"
         },
         {
           "repo": "o2oa/o2oa",
@@ -1251,7 +1207,7 @@
         },
         {
           "repo": "pig-mesh/pig-ui",
-          "reason": "依赖 A1 贯通链算法（过渡实现未含——待 ke checkup）"
+          "reason": "无贯通链（全部 API 闭包未到达带表映射的 Mapper——跳数分布分母为 0）"
         },
         {
           "repo": "renrenio/renren-fast",
@@ -1287,11 +1243,11 @@
         },
         {
           "repo": "yangzongzhuan/RuoYi-Vue3",
-          "reason": "依赖 A1 贯通链算法（过渡实现未含——待 ke checkup）"
+          "reason": "无贯通链（全部 API 闭包未到达带表映射的 Mapper——跳数分布分母为 0）"
         },
         {
           "repo": "yudaocode/yudao-ui-admin-vue3",
-          "reason": "依赖 A1 贯通链算法（过渡实现未含——待 ke checkup）"
+          "reason": "无贯通链（全部 API 闭包未到达带表映射的 Mapper——跳数分布分母为 0）"
         }
       ],
       "mean": null,
@@ -1392,12 +1348,12 @@
           "reason": "无 Method 对象（分母为 0）"
         }
       ],
-      "mean": 0.108564,
+      "mean": 0.108712,
       "percentiles": {
         "p25": 0.004317,
         "p50": 0.039664,
-        "p75": 0.16339,
-        "p90": 0.301344
+        "p75": 0.166066,
+        "p90": 0.301365
       },
       "percentileMethod": "nearest-rank (Schema §4.2)"
     },
@@ -1443,12 +1399,12 @@
           "reason": "无 Method 对象（分母为 0）"
         }
       ],
-      "mean": 0.005099,
+      "mean": 0.005095,
       "percentiles": {
         "p25": 0.001379,
         "p50": 0.003014,
-        "p75": 0.007306,
-        "p90": 0.014888
+        "p75": 0.00728,
+        "p90": 0.014849
       },
       "percentileMethod": "nearest-rank (Schema §4.2)"
     },
@@ -1458,28 +1414,24 @@
       "label": "技术栈版本覆盖率",
       "domain": "D",
       "direction": "higher-better",
-      "N": 3,
-      "missing": 38,
+      "N": 6,
+      "missing": 35,
       "missingRepos": [
         {
           "repo": "Activiti/Activiti",
-          "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）"
+          "reason": "策略框架命中依赖无可判定版本（全仓可判定版本 2 个均不匹配策略表）"
         },
         {
           "repo": "BroadleafCommerce/BroadleafCommerce",
-          "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）"
+          "reason": "策略框架命中依赖无可判定版本（全仓可判定版本 54 个均不匹配策略表）"
         },
         {
           "repo": "YunaiV/ruoyi-vue-pro",
           "reason": "策略框架命中依赖无可判定版本（全仓可判定版本 2 个均不匹配策略表）"
         },
         {
-          "repo": "alibaba/druid",
-          "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）"
-        },
-        {
           "repo": "alibaba/nacos",
-          "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）"
+          "reason": "策略框架命中依赖无可判定版本（全仓可判定版本 18 个均不匹配策略表）"
         },
         {
           "repo": "apache/dubbo",
@@ -1487,15 +1439,15 @@
         },
         {
           "repo": "apache/fineract",
-          "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）"
+          "reason": "策略框架命中依赖无可判定版本（全仓可判定版本 12 个均不匹配策略表）"
         },
         {
           "repo": "apache/rocketmq",
-          "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）"
+          "reason": "策略框架命中依赖无可判定版本（全仓可判定版本 7 个均不匹配策略表）"
         },
         {
           "repo": "apache/shardingsphere",
-          "reason": "无可判定版本（空串 39 / 属性占位 398 / 合计 437——分母为 0，按口径置空）"
+          "reason": "无可判定版本（策略框架命中 0 或全部空串/占位——分母为 0，按口径置空）"
         },
         {
           "repo": "chillzhuang/SpringBlade",
@@ -1503,7 +1455,7 @@
         },
         {
           "repo": "dhis2/dhis2-core",
-          "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）"
+          "reason": "策略框架命中依赖无可判定版本（全仓可判定版本 15 个均不匹配策略表）"
         },
         {
           "repo": "dromara/RuoYi-Vue-Plus",
@@ -1514,16 +1466,12 @@
           "reason": "无可判定版本（策略框架命中 0 或全部空串/占位——分母为 0，按口径置空）"
         },
         {
-          "repo": "elunez/eladmin",
-          "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）"
-        },
-        {
           "repo": "elunez/eladmin-web",
-          "reason": "无可判定版本（空串 0 / 属性占位 0 / 合计 0——分母为 0，按口径置空）"
+          "reason": "无可判定版本（策略框架命中 0 或全部空串/占位——分母为 0，按口径置空）"
         },
         {
           "repo": "flowable/flowable-engine",
-          "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）"
+          "reason": "策略框架命中依赖无可判定版本（全仓可判定版本 33 个均不匹配策略表）"
         },
         {
           "repo": "hibernate/hibernate-orm",
@@ -1531,11 +1479,11 @@
         },
         {
           "repo": "jeecgboot/jeecgboot-vue3",
-          "reason": "无可判定版本（空串 0 / 属性占位 0 / 合计 0——分母为 0，按口径置空）"
+          "reason": "无可判定版本（策略框架命中 0 或全部空串/占位——分母为 0，按口径置空）"
         },
         {
           "repo": "keycloak/keycloak",
-          "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）"
+          "reason": "策略框架命中依赖无可判定版本（全仓可判定版本 23 个均不匹配策略表）"
         },
         {
           "repo": "lenve/vhr",
@@ -1547,7 +1495,7 @@
         },
         {
           "repo": "macrozheng/mall-admin-web",
-          "reason": "无可判定版本（空串 0 / 属性占位 0 / 合计 0——分母为 0，按口径置空）"
+          "reason": "无可判定版本（策略框架命中 0 或全部空串/占位——分母为 0，按口径置空）"
         },
         {
           "repo": "macrozheng/mall-swarm",
@@ -1563,7 +1511,7 @@
         },
         {
           "repo": "newbee-ltd/newbee-mall-vue3-app",
-          "reason": "无可判定版本（空串 0 / 属性占位 0 / 合计 0——分母为 0，按口径置空）"
+          "reason": "无可判定版本（策略框架命中 0 或全部空串/占位——分母为 0，按口径置空）"
         },
         {
           "repo": "pig-mesh/pig",
@@ -1571,23 +1519,19 @@
         },
         {
           "repo": "pig-mesh/pig-ui",
-          "reason": "无可判定版本（空串 0 / 属性占位 0 / 合计 0——分母为 0，按口径置空）"
+          "reason": "无可判定版本（策略框架命中 0 或全部空串/占位——分母为 0，按口径置空）"
         },
         {
           "repo": "renrenio/renren-fast",
           "reason": "无可判定版本（策略框架命中 0 或全部空串/占位——分母为 0，按口径置空）"
         },
         {
-          "repo": "spring-projects/spring-boot",
-          "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）"
-        },
-        {
           "repo": "spring-projects/spring-framework",
-          "reason": "目标 semver range 为 cohort 级策略输入（过渡实现单体层不出值）"
+          "reason": "策略框架命中依赖无可判定版本（全仓可判定版本 4 个均不匹配策略表）"
         },
         {
           "repo": "spring-projects/spring-petclinic",
-          "reason": "无可判定版本（空串 25 / 属性占位 5 / 合计 30——分母为 0，按口径置空）"
+          "reason": "无可判定版本（策略框架命中 0 或全部空串/占位——分母为 0，按口径置空）"
         },
         {
           "repo": "stylefeng/Guns",
@@ -1607,63 +1551,58 @@
         },
         {
           "repo": "yangzongzhuan/RuoYi-Vue3",
-          "reason": "无可判定版本（空串 0 / 属性占位 0 / 合计 0——分母为 0，按口径置空）"
+          "reason": "无可判定版本（策略框架命中 0 或全部空串/占位——分母为 0，按口径置空）"
         },
         {
           "repo": "yudaocode/yudao-ui-admin-vue3",
-          "reason": "无可判定版本（空串 0 / 属性占位 0 / 合计 0——分母为 0，按口径置空）"
+          "reason": "无可判定版本（策略框架命中 0 或全部空串/占位——分母为 0，按口径置空）"
         }
       ],
-      "mean": null,
-      "percentiles": null,
-      "percentileMethod": "nearest-rank (Schema §4.2)",
-      "gateNote": "k-匿名隐私护栏：切片 N=3 < 5，整组不出分位（与发布门槛显式区分）"
+      "mean": 0.666667,
+      "percentiles": {
+        "p25": 0.5,
+        "p50": 0.5,
+        "p75": 1.0,
+        "p90": 1.0
+      },
+      "percentileMethod": "nearest-rank (Schema §4.2)"
     }
   },
   "validation": {
-    "reposWithStatus": 20,
+    "reposWithStatus": 40,
     "overall": {
-      "pass": 19,
-      "fail": 1
+      "pass": 40,
+      "fail": 0
     },
     "steps": {
       "scan": {
-        "ok": 20,
+        "ok": 40,
         "failed": 0,
         "skipped": 0
       },
       "projection": {
-        "ok": 19,
+        "ok": 40,
         "failed": 0,
-        "skipped": 1
+        "skipped": 0
       },
       "metrics": {
-        "ok": 19,
+        "ok": 40,
         "failed": 0,
-        "skipped": 1
+        "skipped": 0
       },
       "consistency": {
-        "ok": 19,
+        "ok": 40,
         "failed": 0,
-        "skipped": 1
+        "skipped": 0
       }
     },
     "consistencyResult": {
-      "pass": 19,
+      "pass": 40,
       "mismatch": 0,
       "error": 0,
-      "skipped": 1
+      "skipped": 0
     },
-    "failedRepos": [
-      {
-        "repo": "apache/fineract",
-        "failedSteps": [
-          "projection:skipped",
-          "metrics:skipped",
-          "consistency:skipped"
-        ]
-      }
-    ],
+    "failedRepos": [],
     "basis": "pipeline-status/{owner}/{repo}.json（scan job ⑤ annotate 确定性产物）——单仓失败不阻断聚合：reports 区聚合成功产物，本区汇总全部仓子步结论"
   },
   "cohort": {
@@ -1673,40 +1612,66 @@
       "label": "依赖同质度",
       "domain": "D",
       "direction": "none",
-      "value": 0.428571,
+      "value": 0.375,
       "frameworks": {
         "druid": {
-          "reposUsing": 3,
-          "distinctVersions": 3,
-          "dominantVersion": "1.2.1",
-          "dominantShare": 0.333333,
-          "mixedVersionRepos": 0,
+          "reposUsing": 5,
+          "distinctVersions": 5,
+          "dominantVersion": "${druid.version}",
+          "dominantShare": 0.2,
+          "mixedVersionRepos": 1,
           "versionDistribution": {
+            "${druid.version}": 1,
             "1.2.1": 1,
             "1.2.28": 1,
+            "1.2.29-SNAPSHOT": 1,
             "1.2.8": 1
           }
         },
+        "mybatis": {
+          "reposUsing": 1,
+          "distinctVersions": 1,
+          "dominantVersion": "3.4.0",
+          "dominantShare": 1.0,
+          "mixedVersionRepos": 1,
+          "versionDistribution": {
+            "3.4.0": 1
+          }
+        },
         "mysql-connector-j": {
-          "reposUsing": 3,
-          "distinctVersions": 3,
-          "dominantVersion": "${mysql-connector-java.version}",
-          "dominantShare": 0.333333,
+          "reposUsing": 5,
+          "distinctVersions": 4,
+          "dominantVersion": "8.0.33",
+          "dominantShare": 0.4,
           "mixedVersionRepos": 0,
           "versionDistribution": {
             "${mysql-connector-java.version}": 1,
             "8.0.28": 1,
-            "8.0.33": 1
+            "8.0.33": 2,
+            "9.2.0": 1
           }
         },
         "spring-boot": {
-          "reposUsing": 1,
-          "distinctVersions": 1,
-          "dominantVersion": "2.1.5.RELEASE",
-          "dominantShare": 1.0,
-          "mixedVersionRepos": 0,
+          "reposUsing": 3,
+          "distinctVersions": 3,
+          "dominantVersion": "${springboot3.version}",
+          "dominantShare": 0.333333,
+          "mixedVersionRepos": 1,
           "versionDistribution": {
-            "2.1.5.RELEASE": 1
+            "${springboot3.version}": 1,
+            "2.1.5.RELEASE": 1,
+            "@project.version@": 1
+          }
+        },
+        "spring-framework": {
+          "reposUsing": 2,
+          "distinctVersions": 2,
+          "dominantVersion": "6.1.21",
+          "dominantShare": 0.5,
+          "mixedVersionRepos": 1,
+          "versionDistribution": {
+            "6.1.21": 1,
+            "@spring-framework.version@": 1
           }
         }
       },
