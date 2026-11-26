@@ -57,9 +57,9 @@ preflight（零漂移短路）
 census（聚合成功产物 + 汇总全部仓子步结论 + 与扫描矩阵对账——缺仓即判失败）
 ```
 
-- **触发**：push 修改 `repos.yaml` / Actions 页手动触发（可选 `scan_force`）。月度 schedule 尚未启用（保持注释态）。
+- **触发**（三触发面）：① push 修改 `repos.yaml`；② Actions 页手动触发（可选 `scan_force`）；③ schedule 月度重扫——每月 1 日 02:00 UTC（北京时间 10:00，2026-11-26 启用）。**schedule 事件没有 inputs，`scan_force` 恒为空，永不走 force 重扫轨**——分析器升级后的口径修正仍须手动勾选 `scan_force`。
 - **默认轨去重**：仓 HEAD 与 CLI 版本均未变时，preflight 直接跳过整个 job（run #34 实证：41 仓中 36 仓秒级跳过，样本数零漂移）。
-- **并发护栏**：`max-parallel: 1` 单仓串行，投影天然独占窗口。
+- **并发护栏**：`max-parallel: 1` 单仓串行，投影天然独占窗口；run 级 `concurrency: ke-index-scan`——三触发面重叠时后到者排队，不并行、不取消在跑者。
 
 ## 复现说明
 
