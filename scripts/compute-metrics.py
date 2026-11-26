@@ -426,6 +426,107 @@ def ratio(num, den, digits=6):
     return round(num / den, digits) if den else None
 
 
+# =============================================================================
+# 仓规模（文件数 / 行数——repo-scale.py 产物 → D3 规模画像 scale 子对象）
+# =============================================================================
+
+# repo-scale.py files 区原样保留的键（byLanguage 单独平铺为 filesByLanguage）
+SCALE_FILE_KEYS = ("tracked", "skippedByAnalyzerDirs", "nonRegular", "total", "text", "binary")
+
+
+def _is_int(v):
+    return isinstance(v, int) and not isinstance(v, bool)
+
+
+def load_scale(path):
+    """读 repo-scale.py 产物并校验形态；path 为空 → None（未采集——旧形态）。
+
+    校验失败抛 KeError（FAIL 不静默降级）：规模数据残缺/畸形时 report 不算
+    完整结论——与 count 交叉验证不一致即失败同一判据。
+    """
+    if not path:
+        return None
+    try:
+        with open(path, encoding="utf-8") as fh:
+            data = json.load(fh)
+    except (OSError, ValueError) as e:
+        raise KeError("--scale-json 不可读 %s：%s" % (path, e))
+    files = data.get("files") if isinstance(data, dict) else None
+    lines = data.get("lines") if isinstance(data, dict) else None
+    if not isinstance(files, dict) or not isinstance(lines, dict) \
+            or not all(_is_int(files.get(k)) for k in SCALE_FILE_KEYS) \
+            or not _is_int(lines.get("total")) \
+            or not isinstance(files.get("byLanguage", {}), dict) \
+            or not isinstance(lines.get("byLanguage", {}), dict):
+        raise KeError("--scale-json 形态不符（缺 files/lines 计数键）：%s" % path)
+    return data
+
+
+def scale_block(ke, snap_id, scale):
+    """repo-scale 产物 → report D3.scale（含服务端 Repository.fileCount 对照）。
+
+    对照口径：files.total 与分析器 Repository.fileCount 同口径（tracked 剔除
+    跳过目录 + 非普通文件）——两路独立实现（CI 侧 git ls-files vs 分析器
+    fs walk）读同一提交，相等即互证；不等只告警不置红（符号链接 / 子模块 /
+    跳过目录差异属已知口径差——用户裁决 2026-11-26），差值原样入 report。
+    服务端查询失败 fail-open（对照置 null + 注记）：规模数据本身来自 CI 侧
+    clone，不依赖服务端可用性。
+    """
+    files = scale["files"]
+    by_lang_files = files.get("byLanguage") or {}
+    by_lang_lines = scale["lines"].get("byLanguage") or {}
+    block = {
+        "collectedBy": "scan",
+        "sourceHead": scale.get("sourceHead"),
+        "method": scale.get("method"),
+        "fileCount": files["total"],
+        "javaFiles": by_lang_files.get("java", 0),
+        "lineCount": scale["lines"]["total"],
+        "javaLines": by_lang_lines.get("java", 0),
+        "files": {k: files[k] for k in SCALE_FILE_KEYS},
+        "filesByLanguage": by_lang_files,
+        "linesByLanguage": by_lang_lines,
+        "bytes": (scale.get("bytes") or {}).get("total"),
+        "commands": [
+            "python3 scripts/repo-scale.py --repo <clone> --out <file>  # scan-one.sh clone 后 / scale-backfill.py 检出 snapshot.sourceHead 后执行",
+            query_cmd("Repository", ["id", "fileCount"], snap_id),
+        ],
+    }
+    print("scale fileCount cross-check: CI=%d" % files["total"])
+    try:
+        rows = ke.query("Repository", ["id", "fileCount"], snap_id)
+    except KeError as e:
+        block["serverFileCount"] = None
+        block["fileCountMatch"] = None
+        block["fileCountMatchNote"] = "服务端 Repository.fileCount 查询失败（fail-open）：%s" % e
+        print("WARN: %s" % block["fileCountMatchNote"], file=sys.stderr)
+        return block
+    server = None
+    if len(rows) == 1:
+        raw = rows[0].get("fileCount")
+        if _is_int(raw):
+            server = raw
+        elif isinstance(raw, str) and raw.isdigit():
+            server = int(raw)
+    if server is None:
+        block["serverFileCount"] = None
+        block["fileCountMatch"] = None
+        block["fileCountMatchNote"] = "服务端 Repository 行数或 fileCount 字段形态异常（rows=%d）" % len(rows)
+        print("WARN: %s" % block["fileCountMatchNote"], file=sys.stderr)
+        return block
+    match = server == files["total"]
+    block["serverFileCount"] = server
+    block["fileCountMatch"] = match
+    print("scale fileCount cross-check: CI=%d server=%d %s" % (
+        files["total"], server, "OK" if match else "MISMATCH"))
+    if not match:
+        block["fileCountMatchNote"] = (
+            "CI 侧与分析器 Repository.fileCount 口径差（符号链接/子模块/跳过目录）——告警不置红，差值 %d" % (files["total"] - server))
+        print("::warning::仓规模 fileCount 对照不一致：CI=%d server=%d（已知口径差，不置红——见 report D3.scale.fileCountMatchNote）"
+              % (files["total"], server))
+    return block
+
+
 def main():
     ap = argparse.ArgumentParser(description="KE Index L1 指标计算（过渡实现）")
     ap.add_argument("--owner", required=True, help="GitHub owner（如 macrozheng）")
@@ -440,6 +541,9 @@ def main():
     ap.add_argument("--framework-policy", default=None,
                     help="framework-policy.json 路径（缺省 scripts/ 同目录）")
     ap.add_argument("--skip-cross-check", action="store_true", help="跳过 count 交叉验证（仅调试用）")
+    ap.add_argument("--scale-json", default=None,
+                    help="repo-scale.py 产物（scan-one.sh clone 后生成的仓规模采集——文件数/行数）；"
+                         "传入即并入 report D3 规模画像 scale 子对象；缺省省略该子对象（本地复算旧形态）")
     args = ap.parse_args()
 
     if not args.url or not args.token:
@@ -470,6 +574,20 @@ def main():
     snap_id = target["snapshotId"]
     print("target snapshot: %s (%s, objectCount=%s)" % (
         snap_id, target.get("status"), target.get("objectCount")))
+
+    # ---- 仓规模采集产物（文件数 / 行数——scan-one.sh clone 后生成）----
+    # 采集对象必须就是本快照分析的提交：scale.sourceHead 与快照 sourceVersion
+    # （import start --commit 落锚）不等即采集对象错位——规模数据会挂到错误的
+    # 提交上，FAIL 不静默降级（存量 sourceVersion="head" 无锚可比 → 跳过本判据）
+    scale = load_scale(args.scale_json)
+    if scale is not None:
+        sv = target.get("sourceVersion")
+        if isinstance(sv, str) and re.fullmatch(r"[0-9a-f]{40}", sv) and scale.get("sourceHead") != sv:
+            raise KeError("scale sourceHead %s != 快照 sourceVersion %s（规模采集对象与快照提交不一致）"
+                          % (scale.get("sourceHead"), sv))
+        print("scale: files=%d（tracked=%d）lines=%d java=%d files / %d lines" % (
+            scale["files"]["total"], scale["files"]["tracked"], scale["lines"]["total"],
+            scale["files"]["byLanguage"].get("java", 0), scale["lines"]["byLanguage"].get("java", 0)))
 
     # ---- 14 类型 count（5.1.4：stats 端点单次收敛——14 次 ke count → 1 次 HTTP）----
     # objectCounts 源自 manifest 键控 GROUP BY（与 legacy ke count 异源）——
@@ -955,7 +1073,8 @@ def main():
         evidence={"dependencyCount": len(deps)},
     )
 
-    # D3 规模画像（描述型：objectCount / linkCount / typeCounts）
+    # D3 规模画像（描述型：objectCount / linkCount / typeCounts；有仓规模采集
+    # 产物时并入 scale 子对象——文件数 / 行数，仓规模的文件级参照）
     metrics["D3"] = metric(
         "D3", "scale-profile", "规模画像", "D", "none",
         int(target.get("objectCount") or 0),
@@ -964,6 +1083,8 @@ def main():
         typeCounts={t: counts[t] for t in OBJECT_TYPES},
         linkCount=int(target.get("linkCount") or 0),
     )
+    if scale is not None:
+        metrics["D3"]["scale"] = scale_block(ke, snap_id, scale)
 
     # D4 年度演进趋势（5.1.4.5）：历史 report 差分（同 source 多快照时序）——
     # 磁盘上的既有 report（上轮 scan 提交产物）与本次快照不同时，输出逐指标

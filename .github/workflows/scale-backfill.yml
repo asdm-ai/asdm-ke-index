@@ -1,0 +1,201 @@
+# =============================================================================
+# KE Index · 仓规模一次性补齐 workflow（scale-backfill）
+# -----------------------------------------------------------------------------
+# 背景（2026-11-26）：仓规模采集（文件数 / 行数——repo-scale.py）接入扫描轨
+# （scan-one.sh clone 后采集 → compute-metrics.py 并入 report D3.scale）。此前
+# 落库的 report 无 D3.scale；preflight 零漂移短路下上游 HEAD 未前移的仓不会
+# 被重扫、report 不重生成 → 需按 report.snapshot.sourceHead 检出同一提交补采。
+# 确定性：同一提交逐字节同值——与"当时扫描时采集"等价。
+#
+# 触发：workflow_dispatch 手动（一次性轨道——不随 push 自动跑；可重复 dispatch：
+# 已有 D3.scale 的 report 整 job 跳过，幂等）。
+# 不碰：服务端快照 / 投影 / 其它指标区 / pipeline-status（只回填 D3.scale，
+# 服务端仅做一次 Repository.fileCount 只读对照——与扫描轨同判据）。
+# 与 scan 的关系：本 workflow 只写各仓自己的 report 文件；与 scan 同时跑时
+# 同仓 report 可能 rebase 冲突（确定性失败，可见不静默）——建议错开执行。
+#
+# job 流水：prepare（repos.yaml → matrix）→ backfill（每仓：定锚 → 装配 CLI →
+# 检出定锚提交 → scale-backfill.py → 提交；max-parallel 4——纯只读 + git 操作，
+# 无服务端写入面）→ census（重聚合：repos[] 规模字段 + cohort.scale 分布）。
+# =============================================================================
+name: scale-backfill
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ke-index-scale-backfill
+  cancel-in-progress: false
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.gen.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Generate matrix from repos.yaml
+        id: gen
+        run: |
+          # 与 scan.yml prepare 同形（ruby stdlib YAML → jq 过滤 skip）
+          MATRIX=$(ruby -ryaml -rjson -e 'puts JSON.generate(YAML.load_file("repos.yaml"))' \
+            | jq -c '{include: [.repos[] | select((.skip // false) | not) | {owner: .owner, repo: .repo, branch: (.branch // "")}]}')
+          echo "matrix=$MATRIX" >> "$GITHUB_OUTPUT"
+          echo "$MATRIX"
+
+  backfill:
+    needs: prepare
+    runs-on: ubuntu-latest
+    strategy:
+      # 单仓失败不级联取消其它仓
+      fail-fast: false
+      max-parallel: 4
+      matrix: ${{ fromJson(needs.prepare.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+
+      # 定锚：report.snapshot.sourceHead（scan-one 落的源仓 HEAD；存量兜底
+      # sourceVersion）。已有 D3.scale → 整 job 跳过（幂等）。report 缺失 →
+      # 该仓 FAIL（从未扫描过的仓不属补齐对象，显式列出而非静默略过）。
+      - name: Resolve anchor (report.snapshot.sourceHead)
+        id: anchor
+        env:
+          OWNER: ${{ matrix.owner }}
+          REPO: ${{ matrix.repo }}
+        run: |
+          REPORT="reports/$OWNER/$REPO.json"
+          if [ ! -f "$REPORT" ]; then
+            echo "FAIL: report 不存在（$REPORT）——该仓尚未扫描，不属补齐对象" >&2
+            exit 1
+          fi
+          if jq -e '.metrics.D3.scale.fileCount | type == "number"' "$REPORT" > /dev/null; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            echo "已有 D3.scale（fileCount=$(jq -r '.metrics.D3.scale.fileCount' "$REPORT")）——跳过"
+            exit 0
+          fi
+          SHA=$(jq -r '.snapshot.sourceHead // .snapshot.sourceVersion // ""' "$REPORT")
+          if [ -z "$SHA" ]; then
+            echo "FAIL: $REPORT 无 snapshot.sourceHead / sourceVersion——无法定锚" >&2
+            exit 1
+          fi
+          echo "sha=$SHA" >> "$GITHUB_OUTPUT"
+          echo "anchor=$SHA"
+
+      # CLI 仅用于服务端 Repository.fileCount 只读对照（scale-backfill.py 内
+      # ke query Repository）——与 scan.yml 同装配形态（按版本键共享安装产物）
+      - name: Restore KE CLI cache
+        id: cli_cache
+        if: steps.anchor.outputs.skip != 'true'
+        uses: actions/cache@v4
+        with:
+          path: ${{ runner.temp }}/ke-cli
+          key: ke-cli-0.3.10-ubuntu-x64
+
+      - name: Prepare KE CLI (install or cache-hit + PATH)
+        if: steps.anchor.outputs.skip != 'true'
+        env:
+          KE_API_KEY: ${{ secrets.KE_API_KEY }}
+          KE_SERVER_URL: ${{ secrets.KE_SERVER_URL }}
+        run: |
+          if [ "${{ steps.cli_cache.outputs.cache-hit }}" != "true" ]; then
+            bash scripts/install-cli.sh "$RUNNER_TEMP/ke-cli"
+          fi
+          echo "$RUNNER_TEMP/ke-cli/bin" >> "$GITHUB_PATH"
+          PATH="$RUNNER_TEMP/ke-cli/bin:$PATH" ke --version
+
+      # 按定锚提交检出（GitHub 支持按可达提交 sha 浅取——depth 1 即该提交
+      # 的完整工作树；scale-backfill.py 二次断言 HEAD == 定锚提交）
+      - name: Fetch source at anchor (depth 1)
+        if: steps.anchor.outputs.skip != 'true'
+        env:
+          OWNER: ${{ matrix.owner }}
+          REPO: ${{ matrix.repo }}
+          SHA: ${{ steps.anchor.outputs.sha }}
+        run: |
+          SRC="$RUNNER_TEMP/src"
+          git init -q "$SRC"
+          git -C "$SRC" fetch --depth 1 "https://github.com/$OWNER/$REPO.git" "$SHA"
+          git -C "$SRC" checkout -q --detach FETCH_HEAD
+          echo "source HEAD=$(git -C "$SRC" rev-parse HEAD) files=$(git -C "$SRC" ls-files | wc -l)"
+
+      - name: Backfill D3.scale
+        if: steps.anchor.outputs.skip != 'true'
+        env:
+          KE_API_KEY: ${{ secrets.KE_API_KEY }}
+          KE_SERVER_URL: ${{ secrets.KE_SERVER_URL }}
+          OWNER: ${{ matrix.owner }}
+          REPO: ${{ matrix.repo }}
+        run: |
+          python3 scripts/scale-backfill.py \
+            --repo "$RUNNER_TEMP/src" \
+            --report "reports/$OWNER/$REPO.json"
+
+      # 产物入库（bot 身份；matrix 并发推送冲突 → 分类重试，见 push-with-retry.sh）
+      - name: Commit report
+        if: steps.anchor.outputs.skip != 'true'
+        env:
+          OWNER: ${{ matrix.owner }}
+          REPO: ${{ matrix.repo }}
+        run: |
+          git config user.name "ke-index-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A reports 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "report unchanged — no commit"
+            exit 0
+          fi
+          git commit -m "report: backfill repo scale (file/line counts) for ${OWNER}/${REPO}"
+          bash scripts/push-with-retry.sh
+
+  # 重聚合：repos[] 规模字段 + cohort.scale 分布（与 scan.yml census 同形——
+  # 矩阵经 needs 传入做对账，summary.validation 不因本轨失锚）
+  census:
+    needs: [prepare, backfill]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Sync latest reports (bot commits from backfill jobs)
+        env:
+          SCAN_MATRIX: ${{ needs.prepare.outputs.matrix }}
+        run: |
+          git fetch origin "${GITHUB_REF_NAME}"
+          git reset --hard "origin/${GITHUB_REF_NAME}"
+          printf '%s' "$SCAN_MATRIX" > "$RUNNER_TEMP/scan-matrix.json"
+          jq -e '.include | length' "$RUNNER_TEMP/scan-matrix.json"
+
+      - name: Aggregate census summary
+        run: python3 scripts/census.py --matrix-json "@$RUNNER_TEMP/scan-matrix.json"
+
+      # 提交先于断言（与 scan.yml census 同序）：缺仓时 summary 仍入库可查，
+      # 再由断言步把 job 置红
+      - name: Commit census summary
+        run: |
+          git config user.name "ke-index-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add census/
+          if git diff --cached --quiet; then
+            echo "census unchanged — no commit"
+            exit 0
+          fi
+          git commit -m "census: aggregate summary (repo scale backfill)"
+          bash scripts/push-with-retry.sh
+
+      # 断言：每仓 report 都有 D3.scale（补齐轨的唯一硬判据——缺一即红并列出）
+      - name: Assert every report has repo scale
+        run: |
+          MISSING=$(for f in reports/*/*.json; do
+            jq -e '.metrics.D3.scale.fileCount | type == "number"' "$f" > /dev/null || echo "$f"
+          done)
+          if [ -n "$MISSING" ]; then
+            for f in $MISSING; do
+              echo "::error title=scale-backfill::report 缺 D3.scale：$f"
+            done
+            echo "FAIL: 以下 report 缺 D3.scale：$MISSING" >&2
+            exit 1
+          fi
+          echo "repo scale: $(ls reports/*/*.json | wc -l) 份 report 均有 D3.scale"

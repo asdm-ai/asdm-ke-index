@@ -32,8 +32,11 @@ KE Index 开源基准库冷启动仓库——开源仓库扫描清单、扫描�
 | `scripts/graph-metrics.py` | 图查询形态重算 A1/C1 + 双路径等价比对（`--compare`，MISMATCH exit 2） |
 | `scripts/framework-policy.json` | D1 目标版本区间策略表 |
 | `scripts/pipeline-status.sh` | 四子步结论落盘 → `pipeline-status/{owner}/{repo}.json` |
-| `scripts/census.py` | 聚合分位 + 穿行 validation roll-up + 矩阵对账 → `census/summary.json` |
+| `scripts/census.py` | 聚合分位 + 穿行 validation roll-up + 矩阵对账 + 仓规模分布 → `census/summary.json` |
 | `scripts/push-with-retry.sh` | bot 提交推送重试（按拒绝原因分类：non-FF 才 rebase，瞬时 5xx 退避重试） |
+| `scripts/repo-scale.py` | 仓规模采集（文件数 / 行数，分语言）——扫描时 clone 后调用，口径见[仓规模口径](#仓规模口径文件数--行数) |
+| `scripts/scale-backfill.py` | 存量 report 按定锚提交补采仓规模（回填 `D3.scale`，幂等） |
+| `.github/workflows/scale-backfill.yml` | 仓规模一次性补齐 workflow（手动 dispatch） |
 | `reports/{owner}/{repo}.json` | 单仓指标报告 |
 | `pipeline-status/{owner}/{repo}.json` | 单仓链路结论（确定性产物） |
 | `census/summary.json` | 聚合产物（样本清单 + 各指标分位 + validation + D2 cohort） |
@@ -147,6 +150,22 @@ bash scripts/scan-one.sh
 > ⚠️ **分层漂移**：Guns / jeesite / dante-cloud 在被扫描的 HEAD 上已不是选样时假设的 Java 后端形态
 > （`.java` 文件分别只有 18 / 0 / 77 个；其中 Guns 与 jeesite 的 `.vue` 文件分别为 163 / 301 个，实为前端形态）。三仓仍计入 A 层 18 仓，但
 > 其 Java 侧指标（A3/A4、B、C 域）样本代表性有限。
+
+### 仓规模口径（文件数 / 行数）
+
+仓规模在扫描的同时采集（`scan-one.sh` clone 之后、import 之前，同一工作树同一 HEAD），落 `report.metrics.D3.scale`，
+并在 `census/summary.json` 给出逐仓字段（`repos[]`）与跨仓分布（`cohort.scale`）。作为各指标的规模参照，不参与评分。
+
+| 字段 | 口径 |
+|---|---|
+| 文件数 `fileCount` | tracked 文件数，剔除分析器跳过目录（`target` / `build` / `dist` / `node_modules` 等）与符号链接等非普通文件；与分析器 `Repository.fileCount` 同口径，扫描时逐仓对照（不一致只告警不置红） |
+| Java 文件 `javaFiles` | 其中 `.java` 文件数 |
+| 总行数 `lineCount` | 文本文件的物理行数，含注释与空行，**不是 SLOC**；二进制文件（首 8000 字节含 NUL）不计 |
+| Java 行数 `javaLines` | 其中 `.java` 文件的物理行数 |
+
+- **规模参照以 Java 行数为主指标。** 总行数会被设计文档、SVG、生成物显著抬高（mall 的总行数里有 4.1 万行来自 `.pdb` / `.pdm` 设计文件）。
+- 分语言明细（`linesByLanguage` / `filesByLanguage`）随 report 一并给出。
+- 2026-11-26 之前落库的 report 由 `scale-backfill` workflow 按同一提交补采，数值与扫描时采集等价（`collectedBy: "backfill"`）。
 
 ## 指标状况（按 16 卡如实列出）
 

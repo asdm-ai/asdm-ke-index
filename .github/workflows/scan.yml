@@ -22,6 +22,10 @@
 #   函数的 if 隐式前缀 success()（run #31 实证：投影 403 后 metrics 被
 #   意外 skip）。② 用 KE_ADMIN_API_KEY（tenant-admin——reproject 端点需要；
 #   member 键 403，最小权限仅此步），其余子步仍用 KE_API_KEY（member）。
+#   仓规模（2026-11-26）：① clone 后由 repo-scale.py 采集文件数 / 行数
+#   （产物路径经 steps.scan.outputs.scale_json 传给 ③）→ ③ 经 --scale-json
+#   并入 report D3.scale（含服务端 Repository.fileCount 对照）→ census
+#   repos[] / cohort.scale。存量 report 由 scale-backfill.yml 补齐。
 #   防风暴背景（Hotfix-14/15，B1/B3——原错峰轨 projection-sweep 已由穿行结构
 #   取代）：穿行 = 单仓串行（max-parallel 1），投影天然独占窗口；服务端侧
 #   obj_unique 唯一约束 + 投影并发上限 + 同快照互斥三重防护仍在位。
@@ -185,10 +189,16 @@ jobs:
           OWNER: ${{ matrix.owner }}
           REPO: ${{ matrix.repo }}
           SNAPSHOT_ID: ${{ steps.scan.outputs.snapshot_id }}
+          SCALE_JSON: ${{ steps.scan.outputs.scale_json }}
         run: |
           ARGS=""
           if [ -n "$SNAPSHOT_ID" ]; then
             ARGS="--snapshot $SNAPSHOT_ID"
+          fi
+          # 仓规模采集产物（scan 子步 clone 后生成——见 scan-one.sh；缺省即透传，
+          # 本地复算无此产物时不传 → report D3 无 scale 子对象）
+          if [ -n "$SCALE_JSON" ]; then
+            ARGS="$ARGS --scale-json $SCALE_JSON"
           fi
           python3 scripts/compute-metrics.py \
             --owner "$OWNER" --repo "$REPO" \

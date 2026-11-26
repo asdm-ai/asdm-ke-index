@@ -24,6 +24,7 @@
 # 出参：步骤末行回显原始 summary JSON（Action 日志对账锚——objectCount）；
 #       GITHUB_OUTPUT：head=<sha> snapshot_id=<id> snapshot_count=<n>
 #       import_status=completed|skipped（穿行 ⑤ annotate 消费——子步结论落盘）
+#       scale_json=<path>（仓规模采集产物——metrics 子步 --scale-json 消费）
 # =============================================================================
 set -euo pipefail
 
@@ -81,6 +82,23 @@ SCAN_HEAD=$(git -C "$REPO_DIR" rev-parse HEAD)
 echo "scan-one: sourceHead=$SCAN_HEAD"
 if [ -n "${GITHUB_OUTPUT:-}" ]; then
   echo "head=$SCAN_HEAD" >> "$GITHUB_OUTPUT"
+fi
+
+# 仓规模采集（文件数 / 行数——扫描的同时生成：clone 之后、import 之前，同一工作树
+# 同一 HEAD，与导入分析的输入同源）。产物路径经 GITHUB_OUTPUT scale_json 传给
+# metrics 子步（compute-metrics.py --scale-json → report D3 规模画像）。
+# 失败即本步失败：与穿行结构"任何子步失败即该仓任务失败"一致——规模数据缺失的
+# report 不算完整结论，不静默降级（用户裁决 2026-11-26）。
+# scale.sourceHead 必须等于 SCAN_HEAD（同一工作树的两次读数——不等即采集对象错位）
+SCALE_OUT="${SCALE_OUT:-$WORK/repo-scale.json}"
+python3 "$SCRIPT_DIR/repo-scale.py" --repo "$REPO_DIR" --out "$SCALE_OUT"
+SCALE_HEAD=$(jq -r '.sourceHead // ""' "$SCALE_OUT")
+if [ "$SCALE_HEAD" != "$SCAN_HEAD" ]; then
+  echo "FAIL: repo-scale sourceHead=$SCALE_HEAD != scan HEAD=$SCAN_HEAD（采集对象错位）" >&2
+  exit 1
+fi
+if [ -n "${GITHUB_OUTPUT:-}" ]; then
+  echo "scale_json=$SCALE_OUT" >> "$GITHUB_OUTPUT"
 fi
 
 # 投影错峰轨（B3）：缺省 defer（批扫投影风暴治理）；DEFER_PROJECTION=false 显式关闭

@@ -38,6 +38,13 @@
 # 列入 failedRepos、validation.ok=false——summary 仍写出（聚合不被阻断），
 # ok 由 scan.yml 的独立断言步判定 job 结论。
 #
+# 仓规模（2026-11-26——文件数 / 行数，仓规模的文件级参照）：数据源 = 各
+# report metrics.D3.scale（scan-one.sh clone 后 repo-scale.py 采集）。逐仓
+# 扁平字段落 repos[]（fileCount / javaFiles / lineCount / javaLines /
+# linesByLanguage / scaleFileCountMatch）；cohort.scale 出跨仓分布（描述面，
+# direction "none"——不进分位分母，统计量守门与指标同口径）。D3 无 scale
+# 子对象（存量 report 未补齐）→ 字段 null + 计入缺失，不静默当作 0。
+#
 # 分位算法：nearest-rank（Schema §4.2——升序第 ceil(p*N) 个值）。
 # 输出确定性：同一批 report 产出逐字节一致的 summary（不含墙钟时间戳）。
 #
@@ -52,7 +59,7 @@ import sys
 from math import ceil
 
 SCHEMA_VERSION = "draft-v1"
-IMPLEMENTATION = "ke-index census.py (5.1.4: L2 aggregation + D2 cohort + per-repo pipeline validation roll-up)"
+IMPLEMENTATION = "ke-index census.py (5.1.4: L2 aggregation + D2 cohort + per-repo pipeline validation roll-up + repo scale)"
 
 # 标准分位集（Schema §4.2）
 PERCENTILES = [("p25", 0.25), ("p50", 0.50), ("p75", 0.75), ("p90", 0.90)]
@@ -60,6 +67,9 @@ PERCENTILES = [("p25", 0.25), ("p50", 0.50), ("p75", 0.75), ("p90", 0.90)]
 # 穿行子步键（与 pipeline-status.sh 状态机对齐——ok/failed/skipped 三值）
 PIPELINE_STEPS = ["scan", "projection", "metrics", "consistency"]
 CONSISTENCY_RESULTS = ["pass", "mismatch", "error", "skipped"]
+
+# 仓规模字段（report metrics.D3.scale → repos[] 扁平字段 + cohort.scale 分布）
+SCALE_KEYS = ["fileCount", "javaFiles", "lineCount", "javaLines"]
 
 
 def nearest_rank(sorted_vals, p):
@@ -169,10 +179,20 @@ def main():
     )
 
     # ---- 仓库索引（README 索引表数据源）----
+    # 仓规模字段（2026-11-26——文件数 / 行数，仓规模的文件级参照）：数据源 =
+    # report metrics.D3.scale（scan-one.sh clone 后 repo-scale.py 采集 →
+    # compute-metrics.py 并入）。存量 report 未补齐时 D3 无 scale 子对象 →
+    # 各字段置 null 并计入 cohort.scale 缺失（不静默当作 0）。
     repo_index = []
+    scale_vals = {k: [] for k in SCALE_KEYS}
+    scale_missing = {k: [] for k in SCALE_KEYS}
+    scale_match = {"match": 0, "mismatch": 0, "unknown": 0, "mismatchRepos": []}
     for owner, repo, r in reports:
         snap = r.get("snapshot", {})
-        repo_index.append({
+        rep_label = "%s/%s" % (owner, repo)
+        scale = ((r.get("metrics") or {}).get("D3") or {}).get("scale")
+        has_scale = isinstance(scale, dict) and is_number(scale.get("fileCount"))
+        entry = {
             "owner": owner,
             "repo": repo,
             "sourceId": r.get("sourceId", repo),
@@ -180,7 +200,48 @@ def main():
             "objectCount": snap.get("objectCount"),
             "linkCount": snap.get("linkCount"),
             "schemaVersion": r.get("schemaVersion"),
-        })
+        }
+        for k in SCALE_KEYS:
+            v = scale.get(k) if has_scale else None
+            entry[k] = v if is_number(v) else None
+            if is_number(v):
+                scale_vals[k].append(v)
+            else:
+                scale_missing[k].append(rep_label)
+        entry["linesByLanguage"] = (scale.get("linesByLanguage") or {}) if has_scale else None
+        match = scale.get("fileCountMatch") if has_scale else None
+        entry["scaleFileCountMatch"] = match if isinstance(match, bool) else None
+        if match is True:
+            scale_match["match"] += 1
+        elif match is False:
+            scale_match["mismatch"] += 1
+            scale_match["mismatchRepos"].append(rep_label)
+        else:
+            scale_match["unknown"] += 1
+        repo_index.append(entry)
+
+    # cohort 仓规模分布（描述面——direction "none"，不进分位分母）：统计量守门
+    # 与指标同口径（published 才出 mean / 分位；切片 N < privacyFloor 整组不出）
+    scale_metrics = {}
+    for k in SCALE_KEYS:
+        vals = sorted(scale_vals[k])
+        n = len(vals)
+        privacy_blocked = published and n < args.privacy_floor
+        scale_metrics[k] = {
+            "N": n,
+            "missing": len(scale_missing[k]),
+            "missingRepos": scale_missing[k],
+            "min": vals[0] if n else None,
+            "max": vals[-1] if n else None,
+            "mean": round(sum(vals) / n, 6) if (published and not privacy_blocked and n) else None,
+            "percentiles": (
+                {pk: nearest_rank(vals, p) for pk, p in PERCENTILES}
+                if published and not privacy_blocked and n else None
+            ),
+        }
+        if privacy_blocked:
+            scale_metrics[k]["gateNote"] = "k-匿名隐私护栏：切片 N=%d < %d，整组不出分位" % (n, args.privacy_floor)
+    scale_match["mismatchRepos"] = sorted(scale_match["mismatchRepos"])
 
     # ---- 按指标聚合 ----
     # 聚合面 = metrics 区 direction != "none"（跨仓收集指标元数据 + 样本值/缺失）
@@ -386,6 +447,21 @@ def main():
                 "frameworks": cohort_d2,
                 "basis": "逐框架主版本众数份额（仓代表版本 = 命中依赖最大版本）按使用仓数加权平均",
             },
+            # 仓规模分布（2026-11-26——文件数 / 行数，仓规模的文件级参照）
+            "scale": {
+                "id": "scale",
+                "name": "repo-scale",
+                "label": "仓规模分布",
+                "domain": "D",
+                "direction": "none",
+                "metrics": scale_metrics,
+                "fileCountMatch": scale_match,
+                "percentileMethod": "nearest-rank (Schema §4.2)",
+                "basis": "各 report metrics.D3.scale（scan-one.sh clone 后 repo-scale.py 采集——"
+                         "文件数 = tracked 剔除分析器跳过目录与非普通文件，与服务端 Repository.fileCount "
+                         "同口径并对照；行数 = 文本文件物理行数，含注释与空行，非 SLOC；java 为主指标）"
+                         "——描述面不进分位分母，统计量守门与指标同口径",
+            },
         },
     }
 
@@ -408,6 +484,13 @@ def main():
     for mid in sorted(metrics_out):
         m = metrics_out[mid]
         print("  %s: N=%d missing=%d mean=%s" % (mid, m["N"], m["missing"], m["mean"]))
+    for k in SCALE_KEYS:
+        s = scale_metrics[k]
+        print("  scale.%s: N=%d missing=%d p50=%s" % (
+            k, s["N"], s["missing"], (s["percentiles"] or {}).get("p50")))
+    print("scale fileCountMatch: match=%d mismatch=%d unknown=%d%s" % (
+        scale_match["match"], scale_match["mismatch"], scale_match["unknown"],
+        (" mismatchRepos=" + ",".join(scale_match["mismatchRepos"])) if scale_match["mismatchRepos"] else ""))
     return 0
 
 
