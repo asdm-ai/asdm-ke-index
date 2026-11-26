@@ -2,9 +2,9 @@
   "schemaVersion": "pipeline-status-v1",
   "owner": "spring-projects",
   "repo": "spring-framework",
-  "sourceHead": "9a9585e39882b9411be27d6c039787d9d48fe7e7",
-  "snapshotId": "ad67282d-2029-4545-b265-fe9c8ec5daf5",
-  "objectCount": 105968,
+  "sourceHead": "309ebb14766f5469f1d81efe07579cc9178a8625",
+  "snapshotId": "8cdd2ce5-9f8b-47c2-b2fb-7549ff100567",
+  "objectCount": 105969,
   "importStatus": "completed",
   "steps": {
     "scan": "ok",
