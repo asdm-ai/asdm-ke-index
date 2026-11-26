@@ -12,8 +12,8 @@ KE Index 开源基准库冷启动仓库——开源仓库扫描清单、扫描�
 | 清单 / report / pipeline-status | **41 / 41 / 41** |
 | 产品链路（scan → projection → metrics → consistency） | 41/41 四子步全 ok，consistency 等价比对 41 pass / 0 mismatch |
 | 分析器版本 | KE CLI `0.3.10`（41 仓同质基线——数值可比） |
-| 数据规模 | 对象 1,170,444 / 链接 8,343,496 |
-| 仓规模（文件数 / 行数，2026-11-26 补齐） | 41/41 report 均有采集；文件数与服务端 `Repository.fileCount` 对照 **41 / 41 一致**；Java 行数 P50 85,434 / P90 1,086,948（见[仓规模口径](#仓规模口径文件数--行数)） |
+| 数据规模 | 对象 1,170,730 / 链接 8,344,536 |
+| 仓规模（文件数 / 行数，2026-11-26） | 41/41 report 均有采集（4 仓扫描时采集 + 37 仓补齐）；文件数与服务端 `Repository.fileCount` 对照 **41 / 41 一致**；Java 行数 P50 85,434 / P90 1,086,948（见[仓规模口径](#仓规模口径文件数--行数)） |
 | census | `samples=41`，`status=published`，`schemaVersion=draft-v1` |
 | 可出参考线的指标（N ≥ 30） | **6 / 16**（见[指标状况](#指标状况按-16-卡如实列出)） |
 
@@ -125,8 +125,8 @@ bash scripts/scan-one.sh
 | 17 | [linlinjava/litemall](https://github.com/linlinjava/litemall) | A | [report](reports/linlinjava/litemall.json) | `35f50e65` | 13,172 | 34,102 | 1,591 | 333 | 227,993 | 116,435 | ✅ |
 | 18 | [metersphere/metersphere](https://github.com/metersphere/metersphere) | A | [report](reports/metersphere/metersphere.json) | `9525ad71` | 43,718 | 157,807 | 4,716 | 2,706 | 860,678 | 372,881 | ✅ |
 | 19 | [apache/dubbo](https://github.com/apache/dubbo) | B | [report](reports/apache/dubbo.json) | `3c195b28` | 34,065 | 136,879 | 4,861 | 4,060 | 524,398 | 484,107 | ✅ |
-| 20 | [apache/fineract](https://github.com/apache/fineract) | B | [report](reports/apache/fineract.json) | `a595220d` | 53,936 | 265,882 | 9,096 | 7,628 | 1,535,991 | 1,003,233 | ✅ |
-| 21 | [apache/rocketmq](https://github.com/apache/rocketmq) | B | [report](reports/apache/rocketmq.json) | `1a8a8aaf` | 26,411 | 109,365 | 2,805 | 2,318 | 434,712 | 399,617 | ✅ |
+| 20 | [apache/fineract](https://github.com/apache/fineract) | B | [report](reports/apache/fineract.json) | `7f0f92e6` | 54,036 | 266,349 | 9,114 | 7,646 | 1,537,729 | 1,004,971 | ✅ |
+| 21 | [apache/rocketmq](https://github.com/apache/rocketmq) | B | [report](reports/apache/rocketmq.json) | `d88658b6` | 26,451 | 109,581 | 2,805 | 2,318 | 436,102 | 401,007 | ✅ |
 | 22 | [alibaba/nacos](https://github.com/alibaba/nacos) | B | [report](reports/alibaba/nacos.json) | `3821b9eb` | 57,376 | 433,824 | 7,381 | 5,442 | 1,320,320 | 849,146 | ✅ |
 | 23 | [apache/shardingsphere](https://github.com/apache/shardingsphere) | B | [report](reports/apache/shardingsphere.json) | `3c9663b5` | 56,172 | 447,822 | 17,467 | 9,916 | 1,501,418 | 836,710 | ✅ |
 | 24 | [spring-projects/spring-boot](https://github.com/spring-projects/spring-boot) | B | [report](reports/spring-projects/spring-boot.json) | `97e4378f` | 65,024 | 141,706 | 11,620 | 8,443 | 922,575 | 752,296 | ✅ |
@@ -134,10 +134,10 @@ bash scripts/scan-one.sh
 | 26 | [alibaba/druid](https://github.com/alibaba/druid) | B | [report](reports/alibaba/druid.json) | `df9c2523` | 41,208 | 234,102 | 6,740 | 5,359 | 702,517 | 598,992 | ✅ |
 | 27 | [spring-projects/spring-petclinic](https://github.com/spring-projects/spring-petclinic) | C | [report](reports/spring-projects/spring-petclinic.json) | `636f6857` | 283 | 626 | 131 | 50 | 27,644 | 4,297 | ✅ |
 | 28 | [elunez/eladmin](https://github.com/elunez/eladmin) | C | [report](reports/elunez/eladmin.json) | `5f43da18` | 1,357 | 5,096 | 305 | 274 | 26,578 | 23,267 | ✅ |
-| 29 | [keycloak/keycloak](https://github.com/keycloak/keycloak) | C | [report](reports/keycloak/keycloak.json) | `8824d864` | 91,998 | 498,423 | 13,515 | 8,701 | 1,849,661 | 1,308,646 | ✅ |
+| 29 | [keycloak/keycloak](https://github.com/keycloak/keycloak) | C | [report](reports/keycloak/keycloak.json) | `fc20531c` | 92,002 | 498,429 | 13,516 | 8,702 | 1,849,744 | 1,308,729 | ✅ |
 | 30 | [flowable/flowable-engine](https://github.com/flowable/flowable-engine) | C | [report](reports/flowable/flowable-engine.json) | `682bf7a1` | 76,265 | 215,262 | 16,202 | 8,082 | 1,730,889 | 1,086,948 | ✅ |
 | 31 | [Activiti/Activiti](https://github.com/Activiti/Activiti) | C | [report](reports/Activiti/Activiti.json) | `b4a8661c` | 24,198 | 85,691 | 5,387 | 3,095 | 476,072 | 353,442 | ✅ |
-| 32 | [hibernate/hibernate-orm](https://github.com/hibernate/hibernate-orm) | C | [report](reports/hibernate/hibernate-orm.json) | `580817a3` | 180,572 | 420,177 | 21,295 | 19,210 | 2,478,104 | 2,306,695 | ✅ |
+| 32 | [hibernate/hibernate-orm](https://github.com/hibernate/hibernate-orm) | C | [report](reports/hibernate/hibernate-orm.json) | `5e4f309e` | 180,714 | 420,528 | 21,303 | 19,218 | 2,479,917 | 2,308,508 | ✅ |
 | 33 | [dhis2/dhis2-core](https://github.com/dhis2/dhis2-core) | C | [report](reports/dhis2/dhis2-core.json) | `d3c20ab4` | 63,457 | 411,972 | 10,299 | 6,670 | 1,621,862 | 1,289,926 | ✅ |
 | 34 | [BroadleafCommerce/BroadleafCommerce](https://github.com/BroadleafCommerce/BroadleafCommerce) | C | [report](reports/BroadleafCommerce/BroadleafCommerce.json) | `f2964888` | 25,682 | 108,282 | 3,866 | 2,983 | 563,954 | 353,597 | ✅ |
 | 35 | [macrozheng/mall-admin-web](https://github.com/macrozheng/mall-admin-web) | D | [report](reports/macrozheng/mall-admin-web.json) | `b61b793d` | 1,662 | 29,228 | 358 | 0 | 36,098 | 0 | ✅ |
