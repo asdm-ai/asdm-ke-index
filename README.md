@@ -1,84 +1,85 @@
 # asdm-ke-index
 
-KE Index 开源基准库冷启动仓库——开源仓库扫描清单、扫描管线脚本、指标报告与 census 聚合产物。
+English | [简体中文](README_zh-cn.md)
 
-> 本仓库由 AOS / KE 平台的批量扫描管线（GitHub Actions）自动维护。
-> 数据落点：[kengine.ai](https://kengine.ai)；指标口径：AOS Index Metrics Schema（16 卡——A 链路 / B 结构 / C 代码 / D 技术栈）。
+Open-source benchmark corpus for KE Index — the scan list, scan pipeline, metric reports and census aggregates.
 
-## 当前状态（2026-11-25 快照基线）
+> This repository is maintained automatically by the AOS / KE batch scan pipeline (GitHub Actions).  
+> Data sink: [kengine.ai](https://kengine.ai). Metric definitions: AOS Index Metrics Schema (16 cards — A chain / B structure / C code / D stack).
 
-| 项 | 值 |
+## Current status (baseline of 2026-11-26)
+
+| Item | Value |
 |---|---|
-| 清单 / report / pipeline-status | **41 / 41 / 41** |
-| 产品链路（scan → projection → metrics → consistency） | 41/41 四子步全 ok，consistency 等价比对 41 pass / 0 mismatch |
-| 分析器版本 | KE CLI `0.3.10`（41 仓同质基线——数值可比） |
-| 数据规模 | 对象 1,170,730 / 链接 8,344,536 |
-| 仓规模（文件数 / 行数，2026-11-26） | 41/41 report 均有采集（4 仓扫描时采集 + 37 仓补齐）；文件数与服务端 `Repository.fileCount` 对照 **41 / 41 一致**；Java 行数 P50 85,434 / P90 1,086,948（见[仓规模口径](#仓规模口径文件数--行数)） |
-| census | `samples=41`，`status=published`，`schemaVersion=draft-v1` |
-| 可出参考线的指标（N ≥ 30） | **6 / 16**（见[指标状况](#指标状况按-16-卡如实列出)） |
+| List / reports / pipeline-status | **41 / 41 / 41** |
+| Pipeline (scan → projection → metrics → consistency) | all four steps ok for 41/41; consistency 41 pass / 0 mismatch; 41 / 41 repos pass overall |
+| Analyzer version | KE CLI `0.3.10` (homogeneous across 41 repos — values comparable) |
+| Data volume | 1,171,119 objects / 8,348,519 links |
+| Repository scale (files / lines) | collected for 41/41 repos; file count matches the server `Repository.fileCount` for **41 / 41**; Java lines P50 85,434 / P90 1,086,948 — see [Repository scale](#repository-scale-files--lines) |
+| Census | `samples=41`, `status=published`, `schemaVersion=draft-v1` |
+| Metrics with N ≥ 30 | **6 / 16** (see [Metric status](#metric-status-all-16-cards-as-listed)) |
 
-全量基线由 run #33（`45617313621`）建立，run #34（`45705197312`）补齐 hibernate-orm 并重扫 4 个
-上游 HEAD 已前移的仓。两轮合计零失败、零僵尸。
+Full baseline rebuilt by run #36 (`45829165719`): a complete rescan of all 41 repositories from empty storage (every repo re-cloned at its upstream HEAD; preflight skipped none), triggered by a manual dispatch after a full data wipe. Zero failures, zero zombie snapshots.
 
-## 目录结构
+Run window: 2026-11-26T13:26:27Z → 2026-11-26T18:13:24Z UTC (4h 46m 57s); repos failing the pipeline: 0.
 
-| 路径 | 内容 |
+## Directory layout
+
+| Path | Content |
 |---|---|
-| `repos.yaml` | 扫描清单（owner/repo/branch/skip/notes——notes 首字符为分层标记） |
-| `.github/workflows/scan.yml` | 批量扫描 workflow（matrix，按仓穿行，`max-parallel: 1`） |
-| `scripts/install-cli.sh` | 下载 KE CLI（manifest latest + sha256 对账 + 版本断言，当前锚 `0.3.10`） |
-| `scripts/preflight-skip.sh` | 零漂移短路（远端 HEAD 与 report 新鲜度命中即整仓跳过） |
-| `scripts/scan-one.sh` | 单仓扫描：clone → `ke import start`（默认 `--defer-projection`） |
-| `scripts/compute-metrics.py` | 单仓指标计算 → `reports/{owner}/{repo}.json`（分子分母 + 指令溯源，可复算） |
-| `scripts/graph-metrics.py` | 图查询形态重算 A1/C1 + 双路径等价比对（`--compare`，MISMATCH exit 2） |
-| `scripts/framework-policy.json` | D1 目标版本区间策略表 |
-| `scripts/pipeline-status.sh` | 四子步结论落盘 → `pipeline-status/{owner}/{repo}.json` |
-| `scripts/census.py` | 聚合分位 + 穿行 validation roll-up + 矩阵对账 + 仓规模分布 → `census/summary.json` |
-| `scripts/push-with-retry.sh` | bot 提交推送重试（按拒绝原因分类：non-FF 才 rebase，瞬时 5xx 退避重试） |
-| `scripts/repo-scale.py` | 仓规模采集（文件数 / 行数，分语言）——扫描时 clone 后调用，口径见[仓规模口径](#仓规模口径文件数--行数) |
-| `scripts/scale-backfill.py` | 存量 report 按定锚提交补采仓规模（回填 `D3.scale`，幂等） |
-| `.github/workflows/scale-backfill.yml` | 仓规模一次性补齐 workflow（手动 dispatch） |
-| `reports/{owner}/{repo}.json` | 单仓指标报告 |
-| `pipeline-status/{owner}/{repo}.json` | 单仓链路结论（确定性产物） |
-| `census/summary.json` | 聚合产物（样本清单 + 各指标分位 + validation + D2 cohort） |
+| `repos.yaml` | Scan list (owner / repo / branch / skip / notes — the first character of `notes` is the tier marker) |
+| `.github/workflows/scan.yml` | Batch scan workflow (matrix, one repo at a time, `max-parallel: 1`) |
+| `scripts/install-cli.sh` | Downloads the KE CLI (manifest latest + sha256 check + version assertion, currently anchored to `0.3.10`) |
+| `scripts/preflight-skip.sh` | Zero-drift short circuit (skips the whole repo when the remote HEAD and the report freshness both match) |
+| `scripts/scan-one.sh` | Single-repo scan: clone → `ke import start` (default `--defer-projection`) |
+| `scripts/repo-scale.py` | Repository scale collection (file count / lines, by language) — called right after the clone, before the import |
+| `scripts/compute-metrics.py` | Per-repo metrics → `reports/{owner}/{repo}.json` (numerators, denominators, provenance) |
+| `scripts/graph-metrics.py` | Graph-form recomputation of A1/C1 + dual-path equivalence check (`--compare`, exit 2 on MISMATCH) |
+| `scripts/framework-policy.json` | Target version ranges for D1 |
+| `scripts/pipeline-status.sh` | Writes the four step conclusions to `pipeline-status/{owner}/{repo}.json` |
+| `scripts/census.py` | Aggregated percentiles + validation roll-up + matrix reconciliation + scale distribution → `census/summary.json` |
+| `scripts/push-with-retry.sh` | Bot commit/push retry (classified by rejection reason: rebase only on non-FF, backoff on transient 5xx) |
+| `scripts/scale-backfill.py`, `.github/workflows/scale-backfill.yml` | Backfills scale for legacy reports at the pinned commit (idempotent, manual dispatch) |
+| `reports/{owner}/{repo}.json` | Per-repo metric report |
+| `pipeline-status/{owner}/{repo}.json` | Per-repo pipeline conclusion (deterministic artifact) |
+| `census/summary.json` | Aggregate output (sample list + per-metric percentiles + validation + D2 cohort + scale distribution) |
 
-## 扫描管线
+## Scan pipeline
 
-每仓一个 job，job 内串行执行完整链路；任一子步不通过即该仓任务失败（`fail-fast: false` +
-`max-parallel: 1`——单仓失败不级联，也不阻断尾部 census）：
+One job per repo; the full chain runs serially inside the job and any failing step fails that repo's job (`fail-fast: false` + `max-parallel: 1` — one repo's failure neither cancels the others nor blocks the trailing census):
 
 ```
-preflight（零漂移短路）
-  → ① scan         clone → import --defer-projection（仅 MySQL 落库）
-  → ② projection   ke project <snapshotId>（Neo4j 投影）
-  → ③ metrics      compute-metrics.py（MySQL 直查）
-  → ④ consistency  graph-metrics.py --compare（图形态重算 + 双路径等价比对）
-  → ⑤ annotate     pipeline-status 落盘 + 报告入库
-census（聚合成功产物 + 汇总全部仓子步结论 + 与扫描矩阵对账——缺仓即判失败）
+preflight (zero-drift short circuit)
+  → ① scan         clone → import --defer-projection (MySQL only)
+  → ② projection   ke project <snapshotId> (Neo4j projection)
+  → ③ metrics      compute-metrics.py (direct MySQL queries)
+  → ④ consistency  graph-metrics.py --compare (graph-form recomputation + dual-path equivalence)
+  → ⑤ annotate     pipeline-status written + report committed
+census (aggregate the successful artifacts + roll up every repo's step conclusions + reconcile with the scan matrix — a missing repo fails it)
 ```
 
-- **触发**（三触发面）：① push 修改 `repos.yaml`；② Actions 页手动触发（可选 `scan_force`）；③ schedule 月度重扫——每月 1 日 02:00 UTC（北京时间 10:00，2026-11-26 启用）。**schedule 事件没有 inputs，`scan_force` 恒为空，永不走 force 重扫轨**——分析器升级后的口径修正仍须手动勾选 `scan_force`。
-- **默认轨去重**：仓 HEAD 与 CLI 版本均未变时，preflight 直接跳过整个 job（run #34 实证：41 仓中 36 仓秒级跳过，样本数零漂移）。
-- **并发护栏**：`max-parallel: 1` 单仓串行，投影天然独占窗口；run 级 `concurrency: ke-index-scan`——三触发面重叠时后到者排队，不并行、不取消在跑者。
+- **Triggers**: a push touching `repos.yaml` / manual dispatch from the Actions tab (optional `scan_force`) / monthly schedule `0 2 1 * *` (first run 2026-12-01). A run-level `concurrency` group keeps the three trigger surfaces mutually exclusive.
+- **Default-track dedup**: when both the repo HEAD and the CLI version are unchanged, preflight skips the whole job.
+- **Concurrency guard**: `max-parallel: 1` — repos are scanned one at a time, so projection has an exclusive window.
 
-## 复现说明
+## Reproducing
 
 ```bash
-# 1. 安装 KE CLI（manifest latest + sha256 对账 + 版本断言）
+# 1. Install the KE CLI (manifest latest + sha256 check + version assertion)
 KE_API_KEY=<member key> bash scripts/install-cli.sh /tmp/ke-cli
 
-# 2. 单仓扫描（clone --depth 1 → ke import start 三段上传直连）
+# 2. Scan one repo (clone --depth 1 → ke import start, three-segment upload)
 OWNER=macrozheng REPO=mall CLI_DIR=/tmp/ke-cli \
 KE_API_KEY=<member key> KE_SERVER_URL=https://console.kengine.ai \
 bash scripts/scan-one.sh
-# 步骤末行为导入 summary JSON（ok / status / snapshotId / objectCount）——失败 exit 1
+# The last line is the import summary JSON (ok / status / snapshotId / objectCount) — exit 1 on failure
 ```
 
-- 对账：Action 步骤末行 `objectCount` 与平台快照列表逐位对照；仓级 report 与 pipeline-status 的 snapshotId / objectCount / sourceHead 三者一致。
+- Reconciliation: the `objectCount` on the last line of the Action step must match the platform's snapshot list; snapshotId / objectCount / sourceHead must agree across the repo report and pipeline-status.
 
-### 重扫轨说明（分析器版本升级后的口径修正重扫）
+### Rescan track (metric corrections after an analyzer upgrade)
 
-仓 HEAD 不变时，`ke import start` 撞已 complete 的快照会 **dedup skipped**（静默跳过——月度重扫的正确去重行为，但会吞掉分析器升级带来的口径修正）。因此**分析器版本升级后的重扫必须走 force 轨**（Actions 页手动触发时勾选 `scan_force`，或本地 `SCAN_FORCE=true`）：
+When the repo HEAD is unchanged, `ke import start` hits the already-complete snapshot and is **dedup skipped** (silently skipped — the correct dedup for monthly rescans, but it swallows the metric corrections an analyzer upgrade brings). Rescans after an analyzer upgrade must therefore use the force track (tick `scan_force` when dispatching from the Actions tab, or set `SCAN_FORCE=true` locally):
 
 ```bash
 SCAN_FORCE=true OWNER=dromara REPO=RuoYi-Vue-Plus CLI_DIR=/tmp/ke-cli \
@@ -86,172 +87,240 @@ KE_API_KEY=<member key> KE_SERVER_URL=https://console.kengine.ai \
 bash scripts/scan-one.sh
 ```
 
-- 判别：force 轨 summary `status == "completed"`（重建）；默认轨同 HEAD 为 `"skipped"`（数值不变）
-- 口径分界：force 重扫 commit 即口径前后的自然分界（git 历史可追溯）
+- Telling them apart: the force track's summary has `status == "completed"` (rebuilt); the default track with the same HEAD has `"skipped"` (values unchanged)
+- Boundary: the force rescan commit is the natural boundary between the old and new metric definitions (traceable in git history)
 
-## 仓库索引（41 仓）
+## Repository index (41 repos)
 
-### 分层构成
+### Tiers
 
-| 分层 | 数量 | 形态说明 |
+| Tier | Count | Shape |
 |---|---|---|
-| A·admin/业务系统 | 18 | Java 脚手架与业务系统（MyBatis/MP/JPA 混合形态——RuoYi 系/Jeecg/芋道/Pig 等多脚手架对照 + 电商/办公/工具型业务系统） |
-| B·大型仓 | 8 | 超大型多模块（Gradle 轨为主——Apache 系中间件 + Spring 生态基石仓） |
-| C·JPA 数据访问层 | 8 | JPA 形态（与 MyBatis 系对照——IAM/BPM/ERP 业务侧 + hibernate-orm 实现本体） |
-| D·前后端配对 | 7 | A 层仓的官方前端仓（Vue 系——**配对聚合未启用，按独立前端形态入列**） |
+| A · Admin / business systems | 18 | Java scaffolds and business systems (MyBatis / MyBatis-Plus / JPA mixes — RuoYi family, Jeecg, yudao, pig and more, plus e-commerce / office / tooling systems) |
+| B · Large repositories | 8 | Very large multi-module repositories (mostly Gradle — Apache middleware + cornerstone repos of the Spring ecosystem) |
+| C · JPA data-access layer | 8 | JPA shape (contrast with the MyBatis family — IAM / BPM / ERP on the business side + hibernate-orm itself) |
+| D · Frontend pairs | 7 | Official frontend repos of tier-A backends (Vue — **pair aggregation is not enabled; they are listed as standalone frontends**) |
 
-> 全量清单见 [repos.yaml](repos.yaml)。快照 ID 截取前 8 位（完整值见 `census/summary.json` 的 repos 区——机器可读源）。
+> The full list is in [repos.yaml](repos.yaml). Snapshot IDs are truncated to 8 characters (full values in the `repos` block of `census/summary.json` — the machine-readable source).
 
-### 全部仓库
+### All repositories
 
-| # | owner/repo | 分层 | Report | 快照 | 对象数 | 链接数 | 文件数 | Java 文件 | 行数 | Java 行数 | 管线 |
+| # | owner/repo | Tier | Report | Snapshot | Objects | Links | Files | Java files | Lines | Java lines | Pipeline |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| 1 | [macrozheng/mall](https://github.com/macrozheng/mall) | A | [report](reports/macrozheng/mall.json) | `3440ab25` | 14,527 | 35,226 | 717 | 524 | 155,807 | 85,434 | ✅ |
-| 2 | [macrozheng/mall-swarm](https://github.com/macrozheng/mall-swarm) | A | [report](reports/macrozheng/mall-swarm.json) | `37ddc9ab` | 14,878 | 36,007 | 782 | 533 | 158,492 | 87,880 | ✅ |
-| 3 | [yangzongzhuan/RuoYi-Vue](https://github.com/yangzongzhuan/RuoYi-Vue) | A | [report](reports/yangzongzhuan/RuoYi-Vue.json) | `d3415eb1` | 2,560 | 7,765 | 334 | 266 | 43,618 | 34,332 | ✅ |
-| 4 | [dromara/RuoYi-Vue-Plus](https://github.com/dromara/RuoYi-Vue-Plus) | A | [report](reports/dromara/RuoYi-Vue-Plus.json) | `34aacaa5` | 4,777 | 22,903 | 980 | 766 | 113,995 | 83,151 | ✅ |
-| 5 | [jeecgboot/JeecgBoot](https://github.com/jeecgboot/JeecgBoot) | A | [report](reports/jeecgboot/JeecgBoot.json) | `6cb1a82a` | 15,697 | 116,780 | 4,020 | 995 | 803,350 | 136,494 | ✅ |
-| 6 | [lenve/vhr](https://github.com/lenve/vhr) | A | [report](reports/lenve/vhr.json) | `f2fb4546` | 991 | 1,436 | 242 | 91 | 20,328 | 5,581 | ✅ |
-| 7 | [YunaiV/ruoyi-vue-pro](https://github.com/YunaiV/ruoyi-vue-pro) | A | [report](reports/YunaiV/ruoyi-vue-pro.json) | `7b0666a4` | 46,623 | 230,904 | 9,710 | 8,161 | 1,024,622 | 798,916 | ✅ |
-| 8 | [yangzongzhuan/RuoYi-Cloud](https://github.com/yangzongzhuan/RuoYi-Cloud) | A | [report](reports/yangzongzhuan/RuoYi-Cloud.json) | `d9545f2a` | 2,532 | 8,741 | 407 | 274 | 43,949 | 32,652 | ✅ |
-| 9 | [pig-mesh/pig](https://github.com/pig-mesh/pig) | A | [report](reports/pig-mesh/pig.json) | `feb1b04a` | 2,546 | 7,737 | 708 | 563 | 61,689 | 49,370 | ✅ |
-| 10 | [newbee-ltd/newbee-mall](https://github.com/newbee-ltd/newbee-mall) | A | [report](reports/newbee-ltd/newbee-mall.json) | `a1b165a0` | 933 | 1,470 | 318 | 88 | 118,606 | 7,609 | ✅ |
-| 11 | [stylefeng/Guns](https://github.com/stylefeng/Guns) | A ⚠️ | [report](reports/stylefeng/Guns.json) | `c75b708b` | 1,377 | 10,042 | 406 | 18 | 60,821 | 1,210 | ✅ |
-| 12 | [renrenio/renren-fast](https://github.com/renrenio/renren-fast) | A | [report](reports/renrenio/renren-fast.json) | `c6105573` | 777 | 3,326 | 223 | 143 | 39,002 | 8,821 | ✅ |
-| 13 | [thinkgem/jeesite](https://github.com/thinkgem/jeesite) | A ⚠️ | [report](reports/thinkgem/jeesite.json) | `b6300c52` | 2,670 | 14,623 | 845 | 0 | 92,527 | 0 | ✅ |
-| 14 | [o2oa/o2oa](https://github.com/o2oa/o2oa) | A | [report](reports/o2oa/o2oa.json) | `569db6c6` | 70,501 | 710,059 | 27,933 | 7,824 | 2,751,818 | 773,636 | ✅ |
-| 15 | [chillzhuang/SpringBlade](https://github.com/chillzhuang/SpringBlade) | A | [report](reports/chillzhuang/SpringBlade.json) | `8f677038` | 1,073 | 3,002 | 423 | 258 | 34,554 | 17,484 | ✅ |
-| 16 | [dromara/dante-cloud](https://github.com/dromara/dante-cloud) | A ⚠️ | [report](reports/dromara/dante-cloud.json) | `cc27d728` | 476 | 728 | 892 | 77 | 144,080 | 5,737 | ✅ |
-| 17 | [linlinjava/litemall](https://github.com/linlinjava/litemall) | A | [report](reports/linlinjava/litemall.json) | `35f50e65` | 13,172 | 34,102 | 1,591 | 333 | 227,993 | 116,435 | ✅ |
-| 18 | [metersphere/metersphere](https://github.com/metersphere/metersphere) | A | [report](reports/metersphere/metersphere.json) | `9525ad71` | 43,718 | 157,807 | 4,716 | 2,706 | 860,678 | 372,881 | ✅ |
-| 19 | [apache/dubbo](https://github.com/apache/dubbo) | B | [report](reports/apache/dubbo.json) | `3c195b28` | 34,065 | 136,879 | 4,861 | 4,060 | 524,398 | 484,107 | ✅ |
-| 20 | [apache/fineract](https://github.com/apache/fineract) | B | [report](reports/apache/fineract.json) | `7f0f92e6` | 54,036 | 266,349 | 9,114 | 7,646 | 1,537,729 | 1,004,971 | ✅ |
-| 21 | [apache/rocketmq](https://github.com/apache/rocketmq) | B | [report](reports/apache/rocketmq.json) | `d88658b6` | 26,451 | 109,581 | 2,805 | 2,318 | 436,102 | 401,007 | ✅ |
-| 22 | [alibaba/nacos](https://github.com/alibaba/nacos) | B | [report](reports/alibaba/nacos.json) | `3821b9eb` | 57,376 | 433,824 | 7,381 | 5,442 | 1,320,320 | 849,146 | ✅ |
-| 23 | [apache/shardingsphere](https://github.com/apache/shardingsphere) | B | [report](reports/apache/shardingsphere.json) | `3c9663b5` | 56,172 | 447,822 | 17,467 | 9,916 | 1,501,418 | 836,710 | ✅ |
-| 24 | [spring-projects/spring-boot](https://github.com/spring-projects/spring-boot) | B | [report](reports/spring-projects/spring-boot.json) | `97e4378f` | 65,024 | 141,706 | 11,620 | 8,443 | 922,575 | 752,296 | ✅ |
-| 25 | [spring-projects/spring-framework](https://github.com/spring-projects/spring-framework) | B | [report](reports/spring-projects/spring-framework.json) | `ad67282d` | 105,968 | 286,287 | 11,402 | 9,244 | 1,595,321 | 1,430,462 | ✅ |
-| 26 | [alibaba/druid](https://github.com/alibaba/druid) | B | [report](reports/alibaba/druid.json) | `df9c2523` | 41,208 | 234,102 | 6,740 | 5,359 | 702,517 | 598,992 | ✅ |
-| 27 | [spring-projects/spring-petclinic](https://github.com/spring-projects/spring-petclinic) | C | [report](reports/spring-projects/spring-petclinic.json) | `636f6857` | 283 | 626 | 131 | 50 | 27,644 | 4,297 | ✅ |
-| 28 | [elunez/eladmin](https://github.com/elunez/eladmin) | C | [report](reports/elunez/eladmin.json) | `5f43da18` | 1,357 | 5,096 | 305 | 274 | 26,578 | 23,267 | ✅ |
-| 29 | [keycloak/keycloak](https://github.com/keycloak/keycloak) | C | [report](reports/keycloak/keycloak.json) | `fc20531c` | 92,002 | 498,429 | 13,516 | 8,702 | 1,849,744 | 1,308,729 | ✅ |
-| 30 | [flowable/flowable-engine](https://github.com/flowable/flowable-engine) | C | [report](reports/flowable/flowable-engine.json) | `682bf7a1` | 76,265 | 215,262 | 16,202 | 8,082 | 1,730,889 | 1,086,948 | ✅ |
-| 31 | [Activiti/Activiti](https://github.com/Activiti/Activiti) | C | [report](reports/Activiti/Activiti.json) | `b4a8661c` | 24,198 | 85,691 | 5,387 | 3,095 | 476,072 | 353,442 | ✅ |
-| 32 | [hibernate/hibernate-orm](https://github.com/hibernate/hibernate-orm) | C | [report](reports/hibernate/hibernate-orm.json) | `5e4f309e` | 180,714 | 420,528 | 21,303 | 19,218 | 2,479,917 | 2,308,508 | ✅ |
-| 33 | [dhis2/dhis2-core](https://github.com/dhis2/dhis2-core) | C | [report](reports/dhis2/dhis2-core.json) | `d3c20ab4` | 63,457 | 411,972 | 10,299 | 6,670 | 1,621,862 | 1,289,926 | ✅ |
-| 34 | [BroadleafCommerce/BroadleafCommerce](https://github.com/BroadleafCommerce/BroadleafCommerce) | C | [report](reports/BroadleafCommerce/BroadleafCommerce.json) | `f2964888` | 25,682 | 108,282 | 3,866 | 2,983 | 563,954 | 353,597 | ✅ |
-| 35 | [macrozheng/mall-admin-web](https://github.com/macrozheng/mall-admin-web) | D | [report](reports/macrozheng/mall-admin-web.json) | `b61b793d` | 1,662 | 29,228 | 358 | 0 | 36,098 | 0 | ✅ |
-| 36 | [yangzongzhuan/RuoYi-Vue3](https://github.com/yangzongzhuan/RuoYi-Vue3) | D | [report](reports/yangzongzhuan/RuoYi-Vue3.json) | `fbc90f26` | 1,078 | 6,243 | 281 | 0 | 26,397 | 0 | ✅ |
-| 37 | [jeecgboot/jeecgboot-vue3](https://github.com/jeecgboot/jeecgboot-vue3) | D | [report](reports/jeecgboot/jeecgboot-vue3.json) | `896b3950` | 4,755 | 25,600 | 1,424 | 0 | 173,262 | 0 | ✅ |
-| 38 | [pig-mesh/pig-ui](https://github.com/pig-mesh/pig-ui) | D | [report](reports/pig-mesh/pig-ui.json) | `1f9ae681` | 1,974 | 11,417 | 479 | 0 | 59,233 | 0 | ✅ |
-| 39 | [yudaocode/yudao-ui-admin-vue3](https://github.com/yudaocode/yudao-ui-admin-vue3) | D | [report](reports/yudaocode/yudao-ui-admin-vue3.json) | `e260a772` | 16,456 | 3,065,439 | 3,274 | 0 | 509,620 | 0 | ✅ |
-| 40 | [elunez/eladmin-web](https://github.com/elunez/eladmin-web) | D | [report](reports/elunez/eladmin-web.json) | `6d998bf1` | 538 | 1,133 | 279 | 0 | 18,332 | 0 | ✅ |
-| 41 | [newbee-ltd/newbee-mall-vue3-app](https://github.com/newbee-ltd/newbee-mall-vue3-app) | D | [report](reports/newbee-ltd/newbee-mall-vue3-app.json) | `c770e3d8` | 181 | 382 | 59 | 0 | 10,854 | 0 | ✅ |
+| 1 | [macrozheng/mall](https://github.com/macrozheng/mall) | A | [report](reports/macrozheng/mall.json) | `104877ef` | 14,527 | 35,226 | 717 | 524 | 155,807 | 85,434 | ✅ |
+| 2 | [macrozheng/mall-swarm](https://github.com/macrozheng/mall-swarm) | A | [report](reports/macrozheng/mall-swarm.json) | `867c82e8` | 14,878 | 36,007 | 782 | 533 | 158,492 | 87,880 | ✅ |
+| 3 | [yangzongzhuan/RuoYi-Vue](https://github.com/yangzongzhuan/RuoYi-Vue) | A | [report](reports/yangzongzhuan/RuoYi-Vue.json) | `756caa24` | 2,560 | 7,765 | 334 | 266 | 43,618 | 34,332 | ✅ |
+| 4 | [dromara/RuoYi-Vue-Plus](https://github.com/dromara/RuoYi-Vue-Plus) | A | [report](reports/dromara/RuoYi-Vue-Plus.json) | `a3e8b577` | 4,777 | 22,903 | 980 | 766 | 113,995 | 83,151 | ✅ |
+| 5 | [jeecgboot/JeecgBoot](https://github.com/jeecgboot/JeecgBoot) | A | [report](reports/jeecgboot/JeecgBoot.json) | `3f1b932d` | 15,697 | 116,780 | 4,020 | 995 | 803,350 | 136,494 | ✅ |
+| 6 | [lenve/vhr](https://github.com/lenve/vhr) | A | [report](reports/lenve/vhr.json) | `a359e4fa` | 991 | 1,436 | 242 | 91 | 20,328 | 5,581 | ✅ |
+| 7 | [YunaiV/ruoyi-vue-pro](https://github.com/YunaiV/ruoyi-vue-pro) | A | [report](reports/YunaiV/ruoyi-vue-pro.json) | `2249ebcd` | 46,623 | 230,904 | 9,710 | 8,161 | 1,024,622 | 798,916 | ✅ |
+| 8 | [yangzongzhuan/RuoYi-Cloud](https://github.com/yangzongzhuan/RuoYi-Cloud) | A | [report](reports/yangzongzhuan/RuoYi-Cloud.json) | `e7f1c4d0` | 2,532 | 8,741 | 407 | 274 | 43,949 | 32,652 | ✅ |
+| 9 | [pig-mesh/pig](https://github.com/pig-mesh/pig) | A | [report](reports/pig-mesh/pig.json) | `3d9872f0` | 2,546 | 7,737 | 708 | 563 | 61,689 | 49,370 | ✅ |
+| 10 | [newbee-ltd/newbee-mall](https://github.com/newbee-ltd/newbee-mall) | A | [report](reports/newbee-ltd/newbee-mall.json) | `fad84fb5` | 933 | 1,470 | 318 | 88 | 118,606 | 7,609 | ✅ |
+| 11 | [stylefeng/Guns](https://github.com/stylefeng/Guns) | A ⚠️ | [report](reports/stylefeng/Guns.json) | `9dda3f5a` | 1,377 | 10,042 | 406 | 18 | 60,821 | 1,210 | ✅ |
+| 12 | [renrenio/renren-fast](https://github.com/renrenio/renren-fast) | A | [report](reports/renrenio/renren-fast.json) | `41ba483e` | 777 | 3,326 | 223 | 143 | 39,002 | 8,821 | ✅ |
+| 13 | [thinkgem/jeesite](https://github.com/thinkgem/jeesite) | A ⚠️ | [report](reports/thinkgem/jeesite.json) | `77063f14` | 2,670 | 14,623 | 845 | 0 | 92,527 | 0 | ✅ |
+| 14 | [o2oa/o2oa](https://github.com/o2oa/o2oa) | A | [report](reports/o2oa/o2oa.json) | `c19b3102` | 70,501 | 710,059 | 27,933 | 7,824 | 2,751,818 | 773,636 | ✅ |
+| 15 | [chillzhuang/SpringBlade](https://github.com/chillzhuang/SpringBlade) | A | [report](reports/chillzhuang/SpringBlade.json) | `779fd2e5` | 1,073 | 3,002 | 423 | 258 | 34,554 | 17,484 | ✅ |
+| 16 | [dromara/dante-cloud](https://github.com/dromara/dante-cloud) | A ⚠️ | [report](reports/dromara/dante-cloud.json) | `2cdd68f7` | 476 | 728 | 892 | 77 | 144,080 | 5,737 | ✅ |
+| 17 | [linlinjava/litemall](https://github.com/linlinjava/litemall) | A | [report](reports/linlinjava/litemall.json) | `4de8e93f` | 13,172 | 34,102 | 1,591 | 333 | 227,993 | 116,435 | ✅ |
+| 18 | [metersphere/metersphere](https://github.com/metersphere/metersphere) | A | [report](reports/metersphere/metersphere.json) | `a5733632` | 43,718 | 157,807 | 4,716 | 2,706 | 860,678 | 372,881 | ✅ |
+| 19 | [apache/dubbo](https://github.com/apache/dubbo) | B | [report](reports/apache/dubbo.json) | `c170d16e` | 34,065 | 136,879 | 4,861 | 4,060 | 524,398 | 484,107 | ✅ |
+| 20 | [apache/fineract](https://github.com/apache/fineract) | B | [report](reports/apache/fineract.json) | `580ff321` | 54,054 | 266,418 | 9,115 | 7,647 | 1,538,051 | 1,005,293 | ✅ |
+| 21 | [apache/rocketmq](https://github.com/apache/rocketmq) | B | [report](reports/apache/rocketmq.json) | `38fd86d7` | 26,486 | 109,906 | 2,805 | 2,318 | 437,047 | 401,952 | ✅ |
+| 22 | [alibaba/nacos](https://github.com/alibaba/nacos) | B | [report](reports/alibaba/nacos.json) | `922f4ddb` | 57,387 | 435,556 | 7,382 | 5,442 | 1,320,342 | 849,146 | ✅ |
+| 23 | [apache/shardingsphere](https://github.com/apache/shardingsphere) | B | [report](reports/apache/shardingsphere.json) | `82f2d160` | 56,172 | 447,822 | 17,467 | 9,916 | 1,501,418 | 836,710 | ✅ |
+| 24 | [spring-projects/spring-boot](https://github.com/spring-projects/spring-boot) | B | [report](reports/spring-projects/spring-boot.json) | `4b21f1bf` | 65,047 | 141,756 | 11,620 | 8,443 | 922,863 | 752,549 | ✅ |
+| 25 | [spring-projects/spring-framework](https://github.com/spring-projects/spring-framework) | B | [report](reports/spring-projects/spring-framework.json) | `8cdd2ce5` | 105,969 | 286,288 | 11,402 | 9,244 | 1,595,393 | 1,430,520 | ✅ |
+| 26 | [alibaba/druid](https://github.com/alibaba/druid) | B | [report](reports/alibaba/druid.json) | `fe51de02` | 41,208 | 234,102 | 6,740 | 5,359 | 702,517 | 598,992 | ✅ |
+| 27 | [spring-projects/spring-petclinic](https://github.com/spring-projects/spring-petclinic) | C | [report](reports/spring-projects/spring-petclinic.json) | `c604adfb` | 283 | 626 | 131 | 50 | 27,644 | 4,297 | ✅ |
+| 28 | [elunez/eladmin](https://github.com/elunez/eladmin) | C | [report](reports/elunez/eladmin.json) | `8389435e` | 1,357 | 5,096 | 305 | 274 | 26,578 | 23,267 | ✅ |
+| 29 | [keycloak/keycloak](https://github.com/keycloak/keycloak) | C | [report](reports/keycloak/keycloak.json) | `fa090d70` | 92,061 | 499,683 | 13,527 | 8,712 | 1,850,827 | 1,309,630 | ✅ |
+| 30 | [flowable/flowable-engine](https://github.com/flowable/flowable-engine) | C | [report](reports/flowable/flowable-engine.json) | `6e898ac7` | 76,265 | 215,262 | 16,202 | 8,082 | 1,730,889 | 1,086,948 | ✅ |
+| 31 | [Activiti/Activiti](https://github.com/Activiti/Activiti) | C | [report](reports/Activiti/Activiti.json) | `385b3aa1` | 24,203 | 85,736 | 5,387 | 3,095 | 476,182 | 353,553 | ✅ |
+| 32 | [hibernate/hibernate-orm](https://github.com/hibernate/hibernate-orm) | C | [report](reports/hibernate/hibernate-orm.json) | `39412056` | 180,951 | 421,035 | 21,338 | 19,251 | 2,483,974 | 2,312,508 | ✅ |
+| 33 | [dhis2/dhis2-core](https://github.com/dhis2/dhis2-core) | C | [report](reports/dhis2/dhis2-core.json) | `0607cfca` | 63,457 | 411,972 | 10,299 | 6,670 | 1,621,862 | 1,289,926 | ✅ |
+| 34 | [BroadleafCommerce/BroadleafCommerce](https://github.com/BroadleafCommerce/BroadleafCommerce) | C | [report](reports/BroadleafCommerce/BroadleafCommerce.json) | `42c6eff8` | 25,682 | 108,282 | 3,866 | 2,983 | 563,954 | 353,597 | ✅ |
+| 35 | [macrozheng/mall-admin-web](https://github.com/macrozheng/mall-admin-web) | D | [report](reports/macrozheng/mall-admin-web.json) | `a9ea2b99` | 1,662 | 29,228 | 358 | 0 | 36,098 | 0 | ✅ |
+| 36 | [yangzongzhuan/RuoYi-Vue3](https://github.com/yangzongzhuan/RuoYi-Vue3) | D | [report](reports/yangzongzhuan/RuoYi-Vue3.json) | `f98278f7` | 1,078 | 6,243 | 281 | 0 | 26,397 | 0 | ✅ |
+| 37 | [jeecgboot/jeecgboot-vue3](https://github.com/jeecgboot/jeecgboot-vue3) | D | [report](reports/jeecgboot/jeecgboot-vue3.json) | `5802e1ef` | 4,755 | 25,600 | 1,424 | 0 | 173,262 | 0 | ✅ |
+| 38 | [pig-mesh/pig-ui](https://github.com/pig-mesh/pig-ui) | D | [report](reports/pig-mesh/pig-ui.json) | `11e95353` | 1,974 | 11,417 | 479 | 0 | 59,233 | 0 | ✅ |
+| 39 | [yudaocode/yudao-ui-admin-vue3](https://github.com/yudaocode/yudao-ui-admin-vue3) | D | [report](reports/yudaocode/yudao-ui-admin-vue3.json) | `5ddd7597` | 16,456 | 3,065,439 | 3,274 | 0 | 509,620 | 0 | ✅ |
+| 40 | [elunez/eladmin-web](https://github.com/elunez/eladmin-web) | D | [report](reports/elunez/eladmin-web.json) | `52df4d82` | 538 | 1,133 | 279 | 0 | 18,332 | 0 | ✅ |
+| 41 | [newbee-ltd/newbee-mall-vue3-app](https://github.com/newbee-ltd/newbee-mall-vue3-app) | D | [report](reports/newbee-ltd/newbee-mall-vue3-app.json) | `c406ff31` | 181 | 382 | 59 | 0 | 10,854 | 0 | ✅ |
 
-> ⚠️ **分层漂移**：Guns / jeesite / dante-cloud 在被扫描的 HEAD 上已不是选样时假设的 Java 后端形态
-> （`.java` 文件分别只有 18 / 0 / 77 个；其中 Guns 与 jeesite 的 `.vue` 文件分别为 163 / 301 个，实为前端形态）。三仓仍计入 A 层 18 仓，但
-> 其 Java 侧指标（A3/A4、B、C 域）样本代表性有限。
+> ⚠️ **Tier drift**: `.java` is not the largest file group in 3 tier-A repos (stylefeng/Guns — 18 `.java` files against 163 `.vue` files; thinkgem/jeesite — 0 `.java` files against 409 `.typescript` files; dromara/dante-cloud — 77 `.java` files against 637 `.sql` files). They still count toward tier A (18 repos), but their Java-side metrics (A3/A4, domains B and C) have limited sample representativeness.
 
-### 仓规模口径（文件数 / 行数）
+## Repository scale (files / lines)
 
-仓规模在扫描的同时采集（`scan-one.sh` clone 之后、import 之前，同一工作树同一 HEAD），落 `report.metrics.D3.scale`，
-并在 `census/summary.json` 给出逐仓字段（`repos[]`）与跨仓分布（`cohort.scale`）。作为各指标的规模参照，不参与评分。
+Scale is collected during the scan (`scan-one.sh`, right after the clone and before the import — same working tree, same HEAD) by `scripts/repo-scale.py`. It is stored under `report.metrics.D3.scale` in each report and summarised per repo (`repos[]`) and across repos (`cohort.scale`) in `census/summary.json`. It is a size reference for the other metrics and is not scored.
 
-| 字段 | 口径 |
+### Definitions
+
+| Field | Definition |
 |---|---|
-| 文件数 `fileCount` | tracked 文件数，剔除分析器跳过目录（`target` / `build` / `dist` / `node_modules` 等）与符号链接等非普通文件；与分析器 `Repository.fileCount` 同口径，扫描时逐仓对照（不一致只告警不置红） |
-| Java 文件 `javaFiles` | 其中 `.java` 文件数 |
-| 总行数 `lineCount` | 文本文件的物理行数，含注释与空行，**不是 SLOC**；二进制文件（首 8000 字节含 NUL）不计 |
-| Java 行数 `javaLines` | 其中 `.java` 文件的物理行数 |
+| Files `fileCount` | Tracked files, excluding directories the analyzer skips (`target` / `build` / `dist` / `node_modules`, …) and non-regular files such as symlinks. Same definition as the analyzer's `Repository.fileCount`; compared per repo during the scan (a mismatch only warns). |
+| Java files `javaFiles` | The `.java` files among them |
+| Lines `lineCount` | Physical lines of text files, comments and blank lines included — **not SLOC**. Binary files (NUL in the first 8000 bytes) are not counted. |
+| Java lines `javaLines` | Physical lines of `.java` files |
 
-- **规模参照以 Java 行数为主指标。** 总行数会被设计文档、SVG、生成物显著抬高（mall 的总行数里有 4.1 万行来自 `.pdb` / `.pdm` 设计文件）。
-- 分语言明细（`linesByLanguage` / `filesByLanguage`）随 report 一并给出。
-- 2026-11-26 之前落库的 report 由 `scale-backfill` workflow 按同一提交补采，数值与扫描时采集等价（`collectedBy: "backfill"`）。
+### Totals across the corpus
 
-## 指标状况（按 16 卡如实列出）
+| Measure | Sum over all repos | Smallest repo | Largest repo |
+|---|---|---|---|
+| Files | 203,848 | 59 | 27,933 |
+| Java files | 125,166 | 0 | 19,251 |
+| Lines | 24,913,664 | 10,854 | 2,751,818 |
+| Java lines | 15,710,618 | 0 | 2,312,508 |
 
-分位为全体切片的 nearest-rank 值（取自 `census/summary.json`）。**状态列是本表的重点**——N 为该指标
-实际可算的仓数，只有 N ≥ 30 的切片具备出参考线的统计充分性。
+Java accounts for 63.1% of all counted lines and 61.4% of counted files. The 41 repos hold 204,788 tracked files in git (185,807 counted as text, 18,041 detected as binary and skipped). Collected by: `scan`.
 
-| 指标 | 名称 | 方向 | N | 缺失 | P25 | P50 | P75 | 状态 |
+### Distribution across repos
+
+| Measure | N | Missing | Min | P25 | P50 | P75 | P90 | Max | Sum | Mean |
+|---|---|---|---|---|---|---|---|---|---|---|
+| Files `fileCount` | 41 | 0 | 59 | 406 | 1,424 | 7,382 | 13,527 | 27,933 | 203,848 | 4,972 |
+| Java files `javaFiles` | 41 | 0 | 0 | 77 | 533 | 5,442 | 8,443 | 19,251 | 125,166 | 3,053 |
+| Lines `lineCount` | 41 | 0 | 10,854 | 43,949 | 173,262 | 922,863 | 1,621,862 | 2,751,818 | 24,913,664 | 607,650 |
+| Java lines `javaLines` | 41 | 0 | 0 | 5,581 | 85,434 | 752,549 | 1,086,948 | 2,312,508 | 15,710,618 | 383,186 |
+
+Percentiles are nearest-rank values from `census/summary.json`.
+
+### By tier
+
+| Tier | Repos | Median files | Median lines | Median Java lines | Sum of Java lines |
+|---|---|---|---|---|---|
+| A · Admin / business systems | 18 | 749 | 116,300 | 41,851 | 2,617,623 |
+| B · Large repositories | 8 | 8,248 | 1,121,602 | 794,629 | 6,359,269 |
+| C · JPA data-access layer | 8 | 7,843 | 1,092,908 | 720,272 | 6,733,726 |
+| D · Frontend pairs | 7 | 358 | 36,098 | 0 | 0 |
+
+### Largest repositories
+
+By Java lines:
+
+| Repository | Java lines | Lines | Java files | Files |
+|---|---|---|---|---|
+| [hibernate/hibernate-orm](https://github.com/hibernate/hibernate-orm) | 2,312,508 | 2,483,974 | 19,251 | 21,338 |
+| [spring-projects/spring-framework](https://github.com/spring-projects/spring-framework) | 1,430,520 | 1,595,393 | 9,244 | 11,402 |
+| [keycloak/keycloak](https://github.com/keycloak/keycloak) | 1,309,630 | 1,850,827 | 8,712 | 13,527 |
+| [dhis2/dhis2-core](https://github.com/dhis2/dhis2-core) | 1,289,926 | 1,621,862 | 6,670 | 10,299 |
+| [flowable/flowable-engine](https://github.com/flowable/flowable-engine) | 1,086,948 | 1,730,889 | 8,082 | 16,202 |
+
+By total lines:
+
+| Repository | Lines | Java lines | Java files | Files |
+|---|---|---|---|---|
+| [o2oa/o2oa](https://github.com/o2oa/o2oa) | 2,751,818 | 773,636 | 7,824 | 27,933 |
+| [hibernate/hibernate-orm](https://github.com/hibernate/hibernate-orm) | 2,483,974 | 2,312,508 | 19,251 | 21,338 |
+| [keycloak/keycloak](https://github.com/keycloak/keycloak) | 1,850,827 | 1,309,630 | 8,712 | 13,527 |
+| [flowable/flowable-engine](https://github.com/flowable/flowable-engine) | 1,730,889 | 1,086,948 | 8,082 | 16,202 |
+| [dhis2/dhis2-core](https://github.com/dhis2/dhis2-core) | 1,621,862 | 1,289,926 | 6,670 | 10,299 |
+
+### Lines by language
+
+| Language (by extension) | Lines | Share | Files |
+|---|---|---|---|
+| `java` | 15,710,618 | 63.1% | 125,166 |
+| `javascript` | 1,952,331 | 7.8% | 5,818 |
+| `other` | 1,593,683 | 6.4% | 30,779 |
+| `vue` | 1,028,838 | 4.1% | 5,497 |
+| `xml` | 1,012,698 | 4.1% | 13,453 |
+| `json` | 882,181 | 3.5% | 2,240 |
+| `sql` | 404,530 | 1.6% | 4,431 |
+| `html` | 387,821 | 1.6% | 2,016 |
+| `typescript` | 371,773 | 1.5% | 4,074 |
+| `yaml` | 313,054 | 1.3% | 2,330 |
+| other (11 more) | 1,256,137 | 5.0% | 8,044 |
+
+- **Java lines are the primary size reference.** Total lines are inflated by design documents, SVG and generated artifacts (in macrozheng/mall the `other` bucket — unrecognised extensions, here mostly the `.pdb` / `.pdm` design files — alone contributes 41,854 lines).
+- Per-language detail (`linesByLanguage` / `filesByLanguage`) is part of each report.
+
+## Metric status (all 16 cards, as listed)
+
+Percentiles are nearest-rank values over each metric's own slice (from `census/summary.json`). **The status column is the point of this table** — N is the number of repos for which the metric is actually computable, and only slices with N ≥ 30 are statistically sufficient to serve as a reference line.
+
+| Metric | Name | Direction | N | Missing | P25 | P50 | P75 | Status |
 |---|---|---|---|---|---|---|---|---|
-| A1 | 全链路贯通率 | 越高越好 | 18 | 23 | 0 | 0 | 0 | ⚠️ 未达门槛，分布退化 |
-| A2 | 前后端断链率 | 越低越好 | 18 | 23 | 1 | 1 | 1 | ⚠️ 未达门槛，分布退化 |
-| A3 | 孤儿表率 | 越低越好 | 29 | 12 | 0.21 | 0.5362 | 0.9806 | ⚠️ 未达门槛（差 1 仓） |
-| A4 | 表↔实体映射率 | 越高越好 | 29 | 12 | 0.0194 | 0.4638 | 0.79 | ⚠️ 未达门槛（差 1 仓） |
-| B1.backend | 循环依赖密度（后端） | 越低越好 | 33 | 8 | 0.0909 | 0.2126 | 0.4223 | ✅ 可出参考线 |
-| B1.frontend | 循环依赖密度（前端） | 越低越好 | 27 | 14 | 0 | 0 | 0.003 | ⚠️ 未达门槛（差 3 仓） |
-| B2 | 包依赖密度 | 区间型 | 33 | 8 | 2.3617 | 4.6335 | 7.6072 | ✅ 可出参考线 |
-| B3 | 巨型类占比 | 越低越好 | 33 | 8 | 0.0062 | 0.0253 | 0.0357 | ✅ 可出参考线 |
-| B4 | 组件耦合度 | 越低越好 | 17 | 24 | 0.0503 | 0.2294 | 0.3462 | ⚠️ 未达门槛 |
-| C1 | 端到端跳数 | 区间型 | 1 | 40 | — | — | — | ⛔ 无分位（k-匿名 N<5） |
-| C2 | 圈复杂度 P90 | 越低越好 | 33 | 8 | 2 | 3 | 3 | ✅ 可出参考线 |
-| C3 | 测试方法占比 | 越高越好 | 33 | 8 | 0.0043 | 0.0397 | 0.1662 | ✅ 可出参考线 |
-| C4 | 巨型方法占比 | 越低越好 | 33 | 8 | 0.0014 | 0.003 | 0.0073 | ✅ 可出参考线 |
-| D1 | 技术栈版本覆盖率 | 越高越好 | 6 | 35 | 0.5 | 0.5 | 1 | ❌ 值待修正，不可用 |
-| D2 | 依赖同质度 | 描述性 | cohort | — | 值 0.375 | | | ❌ 值待修正，不可用 |
-| D3 | 规模画像 | 描述性 | 41 | 0 | 对象数 181 | 14,527 | 180,572 | ℹ️ 描述性统计 |
-| D4 | 年度演进趋势 | 描述性 | 4 | 37 | — | — | — | ⛔ 无时序（非年度间隔） |
+| A1 | Full-chain coverage | Higher is better | 18 | 23 | 0 | 0 | 0 | ⚠️ Below threshold (short by 12), degenerate distribution |
+| A2 | Frontend-backend break rate | Lower is better | 18 | 23 | 1 | 1 | 1 | ⚠️ Below threshold (short by 12), degenerate distribution |
+| A3 | Orphan-table rate | Lower is better | 29 | 12 | 0.21 | 0.5362 | 0.9806 | ⚠️ Below threshold (short by 1) |
+| A4 | Table ↔ entity mapping rate | Higher is better | 29 | 12 | 0.0194 | 0.4638 | 0.79 | ⚠️ Below threshold (short by 1) |
+| B1.backend | Circular dependency density (backend) | Lower is better | 33 | 8 | 0.0909 | 0.2126 | 0.4223 | ✅ Reference-ready |
+| B1.frontend | Circular dependency density (frontend) | Lower is better | 27 | 14 | 0 | 0 | 0.003 | ⚠️ Below threshold (short by 3) |
+| B2 | Package dependency density | Lower is better | 33 | 8 | 2.3617 | 4.6343 | 7.6102 | ✅ Reference-ready |
+| B3 | God-class share | Lower is better | 33 | 8 | 0.0062 | 0.0253 | 0.0356 | ✅ Reference-ready |
+| B4 | Component coupling | Lower is better | 17 | 24 | 0.0503 | 0.2294 | 0.3462 | ⚠️ Below threshold (short by 13) |
+| C1 | End-to-end hop count | Range-type | 1 | 40 | — | — | — | ⛔ No percentiles (k-anonymity N < 5) |
+| C2 | Cyclomatic complexity P90 | Lower is better | 33 | 8 | 2 | 3 | 3 | ✅ Reference-ready |
+| C3 | Test-method share | Higher is better | 33 | 8 | 0.0043 | 0.0397 | 0.1672 | ✅ Reference-ready |
+| C4 | God-method share | Lower is better | 33 | 8 | 0.0014 | 0.003 | 0.0073 | ✅ Reference-ready |
+| D1 | Framework version coverage | Higher is better | 6 | 35 | 0.5 | 0.5 | 1 | ❌ Values not usable yet |
+| D2 | Dependency homogeneity | Descriptive | cohort | — | — | value 0.375 | — | ❌ Values not usable yet |
+| D3 | Scale profile | Descriptive | 41 | 0 | objects 181 | 14,527 | 180,951 | ℹ️ Descriptive |
+| D4 | Year-over-year evolution | Descriptive | 0 | 41 | — | — | — | ⛔ No time series (single snapshot per repo) |
 
-### 逐指标说明
+B1 is listed as two rows (backend / frontend), so the 16 cards appear as 17 rows.
 
-**A 域（链路）**
+### Per-metric notes
 
-- **A1 / A2 / C1**：`ApiEndpoint` 是前端调用点对象，纯后端仓不产出该类型——23 仓置空属口径性缺失，不是扫描失败。
-  但这意味着这三个指标只在"同一快照内前端调用点与配对后端并存"时可算，当前样本下无法形成参考线：
-  - 18 个有值仓中，7 个是 D 层独立扫描的前端（同快照内没有配对后端，A1 恒为 0、A2 恒为 1）；
-  - 其余 11 仓中仅 lenve/vhr 为 A1 = 1.0（分母只有 1 个端点），另 10 仓为 0，端点数为 1–123；
-  - C1 只有 1 个仓有值，另 17 仓有端点但无贯通链。
-- **A3 / A4**：N=29，距门槛差 1 仓。12 个缺失仓中 7 个是前端，5 个是后端（BroadleafCommerce / dubbo / jeesite / keycloak / o2oa）——
-  这些仓的 DDL 不在可解析的内联 `.sql` 文件中，因此无 `Table` 对象。29 个有值仓里 7 个 A3 = 1.0（表全部为孤儿）、4 个 A3 = 0，
-  分布明显双峰，P25–P75 区间很宽。
+**Domain A (chain)**
 
-**B 域（结构）**
+- **A1 / A2 / C1**: `ApiEndpoint` is the frontend call-site object and pure backend repos do not produce it — the 23 repos without it are a definitional absence, not a scan failure. These three metrics are therefore only computable when frontend call sites and the paired backend coexist in one snapshot, and under the current sample no reference line can be formed:
+  - of the 18 repos with a value, 7 are standalone tier-D frontends (no paired backend in the snapshot, so A1 is always 0 and A2 always 1);
+  - among the other 11, only lenve/vhr reaches A1 = 1.0 (a denominator of 1 endpoint); the remaining 10 are at 0, with 1–123 endpoints;
+  - C1 has a value for 1 repo(s); the other 17 with endpoints have no complete chain.
+- **A3 / A4**: N = 29. Of the 12 missing repos, 7 are frontends and 5 are backends (thinkgem/jeesite, o2oa/o2oa, apache/dubbo, keycloak/keycloak and BroadleafCommerce/BroadleafCommerce) — their DDL is not in parseable inline `.sql` files, so there are no `Table` objects. Among the 29 repos with a value, 7 have A3 = 1.0 (every table orphaned) and 4 have A3 = 0; the distribution is clearly bimodal with a very wide P25–P75 range.
 
-- **B1.backend / B2 / B3**：N=33，当前最可靠的一组。缺失 8 仓 = 7 个 D 层前端 + jeesite（无 `Package` / `Class` 对象）。
-- **B1.frontend**：N=27，差 3 仓。
-- **B4**：N=17，仅含组件对象的仓可算。
+**Domain B (structure)**
 
-**C 域（代码）**
+- **B1.backend / B2 / B3**: N = 33, currently the most reliable group. The 8 missing repos are the 7 tier-D frontends plus thinkgem/jeesite (no `Package` / `Class` objects).
+- **B1.frontend**: N = 27.
+- **B4**: N = 17 — computable only for repos that have component objects.
 
-- **C2 / C3 / C4**：N=33，与 B 域后端口径一致。
+**Domain C (code)**
 
-**D 域（技术栈）**
+- **C2 / C3 / C4**: N = 33, the same slice as the backend metrics of domain B.
 
-- **D1**：仅 6 仓有值，且值不可用。Maven 多模块仓的依赖版本大多由父 POM 继承，抽取结果是空串或属性占位符
-  （`${...}` / `@x@`）——6 个有值仓的分子分母只有 1–7 条依赖；`@x@` 形式的占位符还会被当作可判定版本并计入"超范围"
-  （spring-boot 自身因此得到 D1 = 0.0）。
-- **D2**：cohort 值 0.375 不可用——各框架可用仓数只有 1–5 个（mybatis 1 / spring-framework 2 / spring-boot 3 / druid 5 / mysql-connector-j 5），
-  且部分"众数版本"本身是占位符串。
-- **D3**：41 仓全量可描述。对象数 181–180,572（中位 14,527），链接数 382–3,065,439（中位 35,226）。
-- **D4**：仅 4 仓有值，且来自 run #33 与 run #34 相隔数小时的两个快照——能验证计算逻辑，但不构成年度趋势。
-  需要月度重扫启用后积累多期数据。
+**Domain D (stack)**
 
-## census 守门状态
+- **D1**: only 6 repos have a value, and the values are not usable. In Maven multi-module repos most dependency versions are inherited from a parent POM, so extraction yields an empty string or a property placeholder (`${...}` / `@x@`) — the 6 repos with a value have only 1–7 judgeable dependencies each, and `@x@`-style placeholders are still treated as judgeable versions and counted as out of range (spring-boot itself gets D1 = 0 that way).
+- **D2**: the cohort value 0.375 is not usable — each framework is used by only 1–5 repos, and the dominant version of 2 of them is itself a placeholder string.
 
-| 项 | 值 |
+| Framework | Repos using | Distinct versions | Dominant version | Dominant share |
+|---|---|---|---|---|
+| druid | 5 | 5 | `${druid.version}` | 20.0% |
+| mybatis | 1 | 1 | `3.4.0` | 100.0% |
+| mysql-connector-j | 5 | 4 | `8.0.33` | 40.0% |
+| spring-boot | 3 | 3 | `${springboot2.version}` | 33.3% |
+| spring-framework | 2 | 2 | `6.1.21` | 50.0% |
+
+- **D3**: describable for all 41 repos. Objects 181–180,951 (median 14,527); links 382–3,065,439 (median 35,226).
+- **D4**: 0 repos have a value. Year-over-year evolution needs several periods of data; it only becomes meaningful once the monthly rescan has accumulated a few rounds.
+
+## Census gating
+
+| Item | Value |
 |---|---|
-| 已收录样本 | **41** |
-| 发布门槛（统计充分性） | 总样本 N ≥ 30 → `published`（当前 N=41） |
-| 隐私护栏（k-匿名单指标级） | 切片 N < 5 整组不出分位 |
-| 当前状态 | `published`，`schemaVersion=draft-v1` |
-| validation | 41/41 四子步 ok；consistency pass 41 / mismatch 0；与扫描矩阵对账 missing 0 |
+| Samples included | **41** |
+| Publish threshold (statistical sufficiency) | total N ≥ 30 → `published` (currently N = 41) |
+| Privacy guard (k-anonymity, per metric) | slices with N < 5 get no percentiles |
+| Current status | `published`, `schemaVersion=draft-v1` |
+| validation | 41/41 four steps ok; consistency pass 41 / mismatch 0; reconciled with the scan matrix, missing 0 |
 
-> **阅读提示**：`census.py` 目前把 30 的门槛作用在**总样本**上，各指标切片只施 k-匿名护栏（N ≥ 5 即出分位）。
-> "每个切片独立 N ≥ 30 才出参考线"的门槛尚未实现，所以 `summary.json` 里 N = 6 / 17 / 18 的切片也带分位值。
-> 引用数值时请以上表状态列为准。
+> **Reading note**: `census.py` currently applies the threshold of 30 to the **total sample**; individual metric slices only get the k-anonymity guard (percentiles as soon as N ≥ 5). The rule "each slice independently needs N ≥ 30 to produce a reference line" is not implemented yet, so slices with small N in `summary.json` also carry percentiles. Use the status column of the table above when citing numbers.
 
-## 已知限制
+## Known limitations
 
-1. **分层切片与体质分当前不可得。** 分层为 A18 / B8 / C8 / D7，各层都低于 30；总量 41 也低于体质分要求的 50。
-   现阶段只有全体切片具备统计充分性。
-2. **A1 / A2 / C1 依赖前后端配对聚合。** 配对聚合尚未启用，D 层前端按独立仓入列。
-3. **D1 / D2 依赖 Maven 版本继承解析。** 平台侧暂不解析父 POM 管理的版本。
-4. **consistency 的覆盖面有限。** 无 `ApiEndpoint` 的仓会跳过图形态比对（23 仓），41 个 pass 中实际执行双路径等价比对的不超过 18 仓。
-5. **个别仓的数值待归因。** yudao-ui-admin-vue3 链接数 3,065,439（约 186 条/对象，远高于其它仓）；dhis2-core 的 A4 仅 0.0275。
-6. **三仓分层漂移**（见仓库索引的 ⚠️ 标注）。
+1. **Tier slices and the corpus fitness score are not available yet.** The tiers are A18 / B8 / C8 / D7, each below 30; the total of 41 is also below the 50 the fitness score requires. At this stage only the whole-corpus slice is statistically sufficient.
+2. **A1 / A2 / C1 depend on frontend-backend pair aggregation**, which is not enabled; tier-D frontends are listed as standalone repos.
+3. **D1 / D2 depend on Maven version-inheritance resolution**, which the platform does not do yet.
+4. **Consistency coverage is limited.** Repos without `ApiEndpoint` skip the graph-form comparison (23 repos); of the 41 passes, at most 18 actually ran the dual-path equivalence check.
+5. **Some per-repo values await attribution.** yudaocode/yudao-ui-admin-vue3 has 3,065,439 links for 16,456 objects (about 186 links per object, far above the other repos); dhis2-core's A4 is only 0.0275.
+6. **Tier drift** in 3 repos (see the ⚠️ marks in the repository index).
 
-## 披露
+## Disclosure
 
-- 本清单为分层选样的知名 Java 仓库，**非随机抽样**——存在自选择偏差，分位参考线不代表行业普查结果。
-- report 仅含聚合计数与指标值，不含源码字符串内容；对外只发布聚合分位，单仓指标值不单独发布。
+- The list is a tiered selection of well-known Java repositories, **not a random sample** — there is self-selection bias, and the percentile reference lines do not represent an industry survey.
+- Reports contain only aggregate counts and metric values, no source-code strings; only aggregate percentiles are published externally, and single-repo metric values are not published separately.
+
