@@ -13,6 +13,7 @@ KE Index 开源基准库冷启动仓库——开源仓库扫描清单、扫描�
 | 产品链路（scan → projection → metrics → consistency） | 41/41 四子步全 ok，consistency 等价比对 41 pass / 0 mismatch |
 | 分析器版本 | KE CLI `0.3.10`（41 仓同质基线——数值可比） |
 | 数据规模 | 对象 1,170,444 / 链接 8,343,496 |
+| 仓规模（文件数 / 行数，2026-11-26 补齐） | 41/41 report 均有采集；文件数与服务端 `Repository.fileCount` 对照 **41 / 41 一致**；Java 行数 P50 85,434 / P90 1,086,948（见[仓规模口径](#仓规模口径文件数--行数)） |
 | census | `samples=41`，`status=published`，`schemaVersion=draft-v1` |
 | 可出参考线的指标（N ≥ 30） | **6 / 16**（见[指标状况](#指标状况按-16-卡如实列出)） |
 
@@ -103,49 +104,49 @@ bash scripts/scan-one.sh
 
 ### 全部仓库
 
-| # | owner/repo | 分层 | Report | 快照 | 对象数 | 链接数 | 管线 |
-|---|---|---|---|---|---|---|---|
-| 1 | [macrozheng/mall](https://github.com/macrozheng/mall) | A | [report](reports/macrozheng/mall.json) | `3440ab25` | 14,527 | 35,226 | ✅ |
-| 2 | [macrozheng/mall-swarm](https://github.com/macrozheng/mall-swarm) | A | [report](reports/macrozheng/mall-swarm.json) | `37ddc9ab` | 14,878 | 36,007 | ✅ |
-| 3 | [yangzongzhuan/RuoYi-Vue](https://github.com/yangzongzhuan/RuoYi-Vue) | A | [report](reports/yangzongzhuan/RuoYi-Vue.json) | `d3415eb1` | 2,560 | 7,765 | ✅ |
-| 4 | [dromara/RuoYi-Vue-Plus](https://github.com/dromara/RuoYi-Vue-Plus) | A | [report](reports/dromara/RuoYi-Vue-Plus.json) | `34aacaa5` | 4,777 | 22,903 | ✅ |
-| 5 | [jeecgboot/JeecgBoot](https://github.com/jeecgboot/JeecgBoot) | A | [report](reports/jeecgboot/JeecgBoot.json) | `6cb1a82a` | 15,697 | 116,780 | ✅ |
-| 6 | [lenve/vhr](https://github.com/lenve/vhr) | A | [report](reports/lenve/vhr.json) | `f2fb4546` | 991 | 1,436 | ✅ |
-| 7 | [YunaiV/ruoyi-vue-pro](https://github.com/YunaiV/ruoyi-vue-pro) | A | [report](reports/YunaiV/ruoyi-vue-pro.json) | `7b0666a4` | 46,623 | 230,904 | ✅ |
-| 8 | [yangzongzhuan/RuoYi-Cloud](https://github.com/yangzongzhuan/RuoYi-Cloud) | A | [report](reports/yangzongzhuan/RuoYi-Cloud.json) | `d9545f2a` | 2,532 | 8,741 | ✅ |
-| 9 | [pig-mesh/pig](https://github.com/pig-mesh/pig) | A | [report](reports/pig-mesh/pig.json) | `feb1b04a` | 2,546 | 7,737 | ✅ |
-| 10 | [newbee-ltd/newbee-mall](https://github.com/newbee-ltd/newbee-mall) | A | [report](reports/newbee-ltd/newbee-mall.json) | `a1b165a0` | 933 | 1,470 | ✅ |
-| 11 | [stylefeng/Guns](https://github.com/stylefeng/Guns) | A ⚠️ | [report](reports/stylefeng/Guns.json) | `c75b708b` | 1,377 | 10,042 | ✅ |
-| 12 | [renrenio/renren-fast](https://github.com/renrenio/renren-fast) | A | [report](reports/renrenio/renren-fast.json) | `c6105573` | 777 | 3,326 | ✅ |
-| 13 | [thinkgem/jeesite](https://github.com/thinkgem/jeesite) | A ⚠️ | [report](reports/thinkgem/jeesite.json) | `b6300c52` | 2,670 | 14,623 | ✅ |
-| 14 | [o2oa/o2oa](https://github.com/o2oa/o2oa) | A | [report](reports/o2oa/o2oa.json) | `569db6c6` | 70,501 | 710,059 | ✅ |
-| 15 | [chillzhuang/SpringBlade](https://github.com/chillzhuang/SpringBlade) | A | [report](reports/chillzhuang/SpringBlade.json) | `8f677038` | 1,073 | 3,002 | ✅ |
-| 16 | [dromara/dante-cloud](https://github.com/dromara/dante-cloud) | A ⚠️ | [report](reports/dromara/dante-cloud.json) | `cc27d728` | 476 | 728 | ✅ |
-| 17 | [linlinjava/litemall](https://github.com/linlinjava/litemall) | A | [report](reports/linlinjava/litemall.json) | `35f50e65` | 13,172 | 34,102 | ✅ |
-| 18 | [metersphere/metersphere](https://github.com/metersphere/metersphere) | A | [report](reports/metersphere/metersphere.json) | `9525ad71` | 43,718 | 157,807 | ✅ |
-| 19 | [apache/dubbo](https://github.com/apache/dubbo) | B | [report](reports/apache/dubbo.json) | `3c195b28` | 34,065 | 136,879 | ✅ |
-| 20 | [apache/fineract](https://github.com/apache/fineract) | B | [report](reports/apache/fineract.json) | `a595220d` | 53,936 | 265,882 | ✅ |
-| 21 | [apache/rocketmq](https://github.com/apache/rocketmq) | B | [report](reports/apache/rocketmq.json) | `1a8a8aaf` | 26,411 | 109,365 | ✅ |
-| 22 | [alibaba/nacos](https://github.com/alibaba/nacos) | B | [report](reports/alibaba/nacos.json) | `3821b9eb` | 57,376 | 433,824 | ✅ |
-| 23 | [apache/shardingsphere](https://github.com/apache/shardingsphere) | B | [report](reports/apache/shardingsphere.json) | `3c9663b5` | 56,172 | 447,822 | ✅ |
-| 24 | [spring-projects/spring-boot](https://github.com/spring-projects/spring-boot) | B | [report](reports/spring-projects/spring-boot.json) | `97e4378f` | 65,024 | 141,706 | ✅ |
-| 25 | [spring-projects/spring-framework](https://github.com/spring-projects/spring-framework) | B | [report](reports/spring-projects/spring-framework.json) | `ad67282d` | 105,968 | 286,287 | ✅ |
-| 26 | [alibaba/druid](https://github.com/alibaba/druid) | B | [report](reports/alibaba/druid.json) | `df9c2523` | 41,208 | 234,102 | ✅ |
-| 27 | [spring-projects/spring-petclinic](https://github.com/spring-projects/spring-petclinic) | C | [report](reports/spring-projects/spring-petclinic.json) | `636f6857` | 283 | 626 | ✅ |
-| 28 | [elunez/eladmin](https://github.com/elunez/eladmin) | C | [report](reports/elunez/eladmin.json) | `5f43da18` | 1,357 | 5,096 | ✅ |
-| 29 | [keycloak/keycloak](https://github.com/keycloak/keycloak) | C | [report](reports/keycloak/keycloak.json) | `8824d864` | 91,998 | 498,423 | ✅ |
-| 30 | [flowable/flowable-engine](https://github.com/flowable/flowable-engine) | C | [report](reports/flowable/flowable-engine.json) | `682bf7a1` | 76,265 | 215,262 | ✅ |
-| 31 | [Activiti/Activiti](https://github.com/Activiti/Activiti) | C | [report](reports/Activiti/Activiti.json) | `b4a8661c` | 24,198 | 85,691 | ✅ |
-| 32 | [hibernate/hibernate-orm](https://github.com/hibernate/hibernate-orm) | C | [report](reports/hibernate/hibernate-orm.json) | `580817a3` | 180,572 | 420,177 | ✅ |
-| 33 | [dhis2/dhis2-core](https://github.com/dhis2/dhis2-core) | C | [report](reports/dhis2/dhis2-core.json) | `d3c20ab4` | 63,457 | 411,972 | ✅ |
-| 34 | [BroadleafCommerce/BroadleafCommerce](https://github.com/BroadleafCommerce/BroadleafCommerce) | C | [report](reports/BroadleafCommerce/BroadleafCommerce.json) | `f2964888` | 25,682 | 108,282 | ✅ |
-| 35 | [macrozheng/mall-admin-web](https://github.com/macrozheng/mall-admin-web) | D | [report](reports/macrozheng/mall-admin-web.json) | `b61b793d` | 1,662 | 29,228 | ✅ |
-| 36 | [yangzongzhuan/RuoYi-Vue3](https://github.com/yangzongzhuan/RuoYi-Vue3) | D | [report](reports/yangzongzhuan/RuoYi-Vue3.json) | `fbc90f26` | 1,078 | 6,243 | ✅ |
-| 37 | [jeecgboot/jeecgboot-vue3](https://github.com/jeecgboot/jeecgboot-vue3) | D | [report](reports/jeecgboot/jeecgboot-vue3.json) | `896b3950` | 4,755 | 25,600 | ✅ |
-| 38 | [pig-mesh/pig-ui](https://github.com/pig-mesh/pig-ui) | D | [report](reports/pig-mesh/pig-ui.json) | `1f9ae681` | 1,974 | 11,417 | ✅ |
-| 39 | [yudaocode/yudao-ui-admin-vue3](https://github.com/yudaocode/yudao-ui-admin-vue3) | D | [report](reports/yudaocode/yudao-ui-admin-vue3.json) | `e260a772` | 16,456 | 3,065,439 | ✅ |
-| 40 | [elunez/eladmin-web](https://github.com/elunez/eladmin-web) | D | [report](reports/elunez/eladmin-web.json) | `6d998bf1` | 538 | 1,133 | ✅ |
-| 41 | [newbee-ltd/newbee-mall-vue3-app](https://github.com/newbee-ltd/newbee-mall-vue3-app) | D | [report](reports/newbee-ltd/newbee-mall-vue3-app.json) | `c770e3d8` | 181 | 382 | ✅ |
+| # | owner/repo | 分层 | Report | 快照 | 对象数 | 链接数 | 文件数 | Java 文件 | 行数 | Java 行数 | 管线 |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| 1 | [macrozheng/mall](https://github.com/macrozheng/mall) | A | [report](reports/macrozheng/mall.json) | `3440ab25` | 14,527 | 35,226 | 717 | 524 | 155,807 | 85,434 | ✅ |
+| 2 | [macrozheng/mall-swarm](https://github.com/macrozheng/mall-swarm) | A | [report](reports/macrozheng/mall-swarm.json) | `37ddc9ab` | 14,878 | 36,007 | 782 | 533 | 158,492 | 87,880 | ✅ |
+| 3 | [yangzongzhuan/RuoYi-Vue](https://github.com/yangzongzhuan/RuoYi-Vue) | A | [report](reports/yangzongzhuan/RuoYi-Vue.json) | `d3415eb1` | 2,560 | 7,765 | 334 | 266 | 43,618 | 34,332 | ✅ |
+| 4 | [dromara/RuoYi-Vue-Plus](https://github.com/dromara/RuoYi-Vue-Plus) | A | [report](reports/dromara/RuoYi-Vue-Plus.json) | `34aacaa5` | 4,777 | 22,903 | 980 | 766 | 113,995 | 83,151 | ✅ |
+| 5 | [jeecgboot/JeecgBoot](https://github.com/jeecgboot/JeecgBoot) | A | [report](reports/jeecgboot/JeecgBoot.json) | `6cb1a82a` | 15,697 | 116,780 | 4,020 | 995 | 803,350 | 136,494 | ✅ |
+| 6 | [lenve/vhr](https://github.com/lenve/vhr) | A | [report](reports/lenve/vhr.json) | `f2fb4546` | 991 | 1,436 | 242 | 91 | 20,328 | 5,581 | ✅ |
+| 7 | [YunaiV/ruoyi-vue-pro](https://github.com/YunaiV/ruoyi-vue-pro) | A | [report](reports/YunaiV/ruoyi-vue-pro.json) | `7b0666a4` | 46,623 | 230,904 | 9,710 | 8,161 | 1,024,622 | 798,916 | ✅ |
+| 8 | [yangzongzhuan/RuoYi-Cloud](https://github.com/yangzongzhuan/RuoYi-Cloud) | A | [report](reports/yangzongzhuan/RuoYi-Cloud.json) | `d9545f2a` | 2,532 | 8,741 | 407 | 274 | 43,949 | 32,652 | ✅ |
+| 9 | [pig-mesh/pig](https://github.com/pig-mesh/pig) | A | [report](reports/pig-mesh/pig.json) | `feb1b04a` | 2,546 | 7,737 | 708 | 563 | 61,689 | 49,370 | ✅ |
+| 10 | [newbee-ltd/newbee-mall](https://github.com/newbee-ltd/newbee-mall) | A | [report](reports/newbee-ltd/newbee-mall.json) | `a1b165a0` | 933 | 1,470 | 318 | 88 | 118,606 | 7,609 | ✅ |
+| 11 | [stylefeng/Guns](https://github.com/stylefeng/Guns) | A ⚠️ | [report](reports/stylefeng/Guns.json) | `c75b708b` | 1,377 | 10,042 | 406 | 18 | 60,821 | 1,210 | ✅ |
+| 12 | [renrenio/renren-fast](https://github.com/renrenio/renren-fast) | A | [report](reports/renrenio/renren-fast.json) | `c6105573` | 777 | 3,326 | 223 | 143 | 39,002 | 8,821 | ✅ |
+| 13 | [thinkgem/jeesite](https://github.com/thinkgem/jeesite) | A ⚠️ | [report](reports/thinkgem/jeesite.json) | `b6300c52` | 2,670 | 14,623 | 845 | 0 | 92,527 | 0 | ✅ |
+| 14 | [o2oa/o2oa](https://github.com/o2oa/o2oa) | A | [report](reports/o2oa/o2oa.json) | `569db6c6` | 70,501 | 710,059 | 27,933 | 7,824 | 2,751,818 | 773,636 | ✅ |
+| 15 | [chillzhuang/SpringBlade](https://github.com/chillzhuang/SpringBlade) | A | [report](reports/chillzhuang/SpringBlade.json) | `8f677038` | 1,073 | 3,002 | 423 | 258 | 34,554 | 17,484 | ✅ |
+| 16 | [dromara/dante-cloud](https://github.com/dromara/dante-cloud) | A ⚠️ | [report](reports/dromara/dante-cloud.json) | `cc27d728` | 476 | 728 | 892 | 77 | 144,080 | 5,737 | ✅ |
+| 17 | [linlinjava/litemall](https://github.com/linlinjava/litemall) | A | [report](reports/linlinjava/litemall.json) | `35f50e65` | 13,172 | 34,102 | 1,591 | 333 | 227,993 | 116,435 | ✅ |
+| 18 | [metersphere/metersphere](https://github.com/metersphere/metersphere) | A | [report](reports/metersphere/metersphere.json) | `9525ad71` | 43,718 | 157,807 | 4,716 | 2,706 | 860,678 | 372,881 | ✅ |
+| 19 | [apache/dubbo](https://github.com/apache/dubbo) | B | [report](reports/apache/dubbo.json) | `3c195b28` | 34,065 | 136,879 | 4,861 | 4,060 | 524,398 | 484,107 | ✅ |
+| 20 | [apache/fineract](https://github.com/apache/fineract) | B | [report](reports/apache/fineract.json) | `a595220d` | 53,936 | 265,882 | 9,096 | 7,628 | 1,535,991 | 1,003,233 | ✅ |
+| 21 | [apache/rocketmq](https://github.com/apache/rocketmq) | B | [report](reports/apache/rocketmq.json) | `1a8a8aaf` | 26,411 | 109,365 | 2,805 | 2,318 | 434,712 | 399,617 | ✅ |
+| 22 | [alibaba/nacos](https://github.com/alibaba/nacos) | B | [report](reports/alibaba/nacos.json) | `3821b9eb` | 57,376 | 433,824 | 7,381 | 5,442 | 1,320,320 | 849,146 | ✅ |
+| 23 | [apache/shardingsphere](https://github.com/apache/shardingsphere) | B | [report](reports/apache/shardingsphere.json) | `3c9663b5` | 56,172 | 447,822 | 17,467 | 9,916 | 1,501,418 | 836,710 | ✅ |
+| 24 | [spring-projects/spring-boot](https://github.com/spring-projects/spring-boot) | B | [report](reports/spring-projects/spring-boot.json) | `97e4378f` | 65,024 | 141,706 | 11,620 | 8,443 | 922,575 | 752,296 | ✅ |
+| 25 | [spring-projects/spring-framework](https://github.com/spring-projects/spring-framework) | B | [report](reports/spring-projects/spring-framework.json) | `ad67282d` | 105,968 | 286,287 | 11,402 | 9,244 | 1,595,321 | 1,430,462 | ✅ |
+| 26 | [alibaba/druid](https://github.com/alibaba/druid) | B | [report](reports/alibaba/druid.json) | `df9c2523` | 41,208 | 234,102 | 6,740 | 5,359 | 702,517 | 598,992 | ✅ |
+| 27 | [spring-projects/spring-petclinic](https://github.com/spring-projects/spring-petclinic) | C | [report](reports/spring-projects/spring-petclinic.json) | `636f6857` | 283 | 626 | 131 | 50 | 27,644 | 4,297 | ✅ |
+| 28 | [elunez/eladmin](https://github.com/elunez/eladmin) | C | [report](reports/elunez/eladmin.json) | `5f43da18` | 1,357 | 5,096 | 305 | 274 | 26,578 | 23,267 | ✅ |
+| 29 | [keycloak/keycloak](https://github.com/keycloak/keycloak) | C | [report](reports/keycloak/keycloak.json) | `8824d864` | 91,998 | 498,423 | 13,515 | 8,701 | 1,849,661 | 1,308,646 | ✅ |
+| 30 | [flowable/flowable-engine](https://github.com/flowable/flowable-engine) | C | [report](reports/flowable/flowable-engine.json) | `682bf7a1` | 76,265 | 215,262 | 16,202 | 8,082 | 1,730,889 | 1,086,948 | ✅ |
+| 31 | [Activiti/Activiti](https://github.com/Activiti/Activiti) | C | [report](reports/Activiti/Activiti.json) | `b4a8661c` | 24,198 | 85,691 | 5,387 | 3,095 | 476,072 | 353,442 | ✅ |
+| 32 | [hibernate/hibernate-orm](https://github.com/hibernate/hibernate-orm) | C | [report](reports/hibernate/hibernate-orm.json) | `580817a3` | 180,572 | 420,177 | 21,295 | 19,210 | 2,478,104 | 2,306,695 | ✅ |
+| 33 | [dhis2/dhis2-core](https://github.com/dhis2/dhis2-core) | C | [report](reports/dhis2/dhis2-core.json) | `d3c20ab4` | 63,457 | 411,972 | 10,299 | 6,670 | 1,621,862 | 1,289,926 | ✅ |
+| 34 | [BroadleafCommerce/BroadleafCommerce](https://github.com/BroadleafCommerce/BroadleafCommerce) | C | [report](reports/BroadleafCommerce/BroadleafCommerce.json) | `f2964888` | 25,682 | 108,282 | 3,866 | 2,983 | 563,954 | 353,597 | ✅ |
+| 35 | [macrozheng/mall-admin-web](https://github.com/macrozheng/mall-admin-web) | D | [report](reports/macrozheng/mall-admin-web.json) | `b61b793d` | 1,662 | 29,228 | 358 | 0 | 36,098 | 0 | ✅ |
+| 36 | [yangzongzhuan/RuoYi-Vue3](https://github.com/yangzongzhuan/RuoYi-Vue3) | D | [report](reports/yangzongzhuan/RuoYi-Vue3.json) | `fbc90f26` | 1,078 | 6,243 | 281 | 0 | 26,397 | 0 | ✅ |
+| 37 | [jeecgboot/jeecgboot-vue3](https://github.com/jeecgboot/jeecgboot-vue3) | D | [report](reports/jeecgboot/jeecgboot-vue3.json) | `896b3950` | 4,755 | 25,600 | 1,424 | 0 | 173,262 | 0 | ✅ |
+| 38 | [pig-mesh/pig-ui](https://github.com/pig-mesh/pig-ui) | D | [report](reports/pig-mesh/pig-ui.json) | `1f9ae681` | 1,974 | 11,417 | 479 | 0 | 59,233 | 0 | ✅ |
+| 39 | [yudaocode/yudao-ui-admin-vue3](https://github.com/yudaocode/yudao-ui-admin-vue3) | D | [report](reports/yudaocode/yudao-ui-admin-vue3.json) | `e260a772` | 16,456 | 3,065,439 | 3,274 | 0 | 509,620 | 0 | ✅ |
+| 40 | [elunez/eladmin-web](https://github.com/elunez/eladmin-web) | D | [report](reports/elunez/eladmin-web.json) | `6d998bf1` | 538 | 1,133 | 279 | 0 | 18,332 | 0 | ✅ |
+| 41 | [newbee-ltd/newbee-mall-vue3-app](https://github.com/newbee-ltd/newbee-mall-vue3-app) | D | [report](reports/newbee-ltd/newbee-mall-vue3-app.json) | `c770e3d8` | 181 | 382 | 59 | 0 | 10,854 | 0 | ✅ |
 
 > ⚠️ **分层漂移**：Guns / jeesite / dante-cloud 在被扫描的 HEAD 上已不是选样时假设的 Java 后端形态
 > （`.java` 文件分别只有 18 / 0 / 77 个；其中 Guns 与 jeesite 的 `.vue` 文件分别为 163 / 301 个，实为前端形态）。三仓仍计入 A 层 18 仓，但

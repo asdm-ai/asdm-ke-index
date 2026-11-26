@@ -12,8 +12,9 @@
 # 口径（全部写入输出 method 字段——report 读者不必翻脚本）：
 #   - 文件清单 = git ls-files（tracked 文件；子模块 gitlink 不是文件）
 #   - files.tracked            原始 tracked 数（不过滤）
-#   - files.skippedByAnalyzerDirs  落在分析器跳过目录内的 tracked 数
-#     （SKIP_DIRS 与分析器 repoScanner.ts 逐项对齐：target/build/dist/node_modules 等）
+#   - files.skippedByAnalyzerDirs  位于分析器跳过目录内的 tracked 数
+#     （SKIP_DIRS 与分析器 repoScanner.ts 逐项对齐：target/build/dist/node_modules
+#     等——仅作用于目录；与目录同名的普通文件照常计数）
 #   - files.nonRegular         符号链接等非普通文件（分析器 Dirent.isFile()
 #     为假、不计数——同口径剔除；不跟随符号链接读工作树之外的内容）
 #   - files.total              = tracked - skipped - nonRegular（分析器
@@ -36,7 +37,8 @@ import sys
 
 SCHEMA_VERSION = "repo-scale-v1"
 
-# 与分析器 repoScanner.ts SKIP_DIRS 逐项对齐（路径任一段命中即跳过）
+# 与分析器 repoScanner.ts SKIP_DIRS 逐项对齐（仅作用于目录：文件所在的目录段
+# 任一命中即跳过；文件名本身等于目录名不触发——与分析器 entry.isDirectory() 分支同语义）
 SKIP_DIRS = frozenset([
     ".git", "node_modules", "target", "build", ".idea", ".vscode",
     "dist", "out", ".gradle", ".mvn",
@@ -99,7 +101,15 @@ def lang_of(name):
 
 
 def in_skipped_dir(rel):
-    return any(part in SKIP_DIRS for part in rel.split("/"))
+    """文件是否位于分析器跳过目录内（只看所在目录段，不看文件名本身）。
+
+    分析器 SKIP_DIRS 只作用于目录项（entry.isDirectory() 分支）——仓根下名为
+    build / target 等的普通文件照常计数（apache/dubbo 根目录有 tracked 可执行
+    脚本 `build`：首版按"任一路径段"匹配把它漏掉，CI 4860 != server 4861，
+    由 fileCount 对照抓出）。
+    """
+    parts = rel.split("/")
+    return any(part in SKIP_DIRS for part in parts[:-1])
 
 
 def scan_file(path):

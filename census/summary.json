@@ -159,12 +159,12 @@
       "objectCount": 34065,
       "linkCount": 136879,
       "schemaVersion": "draft-v1",
-      "fileCount": 4860,
+      "fileCount": 4861,
       "javaFiles": 4060,
-      "lineCount": 524279,
+      "lineCount": 524398,
       "javaLines": 484107,
       "linesByLanguage": {
-        "other": 10181,
+        "other": 10300,
         "yaml": 4403,
         "markdown": 2675,
         "xml": 20678,
@@ -175,7 +175,7 @@
         "json": 88,
         "shell": 126
       },
-      "scaleFileCountMatch": false
+      "scaleFileCountMatch": true
     },
     {
       "owner": "apache",
@@ -2446,7 +2446,7 @@
           "missingRepos": [],
           "min": 59,
           "max": 27933,
-          "mean": 4970.04878,
+          "mean": 4970.073171,
           "percentiles": {
             "p25": 406,
             "p50": 1424,
@@ -2474,7 +2474,7 @@
           "missingRepos": [],
           "min": 10854,
           "max": 2751818,
-          "mean": 607356.634146,
+          "mean": 607359.536585,
           "percentiles": {
             "p25": 43949,
             "p50": 173262,
@@ -2498,12 +2498,10 @@
         }
       },
       "fileCountMatch": {
-        "match": 40,
-        "mismatch": 1,
+        "match": 41,
+        "mismatch": 0,
         "unknown": 0,
-        "mismatchRepos": [
-          "apache/dubbo"
-        ]
+        "mismatchRepos": []
       },
       "percentileMethod": "nearest-rank (Schema §4.2)",
       "basis": "各 report metrics.D3.scale（scan-one.sh clone 后 repo-scale.py 采集——文件数 = tracked 剔除分析器跳过目录与非普通文件，与服务端 Repository.fileCount 同口径并对照；行数 = 文本文件物理行数，含注释与空行，非 SLOC；java 为主指标）——描述面不进分位分母，统计量守门与指标同口径"
