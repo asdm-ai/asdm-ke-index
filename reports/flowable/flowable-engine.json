@@ -942,7 +942,63 @@
         "Route": 0,
         "ApiEndpoint": 0
       },
-      "linkCount": 215262
+      "linkCount": 215262,
+      "scale": {
+        "collectedBy": "backfill",
+        "sourceHead": "2af890cdccdaf9b53d07eb92ab8ffb79918c82c5",
+        "method": "文件清单 = git ls-files（tracked）；files.total 剔除分析器跳过目录（target/build/dist/node_modules 等，与分析器 SKIP_DIRS 逐项对齐）与符号链接等非普通文件，与分析器 Repository.fileCount 同口径；二进制 = 首 8000 字节含 NUL；行数 = 文本文件物理行数（LF 计数，末行无换行符计 1 行），含注释与空行，非 SLOC；语言按扩展名归类，未命中归 other；规模参照以 java 为主指标",
+        "fileCount": 16202,
+        "javaFiles": 8082,
+        "lineCount": 1730889,
+        "javaLines": 1086948,
+        "files": {
+          "tracked": 16204,
+          "skippedByAnalyzerDirs": 2,
+          "nonRegular": 0,
+          "total": 16202,
+          "text": 15536,
+          "binary": 666
+        },
+        "filesByLanguage": {
+          "markdown": 63,
+          "sql": 1403,
+          "shell": 24,
+          "yaml": 31,
+          "other": 2219,
+          "xml": 3696,
+          "html": 484,
+          "json": 56,
+          "javascript": 50,
+          "css": 13,
+          "java": 8082,
+          "properties": 79,
+          "template": 1,
+          "groovy": 1
+        },
+        "linesByLanguage": {
+          "markdown": 34543,
+          "sql": 43571,
+          "shell": 367,
+          "yaml": 33249,
+          "other": 110867,
+          "xml": 193571,
+          "html": 170816,
+          "json": 3548,
+          "javascript": 47378,
+          "css": 5219,
+          "java": 1086948,
+          "properties": 714,
+          "template": 80,
+          "groovy": 18
+        },
+        "bytes": 141138180,
+        "commands": [
+          "python3 scripts/repo-scale.py --repo <clone> --out <file>  # scan-one.sh clone 后 / scale-backfill.py 检出 snapshot.sourceHead 后执行",
+          "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Repository --all --field id,fileCount --snapshot 682bf7a1-d6ac-4e93-a19a-9d2a6896e201"
+        ],
+        "serverFileCount": 16202,
+        "fileCountMatch": true
+      }
     }
   },
   "nullMetrics": {
