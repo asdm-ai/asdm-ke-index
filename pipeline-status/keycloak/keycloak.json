@@ -2,9 +2,9 @@
   "schemaVersion": "pipeline-status-v1",
   "owner": "keycloak",
   "repo": "keycloak",
-  "sourceHead": "1333cf9f6de71171c737abdaca53550932a37891",
-  "snapshotId": "fc20531c-d2e1-47e4-bfc4-4f26245c9dbf",
-  "objectCount": 92002,
+  "sourceHead": "d22c7c587818ecf3517c349e9efa199b24623bbe",
+  "snapshotId": "fa090d70-40e2-4b68-986f-3d7b567cb6a0",
+  "objectCount": 92061,
   "importStatus": "completed",
   "steps": {
     "scan": "ok",
