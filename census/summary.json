@@ -181,31 +181,31 @@
       "owner": "apache",
       "repo": "fineract",
       "sourceId": "fineract",
-      "snapshotId": "a595220d-1d51-49c2-ae51-76142cb27adb",
-      "objectCount": 53936,
-      "linkCount": 265882,
+      "snapshotId": "7f0f92e6-af71-4911-8e69-2a9d4b23e28a",
+      "objectCount": 54036,
+      "linkCount": 266349,
       "schemaVersion": "draft-v1",
-      "fileCount": 9096,
-      "javaFiles": 7628,
-      "lineCount": 1535991,
-      "javaLines": 1003233,
+      "fileCount": 9114,
+      "javaFiles": 7646,
+      "lineCount": 1537729,
+      "javaLines": 1004971,
       "linesByLanguage": {
-        "markdown": 2151,
-        "yaml": 6583,
-        "other": 301255,
-        "shell": 2091,
-        "python": 541,
-        "json": 5198,
+        "css": 752,
         "gradle": 9204,
         "groovy": 395,
-        "xml": 117040,
-        "sql": 28136,
-        "java": 1003233,
-        "properties": 2879,
-        "template": 1143,
         "html": 55386,
-        "css": 752,
-        "javascript": 4
+        "java": 1004971,
+        "javascript": 4,
+        "json": 5198,
+        "markdown": 2151,
+        "other": 301255,
+        "properties": 2879,
+        "python": 541,
+        "shell": 2091,
+        "sql": 28136,
+        "template": 1143,
+        "xml": 117040,
+        "yaml": 6583
       },
       "scaleFileCountMatch": true
     },
@@ -213,25 +213,25 @@
       "owner": "apache",
       "repo": "rocketmq",
       "sourceId": "rocketmq",
-      "snapshotId": "1a8a8aaf-8ddf-4452-8f59-3ee939e2a015",
-      "objectCount": 26411,
-      "linkCount": 109365,
+      "snapshotId": "d88658b6-8e64-47d2-b4b0-b3defd77613b",
+      "objectCount": 26451,
+      "linkCount": 109581,
       "schemaVersion": "draft-v1",
       "fileCount": 2805,
       "javaFiles": 2318,
-      "lineCount": 434712,
-      "javaLines": 399617,
+      "lineCount": 436102,
+      "javaLines": 401007,
       "linesByLanguage": {
-        "yaml": 1073,
-        "other": 9394,
+        "java": 401007,
+        "json": 9,
         "markdown": 16126,
-        "xml": 6534,
-        "java": 399617,
-        "sql": 22,
+        "other": 9394,
         "properties": 249,
         "python": 451,
         "shell": 1237,
-        "json": 9
+        "sql": 22,
+        "xml": 6534,
+        "yaml": 1073
       },
       "scaleFileCountMatch": true
     },
@@ -452,30 +452,30 @@
       "owner": "hibernate",
       "repo": "hibernate-orm",
       "sourceId": "hibernate-orm",
-      "snapshotId": "580817a3-c6fc-4539-84c8-22bbccc38167",
-      "objectCount": 180572,
-      "linkCount": 420177,
+      "snapshotId": "5e4f309e-7f71-4ac5-a5c8-d9c206220d19",
+      "objectCount": 180714,
+      "linkCount": 420528,
       "schemaVersion": "draft-v1",
-      "fileCount": 21295,
-      "javaFiles": 19210,
-      "lineCount": 2478104,
-      "javaLines": 2306695,
+      "fileCount": 21303,
+      "javaFiles": 19218,
+      "lineCount": 2479917,
+      "javaLines": 2308508,
       "linesByLanguage": {
-        "other": 106924,
-        "markdown": 1536,
-        "shell": 2077,
-        "yaml": 2396,
+        "css": 1234,
         "gradle": 5795,
-        "java": 2306695,
-        "sql": 4799,
-        "json": 6,
-        "xml": 41677,
-        "properties": 1773,
-        "kotlin": 170,
         "groovy": 157,
         "html": 282,
-        "css": 1234,
-        "template": 2583
+        "java": 2308508,
+        "json": 6,
+        "kotlin": 170,
+        "markdown": 1536,
+        "other": 106924,
+        "properties": 1773,
+        "shell": 2077,
+        "sql": 4799,
+        "template": 2583,
+        "xml": 41677,
+        "yaml": 2396
       },
       "scaleFileCountMatch": true
     },
@@ -542,32 +542,32 @@
       "owner": "keycloak",
       "repo": "keycloak",
       "sourceId": "keycloak",
-      "snapshotId": "8824d864-1db0-4ccf-bd69-e7a1be93f966",
-      "objectCount": 91998,
-      "linkCount": 498423,
+      "snapshotId": "fc20531c-d2e1-47e4-bfc4-4f26245c9dbf",
+      "objectCount": 92002,
+      "linkCount": 498429,
       "schemaVersion": "draft-v1",
-      "fileCount": 13515,
-      "javaFiles": 8701,
-      "lineCount": 1849661,
-      "javaLines": 1308646,
+      "fileCount": 13516,
+      "javaFiles": 8702,
+      "lineCount": 1849744,
+      "javaLines": 1308729,
       "linesByLanguage": {
-        "yaml": 28954,
-        "other": 101171,
-        "shell": 2676,
-        "markdown": 8288,
         "c": 83,
-        "sql": 63,
-        "python": 315,
-        "xml": 42165,
-        "java": 1308646,
-        "properties": 132095,
-        "json": 88890,
-        "html": 622,
-        "template": 4307,
-        "typescript": 39684,
-        "tsx": 88379,
         "css": 1321,
-        "javascript": 2002
+        "html": 622,
+        "java": 1308729,
+        "javascript": 2002,
+        "json": 88890,
+        "markdown": 8288,
+        "other": 101171,
+        "properties": 132095,
+        "python": 315,
+        "shell": 2676,
+        "sql": 63,
+        "template": 4307,
+        "tsx": 88379,
+        "typescript": 39684,
+        "xml": 42165,
+        "yaml": 28954
       },
       "scaleFileCountMatch": true
     },
@@ -1531,7 +1531,7 @@
           "reason": "无 Package 对象（分母为 0）"
         }
       ],
-      "mean": 0.246012,
+      "mean": 0.245933,
       "percentiles": {
         "p25": 0.090909,
         "p50": 0.212598,
@@ -1657,12 +1657,12 @@
           "reason": "无 Package 对象（分母为 0）"
         }
       ],
-      "mean": 5.088842,
+      "mean": 5.088885,
       "percentiles": {
         "p25": 2.3617,
         "p50": 4.6335,
         "p75": 7.6072,
-        "p90": 9.0965
+        "p90": 9.1023
       },
       "percentileMethod": "nearest-rank (Schema §4.2)"
     },
@@ -1708,11 +1708,11 @@
           "reason": "无 Class 对象（分母为 0）"
         }
       ],
-      "mean": 0.035586,
+      "mean": 0.035594,
       "percentiles": {
         "p25": 0.006193,
         "p50": 0.02531,
-        "p75": 0.035684,
+        "p75": 0.03568,
         "p90": 0.082058
       },
       "percentileMethod": "nearest-rank (Schema §4.2)"
@@ -2100,11 +2100,11 @@
           "reason": "无 Method 对象（分母为 0）"
         }
       ],
-      "mean": 0.108815,
+      "mean": 0.108856,
       "percentiles": {
         "p25": 0.004317,
         "p50": 0.039664,
-        "p75": 0.166173,
+        "p75": 0.166538,
         "p90": 0.301365
       },
       "percentileMethod": "nearest-rank (Schema §4.2)"
@@ -2151,12 +2151,12 @@
           "reason": "无 Method 对象（分母为 0）"
         }
       ],
-      "mean": 0.005092,
+      "mean": 0.005097,
       "percentiles": {
         "p25": 0.001379,
         "p50": 0.003014,
         "p75": 0.007272,
-        "p90": 0.014808
+        "p90": 0.014776
       },
       "percentileMethod": "nearest-rank (Schema §4.2)"
     },
@@ -2446,12 +2446,12 @@
           "missingRepos": [],
           "min": 59,
           "max": 27933,
-          "mean": 4970.073171,
+          "mean": 4970.731707,
           "percentiles": {
             "p25": 406,
             "p50": 1424,
             "p75": 7381,
-            "p90": 13515
+            "p90": 13516
           }
         },
         "javaFiles": {
@@ -2459,8 +2459,8 @@
           "missing": 0,
           "missingRepos": [],
           "min": 0,
-          "max": 19210,
-          "mean": 3051.097561,
+          "max": 19218,
+          "mean": 3051.756098,
           "percentiles": {
             "p25": 77,
             "p50": 533,
@@ -2474,7 +2474,7 @@
           "missingRepos": [],
           "min": 10854,
           "max": 2751818,
-          "mean": 607359.536585,
+          "mean": 607482.073171,
           "percentiles": {
             "p25": 43949,
             "p50": 173262,
@@ -2487,8 +2487,8 @@
           "missing": 0,
           "missingRepos": [],
           "min": 0,
-          "max": 2306695,
-          "mean": 382902.536585,
+          "max": 2308508,
+          "mean": 383025.073171,
           "percentiles": {
             "p25": 5581,
             "p50": 85434,
