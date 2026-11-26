@@ -313,7 +313,53 @@
         "Route": 0,
         "ApiEndpoint": 0
       },
-      "linkCount": 7765
+      "linkCount": 7765,
+      "scale": {
+        "collectedBy": "backfill",
+        "sourceHead": "c61d958abbe5b7fc125fbfd60dfdd6b85c36cb94",
+        "method": "文件清单 = git ls-files（tracked）；files.total 剔除分析器跳过目录（target/build/dist/node_modules 等，与分析器 SKIP_DIRS 逐项对齐）与符号链接等非普通文件，与分析器 Repository.fileCount 同口径；二进制 = 首 8000 字节含 NUL；行数 = 文本文件物理行数（LF 计数，末行无换行符计 1 行），含注释与空行，非 SLOC；语言按扩展名归类，未命中归 other；规模参照以 java 为主指标",
+        "fileCount": 334,
+        "javaFiles": 266,
+        "lineCount": 43618,
+        "javaLines": 34332,
+        "files": {
+          "tracked": 334,
+          "skippedByAnalyzerDirs": 0,
+          "nonRegular": 0,
+          "total": 334,
+          "text": 333,
+          "binary": 1
+        },
+        "filesByLanguage": {
+          "yaml": 4,
+          "other": 8,
+          "markdown": 1,
+          "xml": 29,
+          "java": 266,
+          "properties": 2,
+          "template": 21,
+          "shell": 1,
+          "sql": 2
+        },
+        "linesByLanguage": {
+          "yaml": 221,
+          "other": 196,
+          "markdown": 115,
+          "xml": 2982,
+          "java": 34332,
+          "properties": 39,
+          "template": 4749,
+          "shell": 86,
+          "sql": 898
+        },
+        "bytes": 1815498,
+        "commands": [
+          "python3 scripts/repo-scale.py --repo <clone> --out <file>  # scan-one.sh clone 后 / scale-backfill.py 检出 snapshot.sourceHead 后执行",
+          "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Repository --all --field id,fileCount --snapshot d3415eb1-c908-4191-a6d0-7f2cfc6f36b8"
+        ],
+        "serverFileCount": 334,
+        "fileCountMatch": true
+      }
     }
   },
   "nullMetrics": {
