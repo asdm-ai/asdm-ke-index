@@ -694,7 +694,61 @@
         "Route": 0,
         "ApiEndpoint": 0
       },
-      "linkCount": 234102
+      "linkCount": 234102,
+      "scale": {
+        "collectedBy": "backfill",
+        "sourceHead": "fa8dc9912637a2f729eef9f55356621fec18d40e",
+        "method": "文件清单 = git ls-files（tracked）；files.total 剔除分析器跳过目录（target/build/dist/node_modules 等，与分析器 SKIP_DIRS 逐项对齐）与符号链接等非普通文件，与分析器 Repository.fileCount 同口径；二进制 = 首 8000 字节含 NUL；行数 = 文本文件物理行数（LF 计数，末行无换行符计 1 行），含注释与空行，非 SLOC；语言按扩展名归类，未命中归 other；规模参照以 java 为主指标",
+        "fileCount": 6740,
+        "javaFiles": 5359,
+        "lineCount": 702517,
+        "javaLines": 598992,
+        "files": {
+          "tracked": 6746,
+          "skippedByAnalyzerDirs": 6,
+          "nonRegular": 0,
+          "total": 6740,
+          "text": 6620,
+          "binary": 120
+        },
+        "filesByLanguage": {
+          "markdown": 156,
+          "yaml": 25,
+          "other": 420,
+          "xml": 24,
+          "java": 5359,
+          "properties": 53,
+          "html": 50,
+          "css": 9,
+          "javascript": 10,
+          "sql": 623,
+          "shell": 2,
+          "json": 7,
+          "gradle": 2
+        },
+        "linesByLanguage": {
+          "markdown": 17800,
+          "yaml": 408,
+          "other": 36129,
+          "xml": 2856,
+          "java": 598992,
+          "properties": 715,
+          "html": 6488,
+          "css": 8538,
+          "javascript": 1507,
+          "sql": 28351,
+          "shell": 11,
+          "json": 680,
+          "gradle": 42
+        },
+        "bytes": 42926473,
+        "commands": [
+          "python3 scripts/repo-scale.py --repo <clone> --out <file>  # scan-one.sh clone 后 / scale-backfill.py 检出 snapshot.sourceHead 后执行",
+          "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Repository --all --field id,fileCount --snapshot df9c2523-281c-46a3-8e3b-d2c1157108a9"
+        ],
+        "serverFileCount": 6740,
+        "fileCountMatch": true
+      }
     }
   },
   "nullMetrics": {
