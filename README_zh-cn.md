@@ -1,10 +1,18 @@
+<div align="center">
+
 # ASDM KE Index
+
+**让 AI 读懂企业十年旧系统，接手它的每一次迭代**
+
+KE（存量系统认知引擎）的公开基准
 
 [English](README.md) | 简体中文
 
 ![许可证: Apache 2.0](https://img.shields.io/badge/%E8%AE%B8%E5%8F%AF%E8%AF%81-Apache%202.0-blue?style=flat-square) ![基线: 2026-11-26](https://img.shields.io/badge/%E5%9F%BA%E7%BA%BF-2026--11--26-green?style=flat-square) ![系统: 41](https://img.shields.io/badge/%E7%B3%BB%E7%BB%9F-41-blue?style=flat-square) ![代码行数: 2,491 万](https://img.shields.io/badge/%E4%BB%A3%E7%A0%81%E8%A1%8C%E6%95%B0-2%2C491%20%E4%B8%87-blue?style=flat-square) ![对象: 117 万](https://img.shields.io/badge/%E5%AF%B9%E8%B1%A1-117%20%E4%B8%87-blue?style=flat-square) ![参考线: 6 条](https://img.shields.io/badge/%E5%8F%82%E8%80%83%E7%BA%BF-6%20%E6%9D%A1-blue?style=flat-square)
 
-**KE（存量系统认知引擎）的公开基准。** 让 AI 读懂企业十年旧系统，接手它的每一次迭代。
+</div>
+
+---
 
 [参考线](#参考线) · [数据规模与覆盖](#数据规模与覆盖) · [怎么用](#怎么用) · [复核方式](#数据怎么来的怎么复核) · [适用范围](#适用范围)
 

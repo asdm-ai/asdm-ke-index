@@ -1,10 +1,18 @@
+<div align="center">
+
 # ASDM KE Index
+
+**Let AI understand the systems a company has run for ten years, and take over every iteration of them**
+
+The public benchmark of KE, the Legacy System Cognition Engine
 
 English | [简体中文](README_zh-cn.md)
 
 ![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue?style=flat-square) ![Baseline: 2026-11-26](https://img.shields.io/badge/Baseline-2026--11--26-green?style=flat-square) ![Systems: 41](https://img.shields.io/badge/Systems-41-blue?style=flat-square) ![Lines of code: 24.9M](https://img.shields.io/badge/Lines%20of%20code-24.9M-blue?style=flat-square) ![Objects: 1.17M](https://img.shields.io/badge/Objects-1.17M-blue?style=flat-square) ![Reference lines: 6](https://img.shields.io/badge/Reference%20lines-6-blue?style=flat-square)
 
-**The public benchmark of KE, the Legacy System Cognition Engine.** Let AI understand the systems a company has run for ten years, and take over every iteration of them.
+</div>
+
+---
 
 [Reference lines](#reference-lines) · [Data scale and coverage](#data-scale-and-coverage) · [How to use it](#how-to-use-it) · [Where the data comes from](#where-the-data-comes-from) · [Scope and limits](#scope-and-limits)
 
