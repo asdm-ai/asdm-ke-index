@@ -2,8 +2,8 @@
   "schemaVersion": "pipeline-status-v1",
   "owner": "apache",
   "repo": "shardingsphere",
-  "sourceHead": "03aa12d519fc826773241b96a7d40ae4135d3ba1",
-  "snapshotId": "82f2d160-b720-45f8-9123-df3eace7e61f",
+  "sourceHead": "ace4d4f2ac19f938af35913e537afabbac0edfb0",
+  "snapshotId": "3e0820fa-a4b6-44e7-96af-76965d9067d4",
   "objectCount": 56172,
   "importStatus": "completed",
   "steps": {
