@@ -18,6 +18,8 @@
 | `scripts/graph-metrics.py` | 链路类指标的图形态重算与双路径等价比对（`--compare`，MISMATCH exit 2） |
 | `scripts/pipeline-status.sh` | 四个子步的结论落盘到 `pipeline-status/{owner}/{repo}.json` |
 | `scripts/census.py` | 聚合分位、逐仓管线校验、矩阵对账与规模分布，产出 `census/summary.json` |
+| `scripts/render-docs.py` | 由产物渲染 `README.md` 与 `docs/`；不是全部仓通过就拒绝写出 |
+| `scripts/validate-docs.py` | 把渲染出的页面与产物逐项核对（数字、链接、结构、不应出现的内容） |
 | `scripts/push-with-retry.sh` | bot 提交推送重试（仅在 non-FF 时 rebase，瞬时 5xx 退避重试） |
 | `scripts/scale-backfill.py`、`.github/workflows/scale-backfill.yml` | 存量 report 按定锚提交补采仓规模（幂等，手动 dispatch） |
 | `reports/{owner}/{repo}.json` | 单仓报告 |
@@ -38,9 +40,10 @@ preflight（零漂移短路）
 census           聚合成功产物，汇总全部仓子步结论，并与扫描矩阵对账
 ```
 
-- **触发**：push 修改 `repos.yaml`、Actions 页手动触发（可选 `scan_force`）、月度 schedule `0 2 1 * *`（首次 2026-12-01）。run 级 `concurrency` 让三触发面互斥。
+- **触发**：push 修改 `repos.yaml`、Actions 页手动触发（可选 `scan_force`）、月度 schedule `0 2 1 * *`。run 级 `concurrency` 让三触发面互斥。
 - **默认轨去重**：仓 HEAD 与 CLI 版本均未变时，preflight 直接跳过整个 job。
 - **并发护栏**：`max-parallel: 1` 单仓串行，投影天然独占窗口。
+- **文档**：census 提交后，`render-docs.py` 重建 `README.md` 与 `docs/`，`validate-docs.py` 核对后一并提交。不是全部仓通过管线就不写。
 
 ## 核对了什么、没核对什么
 

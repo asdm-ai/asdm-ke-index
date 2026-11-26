@@ -18,6 +18,8 @@ How the 41 systems behind the [reference lines](../README.md) are scanned, measu
 | `scripts/graph-metrics.py` | Graph-form recomputation of the chain metrics and the dual-path equivalence check (`--compare`, exit 2 on MISMATCH) |
 | `scripts/pipeline-status.sh` | Writes the four step conclusions to `pipeline-status/{owner}/{repo}.json` |
 | `scripts/census.py` | Aggregated percentiles, per-repository pipeline validation, matrix reconciliation and scale distribution to `census/summary.json` |
+| `scripts/render-docs.py` | Renders `README.md` and `docs/` from the artifacts; refuses to write unless every system passed |
+| `scripts/validate-docs.py` | Checks the rendered pages against the artifacts (numbers, links, structure, prohibited content) |
 | `scripts/push-with-retry.sh` | Bot commit/push retry (rebase only on non-FF, backoff on transient 5xx) |
 | `scripts/scale-backfill.py`, `.github/workflows/scale-backfill.yml` | Backfills scale for legacy reports at the pinned commit (idempotent, manual dispatch) |
 | `reports/{owner}/{repo}.json` | Per-repository report |
@@ -38,9 +40,10 @@ preflight (zero-drift short circuit)
 census           aggregates the artifacts, rolls up every repo's step conclusions, reconciles with the scan matrix
 ```
 
-- **Triggers**: a push touching `repos.yaml`, a manual dispatch from the Actions tab (optional `scan_force`), or the monthly schedule `0 2 1 * *` (first run 2026-12-01). A run-level `concurrency` group keeps the three trigger surfaces mutually exclusive.
+- **Triggers**: a push touching `repos.yaml`, a manual dispatch from the Actions tab (optional `scan_force`), or the monthly schedule `0 2 1 * *`. A run-level `concurrency` group keeps the three trigger surfaces mutually exclusive.
 - **Default-track dedup**: when both the repo HEAD and the CLI version are unchanged, preflight skips the whole job.
 - **Concurrency guard**: `max-parallel: 1` keeps repos serial, so projection has an exclusive window.
+- **Documentation**: after the census is committed, `render-docs.py` rebuilds `README.md` and `docs/`, `validate-docs.py` checks them and both are committed. Nothing is written unless every system passed the pipeline.
 
 ## What is checked, and what is not
 

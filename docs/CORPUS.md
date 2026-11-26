@@ -8,9 +8,9 @@ Every repository behind the [reference lines](../README.md), with its snapshot, 
 
 | Tier | Repos | Shape |
 |---|---|---|
-| A · Business systems | 18 | Java scaffolds and business systems: the RuoYi family, Jeecg, yudao, pig and more, plus e-commerce / office / tooling systems |
-| B · Large multi-module | 8 | very large multi-module repositories, mostly Gradle: Apache middleware and cornerstone repos of the Spring ecosystem |
-| C · JPA applications | 8 | JPA-shaped systems: IAM / BPM / ERP applications and hibernate-orm itself |
+| A · Business systems | 18 | Java admin scaffolds and business systems, plus e-commerce / office / tooling systems |
+| B · Large multi-module | 8 | very large multi-module repositories: Apache middleware and cornerstone repos of the Spring ecosystem |
+| C · JPA applications | 8 | JPA-shaped systems: IAM / BPM / ERP applications and the JPA implementation itself |
 | D · Frontend projects | 7 | the official frontend repos of the business systems (Vue) |
 
 > The full list is in [repos.yaml](../repos.yaml). Snapshot IDs are truncated to 8 characters (full values in the `repos` block of `census/summary.json`).
@@ -149,5 +149,5 @@ By total lines:
 | `yaml` | 313,054 | 1.3% | 2,330 |
 | other (11 more) | 1,256,137 | 5.0% | 8,044 |
 
-- **Java lines are the primary size reference.** Total lines are inflated by design documents, SVG and generated artifacts: in macrozheng/mall the `other` bucket (unrecognised extensions, here mostly the `.pdb` / `.pdm` design files) alone contributes 41,854 lines.
+- **Java lines are the primary size reference.** Total lines are inflated by non-code files: in apache/fineract the `other` bucket (unrecognised extensions) alone contributes 301,255 lines.
 - Per-language detail (`linesByLanguage` / `filesByLanguage`) is part of each report.

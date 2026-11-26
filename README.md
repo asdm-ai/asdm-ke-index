@@ -103,9 +103,9 @@ All 41 systems in the order of [repos.yaml](repos.yaml).
 | 41 | [newbee-ltd/newbee-mall-vue3-app](https://github.com/newbee-ltd/newbee-mall-vue3-app) | Frontend projects | 181 | 382 | 59 | 0 | 10,854 | 0 |
 | | **Total (41)** | | **1,171,119** | **8,348,519** | **203,848** | **125,166** | **24,913,664** | **15,710,618** |
 
-- **Business systems (18)**: Java scaffolds and business systems: the RuoYi family, Jeecg, yudao, pig and more, plus e-commerce / office / tooling systems
-- **Large multi-module (8)**: very large multi-module repositories, mostly Gradle: Apache middleware and cornerstone repos of the Spring ecosystem
-- **JPA applications (8)**: JPA-shaped systems: IAM / BPM / ERP applications and hibernate-orm itself
+- **Business systems (18)**: Java admin scaffolds and business systems, plus e-commerce / office / tooling systems
+- **Large multi-module (8)**: very large multi-module repositories: Apache middleware and cornerstone repos of the Spring ecosystem
+- **JPA applications (8)**: JPA-shaped systems: IAM / BPM / ERP applications and the JPA implementation itself
 - **Frontend projects (7)**: the official frontend repos of the business systems (Vue)
 
 **Spread.** The systems run from 10,854 to 2,751,818 lines of code (median 173,262) and from 181 to 180,951 objects.
@@ -126,13 +126,13 @@ Reference lines move with each rescan, so compare against the baseline date show
 
 ## Where the data comes from
 
-- **One run, one analyzer version.** All 41 systems were scanned in a single run on 2026-11-26 with the same analyzer version.
+- **One analyzer version.** All 41 systems are measured with the same analyzer version.
 - **Every system passed the pipeline.** Scan, graph build, metric computation and the consistency step completed for 41 of 41 repositories, with 0 failed and none missing.
 - **Cross-checked lines.** For giant-class share, cyclomatic complexity (P90), test-method share, giant-method share, one of the two counts behind the line was compared, system by system, with a separate filtered count from the server: 33 of 33 match on every line.
 - **Lines without a cross-check yet.** circular dependency density, package dependency density are computed in one pass from the package dependency list; there is no second check for these lines yet.
 - **File counts.** Compared with the server's own count for each repository: 41 of 41 match.
 - **Check it yourself.** Per-repository reports, pipeline conclusions and aggregates are all in this repository (`reports/`, `pipeline-status/`, `census/`); the method is in [docs/PIPELINE.md](docs/PIPELINE.md).
-- **Rescanned monthly.** The corpus is rescanned on the first day of each month (the monthly schedule starts on 2026-12-01). [This baseline's scan run](https://github.com/asdm-ai/asdm-ke-index/actions/runs/45829165719): 2026-11-26, 13:26–18:13 UTC, 4h 46m 57s.
+- **Refreshed monthly.** On the first day of each month the baseline is refreshed: a system is rescanned when its upstream HEAD has moved, otherwise it keeps its previous measurement. [This baseline's run](https://github.com/asdm-ai/asdm-ke-index/actions/runs/45829165719): 2026-11-26, 13:26–18:13 UTC, 4h 46m 57s.
 
 ## Scope and limits
 

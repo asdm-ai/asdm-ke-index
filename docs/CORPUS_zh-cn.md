@@ -8,9 +8,9 @@
 
 | 分层 | 仓数 | 形态 |
 |---|---|---|
-| A · 业务系统 | 18 | Java 脚手架与业务系统：RuoYi 系、Jeecg、芋道、Pig 等，以及电商、办公、工具类业务系统 |
-| B · 大型多模块 | 8 | 超大型多模块仓库，以 Gradle 为主：Apache 系中间件与 Spring 生态基石 |
-| C · JPA 企业应用 | 8 | JPA 形态的系统：IAM / BPM / ERP 应用与 hibernate-orm 本体 |
+| A · 业务系统 | 18 | Java 脚手架与业务系统，以及电商、办公、工具类业务系统 |
+| B · 大型多模块 | 8 | 超大型多模块仓库：Apache 系中间件与 Spring 生态基石 |
+| C · JPA 企业应用 | 8 | JPA 形态的系统：IAM / BPM / ERP 应用与 JPA 实现本体 |
 | D · 前端工程 | 7 | 业务系统的官方前端仓库（Vue 系） |
 
 > 全量清单见 [repos.yaml](../repos.yaml)。快照 ID 截取前 8 位（完整值见 `census/summary.json` 的 repos 区）。
@@ -149,5 +149,5 @@ Java 占全部计入行数的 63.1%、计入文件数的 61.4%。41 个仓在 gi
 | `yaml` | 313,054 | 1.3% | 2,330 |
 | 其余（11 种） | 1,256,137 | 5.0% | 8,044 |
 
-- **Java 行数是首要的规模参照。** 总行数会被设计文档、SVG 与生成物抬高：macrozheng/mall 的 `other` 桶（未识别扩展名，这里主要是 `.pdb` / `.pdm` 设计文件）单项就有 41,854 行。
+- **Java 行数是首要的规模参照。** 总行数会被非代码文件抬高：apache/fineract 的 `other` 桶（未识别扩展名）单项就有 301,255 行。
 - 分语言明细（`linesByLanguage` / `filesByLanguage`）见各 report。
