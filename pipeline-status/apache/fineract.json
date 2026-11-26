@@ -2,9 +2,9 @@
   "schemaVersion": "pipeline-status-v1",
   "owner": "apache",
   "repo": "fineract",
-  "sourceHead": "e54c492104ee4ea8d327cc7d2af78b0ed3ce4a52",
-  "snapshotId": "7f0f92e6-af71-4911-8e69-2a9d4b23e28a",
-  "objectCount": 54036,
+  "sourceHead": "4d9557a572b178bd32e1839f81c48204b8fcad49",
+  "snapshotId": "580ff321-b1ac-4da6-8ecb-7248e1b8a4c8",
+  "objectCount": 54054,
   "importStatus": "completed",
   "steps": {
     "scan": "ok",
