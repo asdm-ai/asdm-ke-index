@@ -1021,7 +1021,69 @@
         "Route": 0,
         "ApiEndpoint": 2
       },
-      "linkCount": 498423
+      "linkCount": 498423,
+      "scale": {
+        "collectedBy": "backfill",
+        "sourceHead": "3acd4da3778245724c4b9953fb593a6b28dadecb",
+        "method": "文件清单 = git ls-files（tracked）；files.total 剔除分析器跳过目录（target/build/dist/node_modules 等，与分析器 SKIP_DIRS 逐项对齐）与符号链接等非普通文件，与分析器 Repository.fileCount 同口径；二进制 = 首 8000 字节含 NUL；行数 = 文本文件物理行数（LF 计数，末行无换行符计 1 行），含注释与空行，非 SLOC；语言按扩展名归类，未命中归 other；规模参照以 java 为主指标",
+        "fileCount": 13515,
+        "javaFiles": 8701,
+        "lineCount": 1849661,
+        "javaLines": 1308646,
+        "files": {
+          "tracked": 13635,
+          "skippedByAnalyzerDirs": 100,
+          "nonRegular": 20,
+          "total": 13515,
+          "text": 12745,
+          "binary": 770
+        },
+        "filesByLanguage": {
+          "yaml": 109,
+          "other": 2237,
+          "shell": 61,
+          "markdown": 87,
+          "c": 1,
+          "sql": 8,
+          "python": 2,
+          "xml": 495,
+          "java": 8701,
+          "properties": 348,
+          "json": 180,
+          "html": 7,
+          "template": 114,
+          "typescript": 418,
+          "tsx": 633,
+          "css": 55,
+          "javascript": 59
+        },
+        "linesByLanguage": {
+          "yaml": 28954,
+          "other": 101171,
+          "shell": 2676,
+          "markdown": 8288,
+          "c": 83,
+          "sql": 63,
+          "python": 315,
+          "xml": 42165,
+          "java": 1308646,
+          "properties": 132095,
+          "json": 88890,
+          "html": 622,
+          "template": 4307,
+          "typescript": 39684,
+          "tsx": 88379,
+          "css": 1321,
+          "javascript": 2002
+        },
+        "bytes": 125509963,
+        "commands": [
+          "python3 scripts/repo-scale.py --repo <clone> --out <file>  # scan-one.sh clone 后 / scale-backfill.py 检出 snapshot.sourceHead 后执行",
+          "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Repository --all --field id,fileCount --snapshot 8824d864-1db0-4ccf-bd69-e7a1be93f966"
+        ],
+        "serverFileCount": 13515,
+        "fileCountMatch": true
+      }
     },
     "D4": {
       "id": "D4",
