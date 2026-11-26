@@ -5,13 +5,13 @@
   "repo": "RuoYi-Vue3",
   "sourceId": "RuoYi-Vue3",
   "snapshot": {
-    "snapshotId": "fbc90f26-2553-4d2e-a855-d2132e202413",
+    "snapshotId": "f98278f7-f675-4a88-ac4f-da064d0b1bd3",
     "status": "complete",
     "sourceVersion": "3c2b70c30ff933721a8b54430142bba236c1821e",
     "sourceHead": "3c2b70c30ff933721a8b54430142bba236c1821e",
     "objectCount": 1078,
     "linkCount": 6243,
-    "completedAt": "2026-11-25T16:18:21.603Z"
+    "completedAt": "2026-11-26T16:52:16.754Z"
   },
   "cliVersion": "0.3.10",
   "metrics": {
@@ -25,8 +25,8 @@
       "numerator": 0,
       "denominator": 120,
       "commands": [
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query ApiEndpoint --all --field id,backendMethodId,matchedVia --snapshot fbc90f26-2553-4d2e-a855-d2132e202413",
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Mapper --all --field id,namespace,mappedTableIds --snapshot fbc90f26-2553-4d2e-a855-d2132e202413",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query ApiEndpoint --all --field id,backendMethodId,matchedVia --snapshot f98278f7-f675-4a88-ac4f-da064d0b1bd3",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Mapper --all --field id,namespace,mappedTableIds --snapshot f98278f7-f675-4a88-ac4f-da064d0b1bd3",
         "curl -s -H \"Authorization: Bearer $KE_API_KEY\" \"$KE_SERVER_URL/api/ontology/graph\""
       ],
       "evidence": {
@@ -49,8 +49,8 @@
       "numerator": 120,
       "denominator": 120,
       "commands": [
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query ApiEndpoint --all --field id,backendMethodId,matchedVia --snapshot fbc90f26-2553-4d2e-a855-d2132e202413",
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot fbc90f26-2553-4d2e-a855-d2132e202413"
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query ApiEndpoint --all --field id,backendMethodId,matchedVia --snapshot f98278f7-f675-4a88-ac4f-da064d0b1bd3",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot f98278f7-f675-4a88-ac4f-da064d0b1bd3"
       ]
     },
     "B1.frontend": {
@@ -63,8 +63,8 @@
       "numerator": 5,
       "denominator": 159,
       "commands": [
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Module --all --field id,importedModuleIds --snapshot fbc90f26-2553-4d2e-a855-d2132e202413",
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Module --snapshot fbc90f26-2553-4d2e-a855-d2132e202413"
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Module --all --field id,importedModuleIds --snapshot f98278f7-f675-4a88-ac4f-da064d0b1bd3",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Module --snapshot f98278f7-f675-4a88-ac4f-da064d0b1bd3"
       ],
       "sccCount": 2
     },
@@ -78,8 +78,8 @@
       "numerator": 1,
       "denominator": 39,
       "commands": [
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Component --all --field id,referencedComponentIds,isGlobal --snapshot fbc90f26-2553-4d2e-a855-d2132e202413",
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Component --snapshot fbc90f26-2553-4d2e-a855-d2132e202413"
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Component --all --field id,referencedComponentIds,isGlobal --snapshot f98278f7-f675-4a88-ac4f-da064d0b1bd3",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Component --snapshot f98278f7-f675-4a88-ac4f-da064d0b1bd3"
       ],
       "globalRegistrationRatio": 0.0
     },
@@ -92,20 +92,20 @@
       "value": 1078,
       "commands": [
         "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" snapshot list --repo RuoYi-Vue3",
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Repository --snapshot fbc90f26-2553-4d2e-a855-d2132e202413",
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot fbc90f26-2553-4d2e-a855-d2132e202413",
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --snapshot fbc90f26-2553-4d2e-a855-d2132e202413",
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Interface --snapshot fbc90f26-2553-4d2e-a855-d2132e202413",
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot fbc90f26-2553-4d2e-a855-d2132e202413",
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Dependency --snapshot fbc90f26-2553-4d2e-a855-d2132e202413",
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot fbc90f26-2553-4d2e-a855-d2132e202413",
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Mapper --snapshot fbc90f26-2553-4d2e-a855-d2132e202413",
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Module --snapshot fbc90f26-2553-4d2e-a855-d2132e202413",
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Component --snapshot fbc90f26-2553-4d2e-a855-d2132e202413",
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Function --snapshot fbc90f26-2553-4d2e-a855-d2132e202413",
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Store --snapshot fbc90f26-2553-4d2e-a855-d2132e202413",
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Route --snapshot fbc90f26-2553-4d2e-a855-d2132e202413",
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot fbc90f26-2553-4d2e-a855-d2132e202413"
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Repository --snapshot f98278f7-f675-4a88-ac4f-da064d0b1bd3",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot f98278f7-f675-4a88-ac4f-da064d0b1bd3",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --snapshot f98278f7-f675-4a88-ac4f-da064d0b1bd3",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Interface --snapshot f98278f7-f675-4a88-ac4f-da064d0b1bd3",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot f98278f7-f675-4a88-ac4f-da064d0b1bd3",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Dependency --snapshot f98278f7-f675-4a88-ac4f-da064d0b1bd3",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot f98278f7-f675-4a88-ac4f-da064d0b1bd3",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Mapper --snapshot f98278f7-f675-4a88-ac4f-da064d0b1bd3",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Module --snapshot f98278f7-f675-4a88-ac4f-da064d0b1bd3",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Component --snapshot f98278f7-f675-4a88-ac4f-da064d0b1bd3",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Function --snapshot f98278f7-f675-4a88-ac4f-da064d0b1bd3",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Store --snapshot f98278f7-f675-4a88-ac4f-da064d0b1bd3",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Route --snapshot f98278f7-f675-4a88-ac4f-da064d0b1bd3",
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count ApiEndpoint --snapshot f98278f7-f675-4a88-ac4f-da064d0b1bd3"
       ],
       "typeCounts": {
         "Repository": 1,
@@ -125,7 +125,7 @@
       },
       "linkCount": 6243,
       "scale": {
-        "collectedBy": "backfill",
+        "collectedBy": "scan",
         "sourceHead": "3c2b70c30ff933721a8b54430142bba236c1821e",
         "method": "文件清单 = git ls-files（tracked）；files.total 剔除分析器跳过目录（target/build/dist/node_modules 等，与分析器 SKIP_DIRS 逐项对齐）与符号链接等非普通文件，与分析器 Repository.fileCount 同口径；二进制 = 首 8000 字节含 NUL；行数 = 文本文件物理行数（LF 计数，末行无换行符计 1 行），含注释与空行，非 SLOC；语言按扩展名归类，未命中归 other；规模参照以 java 为主指标",
         "fileCount": 281,
@@ -141,29 +141,29 @@
           "binary": 8
         },
         "filesByLanguage": {
-          "other": 108,
-          "yaml": 1,
-          "markdown": 1,
+          "css": 8,
           "html": 2,
-          "json": 2,
-          "vue": 90,
           "javascript": 69,
-          "css": 8
+          "json": 2,
+          "markdown": 1,
+          "other": 108,
+          "vue": 90,
+          "yaml": 1
         },
         "linesByLanguage": {
-          "other": 280,
-          "yaml": 1,
-          "markdown": 122,
+          "css": 1790,
           "html": 261,
-          "json": 54,
-          "vue": 18451,
           "javascript": 5438,
-          "css": 1790
+          "json": 54,
+          "markdown": 122,
+          "other": 280,
+          "vue": 18451,
+          "yaml": 1
         },
         "bytes": 1996788,
         "commands": [
           "python3 scripts/repo-scale.py --repo <clone> --out <file>  # scan-one.sh clone 后 / scale-backfill.py 检出 snapshot.sourceHead 后执行",
-          "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Repository --all --field id,fileCount --snapshot fbc90f26-2553-4d2e-a855-d2132e202413"
+          "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Repository --all --field id,fileCount --snapshot f98278f7-f675-4a88-ac4f-da064d0b1bd3"
         ],
         "serverFileCount": 281,
         "fileCountMatch": true
@@ -180,7 +180,7 @@
       "value": null,
       "reason": "无 Table 对象（分母为 0）",
       "commands": [
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot fbc90f26-2553-4d2e-a855-d2132e202413"
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot f98278f7-f675-4a88-ac4f-da064d0b1bd3"
       ]
     },
     "A4": {
@@ -192,7 +192,7 @@
       "value": null,
       "reason": "无 Table 对象（分母为 0）",
       "commands": [
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot fbc90f26-2553-4d2e-a855-d2132e202413"
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Table --snapshot f98278f7-f675-4a88-ac4f-da064d0b1bd3"
       ]
     },
     "B1.backend": {
@@ -204,7 +204,7 @@
       "value": null,
       "reason": "无 Package 对象（分母为 0）",
       "commands": [
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot fbc90f26-2553-4d2e-a855-d2132e202413"
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot f98278f7-f675-4a88-ac4f-da064d0b1bd3"
       ]
     },
     "B2": {
@@ -216,7 +216,7 @@
       "value": null,
       "reason": "无 Package 对象（分母为 0）",
       "commands": [
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot fbc90f26-2553-4d2e-a855-d2132e202413"
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Package --snapshot f98278f7-f675-4a88-ac4f-da064d0b1bd3"
       ]
     },
     "B3": {
@@ -228,7 +228,7 @@
       "value": null,
       "reason": "无 Class 对象（分母为 0）",
       "commands": [
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --snapshot fbc90f26-2553-4d2e-a855-d2132e202413"
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --snapshot f98278f7-f675-4a88-ac4f-da064d0b1bd3"
       ]
     },
     "C1": {
@@ -253,7 +253,7 @@
       "value": null,
       "reason": "无 complexity 非 null 的 Method（分母为 0）",
       "commands": [
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot fbc90f26-2553-4d2e-a855-d2132e202413"
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot f98278f7-f675-4a88-ac4f-da064d0b1bd3"
       ]
     },
     "C3": {
@@ -265,7 +265,7 @@
       "value": null,
       "reason": "无 Method 对象（分母为 0）",
       "commands": [
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot fbc90f26-2553-4d2e-a855-d2132e202413"
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot f98278f7-f675-4a88-ac4f-da064d0b1bd3"
       ]
     },
     "C4": {
@@ -277,7 +277,7 @@
       "value": null,
       "reason": "无 Method 对象（分母为 0）",
       "commands": [
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot fbc90f26-2553-4d2e-a855-d2132e202413"
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot f98278f7-f675-4a88-ac4f-da064d0b1bd3"
       ]
     },
     "D1": {
@@ -289,7 +289,7 @@
       "value": null,
       "reason": "无可判定版本（策略框架命中 0 或全部空串/占位——分母为 0，按口径置空）",
       "commands": [
-        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Dependency --all --field id,name,version,scope --snapshot fbc90f26-2553-4d2e-a855-d2132e202413"
+        "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Dependency --all --field id,name,version,scope --snapshot f98278f7-f675-4a88-ac4f-da064d0b1bd3"
       ],
       "evidence": {
         "total": 0,
@@ -366,7 +366,7 @@
       ],
       "evidence": {
         "completeSnapshotCount": 1,
-        "previousReportSnapshot": "9c82ba15-95c7-4113-acaa-4ee50ff1aa0f"
+        "previousReportSnapshot": "fbc90f26-2553-4d2e-a855-d2132e202413"
       }
     }
   },
