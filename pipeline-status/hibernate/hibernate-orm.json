@@ -2,9 +2,9 @@
   "schemaVersion": "pipeline-status-v1",
   "owner": "hibernate",
   "repo": "hibernate-orm",
-  "sourceHead": "9c71bdb5df2f8fada1c7c1c2142163d4042308af",
-  "snapshotId": "39412056-dfab-4045-86c5-c4bf5277db70",
-  "objectCount": 180951,
+  "sourceHead": "b292c21360853dd41c7c02e781c6cc8d07e31ea6",
+  "snapshotId": "6de9f800-9df6-4ebc-ab64-326062de5474",
+  "objectCount": 181041,
   "importStatus": "completed",
   "steps": {
     "scan": "ok",
