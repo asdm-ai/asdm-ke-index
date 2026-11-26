@@ -2,9 +2,9 @@
   "schemaVersion": "pipeline-status-v1",
   "owner": "Activiti",
   "repo": "Activiti",
-  "sourceHead": "610f3e785dbce2ce7e35e0836e311d5777cc2de5",
-  "snapshotId": "b4a8661c-939b-4946-9033-0da059662953",
-  "objectCount": 24198,
+  "sourceHead": "012e9920d0e2f3619c9b2e822fcae8b182ca38f3",
+  "snapshotId": "385b3aa1-0ab0-4f19-bddd-4fd28e12c14b",
+  "objectCount": 24203,
   "importStatus": "completed",
   "steps": {
     "scan": "ok",
