@@ -4,7 +4,7 @@
 
 **KE（存量系统认知引擎）的公开基准。** 让 AI 读懂企业十年旧系统，接手它的每一次迭代。
 
-[参考线](#参考线) · [逐仓规模](#逐仓规模) · [怎么用](#怎么用) · [复核方式](#数据怎么来的怎么复核) · [适用范围](#适用范围)
+[参考线](#参考线) · [数据规模与覆盖](#数据规模与覆盖) · [怎么用](#怎么用) · [复核方式](#数据怎么来的怎么复核) · [适用范围](#适用范围)
 
 | 系统 | 代码行数 | 参考线 | 基线 |
 |---|---|---|---|
@@ -42,59 +42,67 @@ KE 用知识图谱和影响面分析回答前两个问题。KE Index 回答第�
 
 中位数把样本分成两半，P25 到 P75 覆盖中间一半的系统。"越低越好"的指标，你的值高于 P75，说明比四分之三的样本更严重。区间型指标不设优劣方向，落在 P25 到 P75 之间属于常见范围。
 
-## 逐仓规模
+## 数据规模与覆盖
 
-41 个系统按 [repos.yaml](repos.yaml) 的顺序列出。行数为物理行，含注释与空行。
+下表每个系统都由 KE 引擎实际扫描，没有任何数字取自第三方统计。对象与链接是 KE 为该系统构建的知识图谱中的节点与关系；文件数与行数取自所扫描提交上的源码树（行数为物理行，含注释与空行）。
 
-| # | 仓库 | 类型 | 文件数 | Java 文件 | 行数 | Java 行数 |
-|---|---|---|---|---|---|---|
-| 1 | [macrozheng/mall](https://github.com/macrozheng/mall) | 业务系统 | 717 | 524 | 155,807 | 85,434 |
-| 2 | [macrozheng/mall-swarm](https://github.com/macrozheng/mall-swarm) | 业务系统 | 782 | 533 | 158,492 | 87,880 |
-| 3 | [yangzongzhuan/RuoYi-Vue](https://github.com/yangzongzhuan/RuoYi-Vue) | 业务系统 | 334 | 266 | 43,618 | 34,332 |
-| 4 | [dromara/RuoYi-Vue-Plus](https://github.com/dromara/RuoYi-Vue-Plus) | 业务系统 | 980 | 766 | 113,995 | 83,151 |
-| 5 | [jeecgboot/JeecgBoot](https://github.com/jeecgboot/JeecgBoot) | 业务系统 | 4,020 | 995 | 803,350 | 136,494 |
-| 6 | [lenve/vhr](https://github.com/lenve/vhr) | 业务系统 | 242 | 91 | 20,328 | 5,581 |
-| 7 | [YunaiV/ruoyi-vue-pro](https://github.com/YunaiV/ruoyi-vue-pro) | 业务系统 | 9,710 | 8,161 | 1,024,622 | 798,916 |
-| 8 | [yangzongzhuan/RuoYi-Cloud](https://github.com/yangzongzhuan/RuoYi-Cloud) | 业务系统 | 407 | 274 | 43,949 | 32,652 |
-| 9 | [pig-mesh/pig](https://github.com/pig-mesh/pig) | 业务系统 | 708 | 563 | 61,689 | 49,370 |
-| 10 | [newbee-ltd/newbee-mall](https://github.com/newbee-ltd/newbee-mall) | 业务系统 | 318 | 88 | 118,606 | 7,609 |
-| 11 | [stylefeng/Guns](https://github.com/stylefeng/Guns) | 业务系统 | 406 | 18 | 60,821 | 1,210 |
-| 12 | [renrenio/renren-fast](https://github.com/renrenio/renren-fast) | 业务系统 | 223 | 143 | 39,002 | 8,821 |
-| 13 | [thinkgem/jeesite](https://github.com/thinkgem/jeesite) | 业务系统 | 845 | 0 | 92,527 | 0 |
-| 14 | [o2oa/o2oa](https://github.com/o2oa/o2oa) | 业务系统 | 27,933 | 7,824 | 2,751,818 | 773,636 |
-| 15 | [chillzhuang/SpringBlade](https://github.com/chillzhuang/SpringBlade) | 业务系统 | 423 | 258 | 34,554 | 17,484 |
-| 16 | [dromara/dante-cloud](https://github.com/dromara/dante-cloud) | 业务系统 | 892 | 77 | 144,080 | 5,737 |
-| 17 | [linlinjava/litemall](https://github.com/linlinjava/litemall) | 业务系统 | 1,591 | 333 | 227,993 | 116,435 |
-| 18 | [metersphere/metersphere](https://github.com/metersphere/metersphere) | 业务系统 | 4,716 | 2,706 | 860,678 | 372,881 |
-| 19 | [apache/dubbo](https://github.com/apache/dubbo) | 大型多模块 | 4,861 | 4,060 | 524,398 | 484,107 |
-| 20 | [apache/fineract](https://github.com/apache/fineract) | 大型多模块 | 9,115 | 7,647 | 1,538,051 | 1,005,293 |
-| 21 | [apache/rocketmq](https://github.com/apache/rocketmq) | 大型多模块 | 2,805 | 2,318 | 437,047 | 401,952 |
-| 22 | [alibaba/nacos](https://github.com/alibaba/nacos) | 大型多模块 | 7,382 | 5,442 | 1,320,342 | 849,146 |
-| 23 | [apache/shardingsphere](https://github.com/apache/shardingsphere) | 大型多模块 | 17,467 | 9,916 | 1,501,418 | 836,710 |
-| 24 | [spring-projects/spring-boot](https://github.com/spring-projects/spring-boot) | 大型多模块 | 11,620 | 8,443 | 922,863 | 752,549 |
-| 25 | [spring-projects/spring-framework](https://github.com/spring-projects/spring-framework) | 大型多模块 | 11,402 | 9,244 | 1,595,393 | 1,430,520 |
-| 26 | [alibaba/druid](https://github.com/alibaba/druid) | 大型多模块 | 6,740 | 5,359 | 702,517 | 598,992 |
-| 27 | [spring-projects/spring-petclinic](https://github.com/spring-projects/spring-petclinic) | JPA 企业应用 | 131 | 50 | 27,644 | 4,297 |
-| 28 | [elunez/eladmin](https://github.com/elunez/eladmin) | JPA 企业应用 | 305 | 274 | 26,578 | 23,267 |
-| 29 | [keycloak/keycloak](https://github.com/keycloak/keycloak) | JPA 企业应用 | 13,527 | 8,712 | 1,850,827 | 1,309,630 |
-| 30 | [flowable/flowable-engine](https://github.com/flowable/flowable-engine) | JPA 企业应用 | 16,202 | 8,082 | 1,730,889 | 1,086,948 |
-| 31 | [Activiti/Activiti](https://github.com/Activiti/Activiti) | JPA 企业应用 | 5,387 | 3,095 | 476,182 | 353,553 |
-| 32 | [hibernate/hibernate-orm](https://github.com/hibernate/hibernate-orm) | JPA 企业应用 | 21,338 | 19,251 | 2,483,974 | 2,312,508 |
-| 33 | [dhis2/dhis2-core](https://github.com/dhis2/dhis2-core) | JPA 企业应用 | 10,299 | 6,670 | 1,621,862 | 1,289,926 |
-| 34 | [BroadleafCommerce/BroadleafCommerce](https://github.com/BroadleafCommerce/BroadleafCommerce) | JPA 企业应用 | 3,866 | 2,983 | 563,954 | 353,597 |
-| 35 | [macrozheng/mall-admin-web](https://github.com/macrozheng/mall-admin-web) | 前端工程 | 358 | 0 | 36,098 | 0 |
-| 36 | [yangzongzhuan/RuoYi-Vue3](https://github.com/yangzongzhuan/RuoYi-Vue3) | 前端工程 | 281 | 0 | 26,397 | 0 |
-| 37 | [jeecgboot/jeecgboot-vue3](https://github.com/jeecgboot/jeecgboot-vue3) | 前端工程 | 1,424 | 0 | 173,262 | 0 |
-| 38 | [pig-mesh/pig-ui](https://github.com/pig-mesh/pig-ui) | 前端工程 | 479 | 0 | 59,233 | 0 |
-| 39 | [yudaocode/yudao-ui-admin-vue3](https://github.com/yudaocode/yudao-ui-admin-vue3) | 前端工程 | 3,274 | 0 | 509,620 | 0 |
-| 40 | [elunez/eladmin-web](https://github.com/elunez/eladmin-web) | 前端工程 | 279 | 0 | 18,332 | 0 |
-| 41 | [newbee-ltd/newbee-mall-vue3-app](https://github.com/newbee-ltd/newbee-mall-vue3-app) | 前端工程 | 59 | 0 | 10,854 | 0 |
-| | **合计（41 个）** | | **203,848** | **125,166** | **24,913,664** | **15,710,618** |
+41 个系统按 [repos.yaml](repos.yaml) 的顺序列出。
+
+| # | 仓库 | 类型 | 对象 | 链接 | 文件数 | Java 文件 | 行数 | Java 行数 |
+|---|---|---|---|---|---|---|---|---|
+| 1 | [macrozheng/mall](https://github.com/macrozheng/mall) | 业务系统 | 14,527 | 35,226 | 717 | 524 | 155,807 | 85,434 |
+| 2 | [macrozheng/mall-swarm](https://github.com/macrozheng/mall-swarm) | 业务系统 | 14,878 | 36,007 | 782 | 533 | 158,492 | 87,880 |
+| 3 | [yangzongzhuan/RuoYi-Vue](https://github.com/yangzongzhuan/RuoYi-Vue) | 业务系统 | 2,560 | 7,765 | 334 | 266 | 43,618 | 34,332 |
+| 4 | [dromara/RuoYi-Vue-Plus](https://github.com/dromara/RuoYi-Vue-Plus) | 业务系统 | 4,777 | 22,903 | 980 | 766 | 113,995 | 83,151 |
+| 5 | [jeecgboot/JeecgBoot](https://github.com/jeecgboot/JeecgBoot) | 业务系统 | 15,697 | 116,780 | 4,020 | 995 | 803,350 | 136,494 |
+| 6 | [lenve/vhr](https://github.com/lenve/vhr) | 业务系统 | 991 | 1,436 | 242 | 91 | 20,328 | 5,581 |
+| 7 | [YunaiV/ruoyi-vue-pro](https://github.com/YunaiV/ruoyi-vue-pro) | 业务系统 | 46,623 | 230,904 | 9,710 | 8,161 | 1,024,622 | 798,916 |
+| 8 | [yangzongzhuan/RuoYi-Cloud](https://github.com/yangzongzhuan/RuoYi-Cloud) | 业务系统 | 2,532 | 8,741 | 407 | 274 | 43,949 | 32,652 |
+| 9 | [pig-mesh/pig](https://github.com/pig-mesh/pig) | 业务系统 | 2,546 | 7,737 | 708 | 563 | 61,689 | 49,370 |
+| 10 | [newbee-ltd/newbee-mall](https://github.com/newbee-ltd/newbee-mall) | 业务系统 | 933 | 1,470 | 318 | 88 | 118,606 | 7,609 |
+| 11 | [stylefeng/Guns](https://github.com/stylefeng/Guns) | 业务系统 | 1,377 | 10,042 | 406 | 18 | 60,821 | 1,210 |
+| 12 | [renrenio/renren-fast](https://github.com/renrenio/renren-fast) | 业务系统 | 777 | 3,326 | 223 | 143 | 39,002 | 8,821 |
+| 13 | [thinkgem/jeesite](https://github.com/thinkgem/jeesite) | 业务系统 | 2,670 | 14,623 | 845 | 0 | 92,527 | 0 |
+| 14 | [o2oa/o2oa](https://github.com/o2oa/o2oa) | 业务系统 | 70,501 | 710,059 | 27,933 | 7,824 | 2,751,818 | 773,636 |
+| 15 | [chillzhuang/SpringBlade](https://github.com/chillzhuang/SpringBlade) | 业务系统 | 1,073 | 3,002 | 423 | 258 | 34,554 | 17,484 |
+| 16 | [dromara/dante-cloud](https://github.com/dromara/dante-cloud) | 业务系统 | 476 | 728 | 892 | 77 | 144,080 | 5,737 |
+| 17 | [linlinjava/litemall](https://github.com/linlinjava/litemall) | 业务系统 | 13,172 | 34,102 | 1,591 | 333 | 227,993 | 116,435 |
+| 18 | [metersphere/metersphere](https://github.com/metersphere/metersphere) | 业务系统 | 43,718 | 157,807 | 4,716 | 2,706 | 860,678 | 372,881 |
+| 19 | [apache/dubbo](https://github.com/apache/dubbo) | 大型多模块 | 34,065 | 136,879 | 4,861 | 4,060 | 524,398 | 484,107 |
+| 20 | [apache/fineract](https://github.com/apache/fineract) | 大型多模块 | 54,054 | 266,418 | 9,115 | 7,647 | 1,538,051 | 1,005,293 |
+| 21 | [apache/rocketmq](https://github.com/apache/rocketmq) | 大型多模块 | 26,486 | 109,906 | 2,805 | 2,318 | 437,047 | 401,952 |
+| 22 | [alibaba/nacos](https://github.com/alibaba/nacos) | 大型多模块 | 57,387 | 435,556 | 7,382 | 5,442 | 1,320,342 | 849,146 |
+| 23 | [apache/shardingsphere](https://github.com/apache/shardingsphere) | 大型多模块 | 56,172 | 447,822 | 17,467 | 9,916 | 1,501,418 | 836,710 |
+| 24 | [spring-projects/spring-boot](https://github.com/spring-projects/spring-boot) | 大型多模块 | 65,047 | 141,756 | 11,620 | 8,443 | 922,863 | 752,549 |
+| 25 | [spring-projects/spring-framework](https://github.com/spring-projects/spring-framework) | 大型多模块 | 105,969 | 286,288 | 11,402 | 9,244 | 1,595,393 | 1,430,520 |
+| 26 | [alibaba/druid](https://github.com/alibaba/druid) | 大型多模块 | 41,208 | 234,102 | 6,740 | 5,359 | 702,517 | 598,992 |
+| 27 | [spring-projects/spring-petclinic](https://github.com/spring-projects/spring-petclinic) | JPA 企业应用 | 283 | 626 | 131 | 50 | 27,644 | 4,297 |
+| 28 | [elunez/eladmin](https://github.com/elunez/eladmin) | JPA 企业应用 | 1,357 | 5,096 | 305 | 274 | 26,578 | 23,267 |
+| 29 | [keycloak/keycloak](https://github.com/keycloak/keycloak) | JPA 企业应用 | 92,061 | 499,683 | 13,527 | 8,712 | 1,850,827 | 1,309,630 |
+| 30 | [flowable/flowable-engine](https://github.com/flowable/flowable-engine) | JPA 企业应用 | 76,265 | 215,262 | 16,202 | 8,082 | 1,730,889 | 1,086,948 |
+| 31 | [Activiti/Activiti](https://github.com/Activiti/Activiti) | JPA 企业应用 | 24,203 | 85,736 | 5,387 | 3,095 | 476,182 | 353,553 |
+| 32 | [hibernate/hibernate-orm](https://github.com/hibernate/hibernate-orm) | JPA 企业应用 | 180,951 | 421,035 | 21,338 | 19,251 | 2,483,974 | 2,312,508 |
+| 33 | [dhis2/dhis2-core](https://github.com/dhis2/dhis2-core) | JPA 企业应用 | 63,457 | 411,972 | 10,299 | 6,670 | 1,621,862 | 1,289,926 |
+| 34 | [BroadleafCommerce/BroadleafCommerce](https://github.com/BroadleafCommerce/BroadleafCommerce) | JPA 企业应用 | 25,682 | 108,282 | 3,866 | 2,983 | 563,954 | 353,597 |
+| 35 | [macrozheng/mall-admin-web](https://github.com/macrozheng/mall-admin-web) | 前端工程 | 1,662 | 29,228 | 358 | 0 | 36,098 | 0 |
+| 36 | [yangzongzhuan/RuoYi-Vue3](https://github.com/yangzongzhuan/RuoYi-Vue3) | 前端工程 | 1,078 | 6,243 | 281 | 0 | 26,397 | 0 |
+| 37 | [jeecgboot/jeecgboot-vue3](https://github.com/jeecgboot/jeecgboot-vue3) | 前端工程 | 4,755 | 25,600 | 1,424 | 0 | 173,262 | 0 |
+| 38 | [pig-mesh/pig-ui](https://github.com/pig-mesh/pig-ui) | 前端工程 | 1,974 | 11,417 | 479 | 0 | 59,233 | 0 |
+| 39 | [yudaocode/yudao-ui-admin-vue3](https://github.com/yudaocode/yudao-ui-admin-vue3) | 前端工程 | 16,456 | 3,065,439 | 3,274 | 0 | 509,620 | 0 |
+| 40 | [elunez/eladmin-web](https://github.com/elunez/eladmin-web) | 前端工程 | 538 | 1,133 | 279 | 0 | 18,332 | 0 |
+| 41 | [newbee-ltd/newbee-mall-vue3-app](https://github.com/newbee-ltd/newbee-mall-vue3-app) | 前端工程 | 181 | 382 | 59 | 0 | 10,854 | 0 |
+| | **合计（41 个）** | | **1,171,119** | **8,348,519** | **203,848** | **125,166** | **24,913,664** | **15,710,618** |
 
 - **业务系统（18）**：Java 脚手架与业务系统：RuoYi 系、Jeecg、芋道、Pig 等，以及电商、办公、工具类业务系统
 - **大型多模块（8）**：超大型多模块仓库，以 Gradle 为主：Apache 系中间件与 Spring 生态基石
 - **JPA 企业应用（8）**：JPA 形态的系统：IAM / BPM / ERP 应用与 hibernate-orm 本体
 - **前端工程（7）**：业务系统的官方前端仓库（Vue 系）
+
+**跨度。** 这些系统的代码规模从 10,854 行到 2,751,818 行（中位数 173,262 行），图谱对象从 181 个到 180,951 个。
+
+**现在的覆盖范围与目标。** 41 个系统的规模还不足以代表整个开源社区的状态。语料在逐步扩展，目标是达到具备统计学价值的样本比例。在此之前，参考线反映的是这批语料的状况。
+
+**有一处链接数尚未查明原因。**yudaocode/yudao-ui-admin-vue3 一个系统就占全部链接的约 37%（对象 16,456 个、链接 3,065,439 条，约每个对象 186 条，远高于其它系统）。原因尚未查明，见 [docs/CORPUS_zh-cn.md](docs/CORPUS_zh-cn.md)。
 
 源码版本、快照与逐仓明细见 [docs/CORPUS_zh-cn.md](docs/CORPUS_zh-cn.md)。
 
