@@ -2,9 +2,9 @@
   "schemaVersion": "pipeline-status-v1",
   "owner": "apache",
   "repo": "rocketmq",
-  "sourceHead": "79e29dd46c421ff5ee6269e9d473b0bee52bc632",
-  "snapshotId": "d88658b6-8e64-47d2-b4b0-b3defd77613b",
-  "objectCount": 26451,
+  "sourceHead": "e114b542620c4169d016f25b63c2c377b2e279a7",
+  "snapshotId": "38fd86d7-ab44-4b84-8dea-a3efb1e9c71f",
+  "objectCount": 26486,
   "importStatus": "completed",
   "steps": {
     "scan": "ok",
