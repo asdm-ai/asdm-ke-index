@@ -1,6 +1,6 @@
 {
   "schemaVersion": "draft-v1",
-  "implementation": "ke-index census.py (5.1.4: L2 aggregation + D2 cohort + per-repo pipeline validation roll-up)",
+  "implementation": "ke-index census.py (5.1.4: L2 aggregation + D2 cohort + per-repo pipeline validation roll-up + repo scale)",
   "status": "published",
   "samples": 41,
   "gate": {
@@ -17,7 +17,23 @@
       "snapshotId": "b4a8661c-939b-4946-9033-0da059662953",
       "objectCount": 24198,
       "linkCount": 85691,
-      "schemaVersion": "draft-v1"
+      "schemaVersion": "draft-v1",
+      "fileCount": 5387,
+      "javaFiles": 3095,
+      "lineCount": 476072,
+      "javaLines": 353442,
+      "linesByLanguage": {
+        "other": 15152,
+        "markdown": 780,
+        "yaml": 3539,
+        "json": 13340,
+        "xml": 75650,
+        "java": 353442,
+        "properties": 207,
+        "sql": 13292,
+        "html": 670
+      },
+      "scaleFileCountMatch": true
     },
     {
       "owner": "BroadleafCommerce",
@@ -26,7 +42,26 @@
       "snapshotId": "f2964888-d5e5-4fda-a4c7-6719705bc14a",
       "objectCount": 25682,
       "linkCount": 108282,
-      "schemaVersion": "draft-v1"
+      "schemaVersion": "draft-v1",
+      "fileCount": 3866,
+      "javaFiles": 2983,
+      "lineCount": 563954,
+      "javaLines": 353597,
+      "linesByLanguage": {
+        "markdown": 235,
+        "other": 22177,
+        "xml": 14846,
+        "groovy": 7255,
+        "java": 353597,
+        "javascript": 124268,
+        "properties": 3734,
+        "sql": 3947,
+        "css": 30235,
+        "html": 3571,
+        "template": 61,
+        "json": 28
+      },
+      "scaleFileCountMatch": true
     },
     {
       "owner": "YunaiV",
@@ -35,7 +70,26 @@
       "snapshotId": "7b0666a4-03c3-451f-abe8-9f003c65830b",
       "objectCount": 46623,
       "linkCount": 230904,
-      "schemaVersion": "draft-v1"
+      "schemaVersion": "draft-v1",
+      "fileCount": 9710,
+      "javaFiles": 8161,
+      "lineCount": 1024622,
+      "javaLines": 798916,
+      "linesByLanguage": {
+        "markdown": 1503,
+        "yaml": 2939,
+        "other": 83801,
+        "xml": 8605,
+        "json": 4540,
+        "shell": 542,
+        "sql": 96184,
+        "java": 798916,
+        "python": 6518,
+        "template": 20613,
+        "typescript": 213,
+        "vue": 248
+      },
+      "scaleFileCountMatch": true
     },
     {
       "owner": "alibaba",
@@ -44,7 +98,27 @@
       "snapshotId": "df9c2523-281c-46a3-8e3b-d2c1157108a9",
       "objectCount": 41208,
       "linkCount": 234102,
-      "schemaVersion": "draft-v1"
+      "schemaVersion": "draft-v1",
+      "fileCount": 6740,
+      "javaFiles": 5359,
+      "lineCount": 702517,
+      "javaLines": 598992,
+      "linesByLanguage": {
+        "markdown": 17800,
+        "yaml": 408,
+        "other": 36129,
+        "xml": 2856,
+        "java": 598992,
+        "properties": 715,
+        "html": 6488,
+        "css": 8538,
+        "javascript": 1507,
+        "sql": 28351,
+        "shell": 11,
+        "json": 680,
+        "gradle": 42
+      },
+      "scaleFileCountMatch": true
     },
     {
       "owner": "alibaba",
@@ -53,7 +127,29 @@
       "snapshotId": "3821b9eb-853e-4927-952e-5c4877593b86",
       "objectCount": 57376,
       "linkCount": 433824,
-      "schemaVersion": "draft-v1"
+      "schemaVersion": "draft-v1",
+      "fileCount": 7381,
+      "javaFiles": 5442,
+      "lineCount": 1320320,
+      "javaLines": 849146,
+      "linesByLanguage": {
+        "other": 15364,
+        "markdown": 66670,
+        "yaml": 2927,
+        "xml": 10801,
+        "java": 849146,
+        "properties": 1695,
+        "json": 66000,
+        "javascript": 217501,
+        "html": 112,
+        "tsx": 37358,
+        "typescript": 17565,
+        "css": 30576,
+        "shell": 1564,
+        "sql": 2632,
+        "python": 409
+      },
+      "scaleFileCountMatch": true
     },
     {
       "owner": "apache",
@@ -62,7 +158,24 @@
       "snapshotId": "3c195b28-cf5c-47fa-98e4-7a6704e7d221",
       "objectCount": 34065,
       "linkCount": 136879,
-      "schemaVersion": "draft-v1"
+      "schemaVersion": "draft-v1",
+      "fileCount": 4860,
+      "javaFiles": 4060,
+      "lineCount": 524279,
+      "javaLines": 484107,
+      "linesByLanguage": {
+        "other": 10181,
+        "yaml": 4403,
+        "markdown": 2675,
+        "xml": 20678,
+        "java": 484107,
+        "properties": 520,
+        "groovy": 1429,
+        "html": 72,
+        "json": 88,
+        "shell": 126
+      },
+      "scaleFileCountMatch": false
     },
     {
       "owner": "apache",
@@ -71,7 +184,30 @@
       "snapshotId": "a595220d-1d51-49c2-ae51-76142cb27adb",
       "objectCount": 53936,
       "linkCount": 265882,
-      "schemaVersion": "draft-v1"
+      "schemaVersion": "draft-v1",
+      "fileCount": 9096,
+      "javaFiles": 7628,
+      "lineCount": 1535991,
+      "javaLines": 1003233,
+      "linesByLanguage": {
+        "markdown": 2151,
+        "yaml": 6583,
+        "other": 301255,
+        "shell": 2091,
+        "python": 541,
+        "json": 5198,
+        "gradle": 9204,
+        "groovy": 395,
+        "xml": 117040,
+        "sql": 28136,
+        "java": 1003233,
+        "properties": 2879,
+        "template": 1143,
+        "html": 55386,
+        "css": 752,
+        "javascript": 4
+      },
+      "scaleFileCountMatch": true
     },
     {
       "owner": "apache",
@@ -80,7 +216,24 @@
       "snapshotId": "1a8a8aaf-8ddf-4452-8f59-3ee939e2a015",
       "objectCount": 26411,
       "linkCount": 109365,
-      "schemaVersion": "draft-v1"
+      "schemaVersion": "draft-v1",
+      "fileCount": 2805,
+      "javaFiles": 2318,
+      "lineCount": 434712,
+      "javaLines": 399617,
+      "linesByLanguage": {
+        "yaml": 1073,
+        "other": 9394,
+        "markdown": 16126,
+        "xml": 6534,
+        "java": 399617,
+        "sql": 22,
+        "properties": 249,
+        "python": 451,
+        "shell": 1237,
+        "json": 9
+      },
+      "scaleFileCountMatch": true
     },
     {
       "owner": "apache",
@@ -89,7 +242,25 @@
       "snapshotId": "3c9663b5-ff07-42ba-bd1b-796a5e855b4f",
       "objectCount": 56172,
       "linkCount": 447822,
-      "schemaVersion": "draft-v1"
+      "schemaVersion": "draft-v1",
+      "fileCount": 17467,
+      "javaFiles": 9916,
+      "lineCount": 1501418,
+      "javaLines": 836710,
+      "linesByLanguage": {
+        "yaml": 139355,
+        "other": 106935,
+        "markdown": 105004,
+        "python": 12681,
+        "json": 17663,
+        "shell": 2382,
+        "xml": 253410,
+        "java": 836710,
+        "template": 5678,
+        "properties": 646,
+        "sql": 20954
+      },
+      "scaleFileCountMatch": true
     },
     {
       "owner": "chillzhuang",
@@ -98,7 +269,24 @@
       "snapshotId": "8f677038-a83b-4f81-a684-633401b1b29c",
       "objectCount": 1073,
       "linkCount": 3002,
-      "schemaVersion": "draft-v1"
+      "schemaVersion": "draft-v1",
+      "fileCount": 423,
+      "javaFiles": 258,
+      "lineCount": 34554,
+      "javaLines": 17484,
+      "linesByLanguage": {
+        "markdown": 10561,
+        "other": 574,
+        "xml": 2623,
+        "java": 17484,
+        "yaml": 821,
+        "template": 1003,
+        "properties": 329,
+        "sql": 881,
+        "shell": 268,
+        "html": 10
+      },
+      "scaleFileCountMatch": true
     },
     {
       "owner": "dhis2",
@@ -107,7 +295,28 @@
       "snapshotId": "d3c20ab4-db17-4113-9cea-8b59c5611e94",
       "objectCount": 63457,
       "linkCount": 411972,
-      "schemaVersion": "draft-v1"
+      "schemaVersion": "draft-v1",
+      "fileCount": 10299,
+      "javaFiles": 6670,
+      "lineCount": 1621862,
+      "javaLines": 1289926,
+      "linesByLanguage": {
+        "other": 24396,
+        "yaml": 10563,
+        "markdown": 3623,
+        "json": 101615,
+        "shell": 2841,
+        "xml": 17722,
+        "java": 1289926,
+        "template": 672,
+        "properties": 80129,
+        "sql": 32416,
+        "html": 2360,
+        "python": 407,
+        "css": 15775,
+        "javascript": 39417
+      },
+      "scaleFileCountMatch": true
     },
     {
       "owner": "dromara",
@@ -116,7 +325,24 @@
       "snapshotId": "34aacaa5-84ce-40f1-884e-482ec559af1c",
       "objectCount": 4777,
       "linkCount": 22903,
-      "schemaVersion": "draft-v1"
+      "schemaVersion": "draft-v1",
+      "fileCount": 980,
+      "javaFiles": 766,
+      "lineCount": 113995,
+      "javaLines": 83151,
+      "linesByLanguage": {
+        "markdown": 1141,
+        "yaml": 1772,
+        "other": 1039,
+        "xml": 3664,
+        "java": 83151,
+        "properties": 174,
+        "json": 2084,
+        "template": 3311,
+        "shell": 86,
+        "sql": 17573
+      },
+      "scaleFileCountMatch": true
     },
     {
       "owner": "dromara",
@@ -125,7 +351,24 @@
       "snapshotId": "cc27d728-216c-4be3-8653-6e411165842b",
       "objectCount": 476,
       "linkCount": 728,
-      "schemaVersion": "draft-v1"
+      "schemaVersion": "draft-v1",
+      "fileCount": 892,
+      "javaFiles": 77,
+      "lineCount": 144080,
+      "javaLines": 5737,
+      "linesByLanguage": {
+        "markdown": 536,
+        "yaml": 4163,
+        "other": 12351,
+        "xml": 3123,
+        "sql": 56863,
+        "properties": 564,
+        "java": 5737,
+        "css": 379,
+        "html": 92,
+        "json": 60272
+      },
+      "scaleFileCountMatch": true
     },
     {
       "owner": "elunez",
@@ -134,7 +377,22 @@
       "snapshotId": "6d998bf1-3ecf-415d-9ef8-75c5f86baf3b",
       "objectCount": 538,
       "linkCount": 1133,
-      "schemaVersion": "draft-v1"
+      "schemaVersion": "draft-v1",
+      "fileCount": 279,
+      "javaFiles": 0,
+      "lineCount": 18332,
+      "javaLines": 0,
+      "linesByLanguage": {
+        "other": 330,
+        "javascript": 4550,
+        "yaml": 27,
+        "markdown": 84,
+        "json": 115,
+        "html": 15,
+        "vue": 12345,
+        "css": 866
+      },
+      "scaleFileCountMatch": true
     },
     {
       "owner": "elunez",
@@ -143,7 +401,22 @@
       "snapshotId": "5f43da18-2522-4257-b5ec-cbf636c65ce6",
       "objectCount": 1357,
       "linkCount": 5096,
-      "schemaVersion": "draft-v1"
+      "schemaVersion": "draft-v1",
+      "fileCount": 305,
+      "javaFiles": 274,
+      "lineCount": 26578,
+      "javaLines": 23267,
+      "linesByLanguage": {
+        "other": 206,
+        "markdown": 137,
+        "xml": 522,
+        "java": 23267,
+        "properties": 56,
+        "template": 987,
+        "yaml": 385,
+        "sql": 1018
+      },
+      "scaleFileCountMatch": true
     },
     {
       "owner": "flowable",
@@ -152,7 +425,28 @@
       "snapshotId": "682bf7a1-d6ac-4e93-a19a-9d2a6896e201",
       "objectCount": 76265,
       "linkCount": 215262,
-      "schemaVersion": "draft-v1"
+      "schemaVersion": "draft-v1",
+      "fileCount": 16202,
+      "javaFiles": 8082,
+      "lineCount": 1730889,
+      "javaLines": 1086948,
+      "linesByLanguage": {
+        "markdown": 34543,
+        "sql": 43571,
+        "shell": 367,
+        "yaml": 33249,
+        "other": 110867,
+        "xml": 193571,
+        "html": 170816,
+        "json": 3548,
+        "javascript": 47378,
+        "css": 5219,
+        "java": 1086948,
+        "properties": 714,
+        "template": 80,
+        "groovy": 18
+      },
+      "scaleFileCountMatch": true
     },
     {
       "owner": "hibernate",
@@ -161,7 +455,29 @@
       "snapshotId": "580817a3-c6fc-4539-84c8-22bbccc38167",
       "objectCount": 180572,
       "linkCount": 420177,
-      "schemaVersion": "draft-v1"
+      "schemaVersion": "draft-v1",
+      "fileCount": 21295,
+      "javaFiles": 19210,
+      "lineCount": 2478104,
+      "javaLines": 2306695,
+      "linesByLanguage": {
+        "other": 106924,
+        "markdown": 1536,
+        "shell": 2077,
+        "yaml": 2396,
+        "gradle": 5795,
+        "java": 2306695,
+        "sql": 4799,
+        "json": 6,
+        "xml": 41677,
+        "properties": 1773,
+        "kotlin": 170,
+        "groovy": 157,
+        "html": 282,
+        "css": 1234,
+        "template": 2583
+      },
+      "scaleFileCountMatch": true
     },
     {
       "owner": "jeecgboot",
@@ -170,7 +486,31 @@
       "snapshotId": "6cb1a82a-80fc-41a2-b685-ff95d3857f65",
       "objectCount": 15697,
       "linkCount": 116780,
-      "schemaVersion": "draft-v1"
+      "schemaVersion": "draft-v1",
+      "fileCount": 4020,
+      "javaFiles": 995,
+      "lineCount": 803350,
+      "javaLines": 136494,
+      "linesByLanguage": {
+        "other": 45669,
+        "markdown": 3904,
+        "python": 645,
+        "yaml": 21738,
+        "sql": 25854,
+        "xml": 7411,
+        "java": 136494,
+        "properties": 1550,
+        "json": 177176,
+        "template": 6423,
+        "css": 29011,
+        "javascript": 98841,
+        "vue": 168262,
+        "html": 724,
+        "typescript": 76889,
+        "tsx": 2647,
+        "shell": 112
+      },
+      "scaleFileCountMatch": true
     },
     {
       "owner": "jeecgboot",
@@ -179,7 +519,24 @@
       "snapshotId": "896b3950-a093-4c89-8103-364130b237b5",
       "objectCount": 4755,
       "linkCount": 25600,
-      "schemaVersion": "draft-v1"
+      "schemaVersion": "draft-v1",
+      "fileCount": 1424,
+      "javaFiles": 0,
+      "lineCount": 173262,
+      "javaLines": 0,
+      "linesByLanguage": {
+        "other": 3549,
+        "javascript": 1825,
+        "markdown": 763,
+        "yaml": 14109,
+        "html": 181,
+        "typescript": 48375,
+        "json": 1116,
+        "css": 15915,
+        "vue": 84912,
+        "tsx": 2517
+      },
+      "scaleFileCountMatch": true
     },
     {
       "owner": "keycloak",
@@ -188,7 +545,31 @@
       "snapshotId": "8824d864-1db0-4ccf-bd69-e7a1be93f966",
       "objectCount": 91998,
       "linkCount": 498423,
-      "schemaVersion": "draft-v1"
+      "schemaVersion": "draft-v1",
+      "fileCount": 13515,
+      "javaFiles": 8701,
+      "lineCount": 1849661,
+      "javaLines": 1308646,
+      "linesByLanguage": {
+        "yaml": 28954,
+        "other": 101171,
+        "shell": 2676,
+        "markdown": 8288,
+        "c": 83,
+        "sql": 63,
+        "python": 315,
+        "xml": 42165,
+        "java": 1308646,
+        "properties": 132095,
+        "json": 88890,
+        "html": 622,
+        "template": 4307,
+        "typescript": 39684,
+        "tsx": 88379,
+        "css": 1321,
+        "javascript": 2002
+      },
+      "scaleFileCountMatch": true
     },
     {
       "owner": "lenve",
@@ -197,7 +578,26 @@
       "snapshotId": "f2fb4546-8413-41fe-8b61-b5de71b9b83c",
       "objectCount": 991,
       "linkCount": 1436,
-      "schemaVersion": "draft-v1"
+      "schemaVersion": "draft-v1",
+      "fileCount": 242,
+      "javaFiles": 91,
+      "lineCount": 20328,
+      "javaLines": 5581,
+      "linesByLanguage": {
+        "other": 3655,
+        "markdown": 383,
+        "sql": 1008,
+        "xml": 2990,
+        "java": 5581,
+        "properties": 43,
+        "html": 58,
+        "yaml": 28,
+        "css": 8,
+        "javascript": 497,
+        "json": 2625,
+        "vue": 3452
+      },
+      "scaleFileCountMatch": true
     },
     {
       "owner": "linlinjava",
@@ -206,7 +606,27 @@
       "snapshotId": "35f50e65-15b9-40e1-bd0a-d4cf837eb9fe",
       "objectCount": 13172,
       "linkCount": 34102,
-      "schemaVersion": "draft-v1"
+      "schemaVersion": "draft-v1",
+      "fileCount": 1591,
+      "javaFiles": 333,
+      "lineCount": 227993,
+      "javaLines": 116435,
+      "linesByLanguage": {
+        "yaml": 808,
+        "other": 21537,
+        "markdown": 8288,
+        "shell": 261,
+        "xml": 18514,
+        "java": 116435,
+        "javascript": 36888,
+        "json": 5000,
+        "html": 41,
+        "css": 1665,
+        "vue": 16992,
+        "sql": 1200,
+        "typescript": 364
+      },
+      "scaleFileCountMatch": true
     },
     {
       "owner": "macrozheng",
@@ -215,7 +635,22 @@
       "snapshotId": "b61b793d-afed-4a8a-850e-ff7ceb078a44",
       "objectCount": 1662,
       "linkCount": 29228,
-      "schemaVersion": "draft-v1"
+      "schemaVersion": "draft-v1",
+      "fileCount": 358,
+      "javaFiles": 0,
+      "lineCount": 36098,
+      "javaLines": 0,
+      "linesByLanguage": {
+        "other": 352,
+        "markdown": 92,
+        "typescript": 7403,
+        "html": 13,
+        "json": 10292,
+        "javascript": 3907,
+        "css": 606,
+        "vue": 13433
+      },
+      "scaleFileCountMatch": true
     },
     {
       "owner": "macrozheng",
@@ -224,7 +659,22 @@
       "snapshotId": "37ddc9ab-9bb4-4b6a-bece-9a0d2a7bfd66",
       "objectCount": 14878,
       "linkCount": 36007,
-      "schemaVersion": "draft-v1"
+      "schemaVersion": "draft-v1",
+      "fileCount": 782,
+      "javaFiles": 533,
+      "lineCount": 158492,
+      "javaLines": 87880,
+      "linesByLanguage": {
+        "other": 41910,
+        "markdown": 672,
+        "yaml": 1424,
+        "xml": 23247,
+        "shell": 98,
+        "sql": 3257,
+        "java": 87880,
+        "properties": 4
+      },
+      "scaleFileCountMatch": true
     },
     {
       "owner": "macrozheng",
@@ -233,7 +683,23 @@
       "snapshotId": "3440ab25-641d-40ef-98d0-6aa5471f50f5",
       "objectCount": 14527,
       "linkCount": 35226,
-      "schemaVersion": "draft-v1"
+      "schemaVersion": "draft-v1",
+      "fileCount": 717,
+      "javaFiles": 524,
+      "lineCount": 155807,
+      "javaLines": 85434,
+      "linesByLanguage": {
+        "other": 41854,
+        "markdown": 1092,
+        "yaml": 625,
+        "json": 516,
+        "shell": 78,
+        "sql": 3257,
+        "xml": 22947,
+        "java": 85434,
+        "properties": 4
+      },
+      "scaleFileCountMatch": true
     },
     {
       "owner": "metersphere",
@@ -242,7 +708,29 @@
       "snapshotId": "9525ad71-ed1c-4959-ac1e-f5eb1b8fbaf4",
       "objectCount": 43718,
       "linkCount": 157807,
-      "schemaVersion": "draft-v1"
+      "schemaVersion": "draft-v1",
+      "fileCount": 4716,
+      "javaFiles": 2706,
+      "lineCount": 860678,
+      "javaLines": 372881,
+      "linesByLanguage": {
+        "yaml": 528,
+        "markdown": 1326,
+        "other": 122249,
+        "xml": 69062,
+        "java": 372881,
+        "properties": 19417,
+        "javascript": 883,
+        "sql": 7831,
+        "template": 139,
+        "json": 23596,
+        "typescript": 53917,
+        "html": 23,
+        "vue": 184356,
+        "css": 3037,
+        "tsx": 1433
+      },
+      "scaleFileCountMatch": true
     },
     {
       "owner": "newbee-ltd",
@@ -251,7 +739,21 @@
       "snapshotId": "c770e3d8-352c-422a-9837-64949bc842dd",
       "objectCount": 181,
       "linkCount": 382,
-      "schemaVersion": "draft-v1"
+      "schemaVersion": "draft-v1",
+      "fileCount": 59,
+      "javaFiles": 0,
+      "lineCount": 10854,
+      "javaLines": 0,
+      "linesByLanguage": {
+        "other": 2552,
+        "markdown": 138,
+        "html": 14,
+        "javascript": 4765,
+        "json": 27,
+        "vue": 3128,
+        "css": 230
+      },
+      "scaleFileCountMatch": true
     },
     {
       "owner": "newbee-ltd",
@@ -260,7 +762,23 @@
       "snapshotId": "a1b165a0-0358-4864-ac37-34991b5c770b",
       "objectCount": 933,
       "linkCount": 1470,
-      "schemaVersion": "draft-v1"
+      "schemaVersion": "draft-v1",
+      "fileCount": 318,
+      "javaFiles": 88,
+      "lineCount": 118606,
+      "javaLines": 7609,
+      "linesByLanguage": {
+        "other": 1034,
+        "markdown": 2343,
+        "xml": 1935,
+        "java": 7609,
+        "properties": 22,
+        "sql": 1024,
+        "javascript": 75437,
+        "css": 25330,
+        "html": 3872
+      },
+      "scaleFileCountMatch": true
     },
     {
       "owner": "o2oa",
@@ -269,7 +787,27 @@
       "snapshotId": "569db6c6-fe32-4f18-a197-2a3edd8391f3",
       "objectCount": 70501,
       "linkCount": 710059,
-      "schemaVersion": "draft-v1"
+      "schemaVersion": "draft-v1",
+      "fileCount": 27933,
+      "javaFiles": 7824,
+      "lineCount": 2751818,
+      "javaLines": 773636,
+      "linesByLanguage": {
+        "other": 176303,
+        "markdown": 12580,
+        "xml": 9110,
+        "javascript": 1219360,
+        "json": 228361,
+        "shell": 904,
+        "html": 136695,
+        "java": 773636,
+        "css": 114093,
+        "yaml": 23,
+        "template": 56325,
+        "typescript": 3028,
+        "vue": 21400
+      },
+      "scaleFileCountMatch": true
     },
     {
       "owner": "pig-mesh",
@@ -278,7 +816,23 @@
       "snapshotId": "1f9ae681-915d-40b7-acdd-e43a7b41ccb0",
       "objectCount": 1974,
       "linkCount": 11417,
-      "schemaVersion": "draft-v1"
+      "schemaVersion": "draft-v1",
+      "fileCount": 479,
+      "javaFiles": 0,
+      "lineCount": 59233,
+      "javaLines": 0,
+      "linesByLanguage": {
+        "other": 4119,
+        "javascript": 375,
+        "yaml": 167,
+        "markdown": 595,
+        "typescript": 13353,
+        "html": 31,
+        "json": 1645,
+        "css": 4297,
+        "vue": 34651
+      },
+      "scaleFileCountMatch": true
     },
     {
       "owner": "pig-mesh",
@@ -287,7 +841,26 @@
       "snapshotId": "feb1b04a-95fd-4b2b-816c-e4c3470e6f66",
       "objectCount": 2546,
       "linkCount": 7737,
-      "schemaVersion": "draft-v1"
+      "schemaVersion": "draft-v1",
+      "fileCount": 708,
+      "javaFiles": 563,
+      "lineCount": 61689,
+      "javaLines": 49370,
+      "linesByLanguage": {
+        "other": 508,
+        "yaml": 669,
+        "markdown": 217,
+        "sql": 2140,
+        "xml": 4251,
+        "java": 49370,
+        "properties": 349,
+        "template": 300,
+        "json": 161,
+        "html": 2905,
+        "css": 66,
+        "javascript": 753
+      },
+      "scaleFileCountMatch": true
     },
     {
       "owner": "renrenio",
@@ -296,7 +869,23 @@
       "snapshotId": "c6105573-8718-4dec-b990-d3a00fce6fdc",
       "objectCount": 777,
       "linkCount": 3326,
-      "schemaVersion": "draft-v1"
+      "schemaVersion": "draft-v1",
+      "fileCount": 223,
+      "javaFiles": 143,
+      "lineCount": 39002,
+      "javaLines": 8821,
+      "linesByLanguage": {
+        "other": 232,
+        "markdown": 119,
+        "sql": 1578,
+        "yaml": 1897,
+        "xml": 504,
+        "java": 8821,
+        "css": 6,
+        "html": 180,
+        "javascript": 25665
+      },
+      "scaleFileCountMatch": true
     },
     {
       "owner": "spring-projects",
@@ -305,7 +894,29 @@
       "snapshotId": "97e4378f-2899-49c3-8528-4cc3255c67c3",
       "objectCount": 65024,
       "linkCount": 141706,
-      "schemaVersion": "draft-v1"
+      "schemaVersion": "draft-v1",
+      "fileCount": 11620,
+      "javaFiles": 8443,
+      "lineCount": 922575,
+      "javaLines": 752296,
+      "linesByLanguage": {
+        "other": 44722,
+        "yaml": 4065,
+        "markdown": 68,
+        "gradle": 25007,
+        "shell": 144,
+        "json": 59674,
+        "xml": 10307,
+        "java": 752296,
+        "kotlin": 10397,
+        "html": 1521,
+        "groovy": 503,
+        "properties": 1581,
+        "sql": 509,
+        "css": 72,
+        "javascript": 11709
+      },
+      "scaleFileCountMatch": true
     },
     {
       "owner": "spring-projects",
@@ -314,7 +925,30 @@
       "snapshotId": "ad67282d-2029-4545-b265-fe9c8ec5daf5",
       "objectCount": 105968,
       "linkCount": 286287,
-      "schemaVersion": "draft-v1"
+      "schemaVersion": "draft-v1",
+      "fileCount": 11402,
+      "javaFiles": 9244,
+      "lineCount": 1595321,
+      "javaLines": 1430462,
+      "linesByLanguage": {
+        "other": 104576,
+        "yaml": 1201,
+        "markdown": 1029,
+        "gradle": 2033,
+        "xml": 18988,
+        "properties": 565,
+        "json": 567,
+        "html": 44,
+        "java": 1430462,
+        "kotlin": 31935,
+        "sql": 2625,
+        "groovy": 311,
+        "javascript": 40,
+        "template": 886,
+        "css": 49,
+        "python": 10
+      },
+      "scaleFileCountMatch": true
     },
     {
       "owner": "spring-projects",
@@ -323,7 +957,25 @@
       "snapshotId": "636f6857-7711-4dae-9f7b-ac0fcb3530a1",
       "objectCount": 283,
       "linkCount": 626,
-      "schemaVersion": "draft-v1"
+      "schemaVersion": "draft-v1",
+      "fileCount": 131,
+      "javaFiles": 50,
+      "lineCount": 27644,
+      "javaLines": 4297,
+      "linesByLanguage": {
+        "other": 10939,
+        "json": 25,
+        "yaml": 260,
+        "markdown": 181,
+        "gradle": 94,
+        "properties": 577,
+        "xml": 461,
+        "java": 4297,
+        "sql": 344,
+        "css": 9920,
+        "html": 546
+      },
+      "scaleFileCountMatch": true
     },
     {
       "owner": "stylefeng",
@@ -332,7 +984,25 @@
       "snapshotId": "c75b708b-c0e3-4d3a-91d7-3555612ba8f6",
       "objectCount": 1377,
       "linkCount": 10042,
-      "schemaVersion": "draft-v1"
+      "schemaVersion": "draft-v1",
+      "fileCount": 406,
+      "javaFiles": 18,
+      "lineCount": 60821,
+      "javaLines": 1210,
+      "linesByLanguage": {
+        "other": 7170,
+        "markdown": 275,
+        "json": 1371,
+        "html": 67,
+        "javascript": 9974,
+        "vue": 32089,
+        "css": 7261,
+        "xml": 280,
+        "java": 1210,
+        "yaml": 110,
+        "sql": 1014
+      },
+      "scaleFileCountMatch": true
     },
     {
       "owner": "thinkgem",
@@ -341,7 +1011,25 @@
       "snapshotId": "b6300c52-8b97-4458-b0df-8adcfc4ac936",
       "objectCount": 2670,
       "linkCount": 14623,
-      "schemaVersion": "draft-v1"
+      "schemaVersion": "draft-v1",
+      "fileCount": 845,
+      "javaFiles": 0,
+      "lineCount": 92527,
+      "javaLines": 0,
+      "linesByLanguage": {
+        "other": 645,
+        "markdown": 1110,
+        "json": 867,
+        "shell": 15,
+        "typescript": 29712,
+        "vue": 45974,
+        "javascript": 27,
+        "css": 3050,
+        "tsx": 1047,
+        "yaml": 10052,
+        "html": 28
+      },
+      "scaleFileCountMatch": true
     },
     {
       "owner": "yangzongzhuan",
@@ -350,7 +1038,23 @@
       "snapshotId": "d9545f2a-f03a-40ff-b51b-c00d47cea68e",
       "objectCount": 2532,
       "linkCount": 8741,
-      "schemaVersion": "draft-v1"
+      "schemaVersion": "draft-v1",
+      "fileCount": 407,
+      "javaFiles": 274,
+      "lineCount": 43949,
+      "javaLines": 32652,
+      "linesByLanguage": {
+        "yaml": 341,
+        "other": 473,
+        "markdown": 150,
+        "shell": 108,
+        "properties": 33,
+        "xml": 4154,
+        "java": 32652,
+        "template": 4749,
+        "sql": 1289
+      },
+      "scaleFileCountMatch": true
     },
     {
       "owner": "yangzongzhuan",
@@ -359,7 +1063,23 @@
       "snapshotId": "d3415eb1-c908-4191-a6d0-7f2cfc6f36b8",
       "objectCount": 2560,
       "linkCount": 7765,
-      "schemaVersion": "draft-v1"
+      "schemaVersion": "draft-v1",
+      "fileCount": 334,
+      "javaFiles": 266,
+      "lineCount": 43618,
+      "javaLines": 34332,
+      "linesByLanguage": {
+        "yaml": 221,
+        "other": 196,
+        "markdown": 115,
+        "xml": 2982,
+        "java": 34332,
+        "properties": 39,
+        "template": 4749,
+        "shell": 86,
+        "sql": 898
+      },
+      "scaleFileCountMatch": true
     },
     {
       "owner": "yangzongzhuan",
@@ -368,7 +1088,22 @@
       "snapshotId": "fbc90f26-2553-4d2e-a855-d2132e202413",
       "objectCount": 1078,
       "linkCount": 6243,
-      "schemaVersion": "draft-v1"
+      "schemaVersion": "draft-v1",
+      "fileCount": 281,
+      "javaFiles": 0,
+      "lineCount": 26397,
+      "javaLines": 0,
+      "linesByLanguage": {
+        "other": 280,
+        "yaml": 1,
+        "markdown": 122,
+        "html": 261,
+        "json": 54,
+        "vue": 18451,
+        "javascript": 5438,
+        "css": 1790
+      },
+      "scaleFileCountMatch": true
     },
     {
       "owner": "yudaocode",
@@ -377,7 +1112,24 @@
       "snapshotId": "e260a772-bfdf-4b74-9f6c-71e7a4cd51e5",
       "objectCount": 16456,
       "linkCount": 3065439,
-      "schemaVersion": "draft-v1"
+      "schemaVersion": "draft-v1",
+      "fileCount": 3274,
+      "javaFiles": 0,
+      "lineCount": 509620,
+      "javaLines": 0,
+      "linesByLanguage": {
+        "json": 4881,
+        "other": 681,
+        "markdown": 428,
+        "yaml": 11230,
+        "html": 121,
+        "javascript": 19319,
+        "vue": 389145,
+        "typescript": 81269,
+        "tsx": 849,
+        "css": 1697
+      },
+      "scaleFileCountMatch": true
     }
   ],
   "metrics": {
@@ -1680,6 +2432,81 @@
         }
       },
       "basis": "逐框架主版本众数份额（仓代表版本 = 命中依赖最大版本）按使用仓数加权平均"
+    },
+    "scale": {
+      "id": "scale",
+      "name": "repo-scale",
+      "label": "仓规模分布",
+      "domain": "D",
+      "direction": "none",
+      "metrics": {
+        "fileCount": {
+          "N": 41,
+          "missing": 0,
+          "missingRepos": [],
+          "min": 59,
+          "max": 27933,
+          "mean": 4970.04878,
+          "percentiles": {
+            "p25": 406,
+            "p50": 1424,
+            "p75": 7381,
+            "p90": 13515
+          }
+        },
+        "javaFiles": {
+          "N": 41,
+          "missing": 0,
+          "missingRepos": [],
+          "min": 0,
+          "max": 19210,
+          "mean": 3051.097561,
+          "percentiles": {
+            "p25": 77,
+            "p50": 533,
+            "p75": 5442,
+            "p90": 8443
+          }
+        },
+        "lineCount": {
+          "N": 41,
+          "missing": 0,
+          "missingRepos": [],
+          "min": 10854,
+          "max": 2751818,
+          "mean": 607356.634146,
+          "percentiles": {
+            "p25": 43949,
+            "p50": 173262,
+            "p75": 922575,
+            "p90": 1621862
+          }
+        },
+        "javaLines": {
+          "N": 41,
+          "missing": 0,
+          "missingRepos": [],
+          "min": 0,
+          "max": 2306695,
+          "mean": 382902.536585,
+          "percentiles": {
+            "p25": 5581,
+            "p50": 85434,
+            "p75": 752296,
+            "p90": 1086948
+          }
+        }
+      },
+      "fileCountMatch": {
+        "match": 40,
+        "mismatch": 1,
+        "unknown": 0,
+        "mismatchRepos": [
+          "apache/dubbo"
+        ]
+      },
+      "percentileMethod": "nearest-rank (Schema §4.2)",
+      "basis": "各 report metrics.D3.scale（scan-one.sh clone 后 repo-scale.py 采集——文件数 = tracked 剔除分析器跳过目录与非普通文件，与服务端 Repository.fileCount 同口径并对照；行数 = 文本文件物理行数，含注释与空行，非 SLOC；java 为主指标）——描述面不进分位分母，统计量守门与指标同口径"
     }
   }
 }
