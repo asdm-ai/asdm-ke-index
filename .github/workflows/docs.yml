@@ -1,0 +1,57 @@
+# =============================================================================
+# KE Index · 文档重建 workflow（docs）
+# -----------------------------------------------------------------------------
+# README.md / README_zh-cn.md / docs/*.md 全部由 scripts/render-docs.py 从仓库产物渲染，
+# 手改会在下次运行时被覆盖。基线元数据在 docs/baseline.json——由 scan.yml 的文档步写入。
+#
+# 触发：workflow_dispatch 手动。日常更新不走本 workflow：scan.yml 在 census 提交后
+# 自动重建并提交文档。本 workflow 用于两种情况：
+#   commit=false（缺省）—— 核对：按 docs/baseline.json 重新渲染并校验，结果与 main 有
+#     差异即失败。证明"已发布的文档可以由仓库产物逐字节复现"。
+#   commit=true —— 重建：同上，有差异则提交到 main（生成器或文案改动之后用）。
+#
+# 不随 push 自动跑：只改文档不该触发任何流程；GITHUB_TOKEN 的推送也不会触发别的 workflow。
+# =============================================================================
+name: docs
+
+on:
+  workflow_dispatch:
+    inputs:
+      commit:
+        description: "true：有差异时提交到 main；false：只渲染校验，有差异即失败"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Render from docs/baseline.json
+        run: python3 scripts/render-docs.py --meta docs/baseline.json
+
+      - name: Validate
+        run: python3 scripts/validate-docs.py
+
+      - name: Check against main (and commit when asked)
+        env:
+          COMMIT: ${{ inputs.commit }}
+        run: |
+          if git diff --quiet -- README.md README_zh-cn.md docs; then
+            echo "documentation is identical to main — nothing to do"
+            exit 0
+          fi
+          if [ "$COMMIT" != "true" ]; then
+            git --no-pager diff --stat -- README.md README_zh-cn.md docs
+            echo "FAIL: documentation on main is not what render-docs.py produces from the artifacts" >&2
+            exit 1
+          fi
+          git config user.name "ke-index-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md README_zh-cn.md docs
+          git commit -m "docs: rebuild from the current artifacts"
+          bash scripts/push-with-retry.sh

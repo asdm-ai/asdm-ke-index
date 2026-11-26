@@ -358,3 +358,46 @@ jobs:
             exit 1
           fi
           echo "validation.ok=true（矩阵 $(jq -r '.validation.expectedRepos' census/summary.json) 仓均有 pipeline-status）"
+
+      # ---- 文档：census 入库且矩阵对账通过后，重建入口页与 docs/ ----
+      # 门控一：本步隐含 success() 前缀——上一断言步失败（缺仓）即不更新文档。
+      # 门控二：生成器自带——任一仓管线未通过即 exit 1、不写文件。入口页不会带着
+      # "N 个仓失败"自动发布；旧基线文档保持原样，本 job 置红。
+      # completed_at 取本轮最后一个已完成 job 的完成时刻（Actions API）：文档里的
+      # "用时"是扫描用时，不含 census 与文档步自身。job 数超过一页即失败（不静默截断）。
+      # 基线元数据随文档写入 docs/baseline.json——此后可用 docs.yml 逐字节复现。
+      - name: Render documentation
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_STARTED_AT: ${{ github.run_started_at }}
+        run: |
+          JOBS="$(curl -sS -f -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" \
+            "$GITHUB_API_URL/repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/jobs?per_page=100")"
+          TOTAL="$(jq -r '.total_count' <<<"$JOBS")"
+          if [ "$TOTAL" -gt 100 ]; then
+            echo "FAIL: run has $TOTAL jobs; the one-page jobs query would be truncated" >&2
+            exit 1
+          fi
+          COMPLETED_AT="$(jq -r '[.jobs[].completed_at | select(. != null)] | max // empty' <<<"$JOBS")"
+          if [ -z "$COMPLETED_AT" ]; then
+            echo "FAIL: run $GITHUB_RUN_ID has no finished job" >&2
+            exit 1
+          fi
+          python3 scripts/render-docs.py \
+            --run-id "$GITHUB_RUN_ID" --run-number "$GITHUB_RUN_NUMBER" \
+            --started-at "$RUN_STARTED_AT" --completed-at "$COMPLETED_AT"
+
+      - name: Validate documentation
+        run: python3 scripts/validate-docs.py
+
+      - name: Commit documentation
+        run: |
+          git config user.name "ke-index-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md README_zh-cn.md docs
+          if git diff --cached --quiet; then
+            echo "documentation unchanged — no commit"
+            exit 0
+          fi
+          git commit -m "docs: rebuild on run #${GITHUB_RUN_NUMBER}"
+          bash scripts/push-with-retry.sh
