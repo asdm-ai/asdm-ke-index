@@ -796,7 +796,67 @@
         "Route": 0,
         "ApiEndpoint": 0
       },
-      "linkCount": 286287
+      "linkCount": 286287,
+      "scale": {
+        "collectedBy": "backfill",
+        "sourceHead": "9a9585e39882b9411be27d6c039787d9d48fe7e7",
+        "method": "文件清单 = git ls-files（tracked）；files.total 剔除分析器跳过目录（target/build/dist/node_modules 等，与分析器 SKIP_DIRS 逐项对齐）与符号链接等非普通文件，与分析器 Repository.fileCount 同口径；二进制 = 首 8000 字节含 NUL；行数 = 文本文件物理行数（LF 计数，末行无换行符计 1 行），含注释与空行，非 SLOC；语言按扩展名归类，未命中归 other；规模参照以 java 为主指标",
+        "fileCount": 11402,
+        "javaFiles": 9244,
+        "lineCount": 1595321,
+        "javaLines": 1430462,
+        "files": {
+          "tracked": 11466,
+          "skippedByAnalyzerDirs": 63,
+          "nonRegular": 1,
+          "total": 11402,
+          "text": 11357,
+          "binary": 45
+        },
+        "filesByLanguage": {
+          "other": 743,
+          "yaml": 32,
+          "markdown": 9,
+          "gradle": 34,
+          "xml": 694,
+          "properties": 89,
+          "json": 11,
+          "html": 9,
+          "java": 9244,
+          "kotlin": 396,
+          "sql": 80,
+          "groovy": 17,
+          "javascript": 10,
+          "template": 9,
+          "css": 23,
+          "python": 2
+        },
+        "linesByLanguage": {
+          "other": 104576,
+          "yaml": 1201,
+          "markdown": 1029,
+          "gradle": 2033,
+          "xml": 18988,
+          "properties": 565,
+          "json": 567,
+          "html": 44,
+          "java": 1430462,
+          "kotlin": 31935,
+          "sql": 2625,
+          "groovy": 311,
+          "javascript": 40,
+          "template": 886,
+          "css": 49,
+          "python": 10
+        },
+        "bytes": 57610344,
+        "commands": [
+          "python3 scripts/repo-scale.py --repo <clone> --out <file>  # scan-one.sh clone 后 / scale-backfill.py 检出 snapshot.sourceHead 后执行",
+          "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Repository --all --field id,fileCount --snapshot ad67282d-2029-4545-b265-fe9c8ec5daf5"
+        ],
+        "serverFileCount": 11402,
+        "fileCountMatch": true
+      }
     },
     "D4": {
       "id": "D4",
