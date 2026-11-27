@@ -9,9 +9,9 @@
     "status": "complete",
     "sourceVersion": "04c442fe318356bae4445a109dde7af297ce1e84",
     "sourceHead": "04c442fe318356bae4445a109dde7af297ce1e84",
-    "objectCount": 14878,
-    "linkCount": 36007,
-    "completedAt": "2026-11-26T13:29:37.263Z"
+    "objectCount": 24051,
+    "linkCount": 74560,
+    "completedAt": "2026-11-27T11:04:14.802Z"
   },
   "cliVersion": "0.3.10",
   "metrics": {
@@ -95,9 +95,9 @@
       "label": "巨型类占比",
       "domain": "B",
       "direction": "lower-better",
-      "value": 0.154362,
+      "value": 0.152824,
       "numerator": 92,
-      "denominator": 596,
+      "denominator": 602,
       "commands": [
         "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Class --all --field id,lineCount --snapshot 867c82e8-a3d7-4cea-88b2-af876cc96ca8",
         "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --where 'lineCount>500' --snapshot 867c82e8-a3d7-4cea-88b2-af876cc96ca8",
@@ -186,9 +186,9 @@
       "label": "测试方法占比",
       "domain": "C",
       "direction": "higher-better",
-      "value": 0.000793,
+      "value": 0.000478,
       "numerator": 11,
-      "denominator": 13863,
+      "denominator": 23030,
       "commands": [
         "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'isTest=true' --snapshot 867c82e8-a3d7-4cea-88b2-af876cc96ca8",
         "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot 867c82e8-a3d7-4cea-88b2-af876cc96ca8",
@@ -197,6 +197,26 @@
       "testTypes": {
         "UnitTest": 11
       },
+      "calibers": {
+        "allMethods": {
+          "value": 0.000478,
+          "numerator": 11,
+          "denominator": 23030
+        },
+        "sourceAnchored": {
+          "value": 0.000869,
+          "numerator": 11,
+          "denominator": 12653
+        }
+      },
+      "methodComposition": {
+        "all": 23030,
+        "sourceAnchored": 12653,
+        "noSourceBody": 10377,
+        "tests": 11,
+        "testsNotAnchored": 0
+      },
+      "scanMode": "bytecode",
       "crossCheck": {
         "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'isTest=true' --snapshot 867c82e8-a3d7-4cea-88b2-af876cc96ca8",
         "serverCount": 11,
@@ -220,7 +240,7 @@
       ],
       "threshold": "lineCount > 80",
       "excludedFromDenominator": {
-        "lineCountIsZero": 1210,
+        "lineCountIsZero": 10377,
         "lineCountIsNull": 0
       },
       "top": [
@@ -257,7 +277,7 @@
       "label": "规模画像",
       "domain": "D",
       "direction": "none",
-      "value": 14878,
+      "value": 24051,
       "commands": [
         "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" snapshot list --repo mall-swarm",
         "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Repository --snapshot 867c82e8-a3d7-4cea-88b2-af876cc96ca8",
@@ -278,9 +298,9 @@
       "typeCounts": {
         "Repository": 1,
         "Package": 53,
-        "Class": 596,
+        "Class": 602,
         "Interface": 167,
-        "Method": 13863,
+        "Method": 23030,
         "Dependency": 46,
         "Table": 76,
         "Mapper": 76,
@@ -291,7 +311,7 @@
         "Route": 0,
         "ApiEndpoint": 0
       },
-      "linkCount": 36007,
+      "linkCount": 74560,
       "scale": {
         "collectedBy": "scan",
         "sourceHead": "04c442fe318356bae4445a109dde7af297ce1e84",
@@ -497,7 +517,7 @@
       ],
       "evidence": {
         "completeSnapshotCount": 1,
-        "previousReportSnapshot": "37ddc9ab-9bb4-4b6a-bece-9a0d2a7bfd66"
+        "previousReportSnapshot": "867c82e8-a3d7-4cea-88b2-af876cc96ca8"
       }
     }
   },
@@ -508,13 +528,25 @@
       "label": "complexity 为 null 的方法占比",
       "domain": "dq",
       "direction": "none",
-      "value": 0.087283,
-      "numerator": 1210,
-      "denominator": 13863,
+      "value": 0.450586,
+      "numerator": 10377,
+      "denominator": 23030,
       "commands": [
         "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot 867c82e8-a3d7-4cea-88b2-af876cc96ca8",
         "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot 867c82e8-a3d7-4cea-88b2-af876cc96ca8"
-      ]
+      ],
+      "calibers": {
+        "allMethods": {
+          "value": 0.450586,
+          "numerator": 10377,
+          "denominator": 23030
+        },
+        "sourceAnchored": {
+          "value": 0.0,
+          "numerator": 0,
+          "denominator": 12653
+        }
+      }
     },
     "dq.missing-version-ratio": {
       "id": "dq.missing-version-ratio",
@@ -552,6 +584,31 @@
       "direction": "none",
       "value": null,
       "reason": "不可观测（ext: 虚拟边在导入物化时已过滤——查询面天然免疫）"
+    }
+  },
+  "build": {
+    "mode": "bytecode",
+    "fallback": false,
+    "reason": "compiled",
+    "configured": true,
+    "tool": "maven",
+    "jdk": 17,
+    "javaVersion": "17.0.21",
+    "javapVersion": "17.0.21",
+    "exitCode": 0,
+    "testExitCode": 0,
+    "classFiles": {
+      "main": 763,
+      "test": 6,
+      "other": 0
+    },
+    "httpRepositories": null,
+    "attemptMode": null,
+    "attemptReason": null,
+    "crossCheck": {
+      "supplementedMethods": 10377,
+      "lineCountZeroMethods": 10377,
+      "lineCountZeroWithComplexity": 0
     }
   }
 }
