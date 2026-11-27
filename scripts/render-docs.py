@@ -92,6 +92,23 @@ PUBLISHED = {
     },
 }
 
+# C3 的两种分母口径（Phase 4A · P2-D19）：同一指标两行并列，各写明分母与含义。
+# allMethods = 冻结口径（历史连续）；sourceAnchored = 伴随口径，只算有源码方法体（lineCount > 0）
+# 的方法——同时排除接口/抽象方法与字节码补全方法，按构造不随扫描模式切换而变。
+# 文案不得写成“剔除 Lombok”：没有“是否补全”的标记，口径是按 lineCount > 0 识别的。
+C3_CALIBERS = {
+    "allMethods": {
+        "en": "Test-method share (all methods)", "zh": "测试方法占比（全部方法）",
+        "def_en": "Test methods as a share of every method in the graph, including generated methods (getters, setters, builders) that only the compiled classes reveal",
+        "def_zh": "测试方法占图谱中全部方法的比例，含只在编译产物里才出现的生成方法（getter、setter、builder）",
+    },
+    "sourceAnchored": {
+        "en": "Test-method share (methods with a source body)", "zh": "测试方法占比（有源码方法体）",
+        "def_en": "Test methods as a share of the methods that have a source body (a recorded line count above zero)",
+        "def_zh": "测试方法占有源码方法体（行数大于 0）的方法的比例",
+    },
+}
+
 # Shape descriptions name categories only, never individual repositories, so they stay true
 # when the corpus grows. The tier definitions are in the header of repos.yaml.
 TIER = {
@@ -316,8 +333,77 @@ def compute(d):
         if r.get("buildrec") is None and ((r["report"] or {}).get("build") or {}).get("mode") == "bytecode":
             raise SystemExit(f"not publishing: {r['name']} reports bytecode mode but has no build record")
 
+    # C3 companion caliber: a second row next to the frozen line, published on its own N.
+    # Below the threshold it stays out of the entry page and out of the docs (no number, no row).
+    cal = ((c["metrics"].get("C3") or {}).get("calibers") or {})
+    b = cal.get("sourceAnchored") or {}
+    s["c3b"] = b if ("C3" in s["published"] and b.get("published") and b.get("N", 0) >= PUBLISH_N) else None
+    # systems scanned with compiled classes add generated methods to their method count, so the
+    # all-methods line is not comparable across systems while both scan modes are in the corpus
+    s["mixed_modes"] = bool(s["build"]["bytecode"]) and len(s["build"]["bytecode"]) < s["n"]
 
-# ----------------------------------------------------------------- shared pieces
+
+def c3_note(d, en):
+    """The paragraph under the entry-page reference table that explains the two C3 denominators."""
+    s = d["stats"]
+    nbc = len(s["build"]["bytecode"])
+    if en:
+        if s["c3b"]:
+            L = ["**Two denominators for one line.** Test-method share is listed twice. *All methods* counts every method in the graph, "
+                 "including the generated ones (getters, setters, builders) that only the compiled classes reveal. "
+                 "*Methods with a source body* counts only the methods you can locate in the source, so it does not change when a system "
+                 "is scanned with or without compiled classes. Only the all-methods line has an independent cross-check; "
+                 "the source-body line is computed from the same data and is not cross-checked separately yet."]
+            if s["mixed_modes"]:
+                L.append(f" {nbc} of the {s['n']} systems were scanned with compiled classes, so the all-methods line is not comparable "
+                         "across systems; use the source-body line to compare one system with another.")
+            return ["".join(L), ""]
+        if s["mixed_modes"]:
+            return [f"**Scan modes are mixed.** {nbc} of the {s['n']} systems were scanned with compiled classes, which adds generated methods "
+                    "to their method count and lowers their all-methods test share. The all-methods line is therefore not comparable across "
+                    "systems for now; a second line restricted to methods with a source body does not have enough systems with a value yet "
+                    "and is not published.", ""]
+    else:
+        if s["c3b"]:
+            L = ["**同一指标，两种分母。**测试方法占比列了两行。“全部方法”把图谱里的每个方法都算进去，包括只在编译产物里才出现的生成方法"
+                 "（getter、setter、builder）；“有源码方法体”只算能在源码里定位到的方法，因此不随一个系统是否带着编译产物扫描而变。"
+                 "只有“全部方法”一行有独立复核；“有源码方法体”一行由同一批数据算出，暂未单独复核。"]
+            if s["mixed_modes"]:
+                L.append(f" 当前 {s['n']} 个系统中有 {nbc} 个是带着编译产物扫描的，“全部方法”一行在系统之间不可比；"
+                         "跨系统比较请看“有源码方法体”一行。")
+            return ["".join(L), ""]
+        if s["mixed_modes"]:
+            return [f"**扫描模式并存。**{s['n']} 个系统中有 {nbc} 个是带着编译产物扫描的，生成方法计入它们的方法数，"
+                    "把“全部方法”口径的测试占比拉低。因此“全部方法”一行暂时不宜跨系统比较；只算有源码方法体的第二种口径"
+                    "有值的系统还不够，尚未发布。", ""]
+    return []
+
+
+def c3_metric_lines(d, m, en):
+    """Extra bullets of the C3 definition card: the two denominators, each with its meaning and sample size."""
+    s = d["stats"]
+    nbc = len(s["build"]["bytecode"])
+    ca = ((m.get("calibers") or {}).get("allMethods") or {})
+    if en:
+        if s["c3b"]:
+            return [f"- **Two denominators.** *All methods*: {C3_CALIBERS['allMethods']['def_en'][0].lower() + C3_CALIBERS['allMethods']['def_en'][1:]}; "
+                    f"systems with a value: {ca.get('N', m['N'])}. "
+                    f"*Methods with a source body*: {C3_CALIBERS['sourceAnchored']['def_en'][0].lower() + C3_CALIBERS['sourceAnchored']['def_en'][1:]}; "
+                    f"systems with a value: {s['c3b']['N']}. "
+                    "The source-body line has no separate cross-check yet: the cross-check above covers the all-methods numerator."]
+        if s["mixed_modes"]:
+            return [f"- **Not comparable across systems yet.** {nbc} of the {s['n']} systems were scanned with compiled classes, "
+                    "which adds generated methods to their method count. A second line restricted to methods with a source body "
+                    "does not have enough systems with a value yet and is not published."]
+    else:
+        if s["c3b"]:
+            return [f"- **两种分母。**“全部方法”：{C3_CALIBERS['allMethods']['def_zh']}，有值的系统 {ca.get('N', m['N'])} 个。"
+                    f"“有源码方法体”：{C3_CALIBERS['sourceAnchored']['def_zh']}，有值的系统 {s['c3b']['N']} 个。"
+                    "“有源码方法体”一行暂无独立复核：上面的复核只覆盖“全部方法”口径的分子。"]
+        if s["mixed_modes"]:
+            return [f"- **暂不宜跨系统比较。**{s['n']} 个系统中有 {nbc} 个是带着编译产物扫描的，生成方法计入它们的方法数。"
+                    "只算有源码方法体的第二种口径有值的系统还不够，尚未发布。"]
+    return []
 def mname(mid, en):
     return PUBLISHED[mid]["en" if en else "zh"]
 
@@ -348,12 +434,26 @@ def ref_rows(d, en, raw=False):
         m, q = c["metrics"][mid], c["metrics"][mid]["percentiles"]
         fmt = (lambda x: p(x)) if raw or PUBLISHED[mid]["kind"] == "num" else pct
         cells = [mname(mid, en), PUBLISHED[mid]["def_en" if en else "def_zh"], direction(d, mid, en)]
+        if mid == "C3":  # the frozen caliber is named and defined explicitly once two calibers exist
+            cells[0] = C3_CALIBERS["allMethods"]["en" if en else "zh"]
+            cells[1] = C3_CALIBERS["allMethods"]["def_en" if en else "def_zh"]
         if raw:
             cells.append(str(m["N"]))
         cells += [fmt(q[k]) for k in ("p25", "p50", "p75")]
         if raw:
             cells += [p(q["p90"]), p(m["mean"])]
         out.append("| " + " | ".join(cells) + " |")
+        if mid == "C3" and s.get("c3b"):
+            # companion caliber: same shape, its own N and statistics (sourceAnchored caliber of census C3)
+            b, qb = s["c3b"], s["c3b"]["percentiles"]
+            cells = [C3_CALIBERS["sourceAnchored"]["en" if en else "zh"],
+                     C3_CALIBERS["sourceAnchored"]["def_en" if en else "def_zh"], direction(d, mid, en)]
+            if raw:
+                cells.append(str(b["N"]))
+            cells += [fmt(qb[k]) for k in ("p25", "p50", "p75")]
+            if raw:
+                cells += [p(qb["p90"]), p(b["mean"])]
+            out.append("| " + " | ".join(cells) + " |")
     return out
 
 
@@ -632,7 +732,7 @@ def readme(d, meta, en):
             f"{s['no_val'] - s['no_val_frontend']} without a Java package structure). Baseline: {meta['baseline_date']}. "
             "How the numbers are checked: [Where the data comes from](#where-the-data-comes-from).", "",
             "| Reference line | What it measures | Direction | P25 | Median (P50) | P75 |", "|---|---|---|---|---|---|",
-        ] + ref_rows(d, True) + [
+        ] + ref_rows(d, True) + c3_note(d, True) + [
             "",
             "The median splits the sample in half; P25 to P75 covers the middle half of the systems. On a \"lower is better\" line, a value above "
             "P75 means the system is worse than three quarters of the sample. A range-type line has no good or bad direction: "
@@ -728,7 +828,7 @@ def readme(d, meta, en):
             f"{s['no_val'] - s['no_val_frontend']} 个没有 Java 包结构的仓）。基线：{meta['baseline_date']}。"
             "复核方式见[数据怎么来的](#数据怎么来的怎么复核)。", "",
             "| 指标 | 衡量什么 | 方向 | P25 | 中位数（P50） | P75 |", "|---|---|---|---|---|---|",
-        ] + ref_rows(d, False) + [
+        ] + ref_rows(d, False) + c3_note(d, False) + [
             "",
             "中位数把样本分成两半，P25 到 P75 覆盖中间一半的系统。\"越低越好\"的指标，你的值高于 P75，说明比四分之三的样本更严重。"
             "区间型指标不设优劣方向，落在 P25 到 P75 之间属于常见范围。", "",
@@ -825,6 +925,8 @@ def metrics_doc(d, meta, en):
             L += ([f"- **Cross-check.** One of the two counts behind the line was compared, per repository, with a separate filtered "
                    f"count from the server: {x['match']} of {x['match'] + x['mismatch']} match."]
                   if x["checked"] else ["- **Cross-check.** None yet: the line is computed in one pass from the package dependency list."])
+            if mid == "C3":
+                L += c3_metric_lines(d, m, True)
         else:
             L += [f"### {mname(mid, False)}（`{mid}`）", "",
                   f"- **定义。**{PUBLISHED[mid]['def_zh']}。",
@@ -832,6 +934,8 @@ def metrics_doc(d, meta, en):
                   f"- **方向。**{direction(d, mid, False)}。有值的系统 {m['N']} 个，无值 {m['missing']} 个。"]
             L += ([f"- **复核。**分子或分母逐仓与服务端按条件另查一次的结果比对：{x['match']}/{x['match'] + x['mismatch']} 一致。"]
                   if x["checked"] else ["- **复核。**暂无：该指标由包依赖清单一次算出。"])
+            if mid == "C3":
+                L += c3_metric_lines(d, m, False)
         L.append("")
     if en:
         L += ["## Rules", "",
@@ -1226,7 +1330,7 @@ def main():
     ap.add_argument("--meta", help="JSON with run_id, run_number, started_at, completed_at, duration, baseline_date")
     ap.add_argument("--run-id", help="build the meta from a workflow run instead (needs --run-number and --started-at)")
     ap.add_argument("--run-number")
-    ap.add_argument("--started-at", help="run start, ISO 8601 (the workflow's github.run_started_at)")
+    ap.add_argument("--started-at", help="run start, ISO 8601 (run_started_at of the run object, Actions API)")
     ap.add_argument("--completed-at", help="end of the last scan job, ISO 8601 (default: now)")
     ap.add_argument("--out", help="output directory (default: write into --repo)")
     ap.add_argument("--allow-failed", action="store_true",

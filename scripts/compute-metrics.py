@@ -1010,6 +1010,11 @@ def main():
             "无 Method 对象（分母为 0）", commands=[count_cmd("Method", None, snap_id)])
     else:
         test_methods = [m for m in methods if is_true(m.get("isTest"))]
+        # 两种分母口径并列（Phase 4A · P2-D19）：顶层 value/numerator/denominator 是冻结口径 A
+        # （全部方法），存量字段不动；口径 B（有源码方法体，lineCount > 0——与 C4 同规则）
+        # 同时排除接口/抽象方法与字节码补全方法，文案不得写成“剔除 Lombok”。
+        # 补全方法恒 lineCount=0 ∧ complexity=null ∧ isTest=false：口径 A 在 bytecode 模式下被
+        # 机械性拉低、跨模式不可比；口径 B 按构造不随模式切换变化。
         anchored = [m for m in methods if (num_or_zero(m.get("lineCount")) or 0) > 0]
         anchored_total = len(anchored)
         anchored_tests = sum(1 for m in anchored if is_true(m.get("isTest")))
@@ -1017,20 +1022,31 @@ def main():
         for m in test_methods:
             tt = m.get("testType") or "unknown"
             test_types[tt] = test_types.get(tt, 0) + 1
+        value_a = ratio(len(test_methods), len(methods))
         metrics["C3"] = metric(
             "C3", "test-method-ratio", "测试方法占比", "C", "higher-better",
-            ratio(len(test_methods), len(methods)),
+            value_a,
             [count_cmd("Method", "isTest=true", snap_id), count_cmd("Method", None, snap_id),
              query_cmd("Method", ["id", "isTest", "testType"], snap_id)],
             numerator=len(test_methods), denominator=len(methods),
             testTypes=test_types,
-            # 参照值（不改口径）：分母只取有源码位置的方法（lineCount > 0，与 C4 同规则）——
-            # 剔除接口方法与字节码补全方法。bytecode 模式下 C3 的分母含补全方法而分子
-            # 不含（补全方法恒 isTest=false），比值会被机械性拉低；两种分母并列留档
-            sourceAnchored={
-                "value": ratio(anchored_tests, anchored_total),
-                "numerator": anchored_tests, "denominator": anchored_total,
+            calibers={
+                "allMethods": {
+                    "value": value_a,
+                    "numerator": len(test_methods), "denominator": len(methods),
+                },
+                "sourceAnchored": {
+                    "value": ratio(anchored_tests, anchored_total),
+                    "numerator": anchored_tests, "denominator": anchored_total,
+                },
             },
+            methodComposition={
+                "all": len(methods), "sourceAnchored": anchored_total,
+                "noSourceBody": len(methods) - anchored_total,
+                "tests": len(test_methods),
+                "testsNotAnchored": len(test_methods) - anchored_tests,
+            },
+            scanMode="bytecode" if build is not None and build.get("mode") == "bytecode" else "source",
         )
 
     # C4 巨型方法占比（分母排除 lineCount = 0 / null——接口与字节码补全方法）
@@ -1207,11 +1223,24 @@ def main():
     data_quality = {}
     if counts["Method"] > 0:
         null_cc = len(methods) - len(method_cc)
+        anchored_nc = [m for m in methods if (num_or_zero(m.get("lineCount")) or 0) > 0]
+        anchored_null_cc = sum(
+            1 for m in anchored_nc
+            if not (isinstance(m.get("complexity"), dict)
+                    and isinstance(m["complexity"].get("cyclomaticComplexity"), (int, float))))
         data_quality["dq.null-complexity-ratio"] = metric(
             "dq.null-complexity-ratio", "null-complexity-ratio", "complexity 为 null 的方法占比", "dq", "none",
             ratio(null_cc, len(methods)),
             [count_cmd("Method", None, snap_id), count_cmd("Method", "complexity", snap_id)],
             numerator=null_cc, denominator=len(methods),
+            # 与 C3 同构的双口径（Phase 4A）：口径 A 含字节码补全方法（complexity 恒 null），
+            # 口径 B 只看有源码方法体——后者才是真正的数据质量缺口
+            calibers={
+                "allMethods": {"value": ratio(null_cc, len(methods)),
+                               "numerator": null_cc, "denominator": len(methods)},
+                "sourceAnchored": {"value": ratio(anchored_null_cc, len(anchored_nc)),
+                                   "numerator": anchored_null_cc, "denominator": len(anchored_nc)},
+            },
         )
     if len(deps) > 0:
         data_quality["dq.missing-version-ratio"] = metric(
