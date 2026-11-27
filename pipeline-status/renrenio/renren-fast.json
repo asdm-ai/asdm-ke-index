@@ -4,7 +4,7 @@
   "repo": "renren-fast",
   "sourceHead": "75148ab5208f8c144634cb7a9fb24c7d2cb0aafe",
   "snapshotId": "41ba483e-3dd4-4b43-83f2-801874e79b78",
-  "objectCount": 777,
+  "objectCount": 1086,
   "importStatus": "completed",
   "steps": {
     "scan": "ok",
@@ -13,5 +13,22 @@
     "consistency": "ok"
   },
   "consistencyResult": "pass",
+  "build": {
+    "mode": "bytecode",
+    "fallback": false,
+    "reason": "compiled",
+    "tool": "maven",
+    "jdk": 8,
+    "javaVersion": "1.8.0_514",
+    "javapVersion": "1.8.0_514",
+    "exitCode": 0,
+    "testExitCode": 0,
+    "classFiles": {
+      "main": 144,
+      "test": 4,
+      "other": 0
+    },
+    "httpRepositories": null
+  },
   "overall": "pass"
 }
