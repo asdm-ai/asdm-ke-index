@@ -4,7 +4,7 @@
   "repo": "ruoyi-vue-pro",
   "sourceHead": "e34c0f22dc542bd36aebc65afa4dd4ac81c88863",
   "snapshotId": "2249ebcd-82d0-42dd-bfb0-c003533b6fc5",
-  "objectCount": 46623,
+  "objectCount": 52545,
   "importStatus": "completed",
   "steps": {
     "scan": "ok",
@@ -13,5 +13,22 @@
     "consistency": "ok"
   },
   "consistencyResult": "pass",
+  "build": {
+    "mode": "bytecode",
+    "fallback": false,
+    "reason": "compiled",
+    "tool": "maven",
+    "jdk": 8,
+    "javaVersion": "1.8.0_514",
+    "javapVersion": "1.8.0_514",
+    "exitCode": 0,
+    "testExitCode": 0,
+    "classFiles": {
+      "main": 1148,
+      "test": 177,
+      "other": 0
+    },
+    "httpRepositories": null
+  },
   "overall": "pass"
 }

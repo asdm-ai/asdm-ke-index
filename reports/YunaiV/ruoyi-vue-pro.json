@@ -9,9 +9,9 @@
     "status": "complete",
     "sourceVersion": "e34c0f22dc542bd36aebc65afa4dd4ac81c88863",
     "sourceHead": "e34c0f22dc542bd36aebc65afa4dd4ac81c88863",
-    "objectCount": 46623,
-    "linkCount": 230904,
-    "completedAt": "2026-11-26T13:42:49.054Z"
+    "objectCount": 52545,
+    "linkCount": 259063,
+    "completedAt": "2026-11-27T11:25:17.659Z"
   },
   "cliVersion": "0.3.10",
   "metrics": {
@@ -946,9 +946,9 @@
       "label": "巨型类占比",
       "domain": "B",
       "direction": "lower-better",
-      "value": 0.018076,
+      "value": 0.01789,
       "numerator": 127,
-      "denominator": 7026,
+      "denominator": 7099,
       "commands": [
         "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Class --all --field id,lineCount --snapshot 2249ebcd-82d0-42dd-bfb0-c003533b6fc5",
         "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --where 'lineCount>500' --snapshot 2249ebcd-82d0-42dd-bfb0-c003533b6fc5",
@@ -1052,9 +1052,9 @@
       "label": "测试方法占比",
       "domain": "C",
       "direction": "higher-better",
-      "value": 0.20373,
+      "value": 0.17449,
       "numerator": 7111,
-      "denominator": 34904,
+      "denominator": 40753,
       "commands": [
         "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'isTest=true' --snapshot 2249ebcd-82d0-42dd-bfb0-c003533b6fc5",
         "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot 2249ebcd-82d0-42dd-bfb0-c003533b6fc5",
@@ -1063,6 +1063,26 @@
       "testTypes": {
         "UnitTest": 7111
       },
+      "calibers": {
+        "allMethods": {
+          "value": 0.17449,
+          "numerator": 7111,
+          "denominator": 40753
+        },
+        "sourceAnchored": {
+          "value": 0.270648,
+          "numerator": 7111,
+          "denominator": 26274
+        }
+      },
+      "methodComposition": {
+        "all": 40753,
+        "sourceAnchored": 26274,
+        "noSourceBody": 14479,
+        "tests": 7111,
+        "testsNotAnchored": 0
+      },
+      "scanMode": "bytecode",
       "crossCheck": {
         "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'isTest=true' --snapshot 2249ebcd-82d0-42dd-bfb0-c003533b6fc5",
         "serverCount": 7111,
@@ -1086,7 +1106,7 @@
       ],
       "threshold": "lineCount > 80",
       "excludedFromDenominator": {
-        "lineCountIsZero": 8630,
+        "lineCountIsZero": 14479,
         "lineCountIsNull": 0
       },
       "top": [
@@ -1123,7 +1143,7 @@
       "label": "规模画像",
       "domain": "D",
       "direction": "none",
-      "value": 46623,
+      "value": 52545,
       "commands": [
         "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" snapshot list --repo ruoyi-vue-pro",
         "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Repository --snapshot 2249ebcd-82d0-42dd-bfb0-c003533b6fc5",
@@ -1144,9 +1164,9 @@
       "typeCounts": {
         "Repository": 1,
         "Package": 2895,
-        "Class": 7026,
+        "Class": 7099,
         "Interface": 1522,
-        "Method": 34904,
+        "Method": 40753,
         "Dependency": 210,
         "Table": 43,
         "Mapper": 8,
@@ -1157,7 +1177,7 @@
         "Route": 0,
         "ApiEndpoint": 0
       },
-      "linkCount": 230904,
+      "linkCount": 259063,
       "scale": {
         "collectedBy": "scan",
         "sourceHead": "e34c0f22dc542bd36aebc65afa4dd4ac81c88863",
@@ -1207,8 +1227,9 @@
           "python3 scripts/repo-scale.py --repo <clone> --out <file>  # scan-one.sh clone 后 / scale-backfill.py 检出 snapshot.sourceHead 后执行",
           "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Repository --all --field id,fileCount --snapshot 2249ebcd-82d0-42dd-bfb0-c003533b6fc5"
         ],
-        "serverFileCount": 9710,
-        "fileCountMatch": true
+        "serverFileCount": 9732,
+        "fileCountMatch": false,
+        "fileCountMatchNote": "CI 侧与分析器 Repository.fileCount 口径差（符号链接/子模块/跳过目录）——告警不置红，差值 -22"
       }
     }
   },
@@ -1341,7 +1362,7 @@
       ],
       "evidence": {
         "completeSnapshotCount": 1,
-        "previousReportSnapshot": "7b0666a4-03c3-451f-abe8-9f003c65830b"
+        "previousReportSnapshot": "2249ebcd-82d0-42dd-bfb0-c003533b6fc5"
       }
     }
   },
@@ -1352,13 +1373,25 @@
       "label": "complexity 为 null 的方法占比",
       "domain": "dq",
       "direction": "none",
-      "value": 0.248338,
-      "numerator": 8668,
-      "denominator": 34904,
+      "value": 0.356219,
+      "numerator": 14517,
+      "denominator": 40753,
       "commands": [
         "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot 2249ebcd-82d0-42dd-bfb0-c003533b6fc5",
         "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot 2249ebcd-82d0-42dd-bfb0-c003533b6fc5"
-      ]
+      ],
+      "calibers": {
+        "allMethods": {
+          "value": 0.356219,
+          "numerator": 14517,
+          "denominator": 40753
+        },
+        "sourceAnchored": {
+          "value": 0.001446,
+          "numerator": 38,
+          "denominator": 26274
+        }
+      }
     },
     "dq.missing-version-ratio": {
       "id": "dq.missing-version-ratio",
@@ -1396,6 +1429,31 @@
       "direction": "none",
       "value": null,
       "reason": "不可观测（ext: 虚拟边在导入物化时已过滤——查询面天然免疫）"
+    }
+  },
+  "build": {
+    "mode": "bytecode",
+    "fallback": false,
+    "reason": "compiled",
+    "configured": true,
+    "tool": "maven",
+    "jdk": 8,
+    "javaVersion": "1.8.0_514",
+    "javapVersion": "1.8.0_514",
+    "exitCode": 0,
+    "testExitCode": 0,
+    "classFiles": {
+      "main": 1148,
+      "test": 177,
+      "other": 0
+    },
+    "httpRepositories": null,
+    "attemptMode": null,
+    "attemptReason": null,
+    "crossCheck": {
+      "supplementedMethods": 14479,
+      "lineCountZeroMethods": 14479,
+      "lineCountZeroWithComplexity": 0
     }
   }
 }
