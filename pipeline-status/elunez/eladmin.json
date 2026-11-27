@@ -16,12 +16,12 @@
   "build": {
     "mode": "source",
     "fallback": true,
-    "reason": "jdk-not-found",
+    "reason": "compile-failed",
     "tool": "maven",
-    "jdk": null,
-    "javaVersion": null,
-    "javapVersion": null,
-    "exitCode": null,
+    "jdk": 8,
+    "javaVersion": "1.8.0_514",
+    "javapVersion": "1.8.0_514",
+    "exitCode": 1,
     "testExitCode": null,
     "classFiles": {
       "main": 0,
