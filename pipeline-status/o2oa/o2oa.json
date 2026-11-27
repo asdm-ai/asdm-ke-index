@@ -4,14 +4,31 @@
   "repo": "o2oa",
   "sourceHead": "8ce6a68c2630ed3fa7d2891e34d30309a2f8a7e8",
   "snapshotId": "c19b3102-799d-4fe2-ace9-d408762e19a5",
-  "objectCount": 70501,
+  "objectCount": 77482,
   "importStatus": "completed",
   "steps": {
     "scan": "ok",
-    "projection": "ok",
+    "projection": "failed",
     "metrics": "ok",
-    "consistency": "ok"
+    "consistency": "skipped"
   },
-  "consistencyResult": "pass",
-  "overall": "pass"
+  "consistencyResult": "skipped",
+  "build": {
+    "mode": "bytecode",
+    "fallback": false,
+    "reason": "compiled",
+    "tool": "maven",
+    "jdk": 11,
+    "javaVersion": "11.0.33.1",
+    "javapVersion": "11.0.33.1",
+    "exitCode": 0,
+    "testExitCode": 1,
+    "classFiles": {
+      "main": 13275,
+      "test": 4,
+      "other": 0
+    },
+    "httpRepositories": null
+  },
+  "overall": "fail"
 }
