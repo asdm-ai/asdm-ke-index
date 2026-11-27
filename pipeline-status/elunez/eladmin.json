@@ -4,8 +4,8 @@
   "repo": "eladmin",
   "sourceHead": "646c58c30f2e9aecf998b054f05f4d9ba0008995",
   "snapshotId": "8389435e-69be-426d-af8a-1b4efc84ebe1",
-  "objectCount": 1357,
-  "importStatus": "skipped",
+  "objectCount": 2330,
+  "importStatus": "completed",
   "steps": {
     "scan": "ok",
     "projection": "ok",
@@ -14,20 +14,21 @@
   },
   "consistencyResult": "pass",
   "build": {
-    "mode": "source",
-    "fallback": true,
-    "reason": "compile-failed",
+    "mode": "bytecode",
+    "fallback": false,
+    "reason": "compiled",
     "tool": "maven",
     "jdk": 8,
     "javaVersion": "1.8.0_514",
     "javapVersion": "1.8.0_514",
-    "exitCode": 1,
-    "testExitCode": null,
+    "exitCode": 0,
+    "testExitCode": 0,
     "classFiles": {
-      "main": 0,
-      "test": 0,
+      "main": 313,
+      "test": 5,
       "other": 0
-    }
+    },
+    "httpRepositories": null
   },
   "overall": "pass"
 }

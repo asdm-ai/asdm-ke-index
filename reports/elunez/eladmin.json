@@ -9,9 +9,9 @@
     "status": "complete",
     "sourceVersion": "646c58c30f2e9aecf998b054f05f4d9ba0008995",
     "sourceHead": "646c58c30f2e9aecf998b054f05f4d9ba0008995",
-    "objectCount": 1357,
-    "linkCount": 5096,
-    "completedAt": "2026-11-26T15:39:32.050Z"
+    "objectCount": 2330,
+    "linkCount": 8177,
+    "completedAt": "2026-11-27T06:09:49.686Z"
   },
   "cliVersion": "0.3.10",
   "metrics": {
@@ -106,9 +106,9 @@
       "label": "巨型类占比",
       "domain": "B",
       "direction": "lower-better",
-      "value": 0.004831,
+      "value": 0.004202,
       "numerator": 1,
-      "denominator": 207,
+      "denominator": 238,
       "commands": [
         "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Class --all --field id,lineCount --snapshot 8389435e-69be-426d-af8a-1b4efc84ebe1",
         "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --where 'lineCount>500' --snapshot 8389435e-69be-426d-af8a-1b4efc84ebe1",
@@ -197,9 +197,9 @@
       "label": "测试方法占比",
       "domain": "C",
       "direction": "higher-better",
-      "value": 0.014973,
+      "value": 0.007459,
       "numerator": 14,
-      "denominator": 935,
+      "denominator": 1877,
       "commands": [
         "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'isTest=true' --snapshot 8389435e-69be-426d-af8a-1b4efc84ebe1",
         "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot 8389435e-69be-426d-af8a-1b4efc84ebe1",
@@ -210,9 +210,9 @@
       },
       "calibers": {
         "allMethods": {
-          "value": 0.014973,
+          "value": 0.007459,
           "numerator": 14,
-          "denominator": 935
+          "denominator": 1877
         },
         "sourceAnchored": {
           "value": 0.019608,
@@ -221,13 +221,13 @@
         }
       },
       "methodComposition": {
-        "all": 935,
+        "all": 1877,
         "sourceAnchored": 714,
-        "noSourceBody": 221,
+        "noSourceBody": 1163,
         "tests": 14,
         "testsNotAnchored": 0
       },
-      "scanMode": "source",
+      "scanMode": "bytecode",
       "crossCheck": {
         "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'isTest=true' --snapshot 8389435e-69be-426d-af8a-1b4efc84ebe1",
         "serverCount": 14,
@@ -251,7 +251,7 @@
       ],
       "threshold": "lineCount > 80",
       "excludedFromDenominator": {
-        "lineCountIsZero": 221,
+        "lineCountIsZero": 1163,
         "lineCountIsNull": 0
       },
       "top": [
@@ -406,7 +406,7 @@
       "label": "规模画像",
       "domain": "D",
       "direction": "none",
-      "value": 1357,
+      "value": 2330,
       "commands": [
         "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" snapshot list --repo eladmin",
         "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Repository --snapshot 8389435e-69be-426d-af8a-1b4efc84ebe1",
@@ -427,9 +427,9 @@
       "typeCounts": {
         "Repository": 1,
         "Package": 55,
-        "Class": 207,
+        "Class": 238,
         "Interface": 78,
-        "Method": 935,
+        "Method": 1877,
         "Dependency": 44,
         "Table": 37,
         "Mapper": 0,
@@ -440,7 +440,7 @@
         "Route": 0,
         "ApiEndpoint": 0
       },
-      "linkCount": 5096,
+      "linkCount": 8177,
       "scale": {
         "collectedBy": "scan",
         "sourceHead": "646c58c30f2e9aecf998b054f05f4d9ba0008995",
@@ -596,18 +596,18 @@
       "label": "complexity 为 null 的方法占比",
       "domain": "dq",
       "direction": "none",
-      "value": 0.236364,
-      "numerator": 221,
-      "denominator": 935,
+      "value": 0.619606,
+      "numerator": 1163,
+      "denominator": 1877,
       "commands": [
         "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot 8389435e-69be-426d-af8a-1b4efc84ebe1",
         "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot 8389435e-69be-426d-af8a-1b4efc84ebe1"
       ],
       "calibers": {
         "allMethods": {
-          "value": 0.236364,
-          "numerator": 221,
-          "denominator": 935
+          "value": 0.619606,
+          "numerator": 1163,
+          "denominator": 1877
         },
         "sourceAnchored": {
           "value": 0.0,
@@ -641,26 +641,27 @@
     }
   },
   "build": {
-    "mode": "source",
-    "fallback": true,
-    "reason": "compile-failed",
+    "mode": "bytecode",
+    "fallback": false,
+    "reason": "compiled",
     "configured": true,
     "tool": "maven",
     "jdk": 8,
     "javaVersion": "1.8.0_514",
     "javapVersion": "1.8.0_514",
-    "exitCode": 1,
-    "testExitCode": null,
+    "exitCode": 0,
+    "testExitCode": 0,
     "classFiles": {
-      "main": 0,
-      "test": 0,
+      "main": 313,
+      "test": 5,
       "other": 0
     },
+    "httpRepositories": null,
     "attemptMode": null,
     "attemptReason": null,
     "crossCheck": {
-      "supplementedMethods": 221,
-      "lineCountZeroMethods": 221,
+      "supplementedMethods": 1163,
+      "lineCountZeroMethods": 1163,
       "lineCountZeroWithComplexity": 0
     }
   }
