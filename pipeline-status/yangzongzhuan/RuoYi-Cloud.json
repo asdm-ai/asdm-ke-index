@@ -4,7 +4,7 @@
   "repo": "RuoYi-Cloud",
   "sourceHead": "5db048bbd45234d3a34c243d1aed579c1766110d",
   "snapshotId": "e7f1c4d0-d7fc-49b9-89b4-1f4f148f6e3b",
-  "objectCount": 2532,
+  "objectCount": 2621,
   "importStatus": "completed",
   "steps": {
     "scan": "ok",
@@ -13,5 +13,22 @@
     "consistency": "ok"
   },
   "consistencyResult": "pass",
+  "build": {
+    "mode": "bytecode",
+    "fallback": false,
+    "reason": "compiled",
+    "tool": "maven",
+    "jdk": 17,
+    "javaVersion": "17.0.21",
+    "javapVersion": "17.0.21",
+    "exitCode": 0,
+    "testExitCode": 0,
+    "classFiles": {
+      "main": 292,
+      "test": 0,
+      "other": 0
+    },
+    "httpRepositories": null
+  },
   "overall": "pass"
 }
