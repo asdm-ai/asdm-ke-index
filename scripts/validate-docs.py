@@ -8,6 +8,8 @@ Checked:
     (and pipeline-status for the scanned commit)
   - the metrics documents carry the published percentiles and sample sizes
   - the two language versions have the same structure (headings, table rows, badge count, links)
+  - docs/BUILD_LOG: one row per system with a build record, mode equal to the report's build mode
+    (the file is required when at least one system has a build record, and must be absent otherwise)
   - content that must not appear in the public documentation
 
     python3 scripts/validate-docs.py [OUT]         # OUT defaults to the current directory
@@ -25,8 +27,10 @@ import sys
 PUBLISH_N = 30
 FILES = ["README.md", "README_zh-cn.md", "docs/METRICS.md", "docs/METRICS_zh-cn.md",
          "docs/CORPUS.md", "docs/CORPUS_zh-cn.md", "docs/PIPELINE.md", "docs/PIPELINE_zh-cn.md"]
+BUILD_FILES = ["docs/BUILD_LOG.md", "docs/BUILD_LOG_zh-cn.md"]
 PAIRS = [("README.md", "README_zh-cn.md"), ("docs/METRICS.md", "docs/METRICS_zh-cn.md"),
-         ("docs/CORPUS.md", "docs/CORPUS_zh-cn.md"), ("docs/PIPELINE.md", "docs/PIPELINE_zh-cn.md")]
+         ("docs/CORPUS.md", "docs/CORPUS_zh-cn.md"), ("docs/PIPELINE.md", "docs/PIPELINE_zh-cn.md"),
+         ("docs/BUILD_LOG.md", "docs/BUILD_LOG_zh-cn.md")]
 SCALE_KEYS = ("objectCount", "linkCount", "fileCount", "javaFiles", "lineCount", "javaLines")
 
 # Content that must not appear in prose. Each rule must itself be safe to publish: no partner
@@ -65,6 +69,13 @@ def main():
     census = json.load(open(os.path.join(repo, "census/summary.json"), encoding="utf-8"))
     R = {(r["owner"], r["repo"]): r for r in census["repos"]}
     n_repos = len(R)
+    # the build log exists exactly when at least one system carries a build record
+    n_build = sum(1 for r in R.values() if r.get("buildRecorded"))
+    files = FILES + (BUILD_FILES if n_build else [])
+    pairs = PAIRS if n_build else PAIRS[:-1]
+    for f in (BUILD_FILES if not n_build else []):
+        if os.path.exists(os.path.join(out, f)):
+            errs.append((f, "build log present but no system has a build record"))
     errs, texts = [], {}
 
     def resolve(base, rel):
@@ -75,7 +86,7 @@ def main():
         return (s.replace("_zh-cn.md", ".md").replace("README.md#", "R#").replace("README.zh.md#", "R#")
                  .replace("../README.md", "../R").replace("../README_zh-cn.md", "../R"))
 
-    for f in FILES:
+    for f in files:
         try:
             t = open(os.path.join(out, f), encoding="utf-8").read()
         except OSError as e:
@@ -148,6 +159,21 @@ def main():
                 if not json.load(open(os.path.join(repo, f"pipeline-status/{o}/{rp}.json"), encoding="utf-8"))["sourceHead"].startswith(head):
                     errs.append((f, "scanned commit", name))
 
+        if "BUILD_LOG" in f:
+            # one row per system with a build record; mode cell agrees with the report's scan mode
+            rows = re.findall(r"^\| \[([^\]]+)\]\(https://github.com/[^)]+\) \| [^|]+ \| [^|]+ \| ([^|]+) \| "
+                              r"[^|]+ \| [\d,]+ / [\d,]+ \| [\d,]+ \| [^|]+ \|$", t, flags=re.M)
+            if len(rows) != n_build:
+                errs.append((f, "build rows", len(rows), n_build))
+            for name, mode in rows:
+                r = R.get(tuple(name.split("/")))
+                if not r or not r.get("buildRecorded"):
+                    errs.append((f, "unknown build system", name))
+                    continue
+                want = "bytecode" if r["buildMode"] == "bytecode" else ("source (fell back)" if f.endswith("LOG.md") else "source（已回退）")
+                if mode.strip() != want:
+                    errs.append((f, "build mode mismatch", name, mode.strip(), want))
+
         if "METRICS" in f:
             for mid, m in census["metrics"].items():
                 if not m or m["N"] < PUBLISH_N:
@@ -171,7 +197,7 @@ def main():
         if hits:
             errs.append((f, "forbidden", hits[:3]))
 
-    for en, zh in PAIRS:
+    for en, zh in pairs:
         a, b = texts.get(en, ""), texts.get(zh, "")
         if len(anchors(a)) != len(anchors(b)):
             errs.append((en, "heading parity", len(anchors(a)), len(anchors(b))))
