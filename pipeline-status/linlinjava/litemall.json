@@ -5,7 +5,7 @@
   "sourceHead": "a1ef964a718b7277925b19ea26afe78ea3a1d325",
   "snapshotId": "4de8e93f-c82b-451f-aac3-c1a8b852d3f0",
   "objectCount": 13172,
-  "importStatus": "completed",
+  "importStatus": "skipped",
   "steps": {
     "scan": "ok",
     "projection": "ok",
@@ -13,5 +13,21 @@
     "consistency": "ok"
   },
   "consistencyResult": "pass",
+  "build": {
+    "mode": "source",
+    "fallback": true,
+    "reason": "jdk-not-found",
+    "tool": "maven",
+    "jdk": null,
+    "javaVersion": null,
+    "javapVersion": null,
+    "exitCode": null,
+    "testExitCode": null,
+    "classFiles": {
+      "main": 0,
+      "test": 0,
+      "other": 0
+    }
+  },
   "overall": "pass"
 }
