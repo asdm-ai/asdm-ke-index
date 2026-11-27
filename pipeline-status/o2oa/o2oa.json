@@ -8,11 +8,11 @@
   "importStatus": "completed",
   "steps": {
     "scan": "ok",
-    "projection": "failed",
+    "projection": "ok",
     "metrics": "ok",
-    "consistency": "skipped"
+    "consistency": "ok"
   },
-  "consistencyResult": "skipped",
+  "consistencyResult": "pass",
   "build": {
     "mode": "bytecode",
     "fallback": false,
@@ -30,5 +30,5 @@
     },
     "httpRepositories": null
   },
-  "overall": "fail"
+  "overall": "pass"
 }
