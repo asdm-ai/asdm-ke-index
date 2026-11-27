@@ -1,0 +1,26 @@
+{
+  "schemaVersion": "build-v1",
+  "configured": true,
+  "mode": "source",
+  "fallback": true,
+  "reason": "jdk-not-found",
+  "tool": "maven",
+  "jdk": null,
+  "root": ".",
+  "javaHome": null,
+  "javaVersion": null,
+  "javapVersion": null,
+  "command": [],
+  "exitCode": null,
+  "testExitCode": null,
+  "classFiles": {
+    "main": 0,
+    "test": 0,
+    "other": 0
+  },
+  "durationSec": {
+    "compile": 0,
+    "testCompile": 0
+  },
+  "logTail": []
+}

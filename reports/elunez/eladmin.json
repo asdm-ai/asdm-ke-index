@@ -208,6 +208,26 @@
       "testTypes": {
         "UnitTest": 14
       },
+      "calibers": {
+        "allMethods": {
+          "value": 0.014973,
+          "numerator": 14,
+          "denominator": 935
+        },
+        "sourceAnchored": {
+          "value": 0.019608,
+          "numerator": 14,
+          "denominator": 714
+        }
+      },
+      "methodComposition": {
+        "all": 935,
+        "sourceAnchored": 714,
+        "noSourceBody": 221,
+        "tests": 14,
+        "testsNotAnchored": 0
+      },
+      "scanMode": "source",
       "crossCheck": {
         "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'isTest=true' --snapshot 8389435e-69be-426d-af8a-1b4efc84ebe1",
         "serverCount": 14,
@@ -565,7 +585,7 @@
       ],
       "evidence": {
         "completeSnapshotCount": 1,
-        "previousReportSnapshot": "5f43da18-2522-4257-b5ec-cbf636c65ce6"
+        "previousReportSnapshot": "8389435e-69be-426d-af8a-1b4efc84ebe1"
       }
     }
   },
@@ -582,7 +602,19 @@
       "commands": [
         "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot 8389435e-69be-426d-af8a-1b4efc84ebe1",
         "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot 8389435e-69be-426d-af8a-1b4efc84ebe1"
-      ]
+      ],
+      "calibers": {
+        "allMethods": {
+          "value": 0.236364,
+          "numerator": 221,
+          "denominator": 935
+        },
+        "sourceAnchored": {
+          "value": 0.0,
+          "numerator": 0,
+          "denominator": 714
+        }
+      }
     },
     "dq.missing-version-ratio": {
       "id": "dq.missing-version-ratio",
@@ -606,6 +638,30 @@
       "direction": "none",
       "value": null,
       "reason": "不可观测（ext: 虚拟边在导入物化时已过滤——查询面天然免疫）"
+    }
+  },
+  "build": {
+    "mode": "source",
+    "fallback": true,
+    "reason": "jdk-not-found",
+    "configured": true,
+    "tool": "maven",
+    "jdk": null,
+    "javaVersion": null,
+    "javapVersion": null,
+    "exitCode": null,
+    "testExitCode": null,
+    "classFiles": {
+      "main": 0,
+      "test": 0,
+      "other": 0
+    },
+    "attemptMode": null,
+    "attemptReason": null,
+    "crossCheck": {
+      "supplementedMethods": 221,
+      "lineCountZeroMethods": 221,
+      "lineCountZeroWithComplexity": 0
     }
   }
 }
