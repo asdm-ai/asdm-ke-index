@@ -10,13 +10,15 @@ Outputs (two languages, same structure):
   docs/METRICS.md / _zh-cn.md          definitions and raw numbers of the published reference lines only
   docs/CORPUS.md / _zh-cn.md           full per-repository table and scale analysis
   docs/PIPELINE.md / _zh-cn.md         how the data is produced and verified
+  docs/BUILD_LOG.md / _zh-cn.md         build step: which systems were scanned with compiled classes and which fell back
 
 Publishing rule: a reference line is published when at least PUBLISH_N systems carry a value.
 Only metrics described in PUBLISHED are rendered. A metric that reaches the threshold without
 an entry in PUBLISHED stops the run: publishing it needs a written definition first.
 
 Inputs (read-only): repos.yaml, census/summary.json, reports/{owner}/{repo}.json,
-pipeline-status/{owner}/{repo}.json. Standard library only.
+pipeline-status/{owner}/{repo}.json, build/{owner}/{repo}.json (only for systems with a build
+configuration). Standard library only.
 
 Usage:
     python3 scripts/render-docs.py --meta meta.json --out /tmp/x        # dry run to a directory
@@ -30,7 +32,9 @@ it is written to docs/baseline.json, so the published pages can always be reprod
 The rendered files are rewritten by every run, so edit the copy here, not the Markdown.
 
 Stops (non-zero exit, nothing published) when a metric reaches the publish threshold without an
-entry in PUBLISHED, or when the systems were measured with more than one analyzer version.
+entry in PUBLISHED, when the systems were measured with more than one analyzer version, or when a
+build record and its report disagree on the scan mode or a bytecode-mode snapshot carries no
+bytecode-derived methods (the analyzer fell back silently).
 """
 import argparse
 import json
@@ -85,6 +89,23 @@ PUBLISHED = {
         "def_zh": "超过 80 行的方法占有行数记录的方法的比例",
         "how_en": "Numerator: methods with `lineCount > 80`. Denominator: methods with a recorded line count (zero or missing line counts are excluded).",
         "how_zh": "分子：`lineCount > 80` 的方法；分母：有行数记录的方法（行数为 0 或缺失的不计）。",
+    },
+}
+
+# C3 的两种分母口径（Phase 4A · P2-D19）：同一指标两行并列，各写明分母与含义。
+# allMethods = 冻结口径（历史连续）；sourceAnchored = 伴随口径，只算有源码方法体（lineCount > 0）
+# 的方法——同时排除接口/抽象方法与字节码补全方法，按构造不随扫描模式切换而变。
+# 文案不得写成“剔除 Lombok”：没有“是否补全”的标记，口径是按 lineCount > 0 识别的。
+C3_CALIBERS = {
+    "allMethods": {
+        "en": "Test-method share (all methods)", "zh": "测试方法占比（全部方法）",
+        "def_en": "Test methods as a share of every method in the graph, including generated methods (getters, setters, builders) that only the compiled classes reveal",
+        "def_zh": "测试方法占图谱中全部方法的比例，含只在编译产物里才出现的生成方法（getter、setter、builder）",
+    },
+    "sourceAnchored": {
+        "en": "Test-method share (methods with a source body)", "zh": "测试方法占比（有源码方法体）",
+        "def_en": "Test methods as a share of the methods that have a source body (a recorded line count above zero)",
+        "def_zh": "测试方法占有源码方法体（行数大于 0）的方法的比例",
     },
 }
 
@@ -166,6 +187,8 @@ def load(repo):
         sp = os.path.join(repo, "pipeline-status", r["owner"], f"{r['repo']}.json")
         item["report"] = json.load(open(rp, encoding="utf-8")) if os.path.exists(rp) else None
         item["status"] = json.load(open(sp, encoding="utf-8")) if os.path.exists(sp) else None
+        bp = os.path.join(repo, "build", r["owner"], f"{r['repo']}.json")
+        item["buildrec"] = json.load(open(bp, encoding="utf-8")) if os.path.exists(bp) else None
         repos.append(item)
     return {"root": repo, "census": census, "repos": repos}
 
@@ -286,8 +309,101 @@ def compute(d):
         s[key] = {"sum": sum(vals), "min": min(vals), "median": int(statistics.median(vals)), "max": max(vals)} if vals else None
     s["link_top_share"] = s["ratio_top"][3] / s["links"]["sum"] * 100 if s["ratio_top"] and s["links"] else 0.0
 
+    # scan mode (build step): which systems were scanned with compiled classes, which fell back
+    recorded = [r for r in repos if r.get("buildrec")]
+    s["build"] = {
+        "recorded": recorded,
+        "bytecode": [r["name"] for r in recorded if r["buildrec"].get("mode") == "bytecode"],
+        "fallback": [r["name"] for r in recorded if r["buildrec"].get("fallback")],
+        "no_record": len(repos) - len(recorded),
+    }
+    # the mark must be true: the record and the report agree on the mode, and a bytecode-mode snapshot
+    # really carries bytecode-derived methods (KE falls back to source silently when javap is missing or
+    # older than the class files; compute-metrics flags that case)
+    for r in recorded:
+        name, rb = r["name"], (r["report"] or {}).get("build")
+        if not isinstance(rb, dict):
+            raise SystemExit(f"not publishing: {name} has a build record but its report has no build block")
+        if rb.get("mode") != r["buildrec"].get("mode"):
+            raise SystemExit(f"not publishing: {name} build record and report disagree on the scan mode "
+                             f"({r['buildrec'].get('mode')} vs {rb.get('mode')}); rerun the metrics step")
+        if rb.get("warning"):
+            raise SystemExit(f"not publishing: {name}: {rb['warning']}")
+    for r in repos:
+        if r.get("buildrec") is None and ((r["report"] or {}).get("build") or {}).get("mode") == "bytecode":
+            raise SystemExit(f"not publishing: {r['name']} reports bytecode mode but has no build record")
 
-# ----------------------------------------------------------------- shared pieces
+    # C3 companion caliber: a second row next to the frozen line, published on its own N.
+    # Below the threshold it stays out of the entry page and out of the docs (no number, no row).
+    cal = ((c["metrics"].get("C3") or {}).get("calibers") or {})
+    b = cal.get("sourceAnchored") or {}
+    s["c3b"] = b if ("C3" in s["published"] and b.get("published") and b.get("N", 0) >= PUBLISH_N) else None
+    # systems scanned with compiled classes add generated methods to their method count, so the
+    # all-methods line is not comparable across systems while both scan modes are in the corpus
+    s["mixed_modes"] = bool(s["build"]["bytecode"]) and len(s["build"]["bytecode"]) < s["n"]
+
+
+def c3_note(d, en):
+    """The paragraph under the entry-page reference table that explains the two C3 denominators."""
+    s = d["stats"]
+    nbc = len(s["build"]["bytecode"])
+    if en:
+        if s["c3b"]:
+            L = ["**Two denominators for one line.** Test-method share is listed twice. *All methods* counts every method in the graph, "
+                 "including the generated ones (getters, setters, builders) that only the compiled classes reveal. "
+                 "*Methods with a source body* counts only the methods you can locate in the source, so it does not change when a system "
+                 "is scanned with or without compiled classes. Only the all-methods line has an independent cross-check; "
+                 "the source-body line is computed from the same data and is not cross-checked separately yet."]
+            if s["mixed_modes"]:
+                L.append(f" {nbc} of the {s['n']} systems were scanned with compiled classes, so the all-methods line is not comparable "
+                         "across systems; use the source-body line to compare one system with another.")
+            return ["".join(L), ""]
+        if s["mixed_modes"]:
+            return [f"**Scan modes are mixed.** {nbc} of the {s['n']} systems were scanned with compiled classes, which adds generated methods "
+                    "to their method count and lowers their all-methods test share. The all-methods line is therefore not comparable across "
+                    "systems for now; a second line restricted to methods with a source body does not have enough systems with a value yet "
+                    "and is not published.", ""]
+    else:
+        if s["c3b"]:
+            L = ["**同一指标，两种分母。**测试方法占比列了两行。“全部方法”把图谱里的每个方法都算进去，包括只在编译产物里才出现的生成方法"
+                 "（getter、setter、builder）；“有源码方法体”只算能在源码里定位到的方法，因此不随一个系统是否带着编译产物扫描而变。"
+                 "只有“全部方法”一行有独立复核；“有源码方法体”一行由同一批数据算出，暂未单独复核。"]
+            if s["mixed_modes"]:
+                L.append(f" 当前 {s['n']} 个系统中有 {nbc} 个是带着编译产物扫描的，“全部方法”一行在系统之间不可比；"
+                         "跨系统比较请看“有源码方法体”一行。")
+            return ["".join(L), ""]
+        if s["mixed_modes"]:
+            return [f"**扫描模式并存。**{s['n']} 个系统中有 {nbc} 个是带着编译产物扫描的，生成方法计入它们的方法数，"
+                    "把“全部方法”口径的测试占比拉低。因此“全部方法”一行暂时不宜跨系统比较；只算有源码方法体的第二种口径"
+                    "有值的系统还不够，尚未发布。", ""]
+    return []
+
+
+def c3_metric_lines(d, m, en):
+    """Extra bullets of the C3 definition card: the two denominators, each with its meaning and sample size."""
+    s = d["stats"]
+    nbc = len(s["build"]["bytecode"])
+    ca = ((m.get("calibers") or {}).get("allMethods") or {})
+    if en:
+        if s["c3b"]:
+            return [f"- **Two denominators.** *All methods*: {C3_CALIBERS['allMethods']['def_en'][0].lower() + C3_CALIBERS['allMethods']['def_en'][1:]}; "
+                    f"systems with a value: {ca.get('N', m['N'])}. "
+                    f"*Methods with a source body*: {C3_CALIBERS['sourceAnchored']['def_en'][0].lower() + C3_CALIBERS['sourceAnchored']['def_en'][1:]}; "
+                    f"systems with a value: {s['c3b']['N']}. "
+                    "The source-body line has no separate cross-check yet: the cross-check above covers the all-methods numerator."]
+        if s["mixed_modes"]:
+            return [f"- **Not comparable across systems yet.** {nbc} of the {s['n']} systems were scanned with compiled classes, "
+                    "which adds generated methods to their method count. A second line restricted to methods with a source body "
+                    "does not have enough systems with a value yet and is not published."]
+    else:
+        if s["c3b"]:
+            return [f"- **两种分母。**“全部方法”：{C3_CALIBERS['allMethods']['def_zh']}，有值的系统 {ca.get('N', m['N'])} 个。"
+                    f"“有源码方法体”：{C3_CALIBERS['sourceAnchored']['def_zh']}，有值的系统 {s['c3b']['N']} 个。"
+                    "“有源码方法体”一行暂无独立复核：上面的复核只覆盖“全部方法”口径的分子。"]
+        if s["mixed_modes"]:
+            return [f"- **暂不宜跨系统比较。**{s['n']} 个系统中有 {nbc} 个是带着编译产物扫描的，生成方法计入它们的方法数。"
+                    "只算有源码方法体的第二种口径有值的系统还不够，尚未发布。"]
+    return []
 def mname(mid, en):
     return PUBLISHED[mid]["en" if en else "zh"]
 
@@ -318,12 +434,26 @@ def ref_rows(d, en, raw=False):
         m, q = c["metrics"][mid], c["metrics"][mid]["percentiles"]
         fmt = (lambda x: p(x)) if raw or PUBLISHED[mid]["kind"] == "num" else pct
         cells = [mname(mid, en), PUBLISHED[mid]["def_en" if en else "def_zh"], direction(d, mid, en)]
+        if mid == "C3":  # the frozen caliber is named and defined explicitly once two calibers exist
+            cells[0] = C3_CALIBERS["allMethods"]["en" if en else "zh"]
+            cells[1] = C3_CALIBERS["allMethods"]["def_en" if en else "def_zh"]
         if raw:
             cells.append(str(m["N"]))
         cells += [fmt(q[k]) for k in ("p25", "p50", "p75")]
         if raw:
             cells += [p(q["p90"]), p(m["mean"])]
         out.append("| " + " | ".join(cells) + " |")
+        if mid == "C3" and s.get("c3b"):
+            # companion caliber: same shape, its own N and statistics (sourceAnchored caliber of census C3)
+            b, qb = s["c3b"], s["c3b"]["percentiles"]
+            cells = [C3_CALIBERS["sourceAnchored"]["en" if en else "zh"],
+                     C3_CALIBERS["sourceAnchored"]["def_en" if en else "def_zh"], direction(d, mid, en)]
+            if raw:
+                cells.append(str(b["N"]))
+            cells += [fmt(qb[k]) for k in ("p25", "p50", "p75")]
+            if raw:
+                cells += [p(qb["p90"]), p(b["mean"])]
+            out.append("| " + " | ".join(cells) + " |")
     return out
 
 
@@ -367,6 +497,158 @@ def full_rows(d):
             n(rp["snapshot"]["linkCount"]) if rp else "—",
         ] + scale_cells(r) + ["✅" if st and st.get("overall") == "pass" else "❌"]) + " |")
     return out
+
+
+def build_note(d, en):
+    """One paragraph on the scan modes in the corpus; None when no system has a build record."""
+    b = d["stats"]["build"]
+    if not b["recorded"]:
+        return None
+    s, link = d["stats"], ("docs/BUILD_LOG.md" if en else "docs/BUILD_LOG_zh-cn.md")
+    bc, fb, rest = b["bytecode"], b["fallback"], []
+    names_bc = (", " if en else "、").join(bc)
+    names_fb = (", " if en else "、").join(fb)
+    if en:
+        fb_txt = (f" {count_word(len(fb), True)} of the {s['n']} systems was set up for compilation but fell back to a scan "
+                  f"from source alone ({names_fb})." if len(fb) == 1 else
+                  f" {len(fb)} of the {s['n']} systems were set up for compilation but fell back to a scan from "
+                  f"source alone ({names_fb}).") if fb else ""
+    else:
+        fb_txt = f"{len(fb)} 个配置了编译但回退为只扫源码（{names_fb}）。" if fb else ""
+    rest_n = s["n"] - len(bc) - len(fb)
+    rest_en = f" The remaining {rest_n} are scanned from source only." if rest_n else ""
+    rest_zh = f"其余 {rest_n} 个只扫源码。" if rest_n else ""
+    if bc:
+        if en:
+            return (f"**Two scan modes.** {len(bc)} of the {s['n']} systems were compiled before the scan ({names_bc}): "
+                    "their call links are read from the compiled classes, so their method and link counts are higher "
+                    f"than a scan of the same source alone would give.{fb_txt}{rest_en} "
+                    f"Per-system build results: [{link}]({link}).")
+        return (f"**两种扫描模式。**{s['n']} 个系统里有 {len(bc)} 个在扫描前先做了编译（{names_bc}）："
+                f"调用链接取自编译后的 class 文件，它们的方法数与链接数会高于同一份源码只扫源码的结果。{fb_txt}"
+                f"{rest_zh}逐仓编译结论见 [{link}]({link})。")
+    if en:
+        return (f"**Build step.**{fb_txt} All {s['n']} systems are therefore scanned from source only. "
+                f"Per-system build results: [{link}]({link}).")
+    return (f"**编译回退。**{fb_txt}全部 {s['n']} 个系统目前均为只扫源码。"
+            f"逐仓编译结论见 [{link}]({link})。")
+
+
+def build_cells(r, en):
+    """Cells of one BUILD_LOG row; [] when the report has no build block (the generator refuses to write then)."""
+    rec, rb = r["buildrec"], (r["report"] or {}).get("build") or {}
+    if not rb:
+        return []
+    cf = rec.get("classFiles") or {}
+    if rec.get("attemptMode") and rec["attemptMode"] != rec.get("mode"):
+        latest = "failed this time, previous build kept" if en else "本轮失败，沿用之前的编译版快照"
+    elif rec.get("reason") in ("jdk-not-found", "wrapper-not-found", "invalid-config"):
+        latest = "not run" if en else "未执行"
+    elif rec.get("exitCode") == 0:
+        latest = ("ok, tests not compiled" if en else "成功，测试未编译") if rec.get("testExitCode") not in (0, None) \
+            else ("ok" if en else "成功")
+    else:
+        latest = f"failed (exit {rec.get('exitCode')})" if en else f"失败（exit {rec.get('exitCode')}）"
+    mode = "bytecode" if rb.get("mode") == "bytecode" else ("source (fell back)" if en else "source（已回退）")
+    reason = rec.get("reason") or "-"
+    if rec.get("attemptReason") and rec["attemptReason"] != rec.get("reason"):
+        reason += f" (this run: {rec['attemptReason']})" if en else f"（本轮：{rec['attemptReason']}）"
+    if rec.get("httpRepositories") == "unblocked-on-retry":
+        reason += " (HTTP repositories unblocked on retry)" if en else "（重试时放开了明文 HTTP 仓库）"
+    return [f"[{r['name']}](https://github.com/{r['name']})", rec.get("tool") or "-", str(rec.get("jdk") or "-"), mode,
+            latest, f"{n(cf.get('main'))} / {n(cf.get('test'))}",
+            n((rb.get("crossCheck") or {}).get("supplementedMethods")), reason]
+
+
+def build_log_doc(d, meta, en):
+    """docs/BUILD_LOG: the build step result per system with a build configuration."""
+    s, b = d["stats"], d["stats"]["build"]
+    other = "BUILD_LOG_zh-cn.md" if en else "BUILD_LOG.md"
+    home = "../README.md" if en else "../README_zh-cn.md"
+    run_url = f"https://github.com/asdm-ai/asdm-ke-index/actions/runs/{meta['run_id']}"
+    rows = [build_cells(r, en) for r in b["recorded"]]
+    if en:
+        L = ["# Build log", "", f"English | [简体中文]({other})", "",
+             f"Which of the {s['n']} systems behind the [reference lines]({home}) were scanned with compiled "
+             "classes and which fell back to a scan from source alone. Current baseline: "
+             f"run #{meta['run_number']} (`{meta['run_id']}`).", "",
+             "A system listed in `build.yaml` is compiled before the import. When the compiled classes are present, "
+             "the analyzer reads call links from the bytecode and recovers methods the source does not spell out "
+             "(generated getters, setters, builders): that is bytecode mode. A failed build is not a pipeline "
+             "failure. The system is scanned from source alone instead, and the fallback is marked here, in its "
+             "report and in its pipeline status.", "",
+             "| Repository | Tool | JDK | Mode | Latest compile | Class files (main / test) | Methods derived from bytecode | Reason |",
+             "|---|---|---|---|---|---|---|---|"]
+    else:
+        L = ["# 编译日志", "", f"[English]({other}) | 简体中文", "",
+             f"[参考线]({home})背后的 {s['n']} 个系统里，哪些是带着编译产物扫描的、哪些回退成了只扫源码。"
+             f"当前基线：run #{meta['run_number']}（`{meta['run_id']}`）。", "",
+             "`build.yaml` 里列出的系统会在导入前先编译。仓内有编译产物时，分析器从字节码读调用链接，并补出源码里"
+             "没有显式写出的方法（生成的 getter、setter、builder）——这是 bytecode 模式。编译失败不算管线失败："
+             "该系统改为只扫源码，回退在本页、它的 report 与 pipeline-status 里都有标注。", "",
+             "| 仓库 | 工具 | JDK | 模式 | 最近一次编译 | class 文件（主 / 测试） | 字节码补全的方法数 | 原因 |",
+             "|---|---|---|---|---|---|---|---|"]
+    L += ["| " + " | ".join(c) + " |" for c in rows] + [""]
+    nbc, nfb, nnr = len(b["bytecode"]), len(b["fallback"]), b["no_record"]
+    if en:
+        L += [f"- **Bytecode mode**: {nbc} of {s['n']} systems.",
+              f"- **Fell back to source only**: {nfb} (a build was configured but did not succeed).",
+              f"- **Source only, no build configured**: {s['n'] - len(b['recorded'])} systems; {nnr} of them were last scanned "
+              "before the build step existed and carry no build record."]
+    else:
+        L += [f"- **bytecode 模式**：{s['n']} 个系统中的 {nbc} 个。",
+              f"- **回退为只扫源码**：{nfb} 个（配置了构建但没有编译成功）。",
+              f"- **只扫源码、未配置构建**：{s['n'] - len(b['recorded'])} 个系统；其中 {nnr} 个是编译子步上线前扫的，没有编译记录。"]
+    if en:
+        L += ["", "## How to read a row", "",
+              "- **Mode**: `bytecode` means the snapshot was built with the compiled classes; `source (fell back)` "
+              "means the build was configured but did not succeed, so the snapshot comes from source alone.",
+              "- **Latest compile**: the outcome of the build in the last scan of that system. "
+              "\"failed this time, previous build kept\" means the build failed on a later rescan and the earlier "
+              "compiled snapshot was kept (the import was deduplicated).",
+              "- **Methods derived from bytecode**: methods in the snapshot that exist only through the bytecode "
+              "path. A bytecode-mode row with `0` here means the analyzer fell back silently; the documentation "
+              "generator refuses to publish in that case.",
+              "- **Class files**: compiled files found in the tree, main sources / test sources.",
+              "- **Reason**: why the row has its mode (codes in the table below). The suffix "
+              "\"(HTTP repositories unblocked on retry)\" marks a Maven build that the built-in blocker for plain-HTTP "
+              "repositories stopped and that was then run once more with that blocker overridden, because the POM "
+              "declares such a repository.", "",
+              "| Reason | Meaning |", "|---|---|",
+              "| `compiled` | main sources compiled and class files were present |",
+              "| `compile-failed` | the build command exited non-zero; everything it produced was removed before the import |",
+              "| `compile-timeout` | the build command exceeded its time limit |",
+              "| `no-class-files` | the build succeeded but produced no class files |",
+              "| `jdk-not-found` | the JDK named in `build.yaml` is not installed on the runner |",
+              "| `wrapper-not-found` | the repository has no Gradle wrapper |",
+              "| `invalid-config` | the entry in `build.yaml` is not valid |", "",
+              "## Where the details are", "",
+              "Per repository: `build/{owner}/{repo}.json` (command, exit codes, durations, the last 60 lines of compiler "
+              "output). Per-system values and the bytecode cross-check: the `build` block of "
+              "`reports/{owner}/{repo}.json`. The scan run: [this baseline](" + run_url + ").", ""]
+    else:
+        L += ["", "## 怎么读一行", "",
+              "- **模式**：`bytecode` 表示快照是带着编译产物构建的；`source（已回退）` 表示配置了构建但没有成功，"
+              "快照只来自源码。",
+              "- **最近一次编译**：该系统上一次扫描时构建的结果。\"本轮失败，沿用之前的编译版快照\" 表示后来的一次重扫"
+              "编译失败、保留了早先的编译版快照（导入被去重）。",
+              "- **字节码补全的方法数**：快照里只经字节码路径才存在的方法。bytecode 模式的一行这里是 `0`，"
+              "说明分析器静默回退了——文档生成器遇到这种情况拒绝发布。",
+              "- **class 文件**：源码树里找到的编译文件数，主源码 / 测试源码。",
+              "- **原因**：这一行为什么是这个模式（代码见下表）。带\"（重试时放开了明文 HTTP 仓库）\"表示 Maven 构建"
+              "被内置的明文仓库拦截器挡下、随后放开该拦截重试了一次——因为 pom 声明了明文 HTTP 仓库。", "",
+              "| 原因 | 含义 |", "|---|---|",
+              "| `compiled` | 主源码编译成功且有 class 文件 |",
+              "| `compile-failed` | 构建命令非零退出；它产出的一切在导入前已清除 |",
+              "| `compile-timeout` | 构建命令超过时限 |",
+              "| `no-class-files` | 构建成功但没有产出 class 文件 |",
+              "| `jdk-not-found` | `build.yaml` 指定的 JDK 在 runner 上没有安装 |",
+              "| `wrapper-not-found` | 仓库没有 Gradle wrapper |",
+              "| `invalid-config` | `build.yaml` 的条目不合法 |", "",
+              "## 明细在哪", "",
+              "逐仓：`build/{owner}/{repo}.json`（命令、退出码、耗时、编译输出末 60 行）。逐仓数值与字节码交叉核对："
+              "`reports/{owner}/{repo}.json` 的 `build` 块。扫描记录：[本次基线](" + run_url + ")。", ""]
+    return "\n".join(L)
 
 
 # ------------------------------------------------------------------- entry page
@@ -423,6 +705,7 @@ def readme(d, meta, en):
                    ("**全部通过管线。**" if not s["failed"] else "**管线状态。**")
     missing_en = " and none missing" if not n_missing else f", {n_missing} without a recorded conclusion"
     missing_zh = "，无缺失" if not n_missing else f"，{n_missing} 个没有结论记录"
+    build_note_txt = build_note(d, en)
 
     # centred hero block: title, slogan, one-line positioning, language switch, badges
     L = ["<div align=\"center\">", "", "# ASDM KE Index", "",
@@ -455,7 +738,7 @@ def readme(d, meta, en):
             f"{s['no_val'] - s['no_val_frontend']} without a Java package structure). Baseline: {meta['baseline_date']}. "
             "How the numbers are checked: [Where the data comes from](#where-the-data-comes-from).", "",
             "| Reference line | What it measures | Direction | P25 | Median (P50) | P75 |", "|---|---|---|---|---|---|",
-        ] + ref_rows(d, True) + [
+        ] + ref_rows(d, True) + c3_note(d, True) + [
             "",
             "The median splits the sample in half; P25 to P75 covers the middle half of the systems. On a \"lower is better\" line, a value above "
             "P75 means the system is worse than three quarters of the sample. A range-type line has no good or bad direction: "
@@ -473,6 +756,7 @@ def readme(d, meta, en):
             "",
             f"**Spread.** The systems run from {n(s['lineCount']['min'])} to {n(s['lineCount']['max'])} lines of code "
             f"(median {n(s['lineCount']['median'])}) and from {n(s['objects']['min'])} to {n(s['objects']['max'])} objects.", "",
+        ] + ([build_note_txt, ""] if build_note_txt else []) + [
             f"**What this covers, and what it does not yet.** {s['n']} systems are not enough to stand for the open-source community as a whole. "
             "The corpus is being extended step by step, with the goal of reaching a sample proportion that is statistically meaningful. "
             "Until then, the reference lines describe this corpus.", "",
@@ -550,7 +834,7 @@ def readme(d, meta, en):
             f"{s['no_val'] - s['no_val_frontend']} 个没有 Java 包结构的仓）。基线：{meta['baseline_date']}。"
             "复核方式见[数据怎么来的](#数据怎么来的怎么复核)。", "",
             "| 指标 | 衡量什么 | 方向 | P25 | 中位数（P50） | P75 |", "|---|---|---|---|---|---|",
-        ] + ref_rows(d, False) + [
+        ] + ref_rows(d, False) + c3_note(d, False) + [
             "",
             "中位数把样本分成两半，P25 到 P75 覆盖中间一半的系统。\"越低越好\"的指标，你的值高于 P75，说明比四分之三的样本更严重。"
             "区间型指标不设优劣方向，落在 P25 到 P75 之间属于常见范围。", "",
@@ -566,6 +850,7 @@ def readme(d, meta, en):
             "",
             f"**跨度。** 这些系统的代码规模从 {n(s['lineCount']['min'])} 行到 {n(s['lineCount']['max'])} 行（中位数 {n(s['lineCount']['median'])} 行），"
             f"图谱对象从 {n(s['objects']['min'])} 个到 {n(s['objects']['max'])} 个。", "",
+        ] + ([build_note_txt, ""] if build_note_txt else []) + [
             f"**现在的覆盖范围与目标。** {s['n']} 个系统的规模还不足以代表整个开源社区的状态。语料在逐步扩展，目标是达到具备统计学价值的样本比例。"
             "在此之前，参考线反映的是这批语料的状况。", "",
         ]
@@ -646,6 +931,8 @@ def metrics_doc(d, meta, en):
             L += ([f"- **Cross-check.** One of the two counts behind the line was compared, per repository, with a separate filtered "
                    f"count from the server: {x['match']} of {x['match'] + x['mismatch']} match."]
                   if x["checked"] else ["- **Cross-check.** None yet: the line is computed in one pass from the package dependency list."])
+            if mid == "C3":
+                L += c3_metric_lines(d, m, True)
         else:
             L += [f"### {mname(mid, False)}（`{mid}`）", "",
                   f"- **定义。**{PUBLISHED[mid]['def_zh']}。",
@@ -653,6 +940,8 @@ def metrics_doc(d, meta, en):
                   f"- **方向。**{direction(d, mid, False)}。有值的系统 {m['N']} 个，无值 {m['missing']} 个。"]
             L += ([f"- **复核。**分子或分母逐仓与服务端按条件另查一次的结果比对：{x['match']}/{x['match'] + x['mismatch']} 一致。"]
                   if x["checked"] else ["- **复核。**暂无：该指标由包依赖清单一次算出。"])
+            if mid == "C3":
+                L += c3_metric_lines(d, m, False)
         L.append("")
     if en:
         L += ["## Rules", "",
@@ -851,14 +1140,14 @@ def pipeline_doc(d, meta, en):
              "`max-parallel: 1`: one repo's failure neither cancels the others nor blocks the trailing census).", "",
              "```",
              "preflight (zero-drift short circuit)",
-             "  1. scan         clone, then import --defer-projection (MySQL only)",
+             "  1. scan         clone, build when configured, then import --defer-projection (MySQL only)",
              "  2. projection   ke project <snapshotId> (Neo4j projection)",
              "  3. metrics      compute-metrics.py (direct MySQL queries)",
              "  4. consistency   graph-metrics.py --compare (chain metrics only: graph-form recomputation + dual-path equivalence)",
              "  5. annotate     pipeline-status written + report committed",
              "census           aggregates the artifacts, rolls up every repo's step conclusions, reconciles with the scan matrix",
              "```", "",
-             "- **Triggers**: a push touching `repos.yaml`, a manual dispatch from the Actions tab (optional `scan_force`), or the monthly "
+             "- **Triggers**: a push touching `repos.yaml`, a manual dispatch from the Actions tab (optional `scan_force`, and `scan_repos` to rerun only the listed systems), or the monthly "
              "schedule `0 2 1 * *`. A run-level `concurrency` group keeps the three trigger surfaces mutually exclusive.",
              "- **Default-track dedup**: when both the repo HEAD and the CLI version are unchanged, preflight skips the whole job.",
              "- **Concurrency guard**: `max-parallel: 1` keeps repos serial, so projection has an exclusive window.",
@@ -908,14 +1197,14 @@ def pipeline_doc(d, meta, en):
              "单仓失败不级联，也不阻断尾部 census）。", "",
              "```",
              "preflight（零漂移短路）",
-             "  1. scan         clone 后 import --defer-projection（仅 MySQL 落库）",
+             "  1. scan         clone →（配置了构建的仓：编译）→ import --defer-projection（仅 MySQL 落库）",
              "  2. projection   ke project <snapshotId>（Neo4j 投影）",
              "  3. metrics      compute-metrics.py（MySQL 直查）",
              "  4. consistency   graph-metrics.py --compare（仅链路类指标：图形态重算 + 双路径等价比对）",
              "  5. annotate     pipeline-status 落盘 + 报告入库",
              "census           聚合成功产物，汇总全部仓子步结论，并与扫描矩阵对账",
              "```", "",
-             "- **触发**：push 修改 `repos.yaml`、Actions 页手动触发（可选 `scan_force`）、月度 schedule `0 2 1 * *`。"
+             "- **触发**：push 修改 `repos.yaml`、Actions 页手动触发（可选 `scan_force`；`scan_repos` 只重跑列出的仓）、月度 schedule `0 2 1 * *`。"
              "run 级 `concurrency` 让三触发面互斥。",
              "- **默认轨去重**：仓 HEAD 与 CLI 版本均未变时，preflight 直接跳过整个 job。",
              "- **并发护栏**：`max-parallel: 1` 单仓串行，投影天然独占窗口。",
@@ -939,6 +1228,51 @@ def pipeline_doc(d, meta, en):
              "> 该门槛作用在总样本上。具体哪些参考线在 README 上发布，由 [docs/METRICS_zh-cn.md](METRICS_zh-cn.md) 的逐条规则决定，"
              "并在生成本文档时强制检查。", ""]
         title_repro, title_rescan = "## 复现说明", "### 重扫轨说明（分析器版本升级后的口径修正重扫）"
+    # build step (2026-11-27): rows for the scripts always; the data paths and the section only once a
+    # system has a build record, so a corpus without one renders exactly as before
+    have_build = bool(s["build"]["recorded"])
+    bl = "docs/BUILD_LOG.md" if en else "docs/BUILD_LOG_zh-cn.md"
+    extra_rows = [
+        "| `scripts/build-step.sh` | Build step: compiles a system configured in `build.yaml` after the clone "
+        "(Maven `compile` + `test-compile`, or the Gradle wrapper); a failed build falls back to source-only and says so |"
+        if en else "| `scripts/build-step.sh` | 编译子步：对 `build.yaml` 里配置的仓在 clone 后编译（Maven `compile` + "
+                   "`test-compile`，或 Gradle wrapper）；编译失败回退只扫源码并标注 |",
+        "| `scripts/scan-matrix.sh` | Builds the scan matrix: `repos.yaml` without the skipped systems, each entry joined "
+        "with its `build.yaml` configuration, optionally narrowed to `scan_repos` |"
+        if en else "| `scripts/scan-matrix.sh` | 生成扫描矩阵：`repos.yaml` 去掉 skip 的仓，逐条并入 `build.yaml` 配置，"
+                   "可按 `scan_repos` 收窄 |",
+    ] + ([
+        "| `build.yaml` | Build configuration per system: tool, JDK, build root (no entry = scanned from source only) |"
+        if en else "| `build.yaml` | 逐仓构建配置：工具、JDK、构建根目录（没有条目 = 只扫源码） |",
+        "| `build/{owner}/{repo}.json` | Build record of the last scan of a system with a build configuration "
+        "(command, exit codes, durations, last lines of compiler output) |"
+        if en else "| `build/{owner}/{repo}.json` | 配置了构建的仓最近一次扫描的编译记录（命令、退出码、耗时、编译输出末尾） |",
+        f"| `{bl}` | Scan mode per system with a build configuration; fallbacks listed by name |"
+        if en else f"| `{bl}` | 配置了构建的各系统的扫描模式；回退的仓逐个列出 |",
+    ] if have_build else [])
+    k = next(i for i, x in enumerate(L) if x.startswith("| `scripts/repo-scale.py` |"))
+    L = L[:k + 1] + extra_rows + L[k + 1:]
+    if have_build:
+        if en:
+            section = ["## Build step and scan mode", "",
+                       "A system listed in `build.yaml` is compiled after the clone and before the import, on the JDK given per "
+                       "system. With the compiled classes present, the analyzer reads call links from the bytecode and "
+                       "recovers methods the source does not spell out (generated getters, setters, builders): bytecode mode.", "",
+                       "A failed build is not a pipeline failure. The system is scanned from source alone instead, and the "
+                       f"fallback is marked in its report, its pipeline status and in [{bl}]({os.path.basename(bl)}), with the last lines of "
+                       "the compiler output kept in `build/{owner}/{repo}.json`.", "",
+                       "Method and link counts are not comparable between the two modes.", ""]
+            marker = "Nothing is written unless every system passed the pipeline."
+        else:
+            section = ["## 编译子步与扫描模式", "",
+                       "`build.yaml` 里列出的系统在 clone 之后、导入之前按指定的 JDK 编译。仓内有编译产物时，分析器从字节码读"
+                       "调用链接，并补出源码里没有显式写出的方法（生成的 getter、setter、builder）：bytecode 模式。", "",
+                       "编译失败不算管线失败：该系统改为只扫源码，回退在它的 report、pipeline-status 和 "
+                       f"[{bl}]({os.path.basename(bl)}) 里都有标注，编译输出的末尾保留在 `build/{{owner}}/{{repo}}.json`。", "",
+                       "两种模式下的方法数与链接数不可直接比较。", ""]
+            marker = "不是全部仓通过管线就不写。"
+        j = next(i for i, x in enumerate(L) if x.endswith(marker))
+        L = L[:j + 1] + section + L[j + 1:]
     # Reproducing and rescan track: identical commands in both languages, prose per language
     cmds = ["", "```bash", "# 1. Install the KE CLI (manifest latest + sha256 check + version assertion)" if en
             else "# 1. 安装 KE CLI（manifest latest + sha256 对账 + 版本断言）",
@@ -1002,7 +1336,7 @@ def main():
     ap.add_argument("--meta", help="JSON with run_id, run_number, started_at, completed_at, duration, baseline_date")
     ap.add_argument("--run-id", help="build the meta from a workflow run instead (needs --run-number and --started-at)")
     ap.add_argument("--run-number")
-    ap.add_argument("--started-at", help="run start, ISO 8601 (the workflow's github.run_started_at)")
+    ap.add_argument("--started-at", help="run start, ISO 8601 (run_started_at of the run object, Actions API)")
     ap.add_argument("--completed-at", help="end of the last scan job, ISO 8601 (default: now)")
     ap.add_argument("--out", help="output directory (default: write into --repo)")
     ap.add_argument("--allow-failed", action="store_true",
@@ -1037,6 +1371,15 @@ def main():
         # which run produced the baseline; re-rendering with --meta docs/baseline.json reproduces the pages byte for byte
         "docs/baseline.json": json.dumps(meta, ensure_ascii=False, indent=1) + "\n",
     }
+    if d["stats"]["build"]["recorded"]:
+        docs["docs/BUILD_LOG.md"] = build_log_doc(d, meta, True)
+        docs["docs/BUILD_LOG_zh-cn.md"] = build_log_doc(d, meta, False)
+    else:
+        # a corpus without build records carries no build log; drop one left from an earlier state
+        for stale in ("docs/BUILD_LOG.md", "docs/BUILD_LOG_zh-cn.md"):
+            if os.path.exists(os.path.join(out, stale)):
+                os.remove(os.path.join(out, stale))
+                print(f"removed {stale} (no system has a build record)")
     os.makedirs(os.path.join(out, "docs"), exist_ok=True)
     for name, text in docs.items():
         with open(os.path.join(out, name), "w", encoding="utf-8") as f:
@@ -1047,6 +1390,7 @@ def main():
         "published": s["published"], "N": s["N"], "no_val": [s["no_val"], s["no_val_frontend"]],
         "xcheck": s["xcheck"], "scale": {k: s[k]["sum"] for k in ("fileCount", "javaFiles", "lineCount", "javaLines")},
         "graph": {k: s[k]["sum"] for k in ("objects", "links")},
+        "build": {"bytecode": s["build"]["bytecode"], "fallback": s["build"]["fallback"], "noRecord": s["build"]["no_record"]},
         "fm": s["fm"], "drift": [x["name"] for x in s["drift"]], "other_top": s["other_top"], "link_top_share": s["link_top_share"],
     }, ensure_ascii=False))
 

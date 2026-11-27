@@ -1,0 +1,55 @@
+{
+  "schemaVersion": "build-v1",
+  "configured": true,
+  "mode": "bytecode",
+  "fallback": false,
+  "reason": "compiled",
+  "tool": "gradle",
+  "jdk": 17,
+  "root": ".",
+  "javaHome": "/usr/lib/jvm/temurin-17-jdk-amd64",
+  "javaVersion": "17.0.21.1",
+  "javapVersion": "17.0.21.1",
+  "command": [
+    [
+      "./gradlew",
+      "--no-daemon",
+      "-q",
+      "--console=plain",
+      "compileJava"
+    ],
+    [
+      "./gradlew",
+      "--no-daemon",
+      "-q",
+      "--console=plain",
+      "compileTestJava"
+    ]
+  ],
+  "exitCode": 0,
+  "testExitCode": 0,
+  "classFiles": {
+    "main": 25,
+    "test": 28,
+    "other": 0
+  },
+  "durationSec": {
+    "compile": 46,
+    "testCompile": 29
+  },
+  "logTail": [
+    "/home/runner/work/_temp/clone-buckets/spring-petclinic/src/main/java/org/springframework/samples/petclinic/owner/PetController.java:91: warning: [removal] setDisallowedFields(String...) in DataBinder has been deprecated and marked for removal",
+    "\t\tdataBinder.setDisallowedFields(\"id\", \"*.id\");",
+    "\t\t          ^",
+    "/home/runner/work/_temp/clone-buckets/spring-petclinic/src/main/java/org/springframework/samples/petclinic/owner/PetController.java:97: warning: [removal] setDisallowedFields(String...) in DataBinder has been deprecated and marked for removal",
+    "\t\tdataBinder.setDisallowedFields(\"id\", \"*.id\");",
+    "\t\t          ^",
+    "/home/runner/work/_temp/clone-buckets/spring-petclinic/src/main/java/org/springframework/samples/petclinic/owner/VisitController.java:53: warning: [removal] setDisallowedFields(String...) in DataBinder has been deprecated and marked for removal",
+    "\t\tdataBinder.setDisallowedFields(\"id\", \"*.id\");",
+    "\t\t          ^",
+    "/home/runner/work/_temp/clone-buckets/spring-petclinic/src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java:61: warning: [removal] setDisallowedFields(String...) in DataBinder has been deprecated and marked for removal",
+    "\t\tdataBinder.setDisallowedFields(\"id\", \"*.id\");",
+    "\t\t          ^",
+    "4 warnings"
+  ]
+}

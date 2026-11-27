@@ -4,7 +4,7 @@
   "repo": "litemall",
   "sourceHead": "a1ef964a718b7277925b19ea26afe78ea3a1d325",
   "snapshotId": "4de8e93f-c82b-451f-aac3-c1a8b852d3f0",
-  "objectCount": 13172,
+  "objectCount": 13409,
   "importStatus": "completed",
   "steps": {
     "scan": "ok",
@@ -13,5 +13,21 @@
     "consistency": "ok"
   },
   "consistencyResult": "pass",
+  "build": {
+    "mode": "bytecode",
+    "fallback": false,
+    "reason": "compiled",
+    "tool": "maven",
+    "jdk": 8,
+    "javaVersion": "1.8.0_514",
+    "javapVersion": "1.8.0_514",
+    "exitCode": 0,
+    "testExitCode": 0,
+    "classFiles": {
+      "main": 590,
+      "test": 0,
+      "other": 0
+    }
+  },
   "overall": "pass"
 }

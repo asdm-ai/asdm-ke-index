@@ -59,7 +59,7 @@ import sys
 from math import ceil
 
 SCHEMA_VERSION = "draft-v1"
-IMPLEMENTATION = "ke-index census.py (5.1.4: L2 aggregation + D2 cohort + per-repo pipeline validation roll-up + repo scale)"
+IMPLEMENTATION = "ke-index census.py (5.1.4: L2 aggregation + D2 cohort + per-repo pipeline validation roll-up + repo scale + scan mode + C3 calibers)"
 
 # 标准分位集（Schema §4.2）
 PERCENTILES = [("p25", 0.25), ("p50", 0.50), ("p75", 0.75), ("p90", 0.90)]
@@ -70,6 +70,17 @@ CONSISTENCY_RESULTS = ["pass", "mismatch", "error", "skipped"]
 
 # 仓规模字段（report metrics.D3.scale → repos[] 扁平字段 + cohort.scale 分布）
 SCALE_KEYS = ["fileCount", "javaFiles", "lineCount", "javaLines"]
+
+# 分母双口径并列（Phase 4A · P2-D19）：C3 顶层聚合是冻结口径 A（全部方法）；其下挂
+# calibers.<名称>，与顶层聚合块同构，发布门槛 N>=publishThreshold 对每个口径分别判定。
+# 口径 B「有源码方法体」= 分子分母都只取 lineCount > 0 的方法（与 C4 同规则）——同时排除
+# 接口/抽象方法与字节码补全方法，不随扫描模式（source / bytecode）切换而变。
+CALIBER_METRIC = "C3"
+CALIBERS = [
+    ("allMethods", "全部方法", "分子：标记为测试的方法；分母：全部方法（含字节码补全方法）"),
+    ("sourceAnchored", "有源码方法体", "分子：标记为测试且有源码方法体（lineCount > 0）的方法；分母：有源码方法体的方法"),
+]
+STALE_CALIBER_REASON = "report 无 calibers（早于双口径，待重算 metrics）"
 
 
 def nearest_rank(sorted_vals, p):
@@ -83,6 +94,35 @@ def nearest_rank(sorted_vals, p):
 
 def is_number(v):
     return isinstance(v, (int, float)) and not isinstance(v, bool)
+
+
+def caliber_block(name, label, basis, samples, published, threshold, privacy_floor):
+    """一个口径的聚合块（与 metrics.<id> 顶层块同构；published 按本口径的 N 单独判定）。"""
+    vals = sorted(samples["values"])
+    n = len(vals)
+    out = published and n >= threshold
+    privacy_blocked = out and n < privacy_floor
+    block = {
+        "id": name,
+        "label": label,
+        "N": n,
+        "missing": len(samples["missing"]),
+        "missingRepos": [
+            {"repo": rep, "reason": reason} for rep, reason in sorted(samples["missing"])
+        ],
+        "published": bool(out and not privacy_blocked and n),
+        "mean": round(sum(vals) / n, 6) if (out and not privacy_blocked and n) else None,
+        "percentiles": (
+            {k: nearest_rank(vals, p) for k, p in PERCENTILES}
+            if out and not privacy_blocked and n else None
+        ),
+        "percentileMethod": "nearest-rank (Schema §4.2)",
+        "basis": basis,
+    }
+    if privacy_blocked:
+        block["gateNote"] = "k-匿名隐私护栏：切片 N=%d < %d，整组不出分位（与发布门槛显式区分）" % (
+            n, privacy_floor)
+    return block
 
 
 def load_reports(reports_dir):
@@ -209,6 +249,13 @@ def main():
             else:
                 scale_missing[k].append(rep_label)
         entry["linesByLanguage"] = (scale.get("linesByLanguage") or {}) if has_scale else None
+        # 扫描模式（2026-11-27 编译子步）：report.build——存量 report 无该字段 = 源码模式。
+        # buildRecorded = 该仓配置了构建（有编译记录文件 build/{owner}/{repo}.json；未配置的仓
+        # report.build 只记 not-configured，没有记录文件——与 docs/BUILD_LOG 的行一一对应）
+        build = r.get("build") if isinstance(r.get("build"), dict) else None
+        entry["buildMode"] = build.get("mode") if build else "source"
+        entry["buildFallback"] = bool(build and build.get("fallback"))
+        entry["buildRecorded"] = bool(build and build.get("configured"))
         match = scale.get("fileCountMatch") if has_scale else None
         entry["scaleFileCountMatch"] = match if isinstance(match, bool) else None
         if match is True:
@@ -263,6 +310,21 @@ def main():
                 entry["values"].append(v)
             else:
                 entry["missing"].append((rep_label, "metrics 区 value 非数值"))
+            if mid == CALIBER_METRIC:
+                # 口径 A 就是冻结口径本身：样本与顶层逐一相同；口径 B 取 report 的伴随值，
+                # 没有 calibers 的存量 report 记 missing（不拿口径 A 的值顶替）
+                cal = entry.setdefault("calibers", {k: {"values": [], "missing": []} for k, _l, _b in CALIBERS})
+                if is_number(v):
+                    cal["allMethods"]["values"].append(v)
+                else:
+                    cal["allMethods"]["missing"].append((rep_label, "metrics 区 value 非数值"))
+                cb = m.get("calibers") if isinstance(m.get("calibers"), dict) else None
+                bv = (cb.get("sourceAnchored") or {}).get("value") if cb else None
+                if is_number(bv):
+                    cal["sourceAnchored"]["values"].append(bv)
+                else:
+                    cal["sourceAnchored"]["missing"].append(
+                        (rep_label, STALE_CALIBER_REASON if cb is None else "calibers.sourceAnchored.value 非数值"))
         for mid, m in nulls.items():
             if m.get("direction") == "none":
                 continue
@@ -272,6 +334,10 @@ def main():
                 "values": [], "missing": [],
             })
             entry["missing"].append((rep_label, m.get("reason", "null")))
+            if mid == CALIBER_METRIC:
+                cal = entry.setdefault("calibers", {k: {"values": [], "missing": []} for k, _l, _b in CALIBERS})
+                for k, _l, _b in CALIBERS:
+                    cal[k]["missing"].append((rep_label, m.get("reason", "null")))
 
     metrics_out = {}
     for mid in sorted(agg):
@@ -301,6 +367,13 @@ def main():
         if privacy_blocked:
             entry["gateNote"] = "k-匿名隐私护栏：切片 N=%d < %d，整组不出分位（与发布门槛显式区分）" % (
                 n, args.privacy_floor)
+        if mid == CALIBER_METRIC and e.get("calibers"):
+            # 顶层块保持口径 A 的聚合；calibers 下的两块各带 N / 缺失清单 / 统计量与各自的发布判定
+            entry["calibers"] = {
+                k: caliber_block(k, l, b, e["calibers"][k], published,
+                                 args.publish_threshold, args.privacy_floor)
+                for k, l, b in CALIBERS
+            }
         metrics_out[mid] = entry
 
     # ---- 5.1.4.5 D2 cohort 聚合（依赖同质度——跨仓框架版本一致性）----
@@ -368,6 +441,18 @@ def main():
     total_using = sum(n for n, _ in weighted)
     d2_overall = (round(sum(d for _, d in weighted) / total_using, 6)
                   if total_using else None)
+
+    # ---- 扫描模式分组（2026-11-27 编译子步——描述面，不进分位分母）----
+    # bytecode 模式的 calls 边与方法数显著高于源码模式（编译产物让 KE 的 javap 路径生效），
+    # 两种模式的规模类数字不可直接比较；分模式列出，供文档与人工核对。
+    build_cohort = {"bytecode": [], "source": [], "sourceFallback": [], "noRecord": []}
+    for e in repo_index:
+        label = "%s/%s" % (e["owner"], e["repo"])
+        build_cohort[e["buildMode"]].append(label)
+        if e["buildFallback"]:
+            build_cohort["sourceFallback"].append(label)
+        if not e["buildRecorded"]:
+            build_cohort["noRecord"].append(label)
 
     # ---- 按仓穿行验证 roll-up（2026-11-25——单仓失败不阻断聚合）----
     statuses = load_statuses(args.status_dir)
@@ -461,6 +546,21 @@ def main():
                          "文件数 = tracked 剔除分析器跳过目录与非普通文件，与服务端 Repository.fileCount "
                          "同口径并对照；行数 = 文本文件物理行数，含注释与空行，非 SLOC；java 为主指标）"
                          "——描述面不进分位分母，统计量守门与指标同口径",
+            },
+
+            # 扫描模式分布（2026-11-27 编译子步——各 report.build；描述面，不进分位分母）
+            "build": {
+                "id": "build",
+                "name": "scan-mode",
+                "label": "扫描模式分布",
+                "domain": "D",
+                "direction": "none",
+                "byMode": {"bytecode": build_cohort["bytecode"], "source": build_cohort["source"]},
+                "sourceFallback": build_cohort["sourceFallback"],
+                "noRecord": build_cohort["noRecord"],
+                "basis": "各 report.build（scan-one.sh 编译子步——配置了构建且编译成功 = bytecode，"
+                         "其余 = source；sourceFallback = 配置了构建但编译失败回退源码；noRecord = 没有编译记录："
+                         "未配置构建，或编译子步上线前扫的——均按源码模式解读）。两种模式的规模类数字不可直接比较",
             },
         },
     }

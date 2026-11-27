@@ -1,0 +1,46 @@
+# =============================================================================
+# KE Index 构建配置（编译子步——bytecode 模式）
+# -----------------------------------------------------------------------------
+# 目的：KE 的 Java 分析器在仓内有 .class 时用 javap 读字节码里的 invoke 指令，
+#       得到精确的 calls 边，并补全 Lombok 生成的方法。此前 scan 只 clone --depth 1，
+#       不编译，字节码能力一直没有输入。
+#
+# 字段：
+#   owner / repo   对应 repos.yaml 的条目（必须存在且未被 skip）
+#   tool           maven | gradle
+#   jdk            编译用的 JDK 主版本（runner 预装的 Temurin；本地用 BUILD_JAVA_HOME 指定）
+#   root           构建根目录（缺省 "."——仓根没有构建文件的仓填子目录）
+#   args           追加给构建命令的参数（数组，可省略）
+#
+# 命令：
+#   maven   [./]mvnw|mvn -B -ntp -DskipTests <args> compile，再 test-compile
+#   gradle  ./gradlew --no-daemon -q --console=plain <args> compileJava，再 compileTestJava
+#
+# 结论与回退（2026-11-27 用户裁决）：
+#   - 主源码编译成功且产出 .class → bytecode 模式
+#   - 失败（找不到 JDK / wrapper、编译报错、超时、无产物）→ 回退源码模式，不算管线失败，
+#     但 report / pipeline-status / docs/BUILD_LOG 明确标注 fallback，编译输出末 60 行入库
+#     build/{owner}/{repo}.json
+#   - 清单里没有条目的仓 = 未配置，照旧源码模式
+#
+# 增量启用：哪个仓要进 bytecode 模式，就在这里加一条。没加的仓行为与此前逐字节一致。
+# 阶段：小范围验证（4 个仓，2026-11-27）——拿到 CI 上的编译耗时与成功率后再决定是否全量。
+# =============================================================================
+
+builds:
+  - owner: spring-projects
+    repo: spring-petclinic
+    tool: gradle
+    jdk: 17
+  - owner: elunez
+    repo: eladmin
+    tool: maven
+    jdk: 8
+  - owner: linlinjava
+    repo: litemall
+    tool: maven
+    jdk: 8
+  - owner: dromara
+    repo: RuoYi-Vue-Plus
+    tool: maven
+    jdk: 21

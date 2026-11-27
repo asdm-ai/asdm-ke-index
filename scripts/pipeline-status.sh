@@ -7,6 +7,8 @@
 #   [IMPORT_STATUS=completed|skipped]
 #   SCAN_C=success|failure|skipped PROJECTION_C=... METRICS_C=... CONSISTENCY_C=...
 #   [CONSISTENCY_RC=0|2|1]（graph-metrics.py 退出码：0 PASS / 2 MISMATCH / 1 崩溃）
+#   [BUILD_JSON=<编译记录路径>]（scan-one 产物 build/{owner}/{repo}.json——配置了构建的仓才有；
+#   scan 未产出该文件时省略）
 #   bash scripts/pipeline-status.sh
 # 输出：pipeline-status/{owner}/{repo}.json（确定性——无墙钟字段）：
 #   同仓同快照重跑逐字节一致 → 月度 dedup skip 不产生 git diff
@@ -14,11 +16,22 @@
 #   overall = pass 当且仅当四子步全 ok（scan/projection/metrics/consistency）；
 #   任一 failed → ::error:: 标注（job 已由失败子步置 failed）
 # consistencyResult：pass / mismatch（rc=2）/ error（其它 rc）/ skipped
+# build（2026-11-27 编译子步）：快照的扫描模式 mode=bytecode|source；配置了构建但回退
+#   源码模式时 fallback=true 并 ::warning:: 标注（回退不算管线失败——overall 不受影响；
+#   用户裁决：失败回退源码，但结果里必须明确标注）。未配置构建的仓不写 build 字段。
 # =============================================================================
 set -euo pipefail
 
 : "${OWNER:?OWNER is required}"
 : "${REPO:?REPO is required}"
+
+# 编译记录（确定性字段子集——无墙钟、无编译输出；日志本体在 build/{owner}/{repo}.json）
+BUILD_ARG=(--argjson build null)
+BUILD_MODE=""
+if [ -n "${BUILD_JSON:-}" ] && [ -f "$BUILD_JSON" ]; then
+  BUILD_MODE=$(jq -r '.mode // ""' "$BUILD_JSON")
+  BUILD_ARG=(--argjson build "$(jq -c '{mode, fallback, reason, tool, jdk, javaVersion, javapVersion, exitCode, testExitCode, classFiles, httpRepositories}' "$BUILD_JSON")")
+fi
 
 map_c() {
   # GitHub Actions steps.<id>.conclusion → 状态机三值
@@ -67,6 +80,7 @@ jq -n \
   --arg consistency "$CONS_OK" \
   --arg consistencyResult "$CONS_RES" \
   --arg overall "$OVERALL" \
+  "${BUILD_ARG[@]}" \
   '{
     schemaVersion: "pipeline-status-v1",
     owner: $owner,
@@ -82,10 +96,15 @@ jq -n \
       consistency: $consistency
     },
     consistencyResult: $consistencyResult,
+    build: $build,
     overall: $overall
   }' > "$OUT"
 
-echo "pipeline-status: $OWNER/$REPO overall=$OVERALL scan=$SCAN_OK projection=$PROJ_OK metrics=$MET_OK consistency=${CONS_OK}（${CONS_RES}）"
+echo "pipeline-status: $OWNER/$REPO overall=$OVERALL scan=$SCAN_OK projection=$PROJ_OK metrics=$MET_OK consistency=${CONS_OK}（${CONS_RES}）${BUILD_MODE:+build=$BUILD_MODE}"
+# 编译回退可见性：不是管线失败（overall 不变），但要在 job 页上被看见
+if [ -n "$BUILD_JSON" ] && [ -f "$BUILD_JSON" ] && [ "$(jq -r '.fallback // false' "$BUILD_JSON")" = "true" ]; then
+  echo "::warning title=build fallback::${OWNER}/${REPO} 编译未成功，已回退源码模式（$(jq -r '.reason // .attemptReason // "?"' "$BUILD_JSON")，详见 build/${OWNER}/${REPO}.json 的 logTail）"
+fi
 
 # 失败可见性：GitHub Actions annotation（job 页 annotation 区 + summary 聚合面）
 if [ "$OVERALL" != "pass" ]; then
