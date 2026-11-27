@@ -9,9 +9,9 @@
     "status": "complete",
     "sourceVersion": "2a12947733945d5c06197d99ecaa77d7f2b0aeba",
     "sourceHead": "2a12947733945d5c06197d99ecaa77d7f2b0aeba",
-    "objectCount": 1377,
-    "linkCount": 10042,
-    "completedAt": "2026-11-26T13:50:19.059Z"
+    "objectCount": 1380,
+    "linkCount": 10057,
+    "completedAt": "2026-11-27T11:39:50.811Z"
   },
   "cliVersion": "0.3.10",
   "metrics": {
@@ -247,13 +247,33 @@
       "direction": "higher-better",
       "value": 0.0,
       "numerator": 0,
-      "denominator": 46,
+      "denominator": 49,
       "commands": [
         "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'isTest=true' --snapshot 9dda3f5a-6028-4c79-96a9-a003d0a2d60a",
         "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot 9dda3f5a-6028-4c79-96a9-a003d0a2d60a",
         "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Method --all --field id,isTest,testType --snapshot 9dda3f5a-6028-4c79-96a9-a003d0a2d60a"
       ],
       "testTypes": {},
+      "calibers": {
+        "allMethods": {
+          "value": 0.0,
+          "numerator": 0,
+          "denominator": 49
+        },
+        "sourceAnchored": {
+          "value": 0.0,
+          "numerator": 0,
+          "denominator": 46
+        }
+      },
+      "methodComposition": {
+        "all": 49,
+        "sourceAnchored": 46,
+        "noSourceBody": 3,
+        "tests": 0,
+        "testsNotAnchored": 0
+      },
+      "scanMode": "bytecode",
       "crossCheck": {
         "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'isTest=true' --snapshot 9dda3f5a-6028-4c79-96a9-a003d0a2d60a",
         "serverCount": 0,
@@ -277,7 +297,7 @@
       ],
       "threshold": "lineCount > 80",
       "excludedFromDenominator": {
-        "lineCountIsZero": 0,
+        "lineCountIsZero": 3,
         "lineCountIsNull": 0
       },
       "top": [
@@ -314,7 +334,7 @@
       "label": "规模画像",
       "domain": "D",
       "direction": "none",
-      "value": 1377,
+      "value": 1380,
       "commands": [
         "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" snapshot list --repo Guns",
         "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Repository --snapshot 9dda3f5a-6028-4c79-96a9-a003d0a2d60a",
@@ -337,7 +357,7 @@
         "Package": 11,
         "Class": 17,
         "Interface": 1,
-        "Method": 46,
+        "Method": 49,
         "Dependency": 5,
         "Table": 42,
         "Mapper": 0,
@@ -348,7 +368,7 @@
         "Route": 6,
         "ApiEndpoint": 2
       },
-      "linkCount": 10042,
+      "linkCount": 10057,
       "scale": {
         "collectedBy": "scan",
         "sourceHead": "2a12947733945d5c06197d99ecaa77d7f2b0aeba",
@@ -501,7 +521,7 @@
       ],
       "evidence": {
         "completeSnapshotCount": 1,
-        "previousReportSnapshot": "c75b708b-c0e3-4d3a-91d7-3555612ba8f6"
+        "previousReportSnapshot": "9dda3f5a-6028-4c79-96a9-a003d0a2d60a"
       }
     }
   },
@@ -512,13 +532,25 @@
       "label": "complexity 为 null 的方法占比",
       "domain": "dq",
       "direction": "none",
-      "value": 0.0,
-      "numerator": 0,
-      "denominator": 46,
+      "value": 0.061224,
+      "numerator": 3,
+      "denominator": 49,
       "commands": [
         "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot 9dda3f5a-6028-4c79-96a9-a003d0a2d60a",
         "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot 9dda3f5a-6028-4c79-96a9-a003d0a2d60a"
-      ]
+      ],
+      "calibers": {
+        "allMethods": {
+          "value": 0.061224,
+          "numerator": 3,
+          "denominator": 49
+        },
+        "sourceAnchored": {
+          "value": 0.0,
+          "numerator": 0,
+          "denominator": 46
+        }
+      }
     },
     "dq.missing-version-ratio": {
       "id": "dq.missing-version-ratio",
@@ -542,6 +574,31 @@
       "direction": "none",
       "value": null,
       "reason": "不可观测（ext: 虚拟边在导入物化时已过滤——查询面天然免疫）"
+    }
+  },
+  "build": {
+    "mode": "bytecode",
+    "fallback": false,
+    "reason": "compiled",
+    "configured": true,
+    "tool": "maven",
+    "jdk": 17,
+    "javaVersion": "17.0.21",
+    "javapVersion": "17.0.21",
+    "exitCode": 0,
+    "testExitCode": 0,
+    "classFiles": {
+      "main": 18,
+      "test": 0,
+      "other": 0
+    },
+    "httpRepositories": null,
+    "attemptMode": null,
+    "attemptReason": null,
+    "crossCheck": {
+      "supplementedMethods": 3,
+      "lineCountZeroMethods": 3,
+      "lineCountZeroWithComplexity": 0
     }
   }
 }

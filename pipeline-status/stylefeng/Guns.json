@@ -4,7 +4,7 @@
   "repo": "Guns",
   "sourceHead": "2a12947733945d5c06197d99ecaa77d7f2b0aeba",
   "snapshotId": "9dda3f5a-6028-4c79-96a9-a003d0a2d60a",
-  "objectCount": 1377,
+  "objectCount": 1380,
   "importStatus": "completed",
   "steps": {
     "scan": "ok",
@@ -13,5 +13,22 @@
     "consistency": "ok"
   },
   "consistencyResult": "pass",
+  "build": {
+    "mode": "bytecode",
+    "fallback": false,
+    "reason": "compiled",
+    "tool": "maven",
+    "jdk": 17,
+    "javaVersion": "17.0.21",
+    "javapVersion": "17.0.21",
+    "exitCode": 0,
+    "testExitCode": 0,
+    "classFiles": {
+      "main": 18,
+      "test": 0,
+      "other": 0
+    },
+    "httpRepositories": null
+  },
   "overall": "pass"
 }
