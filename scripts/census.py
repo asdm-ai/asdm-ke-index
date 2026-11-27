@@ -59,7 +59,7 @@ import sys
 from math import ceil
 
 SCHEMA_VERSION = "draft-v1"
-IMPLEMENTATION = "ke-index census.py (5.1.4: L2 aggregation + D2 cohort + per-repo pipeline validation roll-up + repo scale)"
+IMPLEMENTATION = "ke-index census.py (5.1.4: L2 aggregation + D2 cohort + per-repo pipeline validation roll-up + repo scale + scan mode)"
 
 # 标准分位集（Schema §4.2）
 PERCENTILES = [("p25", 0.25), ("p50", 0.50), ("p75", 0.75), ("p90", 0.90)]
@@ -209,6 +209,13 @@ def main():
             else:
                 scale_missing[k].append(rep_label)
         entry["linesByLanguage"] = (scale.get("linesByLanguage") or {}) if has_scale else None
+        # 扫描模式（2026-11-27 编译子步）：report.build——存量 report 无该字段 = 源码模式。
+        # buildRecorded = 该仓配置了构建（有编译记录文件 build/{owner}/{repo}.json；未配置的仓
+        # report.build 只记 not-configured，没有记录文件——与 docs/BUILD_LOG 的行一一对应）
+        build = r.get("build") if isinstance(r.get("build"), dict) else None
+        entry["buildMode"] = build.get("mode") if build else "source"
+        entry["buildFallback"] = bool(build and build.get("fallback"))
+        entry["buildRecorded"] = bool(build and build.get("configured"))
         match = scale.get("fileCountMatch") if has_scale else None
         entry["scaleFileCountMatch"] = match if isinstance(match, bool) else None
         if match is True:
@@ -369,6 +376,18 @@ def main():
     d2_overall = (round(sum(d for _, d in weighted) / total_using, 6)
                   if total_using else None)
 
+    # ---- 扫描模式分组（2026-11-27 编译子步——描述面，不进分位分母）----
+    # bytecode 模式的 calls 边与方法数显著高于源码模式（编译产物让 KE 的 javap 路径生效），
+    # 两种模式的规模类数字不可直接比较；分模式列出，供文档与人工核对。
+    build_cohort = {"bytecode": [], "source": [], "sourceFallback": [], "noRecord": []}
+    for e in repo_index:
+        label = "%s/%s" % (e["owner"], e["repo"])
+        build_cohort[e["buildMode"]].append(label)
+        if e["buildFallback"]:
+            build_cohort["sourceFallback"].append(label)
+        if not e["buildRecorded"]:
+            build_cohort["noRecord"].append(label)
+
     # ---- 按仓穿行验证 roll-up（2026-11-25——单仓失败不阻断聚合）----
     statuses = load_statuses(args.status_dir)
     step_counts = {k: {"ok": 0, "failed": 0, "skipped": 0} for k in PIPELINE_STEPS}
@@ -461,6 +480,21 @@ def main():
                          "文件数 = tracked 剔除分析器跳过目录与非普通文件，与服务端 Repository.fileCount "
                          "同口径并对照；行数 = 文本文件物理行数，含注释与空行，非 SLOC；java 为主指标）"
                          "——描述面不进分位分母，统计量守门与指标同口径",
+            },
+
+            # 扫描模式分布（2026-11-27 编译子步——各 report.build；描述面，不进分位分母）
+            "build": {
+                "id": "build",
+                "name": "scan-mode",
+                "label": "扫描模式分布",
+                "domain": "D",
+                "direction": "none",
+                "byMode": {"bytecode": build_cohort["bytecode"], "source": build_cohort["source"]},
+                "sourceFallback": build_cohort["sourceFallback"],
+                "noRecord": build_cohort["noRecord"],
+                "basis": "各 report.build（scan-one.sh 编译子步——配置了构建且编译成功 = bytecode，"
+                         "其余 = source；sourceFallback = 配置了构建但编译失败回退源码；noRecord = 没有编译记录："
+                         "未配置构建，或编译子步上线前扫的——均按源码模式解读）。两种模式的规模类数字不可直接比较",
             },
         },
     }

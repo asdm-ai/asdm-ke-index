@@ -462,6 +462,50 @@ def load_scale(path):
     return data
 
 
+def load_build(path):
+    """读 scan-one.sh 编译记录（scripts/build-step.sh 产物）；path 为空 → None（旧形态）。
+
+    形态不符（缺 mode / mode 不在枚举内）抛 KeError：编译结论残缺的 report 不算完整结论。
+    """
+    if not path:
+        return None
+    try:
+        with open(path, encoding="utf-8") as fh:
+            data = json.load(fh)
+    except (OSError, ValueError) as e:
+        raise KeError("--build-json 不可读 %s：%s" % (path, e))
+    if not isinstance(data, dict) or data.get("mode") not in ("bytecode", "source"):
+        raise KeError("--build-json 形态不符（mode 须为 bytecode|source）：%s" % path)
+    return data
+
+
+def build_block(build, methods):
+    """report.build：快照的扫描模式与编译结论（确定性字段；编译输出本体在 build/{owner}/{repo}.json）。
+
+    - mode       bytecode = import 时仓内有编译产物，KE 的 javap 路径生效；source = 仅源码
+    - fallback   配置了构建但拿到的是源码模式（编译失败回退——用户裁决：明确标注）
+    - crossCheck 用快照自身核对标注是否属实：字节码补全的方法入湖时恒为 lineCount=0 且
+                 complexity=null（javaAnalyzer.ts mergeBytecodeCalls），纯源码模式下几乎不存在。
+                 bytecode 模式却一个都没有 = 分析器静默回退了（javap 缺失或版本低于 class 文件）
+                 → warning；report 照出，但这一条必须被人看到（render-docs 据此拒绝发布）
+    """
+    out = {k: build.get(k) for k in (
+        "mode", "fallback", "reason", "configured", "tool", "jdk", "javaVersion", "javapVersion",
+        "exitCode", "testExitCode", "classFiles")}
+    out["attemptMode"] = build.get("attemptMode")
+    out["attemptReason"] = build.get("attemptReason")
+    supplemented = sum(1 for m in methods
+                       if m.get("lineCount") is not None and num_or_zero(m.get("lineCount")) == 0
+                       and m.get("complexity") is None)
+    server_zero = sum(1 for m in methods if m.get("lineCount") is not None and num_or_zero(m.get("lineCount")) == 0)
+    out["crossCheck"] = {"supplementedMethods": supplemented, "lineCountZeroMethods": server_zero,
+                         "lineCountZeroWithComplexity": server_zero - supplemented}
+    if out["mode"] == "bytecode" and supplemented == 0:
+        out["warning"] = ("bytecode 模式的快照里没有字节码补全的方法：分析器很可能静默回退了纯源码"
+                          "（javap 缺失，或版本低于 class 文件版本——核对 javaVersion / javapVersion）")
+    return out
+
+
 def scale_block(ke, snap_id, scale):
     """repo-scale 产物 → report D3.scale（含服务端 Repository.fileCount 对照）。
 
@@ -544,6 +588,10 @@ def main():
     ap.add_argument("--scale-json", default=None,
                     help="repo-scale.py 产物（scan-one.sh clone 后生成的仓规模采集——文件数/行数）；"
                          "传入即并入 report D3 规模画像 scale 子对象；缺省省略该子对象（本地复算旧形态）")
+    ap.add_argument("--build-json", default=None,
+                    help="scan-one.sh 编译记录（scripts/build-step.sh 产物）；传入即并入 report.build"
+                         "（扫描模式 bytecode|source、回退标注、编译结论、字节码交叉核对）；"
+                         "缺省省略该字段（存量复算旧形态——等同源码模式）")
     args = ap.parse_args()
 
     if not args.url or not args.token:
@@ -588,6 +636,9 @@ def main():
         print("scale: files=%d（tracked=%d）lines=%d java=%d files / %d lines" % (
             scale["files"]["total"], scale["files"]["tracked"], scale["lines"]["total"],
             scale["files"]["byLanguage"].get("java", 0), scale["lines"]["byLanguage"].get("java", 0)))
+
+    # ---- 编译记录（scan-one.sh 编译子步产物——与快照同一轮；见 build_block）----
+    build = load_build(args.build_json)
 
     # ---- 14 类型 count（5.1.4：stats 端点单次收敛——14 次 ke count → 1 次 HTTP）----
     # objectCounts 源自 manifest 键控 GROUP BY（与 legacy ke count 异源）——
@@ -959,6 +1010,9 @@ def main():
             "无 Method 对象（分母为 0）", commands=[count_cmd("Method", None, snap_id)])
     else:
         test_methods = [m for m in methods if is_true(m.get("isTest"))]
+        anchored = [m for m in methods if (num_or_zero(m.get("lineCount")) or 0) > 0]
+        anchored_total = len(anchored)
+        anchored_tests = sum(1 for m in anchored if is_true(m.get("isTest")))
         test_types = {}
         for m in test_methods:
             tt = m.get("testType") or "unknown"
@@ -970,6 +1024,13 @@ def main():
              query_cmd("Method", ["id", "isTest", "testType"], snap_id)],
             numerator=len(test_methods), denominator=len(methods),
             testTypes=test_types,
+            # 参照值（不改口径）：分母只取有源码位置的方法（lineCount > 0，与 C4 同规则）——
+            # 剔除接口方法与字节码补全方法。bytecode 模式下 C3 的分母含补全方法而分子
+            # 不含（补全方法恒 isTest=false），比值会被机械性拉低；两种分母并列留档
+            sourceAnchored={
+                "value": ratio(anchored_tests, anchored_total),
+                "numerator": anchored_tests, "denominator": anchored_total,
+            },
         )
 
     # C4 巨型方法占比（分母排除 lineCount = 0 / null——接口与字节码补全方法）
@@ -1227,6 +1288,10 @@ def main():
         "nullMetrics": null_metrics,
         "dataQuality": data_quality,
     }
+    # 扫描模式（2026-11-27 编译子步）：mode=bytecode|source、fallback、编译结论、交叉核对。
+    # 存量复算（未传 --build-json）不带该字段——下游一律按源码模式解读，存量 report 逐字节不变
+    if build is not None:
+        report["build"] = build_block(build, methods)
     os.makedirs(os.path.dirname(out_path) or ".", exist_ok=True)
     with open(out_path, "w", encoding="utf-8") as f:
         json.dump(report, f, ensure_ascii=False, indent=2)
