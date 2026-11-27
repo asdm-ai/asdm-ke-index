@@ -26,8 +26,8 @@ printf '%s' "$BUILDS" | jq -e '
     has("owner") and has("repo")
     and (.tool == "maven" or .tool == "gradle")
     and (.jdk | type == "number")
-    and ((has("root")) | not or (.root | type == "string"))
-    and ((has("args")) | not or (.args | type == "array" and all(.[]; type == "string"))))' >/dev/null \
+    and ((has("root") | not) or (.root | type == "string"))
+    and ((has("args") | not) or (.args | type == "array" and all(.[]; type == "string"))))' >/dev/null \
   || { echo "FAIL: build.yaml 配置不合法（tool 须为 maven|gradle，jdk 须为数字，args 须为字符串数组）" >&2; exit 1; }
 
 BUILD_MAP=$(printf '%s' "$BUILDS" | jq -c '[(.builds // [])[] | {key: (.owner + "/" + .repo), value: {tool, jdk, root: (.root // "."), args: (.args // [])}}] | from_entries')

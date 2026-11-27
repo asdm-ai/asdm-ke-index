@@ -8,7 +8,7 @@
 # 字段：
 #   owner / repo   对应 repos.yaml 的条目（必须存在且未被 skip）
 #   tool           maven | gradle
-#   jdk            编译用的 JDK 主版本（runner 预装的 Temurin；本地用 BUILD_JAVA_HOME 指定）
+#   jdk            编译用的 JDK 主版本（CI 由 workflow 按该版本安装 Temurin；本地用 BUILD_JAVA_HOME 指定）
 #   root           构建根目录（缺省 "."——仓根没有构建文件的仓填子目录）
 #   args           追加给构建命令的参数（数组，可省略）
 #
@@ -24,10 +24,13 @@
 #   - 清单里没有条目的仓 = 未配置，照旧源码模式
 #
 # 增量启用：哪个仓要进 bytecode 模式，就在这里加一条。没加的仓行为与此前逐字节一致。
-# 阶段：小范围验证（4 个仓，2026-11-27）——拿到 CI 上的编译耗时与成功率后再决定是否全量。
+# 阶段：4 仓冒烟通过后分批铺开（2026-11-27）——每批 ≤ 10 仓，批序见各组注释；
+#       主版本取自各仓根构建文件的声明（java.version / maven.compiler.* / Gradle toolchain /
+#       enforcer 或 profile 的 jdk 区间）。没有 Java 构建文件的仓不在此列，保持源码模式。
 # =============================================================================
 
 builds:
+  # ---- 冒烟 4 仓（已验证 bytecode compiled）----
   - owner: spring-projects
     repo: spring-petclinic
     tool: gradle
@@ -44,3 +47,137 @@ builds:
     repo: RuoYi-Vue-Plus
     tool: maven
     jdk: 21
+
+  # ---- 批 1：A 层，Maven，构建文件在仓根（7）----
+  - owner: yangzongzhuan
+    repo: RuoYi-Vue
+    tool: maven
+    jdk: 17
+  - owner: yangzongzhuan
+    repo: RuoYi-Cloud
+    tool: maven
+    jdk: 17
+  - owner: newbee-ltd
+    repo: newbee-mall
+    tool: maven
+    jdk: 8
+  - owner: renrenio
+    repo: renren-fast
+    tool: maven
+    jdk: 8
+  - owner: stylefeng
+    repo: Guns
+    tool: maven
+    jdk: 17
+  - owner: YunaiV
+    repo: ruoyi-vue-pro
+    tool: maven
+    jdk: 8
+  - owner: macrozheng
+    repo: mall-swarm
+    tool: maven
+    jdk: 17
+
+  # ---- 批 2：A 层，构建根在子目录 / 需限定模块（6）----
+  - owner: jeecgboot
+    repo: JeecgBoot
+    tool: maven
+    jdk: 17
+    root: jeecg-boot
+  - owner: lenve
+    repo: vhr
+    tool: maven
+    jdk: 21
+    root: vhr
+  # root pom 另含 frontend 模块（frontend-maven-plugin 在 compile 前跑 pnpm install / build）——只编后端
+  - owner: metersphere
+    repo: metersphere
+    tool: maven
+    jdk: 21
+    root: backend
+  - owner: o2oa
+    repo: o2oa
+    tool: maven
+    jdk: 11
+    root: o2server
+  - owner: chillzhuang
+    repo: SpringBlade
+    tool: maven
+    jdk: 21
+  - owner: pig-mesh
+    repo: pig
+    tool: maven
+    jdk: 17
+
+  # ---- 批 3：A 层，JDK 25 与需单独确认的仓（2）----
+  - owner: dromara
+    repo: dante-cloud
+    tool: maven
+    jdk: 25
+  - owner: macrozheng
+    repo: mall
+    tool: maven
+    jdk: 17
+
+  # ---- 批 4：B 层，Maven（5）----
+  - owner: apache
+    repo: dubbo
+    tool: maven
+    jdk: 8
+  - owner: apache
+    repo: rocketmq
+    tool: maven
+    jdk: 8
+  - owner: alibaba
+    repo: nacos
+    tool: maven
+    jdk: 17
+  - owner: alibaba
+    repo: druid
+    tool: maven
+    jdk: 17
+  - owner: apache
+    repo: shardingsphere
+    tool: maven
+    jdk: 21
+
+  # ---- 批 5：B / C 层，Gradle 多模块（4）----
+  - owner: apache
+    repo: fineract
+    tool: gradle
+    jdk: 25
+  - owner: spring-projects
+    repo: spring-boot
+    tool: gradle
+    jdk: 17
+  - owner: spring-projects
+    repo: spring-framework
+    tool: gradle
+    jdk: 17
+  - owner: hibernate
+    repo: hibernate-orm
+    tool: gradle
+    jdk: 17
+
+  # ---- 批 6：C 层，Maven（5）----
+  - owner: keycloak
+    repo: keycloak
+    tool: maven
+    jdk: 21
+  - owner: flowable
+    repo: flowable-engine
+    tool: maven
+    jdk: 17
+  - owner: Activiti
+    repo: Activiti
+    tool: maven
+    jdk: 25
+  - owner: dhis2
+    repo: dhis2-core
+    tool: maven
+    jdk: 17
+    root: dhis-2
+  - owner: BroadleafCommerce
+    repo: BroadleafCommerce
+    tool: maven
+    jdk: 17
