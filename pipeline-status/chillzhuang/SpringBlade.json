@@ -4,7 +4,7 @@
   "repo": "SpringBlade",
   "sourceHead": "4995ddb714a5c1ec30aaadb5db6ffc8dc0a61fcf",
   "snapshotId": "779fd2e5-f19a-4ed9-82e8-180b166a9fd3",
-  "objectCount": 1073,
+  "objectCount": 1783,
   "importStatus": "completed",
   "steps": {
     "scan": "ok",
@@ -13,5 +13,22 @@
     "consistency": "ok"
   },
   "consistencyResult": "pass",
+  "build": {
+    "mode": "bytecode",
+    "fallback": false,
+    "reason": "compiled",
+    "tool": "maven",
+    "jdk": 21,
+    "javaVersion": "21.0.13",
+    "javapVersion": "21.0.13",
+    "exitCode": 0,
+    "testExitCode": 0,
+    "classFiles": {
+      "main": 254,
+      "test": 5,
+      "other": 0
+    },
+    "httpRepositories": null
+  },
   "overall": "pass"
 }
