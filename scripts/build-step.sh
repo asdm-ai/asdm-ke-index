@@ -138,6 +138,8 @@ clean_outputs
 # ---- JDK 定位（候选逐个核对主版本——javap 版本低于 class 文件版本时分析器静默回退，
 #      所以"找到了一个 JDK"不够，必须是指定的那一个）----
 # 候选顺序：BUILD_JAVA_HOME（本地冒烟）→ runner 的 JAVA_HOME_<v>_X64 → /usr/lib/jvm 通配
+#   （JAVA_HOME_<v>_X64 由 scan.yml 的 setup-java 步按 build.yaml 的主版本导出——runner
+#     镜像只预装部分 JDK；/usr/lib/jvm 仅作兜底）
 #            → macOS java_home（逐架构——arm64 机器上不指定架构时它会回落到默认 JDK）
 java_major() { # $1 = JDK 目录 → stdout 主版本号；取不到则非零
   local vv

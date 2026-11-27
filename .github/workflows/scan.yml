@@ -165,6 +165,19 @@ jobs:
           path: ${{ runner.temp }}/clone-buckets
           key: clone-bucket-${{ matrix.owner }}-${{ matrix.repo }}-v1
 
+      # ---- ⓪ JDK 供给（编译子步的前置）：按 build.yaml 配置的主版本装 Temurin ----
+      # runner 镜像只预装部分 JDK（2026-11-27 实测：17 / 21 / 25 在位、8 缺失——配置
+      # JDK 8 的仓全部 jdk-not-found 回退）。setup-java 导出 JAVA_HOME_<主版本>_X64，
+      # build-step.sh 定位 JDK 的候选顺序第二位即读它（第三位仍是 /usr/lib/jvm）。
+      # 配置了构建的仓统一走本步（已预装的版本多一次工具缓存恢复，换来路径一致）；
+      # 未配置构建、或被预检短路的 job 不执行。
+      - name: Provision JDK ${{ matrix.build.jdk }} (Temurin) for the build step
+        if: steps.preflight.outputs.skip != 'true' && matrix.build != null
+        uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: ${{ matrix.build.jdk }}
+
       # ---- ① scan：clone + import --defer-projection（仅 MySQL 落库）----
       # defer 固定（穿行结构）：投影是本 job 下一显式子步（独立结论 + 独立失败面）
       - name: Scan ${{ matrix.owner }}/${{ matrix.repo }}
