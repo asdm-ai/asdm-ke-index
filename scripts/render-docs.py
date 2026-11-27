@@ -553,6 +553,8 @@ def build_cells(r, en):
     reason = rec.get("reason") or "-"
     if rec.get("attemptReason") and rec["attemptReason"] != rec.get("reason"):
         reason += f" (this run: {rec['attemptReason']})" if en else f"（本轮：{rec['attemptReason']}）"
+    if rec.get("httpRepositories") == "unblocked-on-retry":
+        reason += " (HTTP repositories unblocked on retry)" if en else "（重试时放开了明文 HTTP 仓库）"
     return [f"[{r['name']}](https://github.com/{r['name']})", rec.get("tool") or "-", str(rec.get("jdk") or "-"), mode,
             latest, f"{n(cf.get('main'))} / {n(cf.get('test'))}",
             n((rb.get("crossCheck") or {}).get("supplementedMethods")), reason]
@@ -608,7 +610,10 @@ def build_log_doc(d, meta, en):
               "path. A bytecode-mode row with `0` here means the analyzer fell back silently; the documentation "
               "generator refuses to publish in that case.",
               "- **Class files**: compiled files found in the tree, main sources / test sources.",
-              "- **Reason**: why the row has its mode (codes in the table below).", "",
+              "- **Reason**: why the row has its mode (codes in the table below). The suffix "
+              "\"(HTTP repositories unblocked on retry)\" marks a Maven build that the built-in blocker for plain-HTTP "
+              "repositories stopped and that was then run once more with that blocker overridden, because the POM "
+              "declares such a repository.", "",
               "| Reason | Meaning |", "|---|---|",
               "| `compiled` | main sources compiled and class files were present |",
               "| `compile-failed` | the build command exited non-zero; everything it produced was removed before the import |",
@@ -630,7 +635,8 @@ def build_log_doc(d, meta, en):
               "- **字节码补全的方法数**：快照里只经字节码路径才存在的方法。bytecode 模式的一行这里是 `0`，"
               "说明分析器静默回退了——文档生成器遇到这种情况拒绝发布。",
               "- **class 文件**：源码树里找到的编译文件数，主源码 / 测试源码。",
-              "- **原因**：这一行为什么是这个模式（代码见下表）。", "",
+              "- **原因**：这一行为什么是这个模式（代码见下表）。带\"（重试时放开了明文 HTTP 仓库）\"表示 Maven 构建"
+              "被内置的明文仓库拦截器挡下、随后放开该拦截重试了一次——因为 pom 声明了明文 HTTP 仓库。", "",
               "| 原因 | 含义 |", "|---|---|",
               "| `compiled` | 主源码编译成功且有 class 文件 |",
               "| `compile-failed` | 构建命令非零退出；它产出的一切在导入前已清除 |",

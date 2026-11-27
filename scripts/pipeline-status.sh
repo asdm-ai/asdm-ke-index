@@ -30,7 +30,7 @@ BUILD_ARG=(--argjson build null)
 BUILD_MODE=""
 if [ -n "${BUILD_JSON:-}" ] && [ -f "$BUILD_JSON" ]; then
   BUILD_MODE=$(jq -r '.mode // ""' "$BUILD_JSON")
-  BUILD_ARG=(--argjson build "$(jq -c '{mode, fallback, reason, tool, jdk, javaVersion, javapVersion, exitCode, testExitCode, classFiles}' "$BUILD_JSON")")
+  BUILD_ARG=(--argjson build "$(jq -c '{mode, fallback, reason, tool, jdk, javaVersion, javapVersion, exitCode, testExitCode, classFiles, httpRepositories}' "$BUILD_JSON")")
 fi
 
 map_c() {

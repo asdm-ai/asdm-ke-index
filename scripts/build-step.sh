@@ -16,7 +16,9 @@
 #             compiled | compile-failed | compile-timeout | no-class-files
 #   其余字段：tool / jdk / root / javaHome / javaVersion / javapVersion / command /
 #             exitCode / testExitCode / classFiles{main,test,other} / durationSec /
-#             logTail（末 60 行编译输出——定位失败用；不进 docs，只入库 build/）
+#             logTail（末 60 行编译输出——定位失败用；不进 docs，只入库 build/）/
+#             httpRepositories（Maven 明文 HTTP 仓库被拦后带覆盖配置重试过 =
+#             unblocked-on-retry；其余 null——见下方"明文 HTTP 仓库"注记）
 # 约束：
 #   - 失败回退时清掉本次产生的全部编译输出（部分模块编过的 .class 不留——否则是
 #     介于两种模式之间的第三种口径）；成功时输出保留到 import 结束，由 scan-one 清理
@@ -42,8 +44,14 @@ CLASS_JSON='{"main":0,"test":0,"other":0}'
 DUR_JSON='{"compile":0,"testCompile":0}'
 LOG_TAIL_JSON="[]"
 LOG=""
+HTTP_REPOSITORIES=""
+MVN_SETTINGS=""
 # 必须恒返回 0：EXIT 陷阱的返回值在部分 bash 版本里会覆盖脚本自己的 exit 状态
-cleanup() { if [ -n "$LOG" ] && [ -f "$LOG" ]; then rm -f "$LOG"; fi; return 0; }
+cleanup() {
+  if [ -n "$LOG" ] && [ -f "$LOG" ]; then rm -f "$LOG"; fi
+  if [ -n "$MVN_SETTINGS" ] && [ -f "$MVN_SETTINGS" ]; then rm -f "$MVN_SETTINGS"; fi
+  return 0
+}
 trap cleanup EXIT
 
 emit() {
@@ -52,6 +60,7 @@ emit() {
     --arg mode "$MODE" --arg reason "$REASON" \
     --arg tool "$TOOL" --argjson jdk "$JDK" --arg root "$ROOT" \
     --arg javaHome "$JAVA_HOME_RES" --arg javaVersion "$JAVA_VER" --arg javapVersion "$JAVAP_VER" \
+    --arg httpRepositories "$HTTP_REPOSITORIES" \
     --argjson command "$COMMAND_JSON" \
     --argjson exitCode "$EXIT_CODE" --argjson testExitCode "$TEST_EXIT_CODE" \
     --argjson classFiles "$CLASS_JSON" --argjson durationSec "$DUR_JSON" \
@@ -67,6 +76,7 @@ emit() {
       javaHome: (if $javaHome == "" then null else $javaHome end),
       javaVersion: (if $javaVersion == "" then null else $javaVersion end),
       javapVersion: (if $javapVersion == "" then null else $javapVersion end),
+      httpRepositories: (if $httpRepositories == "" then null else $httpRepositories end),
       command: $command,
       exitCode: $exitCode,
       testExitCode: $testExitCode,
@@ -188,6 +198,30 @@ run_limited() { # run_limited <timeout-sec> <cmd...> → 退出码（超时记 1
 }
 detect_timeout() { [ "$1" = "124" ] && [ -n "$TIMEOUT_BIN" ]; }
 
+# ---- Maven 明文 HTTP 仓库（Maven 3.8.1+ 内置镜像 maven-default-http-blocker）----
+# 有些仓在 pom 里声明 http:// 仓库（如 maven.aliyun.com 的旧地址），Maven 自 3.8.1 起
+# 默认一律拦截——"Blocked mirror for repositories"，连父 POM 都读不到。缺省不放开：
+# 首次编译因此失败时，带一份只覆盖该 blocker 的用户级 settings（-s，同 id 镜像覆盖
+# 全局 settings 里的 blocker，其余配置不动）重试一次，并在记录里标注
+# httpRepositories=unblocked-on-retry；重试仍失败 → 照常 compile-failed 回退。
+# 依据：编译第三方仓本身就在执行它的构建脚本，放开明文下载不构成新增风险。
+write_maven_http_settings() { # $1 = settings 输出路径
+  cat > "$1" <<'XML'
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0">
+  <mirrors>
+    <mirror>
+      <id>maven-default-http-blocker</id>
+      <mirrorOf>ke-index-no-repository-matches</mirrorOf>
+      <url>http://0.0.0.0/</url>
+    </mirror>
+  </mirrors>
+</settings>
+XML
+}
+blocked_by_http_mirror() { # 编译日志里是否出现 blocker 的报错
+  [ -n "$LOG" ] && [ -f "$LOG" ] && grep -q -e 'maven-default-http-blocker' -e 'Blocked mirror for repositories' "$LOG"
+}
+
 # ---- 编译（主源码成功即 bytecode；测试源码编译尽力而为，失败只记录）----
 to_json_array() { jq -Rn '[inputs]'; }
 LOG=$(mktemp)
@@ -198,8 +232,10 @@ if [ "$TOOL" = "maven" ]; then
   if [ -x "$REPO_DIR/$ROOT/mvnw" ]; then
     MVN="./mvnw"
     # -ntp 自 Maven 3.6.1 起才有；老 wrapper 分发包不认这个参数
-    wv=$(sed -nE 's/.*apache-maven-([0-9]+)\.([0-9]+)\.[0-9]+-(bin|all)\.zip.*/\1.\2/p' \
-      "$REPO_DIR/$ROOT/.mvn/wrapper/maven-wrapper.properties" 2>/dev/null | head -1)
+    # （没有 .mvn/wrapper/maven-wrapper.properties 时 sed 非零——pipefail 下必须吞掉，
+    #   否则脚本在此中止、既不出记录也不回退）
+    wv=$({ sed -nE 's/.*apache-maven-([0-9]+)\.([0-9]+)\.[0-9]+-(bin|all)\.zip.*/\1.\2/p' \
+      "$REPO_DIR/$ROOT/.mvn/wrapper/maven-wrapper.properties" 2>/dev/null || true; } | head -1)
     if ! printf '%s' "$wv" | awk -F. '{exit !($1 > 3 || ($1 == 3 && $2 >= 6))}'; then NTP=0; fi
   fi
   MCMD=("$MVN" -B); [ "$NTP" = 1 ] && MCMD+=(-ntp)
@@ -220,6 +256,21 @@ set +e
 ( cd "$REPO_DIR/$ROOT" && run_limited "$BUILD_TIMEOUT_SEC" "${MCMD[@]}" ) > "$LOG" 2>&1
 MAIN_RC=$?
 set -e
+if [ "$MAIN_RC" != 0 ] && [ "$TOOL" = "maven" ] && blocked_by_http_mirror; then
+  MVN_SETTINGS=$(mktemp)
+  write_maven_http_settings "$MVN_SETTINGS"
+  HTTP_REPOSITORIES="unblocked-on-retry"
+  echo "build-step: Maven 拦截了 pom 声明的明文 HTTP 仓库——带 blocker 覆盖配置重试一次（记录 httpRepositories=unblocked-on-retry）"
+  # 选项位置无所谓：mvn [--settings <file>] <原参数…> <goal>
+  MCMD=("${MCMD[0]}" --settings "$MVN_SETTINGS" "${MCMD[@]:1}")
+  TCMD=("${MCMD[@]:0:${#MCMD[@]}-1}" test-compile)
+  COMMAND_JSON=$(jq -cn --argjson m "$(printf '%s\n' "${MCMD[@]}" | to_json_array)" \
+    --argjson t "$(printf '%s\n' "${TCMD[@]}" | to_json_array)" '[$m, $t]')
+  set +e
+  ( cd "$REPO_DIR/$ROOT" && run_limited "$BUILD_TIMEOUT_SEC" "${MCMD[@]}" ) > "$LOG" 2>&1
+  MAIN_RC=$?
+  set -e
+fi
 DUR_MAIN=$(( $(date +%s) - t0 ))
 if [ "$MAIN_RC" = 0 ]; then
   t0=$(date +%s)
