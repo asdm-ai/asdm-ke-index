@@ -4,7 +4,7 @@
   "repo": "pig",
   "sourceHead": "0d57d08ff047ee7ec2c224f6e5702c23851949c7",
   "snapshotId": "3d9872f0-e562-470e-8343-abbaa8ac4250",
-  "objectCount": 2546,
+  "objectCount": 5344,
   "importStatus": "completed",
   "steps": {
     "scan": "ok",
@@ -13,5 +13,22 @@
     "consistency": "ok"
   },
   "consistencyResult": "pass",
+  "build": {
+    "mode": "bytecode",
+    "fallback": false,
+    "reason": "compiled",
+    "tool": "maven",
+    "jdk": 17,
+    "javaVersion": "17.0.21",
+    "javapVersion": "17.0.21",
+    "exitCode": 0,
+    "testExitCode": 0,
+    "classFiles": {
+      "main": 593,
+      "test": 27,
+      "other": 0
+    },
+    "httpRepositories": null
+  },
   "overall": "pass"
 }
