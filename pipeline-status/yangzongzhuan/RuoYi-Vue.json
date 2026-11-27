@@ -4,7 +4,7 @@
   "repo": "RuoYi-Vue",
   "sourceHead": "c61d958abbe5b7fc125fbfd60dfdd6b85c36cb94",
   "snapshotId": "756caa24-290f-4434-bc96-79bf4d4ff562",
-  "objectCount": 2560,
+  "objectCount": 2655,
   "importStatus": "completed",
   "steps": {
     "scan": "ok",
@@ -13,5 +13,22 @@
     "consistency": "ok"
   },
   "consistencyResult": "pass",
+  "build": {
+    "mode": "bytecode",
+    "fallback": false,
+    "reason": "compiled",
+    "tool": "maven",
+    "jdk": 17,
+    "javaVersion": "17.0.21.1",
+    "javapVersion": "17.0.21.1",
+    "exitCode": 0,
+    "testExitCode": 0,
+    "classFiles": {
+      "main": 285,
+      "test": 0,
+      "other": 0
+    },
+    "httpRepositories": null
+  },
   "overall": "pass"
 }
