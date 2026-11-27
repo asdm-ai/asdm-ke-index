@@ -20,6 +20,10 @@
 #   规则 A（"head" != sha）；report 无 sourceHead 时规则 B 亦不命中 → 全量
 #   重导入一轮并以 --commit sha 落新锚，此后进入稳态（同 commit 秒级跳过、
 #   新 commit 自动建新快照——五元组幂等键含 sourceVersion）。
+# 编译模式锚（2026-11-27 编译子步）：BUILD_JSON 非空 = 该仓在 build.yaml 配置了构建，
+#   期望模式 bytecode；report.build.mode 不等于期望模式即不跳过（存量 report 无 build
+#   字段 = 源码模式）。效果：配置了构建的仓在拿到编译版快照之前每次都重跑（上一轮
+#   回退源码的仓下一轮自动重试编译）；scan-one 据模式变化决定是否 --force 重建。
 # 出参（GITHUB_OUTPUT——CI 步骤间传递；本地冒烟 stdout 可见）：
 #   skip=true|false   cli_version=<manifest latest>   remote_head=<sha>
 # =============================================================================
@@ -32,6 +36,18 @@ KE_SERVER_URL="${KE_SERVER_URL:-https://console.kengine.ai}"
 BRANCH="${BRANCH:-}"
 SCAN_FORCE="${SCAN_FORCE:-false}"
 REPORT="reports/$OWNER/$REPO.json"
+
+# 编译模式锚：期望模式（配置了构建 = bytecode）对比 report 记录的快照模式
+BUILD_JSON="${BUILD_JSON:-}"
+[ "$BUILD_JSON" = "null" ] && BUILD_JSON=""
+DESIRED_MODE="source"
+[ -n "$BUILD_JSON" ] && DESIRED_MODE="bytecode"
+REPORT_MODE="source"
+if [ -f "$REPORT" ]; then
+  REPORT_MODE=$(jq -r '.build.mode // "source"' "$REPORT" 2>/dev/null || echo source)
+fi
+MODE_FRESH="false"
+[ "$REPORT_MODE" = "$DESIRED_MODE" ] && MODE_FRESH="true"
 
 # manifest latest（fail-open：curl/jq 失败 → 空版本 → 版本锚永不满足 → 不跳过）
 CLI_VERSION=$(curl -fsSL -m 15 -H "Authorization: Bearer $KE_API_KEY" \
@@ -68,7 +84,9 @@ fi
 
 SKIP="false"
 SKIP_RULE=""
-if [ "$SCAN_FORCE" != "true" ] && [ -n "$CLI_VERSION" ] && [ -n "$REMOTE_HEAD" ]; then
+MODE_NOTE="模式已对齐（${DESIRED_MODE}）"
+[ "$MODE_FRESH" = "true" ] || MODE_NOTE="期望 ${DESIRED_MODE}、report 记录 ${REPORT_MODE}（编译模式锚不满足——不跳过）"
+if [ "$SCAN_FORCE" != "true" ] && [ "$MODE_FRESH" = "true" ] && [ -n "$CLI_VERSION" ] && [ -n "$REMOTE_HEAD" ]; then
   # 规则 A：服务端锚 + report 新鲜度
   if [ -n "$SNAP_ID" ] && [ "$SNAP_VERSION" = "$REMOTE_HEAD" ] && [ -f "$REPORT" ]; then
     REPORT_CLI=$(jq -r '.cliVersion // empty' "$REPORT")
@@ -102,3 +120,4 @@ echo "  server snapshot: id=${SNAP_ID:-<none>} sourceVersion=${SNAP_VERSION:-<no
 if [ "$SKIP" = "true" ]; then
   echo "  （规则 ${SKIP_RULE} 命中——跳过 CLI 装配/clone/import/metrics）"
 fi
+echo "  build mode: $MODE_NOTE"

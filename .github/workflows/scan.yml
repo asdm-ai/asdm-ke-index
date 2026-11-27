@@ -10,13 +10,19 @@
 # 按仓穿行（2026-11-25 用户裁决——日常扫描即产品验证目标）：
 #   每仓单 job 内串行执行完整链路，任何子步失败即该仓任务失败（fail-fast:
 #   false + max-parallel 1——单仓失败不级联取消其它仓，也不阻断尾部 census）：
-#     ① scan        clone → import --defer-projection（仅 MySQL 落库）
+#     ① scan        clone →（编译，配置了构建的仓）→ import --defer-projection（仅 MySQL 落库）
 #     ② projection  ke project <snapshotId>（Neo4j 投影——本 job 内显式子步）
 #     ③ metrics     compute-metrics.py（MySQL 直查形态 → report）
 #     ④ consistency graph-metrics.py --compare（图形态重算 + 双路径等价比对
 #                   + 遥测差分——exit 2 MISMATCH 亦判失败）
 #     ⑤ annotate    四子步结论落 pipeline-status/{owner}/{repo}.json（确定性
 #                   产物入库）+ ::error:: 标注 + graph evidence artifact
+#   编译子步（2026-11-27 用户裁决）：build.yaml 里配置了构建的仓，① 在 clone / 规模采集
+#   之后、import 之前编译（scripts/build-step.sh）——主源码编译成功且有 .class 即 bytecode
+#   模式（KE 用 javap 读字节码：calls 边、Lombok 补全方法）；失败回退源码模式，不算管线
+#   失败，但 report.build / pipeline-status.build / ::warning:: / docs/BUILD_LOG 明确标注，
+#   编译输出末 60 行入库 build/{owner}/{repo}.json。配置经 matrix.build 注入（null = 未配置）。
+#   scan_repos 输入 = 白名单冒烟（只重跑指定仓，其余仓不进矩阵——小范围验证用）。
 #   子步门控：② ③ 仅要求 ① 成功（投影失败仍算指标——census 能聚合多少聚合
 #   多少，但该仓任务已判失败）；④ 要求 ② ③ 均成功。凡"前序失败仍要跑"的
 #   步骤 if 必须显式 (success() || failure())——GitHub Actions 对不含状态
@@ -54,6 +60,10 @@ on:
         description: "重扫轨（R3）：true 时 scan-one 透传 --force——同 HEAD 异分析器版本强制重建（分析器升级后的口径修正重扫用）"
         type: boolean
         default: false
+      scan_repos:
+        description: "白名单冒烟：逗号分隔的 owner/repo（如 a/b, c/d）；留空 = 全量清单。只让这些仓进扫描矩阵"
+        type: string
+        default: ""
   schedule:
     - cron: "0 2 1 * *"   # 每月 1 日 02:00 UTC（= 北京时间 10:00）
 
@@ -74,12 +84,20 @@ jobs:
       - uses: actions/checkout@v4
       - name: Generate scan matrix from repos.yaml
         id: gen
+        env:
+          SCAN_REPOS: ${{ inputs.scan_repos }}
         run: |
-          # ruby stdlib YAML 解析（runner 预装）→ jq 过滤 skip 并整形 matrix.include
-          MATRIX=$(ruby -ryaml -rjson -e 'puts JSON.generate(YAML.load_file("repos.yaml"))' \
-            | jq -c '{include: [.repos[] | select((.skip // false) | not) | {owner: .owner, repo: .repo, branch: (.branch // "")}]}')
+          # scripts/scan-matrix.sh：repos.yaml 过滤 skip + build.yaml 配置并入（build 字段）
+          # + scan_repos 白名单；build.yaml 引用了不存在/被 skip 的仓即本步失败
+          MATRIX=$(bash scripts/scan-matrix.sh)
+          N=$(printf '%s' "$MATRIX" | jq '.include | length')
+          if [ "$N" = 0 ]; then
+            echo "FAIL: 扫描矩阵为空（scan_repos 白名单没有命中任何仓？）" >&2
+            exit 1
+          fi
           echo "matrix=$MATRIX" >> "$GITHUB_OUTPUT"
           echo "$MATRIX"
+          printf '%s' "$MATRIX" | jq -r '.include[] | select(.build != null) | "build configured: \(.owner)/\(.repo) \(.build.tool) jdk \(.build.jdk)"'
 
   scan:
     needs: prepare
@@ -109,6 +127,7 @@ jobs:
           REPO: ${{ matrix.repo }}
           BRANCH: ${{ matrix.branch }}
           SCAN_FORCE: ${{ inputs.scan_force }}
+          BUILD_JSON: ${{ toJSON(matrix.build) }}
         run: bash scripts/preflight-skip.sh
 
       # CLI 装配缓存（matrix 每 job 独立 runner——按版本键共享安装产物：首 job 安装落缓存，
@@ -159,6 +178,7 @@ jobs:
           SCAN_FORCE: ${{ inputs.scan_force }}
           DEFER_PROJECTION: "true"
           CLONE_CACHE_DIR: ${{ runner.temp }}/clone-buckets
+          BUILD_JSON: ${{ toJSON(matrix.build) }}
         run: bash scripts/scan-one.sh
 
       # ---- ② projection：ke project <snapshotId>（Neo4j 投影——幂等可重跑）----
@@ -198,10 +218,15 @@ jobs:
           REPO: ${{ matrix.repo }}
           SNAPSHOT_ID: ${{ steps.scan.outputs.snapshot_id }}
           SCALE_JSON: ${{ steps.scan.outputs.scale_json }}
+          BUILD_JSON: ${{ steps.scan.outputs.build_json }}
         run: |
           ARGS=""
           if [ -n "$SNAPSHOT_ID" ]; then
             ARGS="--snapshot $SNAPSHOT_ID"
+          fi
+          # 编译记录（scan 子步产出——report.build：模式、回退、编译结论、字节码交叉核对）
+          if [ -n "$BUILD_JSON" ]; then
+            ARGS="$ARGS --build-json $BUILD_JSON"
           fi
           # 仓规模采集产物（scan 子步 clone 后生成——见 scan-one.sh；缺省即透传，
           # 本地复算无此产物时不传 → report D3 无 scale 子对象）
@@ -277,9 +302,11 @@ jobs:
           METRICS_C: ${{ steps.metrics.conclusion }}
           CONSISTENCY_C: ${{ steps.consistency.conclusion }}
           CONSISTENCY_RC: ${{ steps.consistency.outputs.rc }}
+          BUILD_JSON: ${{ steps.scan.outputs.build_json }}
         run: bash scripts/pipeline-status.sh
 
-      # 产物入库（bot 身份；matrix 并发推送冲突 → 分类重试）
+      # 产物入库（bot 身份；matrix 并发推送冲突 → 分类重试）——build/ 是编译记录
+      # （配置了构建的仓才有；含编译输出末 60 行——定位回退原因用）
       # if: always()——失败仓的 status 同样入库（审计面）；preflight skip 时
       # report 与 status 均无变化——无新增可提交，整步安静退出
       # push 重试按拒绝原因分类（run #33 hibernate-orm 教训：GitHub 瞬时 5xx
@@ -296,7 +323,7 @@ jobs:
         run: |
           git config user.name "ke-index-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A reports pipeline-status 2>/dev/null || true
+          git add -A reports pipeline-status build 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "report/status unchanged — no commit"
             exit 0
