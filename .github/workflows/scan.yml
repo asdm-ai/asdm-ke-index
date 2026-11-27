@@ -23,6 +23,7 @@
 #   失败，但 report.build / pipeline-status.build / ::warning:: / docs/BUILD_LOG 明确标注，
 #   编译输出末 60 行入库 build/{owner}/{repo}.json。配置经 matrix.build 注入（null = 未配置）。
 #   scan_repos 输入 = 白名单冒烟（只重跑指定仓，其余仓不进矩阵——小范围验证用）。
+#   冒烟不发布：scan_repos 非空时 census 不提交、文档不重建、docs/baseline.json 不变。
 #   子步门控：② ③ 仅要求 ① 成功（投影失败仍算指标——census 能聚合多少聚合
 #   多少，但该仓任务已判失败）；④ 要求 ② ③ 均成功。凡"前序失败仍要跑"的
 #   步骤 if 必须显式 (success() || failure())——GitHub Actions 对不含状态
@@ -61,7 +62,7 @@ on:
         type: boolean
         default: false
       scan_repos:
-        description: "白名单冒烟：逗号分隔的 owner/repo（如 a/b, c/d）；留空 = 全量清单。只让这些仓进扫描矩阵"
+        description: "白名单冒烟：逗号分隔的 owner/repo（如 a/b, c/d）；留空 = 全量清单。只让这些仓进扫描矩阵；冒烟不发布（census 不提交、文档不重建、基线不变）"
         type: string
         default: ""
   schedule:
@@ -363,7 +364,11 @@ jobs:
       - name: Aggregate census summary (N gate + validation roll-up + matrix reconcile)
         run: python3 scripts/census.py --matrix-json "@$RUNNER_TEMP/scan-matrix.json"
 
+      # 冒烟不发布（2026-11-27 · Phase 4A 任务 4A.4.1）：scan_repos 非空时本步及下面文档三步
+      # 跳过——否则 4 仓冒烟会把 census/summary.json 与 docs/baseline.json 改写成局部 run。
+      # 聚合步照跑（产物留在 runner 上供查阅日志），正式基线只由不带白名单的 run 生成。
       - name: Commit census summary
+        if: success() && inputs.scan_repos == ''
         run: |
           git config user.name "ke-index-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -392,12 +397,22 @@ jobs:
       # "N 个仓失败"自动发布；旧基线文档保持原样，本 job 置红。
       # completed_at 取本轮最后一个已完成 job 的完成时刻（Actions API）：文档里的
       # "用时"是扫描用时，不含 census 与文档步自身。job 数超过一页即失败（不静默截断）。
+      # started_at 取 run 对象的 run_started_at（Actions API）。此前从 github 上下文取同名属性
+      # ——该上下文没有这个属性，值恒为空，run #37 的 Render 步因此 exit 2
+      # （2026-11-27 实测，Phase 4A 任务 4A.4.1）；取不到即失败，不静默用别的时间顶替。
       # 基线元数据随文档写入 docs/baseline.json——此后可用 docs.yml 逐字节复现。
+      # 冒烟（scan_repos 非空）跳过文档三步——冒烟不发布。
       - name: Render documentation
+        if: success() && inputs.scan_repos == ''
         env:
           GH_TOKEN: ${{ github.token }}
-          RUN_STARTED_AT: ${{ github.run_started_at }}
         run: |
+          RUN_STARTED_AT="$(curl -sS -f -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" \
+            "$GITHUB_API_URL/repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" | jq -r '.run_started_at // empty')"
+          if [ -z "$RUN_STARTED_AT" ]; then
+            echo "FAIL: run $GITHUB_RUN_ID has no run_started_at" >&2
+            exit 1
+          fi
           JOBS="$(curl -sS -f -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" \
             "$GITHUB_API_URL/repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/jobs?per_page=100")"
           TOTAL="$(jq -r '.total_count' <<<"$JOBS")"
@@ -415,9 +430,11 @@ jobs:
             --started-at "$RUN_STARTED_AT" --completed-at "$COMPLETED_AT"
 
       - name: Validate documentation
+        if: success() && inputs.scan_repos == ''
         run: python3 scripts/validate-docs.py
 
       - name: Commit documentation
+        if: success() && inputs.scan_repos == ''
         run: |
           git config user.name "ke-index-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
