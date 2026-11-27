@@ -181,30 +181,30 @@
       "owner": "apache",
       "repo": "fineract",
       "sourceId": "fineract",
-      "snapshotId": "580ff321-b1ac-4da6-8ecb-7248e1b8a4c8",
-      "objectCount": 54054,
-      "linkCount": 266418,
+      "snapshotId": "ce64179e-c643-491a-ad75-91d9aa14ce39",
+      "objectCount": 54225,
+      "linkCount": 267015,
       "schemaVersion": "draft-v1",
-      "fileCount": 9115,
-      "javaFiles": 7647,
-      "lineCount": 1538051,
-      "javaLines": 1005293,
+      "fileCount": 9140,
+      "javaFiles": 7666,
+      "lineCount": 1541325,
+      "javaLines": 1007969,
       "linesByLanguage": {
         "css": 752,
         "gradle": 9204,
         "groovy": 395,
         "html": 55386,
-        "java": 1005293,
+        "java": 1007969,
         "javascript": 4,
         "json": 5198,
         "markdown": 2151,
-        "other": 301255,
+        "other": 301562,
         "properties": 2879,
         "python": 541,
         "shell": 2091,
         "sql": 28136,
         "template": 1143,
-        "xml": 117040,
+        "xml": 117331,
         "yaml": 6583
       },
       "scaleFileCountMatch": true
@@ -239,18 +239,18 @@
       "owner": "apache",
       "repo": "shardingsphere",
       "sourceId": "shardingsphere",
-      "snapshotId": "82f2d160-b720-45f8-9123-df3eace7e61f",
+      "snapshotId": "3e0820fa-a4b6-44e7-96af-76965d9067d4",
       "objectCount": 56172,
       "linkCount": 447822,
       "schemaVersion": "draft-v1",
       "fileCount": 17467,
       "javaFiles": 9916,
-      "lineCount": 1501418,
+      "lineCount": 1501438,
       "javaLines": 836710,
       "linesByLanguage": {
         "java": 836710,
         "json": 17663,
-        "markdown": 105004,
+        "markdown": 105024,
         "other": 106935,
         "properties": 646,
         "python": 12681,
@@ -422,19 +422,19 @@
       "owner": "flowable",
       "repo": "flowable-engine",
       "sourceId": "flowable-engine",
-      "snapshotId": "6e898ac7-1e99-4053-9cf5-362650b3fece",
+      "snapshotId": "19d2bc30-1c94-483a-a516-875a433fc790",
       "objectCount": 76265,
-      "linkCount": 215262,
+      "linkCount": 215260,
       "schemaVersion": "draft-v1",
       "fileCount": 16202,
       "javaFiles": 8082,
-      "lineCount": 1730889,
-      "javaLines": 1086948,
+      "lineCount": 1730890,
+      "javaLines": 1086949,
       "linesByLanguage": {
         "css": 5219,
         "groovy": 18,
         "html": 170816,
-        "java": 1086948,
+        "java": 1086949,
         "javascript": 47378,
         "json": 3548,
         "markdown": 34543,
@@ -452,20 +452,20 @@
       "owner": "hibernate",
       "repo": "hibernate-orm",
       "sourceId": "hibernate-orm",
-      "snapshotId": "39412056-dfab-4045-86c5-c4bf5277db70",
-      "objectCount": 180951,
-      "linkCount": 421035,
+      "snapshotId": "6de9f800-9df6-4ebc-ab64-326062de5474",
+      "objectCount": 181041,
+      "linkCount": 421259,
       "schemaVersion": "draft-v1",
-      "fileCount": 21338,
-      "javaFiles": 19251,
-      "lineCount": 2483974,
-      "javaLines": 2312508,
+      "fileCount": 21350,
+      "javaFiles": 19263,
+      "lineCount": 2485138,
+      "javaLines": 2313672,
       "linesByLanguage": {
         "css": 1234,
         "gradle": 5795,
         "groovy": 157,
         "html": 282,
-        "java": 2312508,
+        "java": 2313672,
         "json": 6,
         "kotlin": 170,
         "markdown": 1536,
@@ -542,30 +542,30 @@
       "owner": "keycloak",
       "repo": "keycloak",
       "sourceId": "keycloak",
-      "snapshotId": "fa090d70-40e2-4b68-986f-3d7b567cb6a0",
-      "objectCount": 92061,
-      "linkCount": 499683,
+      "snapshotId": "86acc252-5c5f-451b-8175-015d1a752c09",
+      "objectCount": 92169,
+      "linkCount": 500194,
       "schemaVersion": "draft-v1",
-      "fileCount": 13527,
-      "javaFiles": 8712,
-      "lineCount": 1850827,
-      "javaLines": 1309630,
+      "fileCount": 13538,
+      "javaFiles": 8717,
+      "lineCount": 1853174,
+      "javaLines": 1311103,
       "linesByLanguage": {
         "c": 83,
         "css": 1339,
         "html": 622,
-        "java": 1309630,
+        "java": 1311103,
         "javascript": 2002,
         "json": 88988,
         "markdown": 8288,
-        "other": 101255,
-        "properties": 132096,
+        "other": 101351,
+        "properties": 132130,
         "python": 315,
         "shell": 2676,
         "sql": 63,
         "template": 4259,
-        "tsx": 88371,
-        "typescript": 39685,
+        "tsx": 88819,
+        "typescript": 39981,
         "xml": 42201,
         "yaml": 28954
       },
@@ -922,13 +922,13 @@
       "owner": "spring-projects",
       "repo": "spring-framework",
       "sourceId": "spring-framework",
-      "snapshotId": "8cdd2ce5-9f8b-47c2-b2fb-7549ff100567",
+      "snapshotId": "e79b478f-65a7-4914-8326-264a83be1821",
       "objectCount": 105969,
       "linkCount": 286288,
       "schemaVersion": "draft-v1",
       "fileCount": 11402,
       "javaFiles": 9244,
-      "lineCount": 1595393,
+      "lineCount": 1595394,
       "javaLines": 1430520,
       "linesByLanguage": {
         "css": 49,
@@ -946,7 +946,7 @@
         "sql": 2625,
         "template": 886,
         "xml": 18988,
-        "yaml": 1201
+        "yaml": 1202
       },
       "scaleFileCountMatch": true
     },
@@ -954,25 +954,25 @@
       "owner": "spring-projects",
       "repo": "spring-petclinic",
       "sourceId": "spring-petclinic",
-      "snapshotId": "c604adfb-523d-4793-8475-d66e71cb96fe",
+      "snapshotId": "0a2d31b0-3700-4f4b-9067-e1455b3146d5",
       "objectCount": 283,
       "linkCount": 626,
       "schemaVersion": "draft-v1",
       "fileCount": 131,
       "javaFiles": 50,
-      "lineCount": 27644,
-      "javaLines": 4297,
+      "lineCount": 27641,
+      "javaLines": 4281,
       "linesByLanguage": {
         "css": 9920,
-        "gradle": 94,
+        "gradle": 98,
         "html": 546,
-        "java": 4297,
+        "java": 4281,
         "json": 25,
         "markdown": 181,
         "other": 10939,
         "properties": 577,
         "sql": 344,
-        "xml": 461,
+        "xml": 470,
         "yaml": 260
       },
       "scaleFileCountMatch": true
@@ -1606,7 +1606,7 @@
           "reason": "无 Module 对象（纯后端仓库——按口径置空）"
         }
       ],
-      "mean": 0.009685,
+      "mean": 0.009686,
       "percentiles": {
         "p25": 0.0,
         "p50": 0.0,
@@ -1657,11 +1657,11 @@
           "reason": "无 Package 对象（分母为 0）"
         }
       ],
-      "mean": 5.089236,
+      "mean": 5.089442,
       "percentiles": {
         "p25": 2.3617,
         "p50": 4.6343,
-        "p75": 7.6102,
+        "p75": 7.6119,
         "p90": 9.1023
       },
       "percentileMethod": "nearest-rank (Schema §4.2)"
@@ -1712,7 +1712,7 @@
       "percentiles": {
         "p25": 0.006193,
         "p50": 0.02531,
-        "p75": 0.035631,
+        "p75": 0.035711,
         "p90": 0.082058
       },
       "percentileMethod": "nearest-rank (Schema §4.2)"
@@ -1823,11 +1823,11 @@
           "reason": "无 Component 对象（纯后端仓库——按口径置空）"
         }
       ],
-      "mean": 0.351824,
+      "mean": 0.351218,
       "percentiles": {
         "p25": 0.0503,
         "p50": 0.2294,
-        "p75": 0.3462,
+        "p75": 0.3359,
         "p90": 1.0
       },
       "percentileMethod": "nearest-rank (Schema §4.2)"
@@ -2100,7 +2100,7 @@
           "reason": "无 Method 对象（分母为 0）"
         }
       ],
-      "mean": 0.108904,
+      "mean": 0.108949,
       "percentiles": {
         "p25": 0.004317,
         "p50": 0.039664,
@@ -2151,12 +2151,12 @@
           "reason": "无 Method 对象（分母为 0）"
         }
       ],
-      "mean": 0.005097,
+      "mean": 0.005094,
       "percentiles": {
         "p25": 0.001379,
         "p50": 0.003014,
-        "p75": 0.007281,
-        "p90": 0.014769
+        "p75": 0.007258,
+        "p90": 0.014689
       },
       "percentileMethod": "nearest-rank (Schema §4.2)"
     },
@@ -2446,12 +2446,12 @@
           "missingRepos": [],
           "min": 59,
           "max": 27933,
-          "mean": 4971.902439,
+          "mean": 4973.073171,
           "percentiles": {
             "p25": 406,
             "p50": 1424,
             "p75": 7382,
-            "p90": 13527
+            "p90": 13538
           }
         },
         "javaFiles": {
@@ -2459,8 +2459,8 @@
           "missing": 0,
           "missingRepos": [],
           "min": 0,
-          "max": 19251,
-          "mean": 3052.829268,
+          "max": 19263,
+          "mean": 3053.707317,
           "percentiles": {
             "p25": 77,
             "p50": 533,
@@ -2474,7 +2474,7 @@
           "missingRepos": [],
           "min": 10854,
           "max": 2751818,
-          "mean": 607650.341463,
+          "mean": 607816.292683,
           "percentiles": {
             "p25": 43949,
             "p50": 173262,
@@ -2487,13 +2487,13 @@
           "missing": 0,
           "missingRepos": [],
           "min": 0,
-          "max": 2312508,
-          "mean": 383185.804878,
+          "max": 2313672,
+          "mean": 383315.02439,
           "percentiles": {
             "p25": 5581,
             "p50": 85434,
             "p75": 752549,
-            "p90": 1086948
+            "p90": 1086949
           }
         }
       },
