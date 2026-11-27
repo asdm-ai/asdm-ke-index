@@ -5,7 +5,7 @@
   "sourceHead": "f1565d99a03dfa54935eabcaab5da3473b6d0744",
   "snapshotId": "a5733632-bd03-472a-ae90-94b73a5137a3",
   "objectCount": 43718,
-  "importStatus": "completed",
+  "importStatus": "skipped",
   "steps": {
     "scan": "ok",
     "projection": "ok",
@@ -13,5 +13,22 @@
     "consistency": "ok"
   },
   "consistencyResult": "pass",
+  "build": {
+    "mode": "source",
+    "fallback": true,
+    "reason": "compile-failed",
+    "tool": "maven",
+    "jdk": 21,
+    "javaVersion": "21.0.13.1",
+    "javapVersion": "21.0.13.1",
+    "exitCode": 1,
+    "testExitCode": null,
+    "classFiles": {
+      "main": 0,
+      "test": 0,
+      "other": 0
+    },
+    "httpRepositories": null
+  },
   "overall": "pass"
 }

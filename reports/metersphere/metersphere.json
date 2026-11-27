@@ -398,6 +398,26 @@
       "testTypes": {
         "UnitTest": 1305
       },
+      "calibers": {
+        "allMethods": {
+          "value": 0.039664,
+          "numerator": 1305,
+          "denominator": 32901
+        },
+        "sourceAnchored": {
+          "value": 0.043481,
+          "numerator": 1305,
+          "denominator": 30013
+        }
+      },
+      "methodComposition": {
+        "all": 32901,
+        "sourceAnchored": 30013,
+        "noSourceBody": 2888,
+        "tests": 1305,
+        "testsNotAnchored": 0
+      },
+      "scanMode": "source",
       "crossCheck": {
         "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'isTest=true' --snapshot a5733632-bd03-472a-ae90-94b73a5137a3",
         "serverCount": 1305,
@@ -653,7 +673,7 @@
       ],
       "evidence": {
         "completeSnapshotCount": 1,
-        "previousReportSnapshot": "9525ad71-ed1c-4959-ac1e-f5eb1b8fbaf4"
+        "previousReportSnapshot": "a5733632-bd03-472a-ae90-94b73a5137a3"
       }
     }
   },
@@ -670,7 +690,19 @@
       "commands": [
         "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot a5733632-bd03-472a-ae90-94b73a5137a3",
         "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot a5733632-bd03-472a-ae90-94b73a5137a3"
-      ]
+      ],
+      "calibers": {
+        "allMethods": {
+          "value": 0.089146,
+          "numerator": 2933,
+          "denominator": 32901
+        },
+        "sourceAnchored": {
+          "value": 0.001499,
+          "numerator": 45,
+          "denominator": 30013
+        }
+      }
     },
     "dq.missing-version-ratio": {
       "id": "dq.missing-version-ratio",
@@ -708,6 +740,31 @@
       "direction": "none",
       "value": null,
       "reason": "不可观测（ext: 虚拟边在导入物化时已过滤——查询面天然免疫）"
+    }
+  },
+  "build": {
+    "mode": "source",
+    "fallback": true,
+    "reason": "compile-failed",
+    "configured": true,
+    "tool": "maven",
+    "jdk": 21,
+    "javaVersion": "21.0.13.1",
+    "javapVersion": "21.0.13.1",
+    "exitCode": 1,
+    "testExitCode": null,
+    "classFiles": {
+      "main": 0,
+      "test": 0,
+      "other": 0
+    },
+    "httpRepositories": null,
+    "attemptMode": null,
+    "attemptReason": null,
+    "crossCheck": {
+      "supplementedMethods": 2888,
+      "lineCountZeroMethods": 2888,
+      "lineCountZeroWithComplexity": 0
     }
   }
 }
