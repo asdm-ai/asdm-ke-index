@@ -2,9 +2,9 @@
   "schemaVersion": "pipeline-status-v1",
   "owner": "spring-projects",
   "repo": "spring-petclinic",
-  "sourceHead": "500158f732419217507c7656904b8e6aa1bcc0d6",
-  "snapshotId": "c604adfb-523d-4793-8475-d66e71cb96fe",
-  "objectCount": 283,
+  "sourceHead": "3aae6ccdd35535054dc972439a461243d41655e2",
+  "snapshotId": "0a2d31b0-3700-4f4b-9067-e1455b3146d5",
+  "objectCount": 292,
   "importStatus": "completed",
   "steps": {
     "scan": "ok",
@@ -13,5 +13,21 @@
     "consistency": "ok"
   },
   "consistencyResult": "pass",
+  "build": {
+    "mode": "bytecode",
+    "fallback": false,
+    "reason": "compiled",
+    "tool": "gradle",
+    "jdk": 17,
+    "javaVersion": "17.0.21.1",
+    "javapVersion": "17.0.21.1",
+    "exitCode": 0,
+    "testExitCode": 0,
+    "classFiles": {
+      "main": 25,
+      "test": 28,
+      "other": 0
+    }
+  },
   "overall": "pass"
 }
