@@ -35,8 +35,8 @@
     "other": 0
   },
   "durationSec": {
-    "compile": 118,
-    "testCompile": 18
+    "compile": 107,
+    "testCompile": 19
   },
   "logTail": [
     "[INFO] x_jpush_core_entity ................................ SKIPPED",
@@ -86,8 +86,8 @@
     "[INFO] ------------------------------------------------------------------------",
     "[INFO] BUILD FAILURE",
     "[INFO] ------------------------------------------------------------------------",
-    "[INFO] Total time:  16.289 s",
-    "[INFO] Finished at: 2026-11-27T23:04:36Z",
+    "[INFO] Total time:  18.084 s",
+    "[INFO] Finished at: 2026-11-28T02:25:22Z",
     "[INFO] ------------------------------------------------------------------------",
     "[ERROR] Failed to execute goal org.codehaus.mojo:exec-maven-plugin:1.6.0:java (enhanceBuilder) on project x_query_core_entity: An exception occured while executing the Java class. Error extracting class information from \"/home/runner/work/_temp/clone-buckets/o2oa/o2server/x_query_core_entity/target/classes/com/x/base/core/entity/JpaObject.class\". /home/runner/work/_temp/clone-buckets/o2oa/o2server",
     "[ERROR] ",
