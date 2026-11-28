@@ -2,9 +2,9 @@
   "schemaVersion": "pipeline-status-v1",
   "owner": "apache",
   "repo": "rocketmq",
-  "sourceHead": "e114b542620c4169d016f25b63c2c377b2e279a7",
-  "snapshotId": "38fd86d7-ab44-4b84-8dea-a3efb1e9c71f",
-  "objectCount": 26486,
+  "sourceHead": "19352a24679337276e041f67307c6d284dd48de9",
+  "snapshotId": "3ac732a2-2a3e-4a32-83f9-719cc5ace66b",
+  "objectCount": 26664,
   "importStatus": "completed",
   "steps": {
     "scan": "ok",
@@ -13,5 +13,23 @@
     "consistency": "ok"
   },
   "consistencyResult": "pass",
+  "build": {
+    "mode": "source",
+    "fallback": true,
+    "reason": "compile-failed",
+    "tool": "maven",
+    "jdk": 8,
+    "javaVersion": "1.8.0_514",
+    "javapVersion": "1.8.0_514",
+    "exitCode": 1,
+    "testExitCode": null,
+    "classFiles": {
+      "main": 0,
+      "test": 0,
+      "other": 0
+    },
+    "httpRepositories": null,
+    "transientRetry": null
+  },
   "overall": "pass"
 }
