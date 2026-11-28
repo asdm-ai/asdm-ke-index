@@ -9,9 +9,9 @@
     "status": "complete",
     "sourceVersion": "f1565d99a03dfa54935eabcaab5da3473b6d0744",
     "sourceHead": "f1565d99a03dfa54935eabcaab5da3473b6d0744",
-    "objectCount": 43718,
-    "linkCount": 157807,
-    "completedAt": "2026-11-26T14:21:10.654Z"
+    "objectCount": 76947,
+    "linkCount": 321858,
+    "completedAt": "2026-11-28T03:22:23.491Z"
   },
   "cliVersion": "0.3.10",
   "metrics": {
@@ -281,9 +281,9 @@
       "label": "巨型类占比",
       "domain": "B",
       "direction": "lower-better",
-      "value": 0.082058,
+      "value": 0.079823,
       "numerator": 252,
-      "denominator": 3071,
+      "denominator": 3157,
       "commands": [
         "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Class --all --field id,lineCount --snapshot a5733632-bd03-472a-ae90-94b73a5137a3",
         "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Class --where 'lineCount>500' --snapshot a5733632-bd03-472a-ae90-94b73a5137a3",
@@ -387,9 +387,9 @@
       "label": "测试方法占比",
       "domain": "C",
       "direction": "higher-better",
-      "value": 0.039664,
+      "value": 0.01976,
       "numerator": 1305,
-      "denominator": 32901,
+      "denominator": 66044,
       "commands": [
         "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'isTest=true' --snapshot a5733632-bd03-472a-ae90-94b73a5137a3",
         "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot a5733632-bd03-472a-ae90-94b73a5137a3",
@@ -400,9 +400,9 @@
       },
       "calibers": {
         "allMethods": {
-          "value": 0.039664,
+          "value": 0.01976,
           "numerator": 1305,
-          "denominator": 32901
+          "denominator": 66044
         },
         "sourceAnchored": {
           "value": 0.043481,
@@ -411,13 +411,13 @@
         }
       },
       "methodComposition": {
-        "all": 32901,
+        "all": 66044,
         "sourceAnchored": 30013,
-        "noSourceBody": 2888,
+        "noSourceBody": 36031,
         "tests": 1305,
         "testsNotAnchored": 0
       },
-      "scanMode": "source",
+      "scanMode": "bytecode",
       "crossCheck": {
         "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'isTest=true' --snapshot a5733632-bd03-472a-ae90-94b73a5137a3",
         "serverCount": 1305,
@@ -441,7 +441,7 @@
       ],
       "threshold": "lineCount > 80",
       "excludedFromDenominator": {
-        "lineCountIsZero": 2888,
+        "lineCountIsZero": 36031,
         "lineCountIsNull": 0
       },
       "top": [
@@ -478,7 +478,7 @@
       "label": "规模画像",
       "domain": "D",
       "direction": "none",
-      "value": 43718,
+      "value": 76947,
       "commands": [
         "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" snapshot list --repo metersphere",
         "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Repository --snapshot a5733632-bd03-472a-ae90-94b73a5137a3",
@@ -499,9 +499,9 @@
       "typeCounts": {
         "Repository": 1,
         "Package": 298,
-        "Class": 3071,
+        "Class": 3157,
         "Interface": 312,
-        "Method": 32901,
+        "Method": 66044,
         "Dependency": 101,
         "Table": 159,
         "Mapper": 160,
@@ -512,7 +512,7 @@
         "Route": 2,
         "ApiEndpoint": 4
       },
-      "linkCount": 157807,
+      "linkCount": 321858,
       "scale": {
         "collectedBy": "scan",
         "sourceHead": "f1565d99a03dfa54935eabcaab5da3473b6d0744",
@@ -568,8 +568,9 @@
           "python3 scripts/repo-scale.py --repo <clone> --out <file>  # scan-one.sh clone 后 / scale-backfill.py 检出 snapshot.sourceHead 后执行",
           "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" query Repository --all --field id,fileCount --snapshot a5733632-bd03-472a-ae90-94b73a5137a3"
         ],
-        "serverFileCount": 4716,
-        "fileCountMatch": true
+        "serverFileCount": 4735,
+        "fileCountMatch": false,
+        "fileCountMatchNote": "CI 侧与分析器 Repository.fileCount 口径差（符号链接/子模块/跳过目录）——告警不置红，差值 -19"
       }
     }
   },
@@ -684,18 +685,18 @@
       "label": "complexity 为 null 的方法占比",
       "domain": "dq",
       "direction": "none",
-      "value": 0.089146,
-      "numerator": 2933,
-      "denominator": 32901,
+      "value": 0.546242,
+      "numerator": 36076,
+      "denominator": 66044,
       "commands": [
         "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot a5733632-bd03-472a-ae90-94b73a5137a3",
         "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot a5733632-bd03-472a-ae90-94b73a5137a3"
       ],
       "calibers": {
         "allMethods": {
-          "value": 0.089146,
-          "numerator": 2933,
-          "denominator": 32901
+          "value": 0.546242,
+          "numerator": 36076,
+          "denominator": 66044
         },
         "sourceAnchored": {
           "value": 0.001499,
@@ -743,27 +744,27 @@
     }
   },
   "build": {
-    "mode": "source",
-    "fallback": true,
-    "reason": "compile-failed",
+    "mode": "bytecode",
+    "fallback": false,
+    "reason": "compiled",
     "configured": true,
     "tool": "maven",
     "jdk": 21,
     "javaVersion": "21.0.13.1",
     "javapVersion": "21.0.13.1",
-    "exitCode": 1,
-    "testExitCode": null,
+    "exitCode": 0,
+    "testExitCode": 0,
     "classFiles": {
-      "main": 0,
-      "test": 0,
+      "main": 3255,
+      "test": 508,
       "other": 0
     },
     "httpRepositories": null,
     "attemptMode": null,
     "attemptReason": null,
     "crossCheck": {
-      "supplementedMethods": 2888,
-      "lineCountZeroMethods": 2888,
+      "supplementedMethods": 36031,
+      "lineCountZeroMethods": 36031,
       "lineCountZeroWithComplexity": 0
     }
   }
