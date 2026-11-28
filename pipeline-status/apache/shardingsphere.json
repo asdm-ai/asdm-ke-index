@@ -2,9 +2,9 @@
   "schemaVersion": "pipeline-status-v1",
   "owner": "apache",
   "repo": "shardingsphere",
-  "sourceHead": "ace4d4f2ac19f938af35913e537afabbac0edfb0",
-  "snapshotId": "3e0820fa-a4b6-44e7-96af-76965d9067d4",
-  "objectCount": 56172,
+  "sourceHead": "970e21dfb72863dbbdee78e3e5cb1a2746909c02",
+  "snapshotId": "3d28309b-c0f3-4ce3-b043-c27c77f9aa86",
+  "objectCount": 56184,
   "importStatus": "completed",
   "steps": {
     "scan": "ok",
@@ -13,5 +13,23 @@
     "consistency": "ok"
   },
   "consistencyResult": "pass",
+  "build": {
+    "mode": "source",
+    "fallback": true,
+    "reason": "compile-failed",
+    "tool": "maven",
+    "jdk": 21,
+    "javaVersion": "21.0.13.1",
+    "javapVersion": "21.0.13.1",
+    "exitCode": 1,
+    "testExitCode": null,
+    "classFiles": {
+      "main": 0,
+      "test": 0,
+      "other": 0
+    },
+    "httpRepositories": null,
+    "transientRetry": null
+  },
   "overall": "pass"
 }
