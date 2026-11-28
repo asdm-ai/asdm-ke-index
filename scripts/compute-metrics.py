@@ -491,7 +491,7 @@ def build_block(build, methods):
     """
     out = {k: build.get(k) for k in (
         "mode", "fallback", "reason", "configured", "tool", "jdk", "javaVersion", "javapVersion",
-        "exitCode", "testExitCode", "classFiles", "httpRepositories")}
+        "exitCode", "testExitCode", "classFiles", "httpRepositories", "transientRetry")}
     out["attemptMode"] = build.get("attemptMode")
     out["attemptReason"] = build.get("attemptReason")
     supplemented = sum(1 for m in methods

@@ -555,6 +555,8 @@ def build_cells(r, en):
         reason += f" (this run: {rec['attemptReason']})" if en else f"（本轮：{rec['attemptReason']}）"
     if rec.get("httpRepositories") == "unblocked-on-retry":
         reason += " (HTTP repositories unblocked on retry)" if en else "（重试时放开了明文 HTTP 仓库）"
+    if rec.get("transientRetry") == "retried-once":
+        reason += " (retried once after a transient download failure)" if en else "（下载瞬时失败后重试一次）"
     return [f"[{r['name']}](https://github.com/{r['name']})", rec.get("tool") or "-", str(rec.get("jdk") or "-"), mode,
             latest, f"{n(cf.get('main'))} / {n(cf.get('test'))}",
             n((rb.get("crossCheck") or {}).get("supplementedMethods")), reason]

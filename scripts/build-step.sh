@@ -18,7 +18,9 @@
 #             exitCode / testExitCode / classFiles{main,test,other} / durationSec /
 #             logTail（末 60 行编译输出——定位失败用；不进 docs，只入库 build/）/
 #             httpRepositories（Maven 明文 HTTP 仓库被拦后带覆盖配置重试过 =
-#             unblocked-on-retry；其余 null——见下方"明文 HTTP 仓库"注记）
+#             unblocked-on-retry；其余 null——见下方"明文 HTTP 仓库"注记）/
+#             transientRetry（编译因瞬时传输失败——429 限流 / 传输中断——退避后按原命令
+#             重试过 = retried-once；其余 null——见下方"瞬时传输失败"注记）
 # 约束：
 #   - 失败回退时清掉本次产生的全部编译输出（部分模块编过的 .class 不留——否则是
 #     介于两种模式之间的第三种口径）；成功时输出保留到 import 结束，由 scan-one 清理
@@ -35,6 +37,7 @@ OUT="${OUT:-build-record.json}"
 BUILD_TIMEOUT_SEC="${BUILD_TIMEOUT_SEC:-1800}"
 BUILD_TEST_TIMEOUT_SEC="${BUILD_TEST_TIMEOUT_SEC:-900}"
 LOG_TAIL_LINES="${LOG_TAIL_LINES:-60}"
+BUILD_RETRY_DELAY_SEC="${BUILD_RETRY_DELAY_SEC:-60}"
 
 MODE="source"; REASON="not-configured"
 TOOL=""; JDK="null"; ROOT="."
@@ -45,6 +48,7 @@ DUR_JSON='{"compile":0,"testCompile":0}'
 LOG_TAIL_JSON="[]"
 LOG=""
 HTTP_REPOSITORIES=""
+TRANSIENT_RETRY=""
 MVN_SETTINGS=""
 # 必须恒返回 0：EXIT 陷阱的返回值在部分 bash 版本里会覆盖脚本自己的 exit 状态
 cleanup() {
@@ -61,6 +65,7 @@ emit() {
     --arg tool "$TOOL" --argjson jdk "$JDK" --arg root "$ROOT" \
     --arg javaHome "$JAVA_HOME_RES" --arg javaVersion "$JAVA_VER" --arg javapVersion "$JAVAP_VER" \
     --arg httpRepositories "$HTTP_REPOSITORIES" \
+    --arg transientRetry "$TRANSIENT_RETRY" \
     --argjson command "$COMMAND_JSON" \
     --argjson exitCode "$EXIT_CODE" --argjson testExitCode "$TEST_EXIT_CODE" \
     --argjson classFiles "$CLASS_JSON" --argjson durationSec "$DUR_JSON" \
@@ -77,6 +82,7 @@ emit() {
       javaVersion: (if $javaVersion == "" then null else $javaVersion end),
       javapVersion: (if $javapVersion == "" then null else $javapVersion end),
       httpRepositories: (if $httpRepositories == "" then null else $httpRepositories end),
+      transientRetry: (if $transientRetry == "" then null else $transientRetry end),
       command: $command,
       exitCode: $exitCode,
       testExitCode: $testExitCode,
@@ -222,6 +228,26 @@ blocked_by_http_mirror() { # 编译日志里是否出现 blocker 的报错
   [ -n "$LOG" ] && [ -f "$LOG" ] && grep -q -e 'maven-default-http-blocker' -e 'Blocked mirror for repositories' "$LOG"
 }
 
+# ---- 瞬时传输失败（下载被限流 / 传输中断）----
+# 构建子步没有依赖缓存，每次冷编译都从中央仓库全量拉取。GitHub runner 的出口被
+# Maven Central 限流（HTTP 429）或传输中断时，与仓内构建配置无关的任何仓都会回退——
+# run #42 lenve/vhr 实证：拉父 POM 时 "status code: 429 … Too Many Requests"，33s 失败，
+# 不改配置重跑即 compiled。处置与上面的明文 HTTP 仓库重试同一形态：编译失败且日志里
+# 出现瞬时传输失败的报错 → 退避 BUILD_RETRY_DELAY_SEC 后按原命令重试一次，记录
+# transientRetry=retried-once；重试仍失败 → 照常 compile-failed 回退。
+# 标记只取"下载本身失败"的措辞（Maven 与 Gradle 两种），编译报错、找不到依赖、
+# 版本冲突等确定性失败不会命中，不被重试。
+# 超时（exit 124）不在此列：日志末尾未必有传输报错，且一次就已用满时间上限。
+transient_transfer_failure() { # 编译日志里是否出现瞬时传输失败的报错
+  [ -n "$LOG" ] && [ -f "$LOG" ] && grep -q -e 'status code: 429' -e 'Too Many Requests' \
+    -e 'Could not transfer artifact' -e 'Connection reset' -e 'Read timed out' \
+    -e "Could not GET '" -e "Could not HEAD '" "$LOG"
+}
+transient_marker() { # 命中的第一条措辞（写进 job 日志——重试会覆盖编译日志）
+  { grep -o -e 'status code: 429' -e 'Too Many Requests' -e 'Could not transfer artifact' \
+      -e 'Connection reset' -e 'Read timed out' -e "Could not GET '" -e "Could not HEAD '" "$LOG" || true; } | head -1
+}
+
 # ---- 编译（主源码成功即 bytecode；测试源码编译尽力而为，失败只记录）----
 to_json_array() { jq -Rn '[inputs]'; }
 LOG=$(mktemp)
@@ -266,6 +292,16 @@ if [ "$MAIN_RC" != 0 ] && [ "$TOOL" = "maven" ] && blocked_by_http_mirror; then
   TCMD=("${MCMD[@]:0:${#MCMD[@]}-1}" test-compile)
   COMMAND_JSON=$(jq -cn --argjson m "$(printf '%s\n' "${MCMD[@]}" | to_json_array)" \
     --argjson t "$(printf '%s\n' "${TCMD[@]}" | to_json_array)" '[$m, $t]')
+  set +e
+  ( cd "$REPO_DIR/$ROOT" && run_limited "$BUILD_TIMEOUT_SEC" "${MCMD[@]}" ) > "$LOG" 2>&1
+  MAIN_RC=$?
+  set -e
+fi
+# 瞬时传输失败：退避后按原命令（含上面可能加上的 --settings）重试一次
+if [ "$MAIN_RC" != 0 ] && ! detect_timeout "$MAIN_RC" && transient_transfer_failure; then
+  TRANSIENT_RETRY="retried-once"
+  echo "build-step: 编译因瞬时传输失败中止（$(transient_marker)）——${BUILD_RETRY_DELAY_SEC}s 后按原命令重试一次（记录 transientRetry=retried-once）"
+  sleep "$BUILD_RETRY_DELAY_SEC"
   set +e
   ( cd "$REPO_DIR/$ROOT" && run_limited "$BUILD_TIMEOUT_SEC" "${MCMD[@]}" ) > "$LOG" 2>&1
   MAIN_RC=$?
