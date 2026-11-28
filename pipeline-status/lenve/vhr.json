@@ -4,8 +4,8 @@
   "repo": "vhr",
   "sourceHead": "28a9f8a5b5619234b9d6d99389f9046dd79c99d5",
   "snapshotId": "a359e4fa-2fcb-4bb4-99a2-34865cca15a9",
-  "objectCount": 991,
-  "importStatus": "skipped",
+  "objectCount": 992,
+  "importStatus": "completed",
   "steps": {
     "scan": "ok",
     "projection": "ok",
@@ -14,18 +14,18 @@
   },
   "consistencyResult": "pass",
   "build": {
-    "mode": "source",
-    "fallback": true,
-    "reason": "compile-failed",
+    "mode": "bytecode",
+    "fallback": false,
+    "reason": "compiled",
     "tool": "maven",
     "jdk": 21,
     "javaVersion": "21.0.13.1",
     "javapVersion": "21.0.13.1",
-    "exitCode": 1,
-    "testExitCode": null,
+    "exitCode": 0,
+    "testExitCode": 0,
     "classFiles": {
-      "main": 0,
-      "test": 0,
+      "main": 88,
+      "test": 3,
       "other": 0
     },
     "httpRepositories": null

@@ -9,9 +9,9 @@
     "status": "complete",
     "sourceVersion": "28a9f8a5b5619234b9d6d99389f9046dd79c99d5",
     "sourceHead": "28a9f8a5b5619234b9d6d99389f9046dd79c99d5",
-    "objectCount": 991,
-    "linkCount": 1436,
-    "completedAt": "2026-11-26T13:37:26.789Z"
+    "objectCount": 992,
+    "linkCount": 1825,
+    "completedAt": "2026-11-28T03:09:01.814Z"
   },
   "cliVersion": "0.3.10",
   "metrics": {
@@ -34,8 +34,8 @@
         "withBackendMethod": 1,
         "chainComplete": 1,
         "joinHitClosures": 1,
-        "closureSpanMedian": 3,
-        "closureSpanMax": 3,
+        "closureSpanMedian": 4,
+        "closureSpanMax": 4,
         "algorithm": "local BFS over calls edges (graph NDJSON full pull)"
       }
     },
@@ -271,9 +271,9 @@
       "label": "测试方法占比",
       "domain": "C",
       "direction": "higher-better",
-      "value": 0.004317,
+      "value": 0.00431,
       "numerator": 3,
-      "denominator": 695,
+      "denominator": 696,
       "commands": [
         "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'isTest=true' --snapshot a359e4fa-2fcb-4bb4-99a2-34865cca15a9",
         "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot a359e4fa-2fcb-4bb4-99a2-34865cca15a9",
@@ -284,9 +284,9 @@
       },
       "calibers": {
         "allMethods": {
-          "value": 0.004317,
+          "value": 0.00431,
           "numerator": 3,
-          "denominator": 695
+          "denominator": 696
         },
         "sourceAnchored": {
           "value": 0.005639,
@@ -295,13 +295,13 @@
         }
       },
       "methodComposition": {
-        "all": 695,
+        "all": 696,
         "sourceAnchored": 532,
-        "noSourceBody": 163,
+        "noSourceBody": 164,
         "tests": 3,
         "testsNotAnchored": 0
       },
-      "scanMode": "source",
+      "scanMode": "bytecode",
       "crossCheck": {
         "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'isTest=true' --snapshot a359e4fa-2fcb-4bb4-99a2-34865cca15a9",
         "serverCount": 3,
@@ -325,7 +325,7 @@
       ],
       "threshold": "lineCount > 80",
       "excludedFromDenominator": {
-        "lineCountIsZero": 163,
+        "lineCountIsZero": 164,
         "lineCountIsNull": 0
       },
       "top": [
@@ -362,7 +362,7 @@
       "label": "规模画像",
       "domain": "D",
       "direction": "none",
-      "value": 991,
+      "value": 992,
       "commands": [
         "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" snapshot list --repo vhr",
         "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Repository --snapshot a359e4fa-2fcb-4bb4-99a2-34865cca15a9",
@@ -385,7 +385,7 @@
         "Package": 17,
         "Class": 69,
         "Interface": 22,
-        "Method": 695,
+        "Method": 696,
         "Dependency": 22,
         "Table": 22,
         "Mapper": 21,
@@ -396,7 +396,7 @@
         "Route": 0,
         "ApiEndpoint": 1
       },
-      "linkCount": 1436,
+      "linkCount": 1825,
       "scale": {
         "collectedBy": "scan",
         "sourceHead": "28a9f8a5b5619234b9d6d99389f9046dd79c99d5",
@@ -549,18 +549,18 @@
       "label": "complexity 为 null 的方法占比",
       "domain": "dq",
       "direction": "none",
-      "value": 0.234532,
-      "numerator": 163,
-      "denominator": 695,
+      "value": 0.235632,
+      "numerator": 164,
+      "denominator": 696,
       "commands": [
         "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot a359e4fa-2fcb-4bb4-99a2-34865cca15a9",
         "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot a359e4fa-2fcb-4bb4-99a2-34865cca15a9"
       ],
       "calibers": {
         "allMethods": {
-          "value": 0.234532,
-          "numerator": 163,
-          "denominator": 695
+          "value": 0.235632,
+          "numerator": 164,
+          "denominator": 696
         },
         "sourceAnchored": {
           "value": 0.0,
@@ -608,27 +608,27 @@
     }
   },
   "build": {
-    "mode": "source",
-    "fallback": true,
-    "reason": "compile-failed",
+    "mode": "bytecode",
+    "fallback": false,
+    "reason": "compiled",
     "configured": true,
     "tool": "maven",
     "jdk": 21,
     "javaVersion": "21.0.13.1",
     "javapVersion": "21.0.13.1",
-    "exitCode": 1,
-    "testExitCode": null,
+    "exitCode": 0,
+    "testExitCode": 0,
     "classFiles": {
-      "main": 0,
-      "test": 0,
+      "main": 88,
+      "test": 3,
       "other": 0
     },
     "httpRepositories": null,
     "attemptMode": null,
     "attemptReason": null,
     "crossCheck": {
-      "supplementedMethods": 163,
-      "lineCountZeroMethods": 163,
+      "supplementedMethods": 164,
+      "lineCountZeroMethods": 164,
       "lineCountZeroWithComplexity": 0
     }
   }
