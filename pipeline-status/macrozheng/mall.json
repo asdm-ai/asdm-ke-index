@@ -4,7 +4,7 @@
   "repo": "mall",
   "sourceHead": "dcaa93b3150352e5044708d7211b5bed0af4509f",
   "snapshotId": "104877ef-6bea-4bd5-9035-8c96e0d2b051",
-  "objectCount": 14527,
+  "objectCount": 23892,
   "importStatus": "completed",
   "steps": {
     "scan": "ok",
@@ -13,5 +13,23 @@
     "consistency": "ok"
   },
   "consistencyResult": "pass",
+  "build": {
+    "mode": "bytecode",
+    "fallback": false,
+    "reason": "compiled",
+    "tool": "maven",
+    "jdk": 17,
+    "javaVersion": "17.0.21.1",
+    "javapVersion": "17.0.21.1",
+    "exitCode": 0,
+    "testExitCode": 0,
+    "classFiles": {
+      "main": 758,
+      "test": 4,
+      "other": 0
+    },
+    "httpRepositories": null,
+    "transientRetry": null
+  },
   "overall": "pass"
 }
