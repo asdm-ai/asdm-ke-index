@@ -137,10 +137,11 @@ builds:
     repo: nacos
     tool: maven
     jdk: 17
-  - owner: alibaba
-    repo: druid
-    tool: maven
-    jdk: 17
+  # alibaba/druid 不配置（2026-11-28 撤回，批 4 run #48）：编译本身通过（JDK 17，2102 + 3997 class），
+  # 但 bytecode 模式下该仓链接数由 23.4 万涨到 167.6 万，server commit 收口的全量物化
+  # （materializeEdgesFromData：全量边数组 + 全局去重 Map）在约 1 GiB 的 V8 堆上限处溢出——
+  # aos-server 4 分钟内连续 5 次 V8 heap OOM 并自动重启，druid 快照滞留 importing
+  # （Hotfix-18 复发；根因候选见该条立案）。server 侧修复上线前保持源码模式，不得加回。
   - owner: apache
     repo: shardingsphere
     tool: maven
