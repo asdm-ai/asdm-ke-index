@@ -2,9 +2,9 @@
   "schemaVersion": "pipeline-status-v1",
   "owner": "alibaba",
   "repo": "nacos",
-  "sourceHead": "9a5c29a48f453630e6e49aa8223551a423220f00",
-  "snapshotId": "922f4ddb-ca12-443b-a545-ecf14bc0f1eb",
-  "objectCount": 57387,
+  "sourceHead": "a82b95acd29f0a69c6701b4c7d9e68d423c58458",
+  "snapshotId": "97e4fdbb-52c4-4b63-82bd-ade699c1397a",
+  "objectCount": 69924,
   "importStatus": "completed",
   "steps": {
     "scan": "ok",
@@ -13,5 +13,23 @@
     "consistency": "ok"
   },
   "consistencyResult": "pass",
+  "build": {
+    "mode": "bytecode",
+    "fallback": false,
+    "reason": "compiled",
+    "tool": "maven",
+    "jdk": 17,
+    "javaVersion": "17.0.21.1",
+    "javapVersion": "17.0.21.1",
+    "exitCode": 0,
+    "testExitCode": 0,
+    "classFiles": {
+      "main": 4601,
+      "test": 3388,
+      "other": 0
+    },
+    "httpRepositories": null,
+    "transientRetry": null
+  },
   "overall": "pass"
 }
