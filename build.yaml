@@ -89,12 +89,17 @@ builds:
     tool: maven
     jdk: 21
     root: vhr
-  # root pom 另含 frontend 模块（frontend-maven-plugin 在 compile 前跑 pnpm install / build）——只编后端
+  # root pom 另含 frontend 模块（frontend-maven-plugin 在 compile 前跑 pnpm install / build）——只编后端。
+  # 后端仍有两处 antrun（services/system-setting、app）把 frontend/dist 拷进 static，前端未构建即失败
+  # （run #42：metersphere-system-setting 处 "frontend/dist does not exist"）。两处都以仓库自带的
+  # skipAntRunForJenkins 属性为开关——传入即跳过，纯 Java 编译 19 模块通过（本地实测 3255 + 508 class）。
   - owner: metersphere
     repo: metersphere
     tool: maven
     jdk: 21
     root: backend
+    args:
+      - -DskipAntRunForJenkins=true
   - owner: o2oa
     repo: o2oa
     tool: maven
