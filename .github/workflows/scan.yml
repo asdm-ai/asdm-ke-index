@@ -65,8 +65,13 @@ on:
         description: "白名单冒烟：逗号分隔的 owner/repo（如 a/b, c/d）；留空 = 全量清单。只让这些仓进扫描矩阵；冒烟不发布（census 不提交、文档不重建、基线不变）"
         type: string
         default: ""
-  schedule:
-    - cron: "0 2 1 * *"   # 每月 1 日 02:00 UTC（= 北京时间 10:00）
+  # ---- 月度 schedule 暂停（2026-11-28，用户裁决——Hotfix-18）----
+  # yudao-ui-admin-vue3 上游已前移，月度全量会重导入该仓（源码模式约 306 万条链接）；
+  # aos-server commit 收口的全量物化内存与声明边数成正比（约 0.5 MB / 千条，1 GiB 堆上限下
+  # 阈值约 150–170 万条），在服务端修复上线之前必触发 V8 堆溢出崩溃循环（11-28 druid
+  # bytecode 事故同因：4 分钟 5 次崩溃）。修复上线并经大仓验证后恢复下面的两行。
+  # schedule:
+  #   - cron: "0 2 1 * *"   # 每月 1 日 02:00 UTC（= 北京时间 10:00）
 
 # 三触发面同一组：同一时刻至多一个 scan run 在跑，后到者排队（不取消在跑者）
 concurrency:
