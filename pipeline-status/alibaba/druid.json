@@ -3,33 +3,33 @@
   "owner": "alibaba",
   "repo": "druid",
   "sourceHead": "fa8dc9912637a2f729eef9f55356621fec18d40e",
-  "snapshotId": null,
-  "objectCount": null,
-  "importStatus": null,
+  "snapshotId": "fe51de02-7c14-4b3c-a8fd-28d58906c521",
+  "objectCount": 41208,
+  "importStatus": "completed",
   "steps": {
-    "scan": "failed",
-    "projection": "skipped",
-    "metrics": "skipped",
-    "consistency": "skipped"
+    "scan": "ok",
+    "projection": "ok",
+    "metrics": "ok",
+    "consistency": "ok"
   },
-  "consistencyResult": "skipped",
+  "consistencyResult": "pass",
   "build": {
-    "mode": "bytecode",
+    "mode": "source",
     "fallback": false,
-    "reason": "compiled",
-    "tool": "maven",
-    "jdk": 17,
-    "javaVersion": "17.0.21",
-    "javapVersion": "17.0.21",
-    "exitCode": 0,
-    "testExitCode": 0,
+    "reason": "not-configured",
+    "tool": null,
+    "jdk": null,
+    "javaVersion": null,
+    "javapVersion": null,
+    "exitCode": null,
+    "testExitCode": null,
     "classFiles": {
-      "main": 2102,
-      "test": 3997,
+      "main": 0,
+      "test": 0,
       "other": 0
     },
     "httpRepositories": null,
     "transientRetry": null
   },
-  "overall": "fail"
+  "overall": "pass"
 }

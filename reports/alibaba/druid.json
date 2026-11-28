@@ -11,7 +11,7 @@
     "sourceHead": "fa8dc9912637a2f729eef9f55356621fec18d40e",
     "objectCount": 41208,
     "linkCount": 234102,
-    "completedAt": "2026-11-26T15:35:42.811Z"
+    "completedAt": "2026-11-28T07:31:43.762Z"
   },
   "cliVersion": "0.3.10",
   "metrics": {
@@ -398,6 +398,26 @@
       "testTypes": {
         "UnitTest": 4776
       },
+      "calibers": {
+        "allMethods": {
+          "value": 0.136989,
+          "numerator": 4776,
+          "denominator": 34864
+        },
+        "sourceAnchored": {
+          "value": 0.152656,
+          "numerator": 4776,
+          "denominator": 31286
+        }
+      },
+      "methodComposition": {
+        "all": 34864,
+        "sourceAnchored": 31286,
+        "noSourceBody": 3578,
+        "tests": 4776,
+        "testsNotAnchored": 0
+      },
+      "scanMode": "source",
       "crossCheck": {
         "command": "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where 'isTest=true' --snapshot fe51de02-7c14-4b3c-a8fd-28d58906c521",
         "serverCount": 4776,
@@ -834,7 +854,7 @@
       ],
       "evidence": {
         "completeSnapshotCount": 1,
-        "previousReportSnapshot": "df9c2523-281c-46a3-8e3b-d2c1157108a9"
+        "previousReportSnapshot": "fe51de02-7c14-4b3c-a8fd-28d58906c521"
       }
     }
   },
@@ -851,7 +871,19 @@
       "commands": [
         "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --snapshot fe51de02-7c14-4b3c-a8fd-28d58906c521",
         "ke --mode server --url \"$KE_SERVER_URL\" --token \"$KE_API_KEY\" count Method --where complexity --snapshot fe51de02-7c14-4b3c-a8fd-28d58906c521"
-      ]
+      ],
+      "calibers": {
+        "allMethods": {
+          "value": 0.104262,
+          "numerator": 3635,
+          "denominator": 34864
+        },
+        "sourceAnchored": {
+          "value": 0.001822,
+          "numerator": 57,
+          "denominator": 31286
+        }
+      }
     },
     "dq.missing-version-ratio": {
       "id": "dq.missing-version-ratio",
@@ -875,6 +907,32 @@
       "direction": "none",
       "value": null,
       "reason": "不可观测（ext: 虚拟边在导入物化时已过滤——查询面天然免疫）"
+    }
+  },
+  "build": {
+    "mode": "source",
+    "fallback": false,
+    "reason": "not-configured",
+    "configured": false,
+    "tool": null,
+    "jdk": null,
+    "javaVersion": null,
+    "javapVersion": null,
+    "exitCode": null,
+    "testExitCode": null,
+    "classFiles": {
+      "main": 0,
+      "test": 0,
+      "other": 0
+    },
+    "httpRepositories": null,
+    "transientRetry": null,
+    "attemptMode": null,
+    "attemptReason": null,
+    "crossCheck": {
+      "supplementedMethods": 3578,
+      "lineCountZeroMethods": 3578,
+      "lineCountZeroWithComplexity": 0
     }
   }
 }
