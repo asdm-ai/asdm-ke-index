@@ -2,9 +2,9 @@
   "schemaVersion": "pipeline-status-v1",
   "owner": "apache",
   "repo": "dubbo",
-  "sourceHead": "ae46e0a5f6fc4ab8489232b0848453818da92e2c",
-  "snapshotId": "c170d16e-ae80-4dd0-b08e-62eecddc516b",
-  "objectCount": 34065,
+  "sourceHead": "09a5747f40de9032f4faf93a763b9ff7e468454b",
+  "snapshotId": "9610a833-a26b-4e08-ab6f-20db89bf98b2",
+  "objectCount": 34080,
   "importStatus": "completed",
   "steps": {
     "scan": "ok",
@@ -13,5 +13,23 @@
     "consistency": "ok"
   },
   "consistencyResult": "pass",
+  "build": {
+    "mode": "source",
+    "fallback": true,
+    "reason": "compile-failed",
+    "tool": "maven",
+    "jdk": 8,
+    "javaVersion": "1.8.0_514",
+    "javapVersion": "1.8.0_514",
+    "exitCode": 1,
+    "testExitCode": null,
+    "classFiles": {
+      "main": 0,
+      "test": 0,
+      "other": 0
+    },
+    "httpRepositories": null,
+    "transientRetry": null
+  },
   "overall": "pass"
 }

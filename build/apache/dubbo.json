@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "build-v1",
+  "configured": true,
+  "mode": "source",
+  "fallback": true,
+  "reason": "compile-failed",
+  "tool": "maven",
+  "jdk": 8,
+  "root": ".",
+  "javaHome": "/opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/8.0.514-1/x64",
+  "javaVersion": "1.8.0_514",
+  "javapVersion": "1.8.0_514",
+  "httpRepositories": null,
+  "transientRetry": null,
+  "command": [
+    [
+      "./mvnw",
+      "-B",
+      "-ntp",
+      "-DskipTests",
+      "compile"
+    ],
+    [
+      "./mvnw",
+      "-B",
+      "-ntp",
+      "-DskipTests",
+      "test-compile"
+    ]
+  ],
+  "exitCode": 1,
+  "testExitCode": null,
+  "classFiles": {
+    "main": 0,
+    "test": 0,
+    "other": 0
+  },
+  "durationSec": {
+    "compile": 1,
+    "testCompile": 0
+  },
+  "logTail": [
+    "Error: Could not find or load main class org.apache.maven.wrapper.MavenWrapperMain"
+  ]
+}
