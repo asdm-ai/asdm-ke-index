@@ -11,7 +11,7 @@
     "sourceHead": "28a9f8a5b5619234b9d6d99389f9046dd79c99d5",
     "objectCount": 992,
     "linkCount": 1825,
-    "completedAt": "2026-11-28T03:09:01.814Z"
+    "completedAt": "2026-11-28T03:59:31.460Z"
   },
   "cliVersion": "0.3.10",
   "metrics": {
@@ -624,6 +624,7 @@
       "other": 0
     },
     "httpRepositories": null,
+    "transientRetry": null,
     "attemptMode": null,
     "attemptReason": null,
     "crossCheck": {

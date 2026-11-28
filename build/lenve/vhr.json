@@ -11,6 +11,7 @@
   "javaVersion": "21.0.13.1",
   "javapVersion": "21.0.13.1",
   "httpRepositories": null,
+  "transientRetry": null,
   "command": [
     [
       "mvn",
@@ -35,8 +36,8 @@
     "other": 0
   },
   "durationSec": {
-    "compile": 22,
-    "testCompile": 4
+    "compile": 26,
+    "testCompile": 5
   },
   "logTail": [
     "[INFO] ",
@@ -88,16 +89,16 @@
     "[INFO] ",
     "[INFO] vhr 1.0-SNAPSHOT ................................... SUCCESS [  0.002 s]",
     "[INFO] vhrserver 1.0-SNAPSHOT ............................. SUCCESS [  0.001 s]",
-    "[INFO] vhr-model 1.0-SNAPSHOT ............................. SUCCESS [  0.370 s]",
-    "[INFO] vhr-mapper 1.0-SNAPSHOT ............................ SUCCESS [  0.176 s]",
-    "[INFO] vhr-service 1.0-SNAPSHOT ........................... SUCCESS [  0.620 s]",
-    "[INFO] vhr-web 0.0.1-SNAPSHOT ............................. SUCCESS [  1.156 s]",
-    "[INFO] mailserver 0.0.1-SNAPSHOT .......................... SUCCESS [  0.290 s]",
+    "[INFO] vhr-model 1.0-SNAPSHOT ............................. SUCCESS [  0.481 s]",
+    "[INFO] vhr-mapper 1.0-SNAPSHOT ............................ SUCCESS [  0.231 s]",
+    "[INFO] vhr-service 1.0-SNAPSHOT ........................... SUCCESS [  0.784 s]",
+    "[INFO] vhr-web 0.0.1-SNAPSHOT ............................. SUCCESS [  1.420 s]",
+    "[INFO] mailserver 0.0.1-SNAPSHOT .......................... SUCCESS [  0.362 s]",
     "[INFO] ------------------------------------------------------------------------",
     "[INFO] BUILD SUCCESS",
     "[INFO] ------------------------------------------------------------------------",
-    "[INFO] Total time:  2.876 s",
-    "[INFO] Finished at: 2026-11-28T03:08:53Z",
+    "[INFO] Total time:  3.653 s",
+    "[INFO] Finished at: 2026-11-28T03:59:22Z",
     "[INFO] ------------------------------------------------------------------------"
   ]
 }

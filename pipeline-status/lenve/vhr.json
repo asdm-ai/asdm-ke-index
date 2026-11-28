@@ -28,7 +28,8 @@
       "test": 3,
       "other": 0
     },
-    "httpRepositories": null
+    "httpRepositories": null,
+    "transientRetry": null
   },
   "overall": "pass"
 }
