@@ -4,7 +4,7 @@
   "repo": "dante-cloud",
   "sourceHead": "c0402026db41dbd1d1c5b0f904cfdb38cbb9d7d2",
   "snapshotId": "2cdd68f7-0392-4bc6-aed5-cf8a02b9f850",
-  "objectCount": 476,
+  "objectCount": 493,
   "importStatus": "completed",
   "steps": {
     "scan": "ok",
@@ -13,5 +13,23 @@
     "consistency": "ok"
   },
   "consistencyResult": "pass",
+  "build": {
+    "mode": "bytecode",
+    "fallback": false,
+    "reason": "compiled",
+    "tool": "maven",
+    "jdk": 25,
+    "javaVersion": "25.0.5.1",
+    "javapVersion": "25.0.5.1",
+    "exitCode": 0,
+    "testExitCode": 0,
+    "classFiles": {
+      "main": 87,
+      "test": 1,
+      "other": 0
+    },
+    "httpRepositories": null,
+    "transientRetry": null
+  },
   "overall": "pass"
 }
